@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160410154410) do
+=======
+ActiveRecord::Schema.define(version: 20160328210852) do
+>>>>>>> 13dd25b25d663815a1e7003a6daa81484e6456ae
 
   create_table "archives", force: :cascade do |t|
     t.string   "name"
@@ -133,6 +137,7 @@ ActiveRecord::Schema.define(version: 20160410154410) do
     t.datetime "updated_at",                                null: false
   end
 
+<<<<<<< HEAD
   create_table "expa_teams", force: :cascade do |t|
     t.integer  "xp_id"
     t.string   "xp_title"
@@ -152,6 +157,11 @@ ActiveRecord::Schema.define(version: 20160410154410) do
   end
 
   create_table "hosts", force: :cascade do |t|
+=======
+<<<<<<< HEAD
+=======
+  create_table "host_people", force: :cascade do |t|
+>>>>>>> 13dd25b25d663815a1e7003a6daa81484e6456ae
     t.string   "full_name"
     t.string   "phone"
     t.string   "email"
@@ -189,4 +199,5 @@ ActiveRecord::Schema.define(version: 20160410154410) do
     t.datetime "updated_at",             null: false
   end
 
+>>>>>>> 86f1f1cdf674002178a6ecd64c8c0b77775e4e18
 end
