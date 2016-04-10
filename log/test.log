@@ -1,0 +1,1490 @@
+Started GET "/" for 127.0.0.1 at 2016-04-10 11:51:45 -0300
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.haml within layouts/empty (7.0ms)
+Completed 200 OK in 31007ms (Views: 30994.7ms | ActiveRecord: 0.0ms)
+Started GET "/assets/application-12d9b3047fb6ade6f962d987e2a49c9b7aafc6039b9e9321abd0354fbe48dfa7.css" for 127.0.0.1 at 2016-04-10 11:52:16 -0300
+Started GET "/assets/application-12f32c12540408753c3a0aac56f044e9681acea1591c2726c3b789857f0c3ccc.js" for 127.0.0.1 at 2016-04-10 11:52:16 -0300
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:52:22 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"mauro.victor5@gmail.com", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 5181ms (ActiveRecord: 2.9ms)
+  [1m[36m (170.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (121.5ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateArchives (20151016071431)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "archives" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "owner" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151016071431"]]
+  [1m[35m (106.6ms)[0m  commit transaction
+Migrating to CreateExpaPeople (20160222043320)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "expa_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_email" varchar, "xp_url" varchar, "xp_birthday_date" date, "xp_full_name" varchar, "xp_last_name" varchar, "xp_profile_photo_url" varchar, "xp_home_lc_id" integer, "xp_home_mc_id" integer, "xp_status" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_phone" varchar, "xp_location" varchar, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_middles_names" varchar, "xp_introduction" varchar, "xp_aiesec_email" varchar, "xp_payment" boolean DEFAULT 'f', "xp_views" integer, "xp_favourites_count" integer, "xp_contacted_at" datetime, "xp_contacted_by" varchar, "xp_gender" integer, "xp_address_info" text, "xp_contact_info" varchar, "xp_current_office_id" integer, "xp_cv_info" varchar, "xp_profile_photos_urls" varchar, "xp_cover_photo_urls" varchar, "xp_profile" varchar, "xp_academic_experience" varchar, "xp_missing_profile_fields" varchar, "xp_nps_score" integer, "xp_permissions" varchar, "entity_exchange_lc_id" integer, "interested_program" integer, "interested_sub_product" integer, "how_got_to_know_aiesec" integer, "customized_fields" text, "control_podio" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043320"]]
+  [1m[35m (140.7ms)[0m  commit transaction
+Migrating to CreateExpaApplications (20160222043342)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "expa_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_url" varchar, "xp_status" integer, "xp_current_status" integer, "xp_permissions" text, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_opportunity_id" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_person_id" integer, "xp_an_signed_at" datetime, "xp_experience_start_date" datetime, "xp_experience_end_date" datetime, "xp_matched_or_rejected_at" datetime, "xp_date_matched" datetime, "xp_date_realized" datetime, "xp_date_completed" datetime, "xp_date_ldm_completed" datetime, "xp_paid" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043342"]]
+  [1m[35m (140.9ms)[0m  commit transaction
+Migrating to CreateExpaOffices (20160222043401)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "expa_offices" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_name" varchar, "xp_full_name" varchar, "xp_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043401"]]
+  [1m[35m (131.7ms)[0m  commit transaction
+Migrating to CreateExpaOpportunities (20160328210852)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "expa_opportunities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_title" varchar, "xp_url" varchar, "xp_status" integer, "xp_location" varchar, "xp_programmes" text, "xp_office_id" integer, "xp_application_count" integer, "xp_earliest_start_date" date, "xp_latest_end_date" date, "xp_applications_close_date" date, "xp_profile_photo_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160328210852"]]
+  [1m[35m (130.3ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started GET "/" for 127.0.0.1 at 2016-04-10 11:53:14 -0300
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.haml within layouts/empty (5.4ms)
+Completed 200 OK in 1743ms (Views: 1729.5ms | ActiveRecord: 0.0ms)
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:53:17 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"mauro.victor5@gmail.com", "password"=>"[FILTERED]"}
+  [1m[36mExpaPerson Load (0.5ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_email" = ? LIMIT 1[0m  [["xp_email", "mauro.victor5@gmail.com"]]
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 434]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mExpaOffice Exists (0.2ms)[0m  SELECT  1 AS one FROM "expa_offices" WHERE "expa_offices"."xp_id" = 434 LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "expa_offices" ("xp_full_name", "xp_name", "xp_id", "xp_url", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["xp_full_name", "AIESEC in GOIANIA"], ["xp_name", "GOIANIA"], ["xp_id", 434], ["xp_url", "https://gis.aiesec.org/v1/offices/434"], ["created_at", "2016-04-10 14:53:38.129410"], ["updated_at", "2016-04-10 14:53:38.129410"]]
+  [1m[35m (132.5ms)[0m  commit transaction
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1[0m  [["xp_id", 1606]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mExpaOffice Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "expa_offices" WHERE "expa_offices"."xp_id" = 1606 LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "expa_offices" ("xp_full_name", "xp_name", "xp_id", "xp_url", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["xp_full_name", "AIESEC in BRAZIL"], ["xp_name", "BRAZIL"], ["xp_id", 1606], ["xp_url", "https://gis.aiesec.org/v1/offices/1606"], ["created_at", "2016-04-10 14:53:38.265725"], ["updated_at", "2016-04-10 14:53:38.265725"]]
+  [1m[36m (107.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 434]]
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1[0m  [["xp_id", 1606]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 434]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mExpaPerson Exists (0.2ms)[0m  SELECT  1 AS one FROM "expa_people" WHERE "expa_people"."xp_id" = 551696 LIMIT 1
+  [1m[36mExpaPerson Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "expa_people" WHERE "expa_people"."xp_email" = 'mauro.victor5@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "expa_people" ("xp_id", "xp_email", "xp_url", "xp_birthday_date", "xp_full_name", "xp_last_name", "xp_profile_photo_url", "xp_home_lc_id", "xp_home_mc_id", "xp_status", "xp_interviewed", "xp_created_at", "xp_updated_at", "xp_views", "xp_favourites_count", "xp_gender", "xp_address_info", "xp_contact_info", "xp_current_office_id", "xp_cover_photo_urls", "xp_profile", "xp_missing_profile_fields", "xp_nps_score", "xp_permissions", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["xp_id", 551696], ["xp_email", "mauro.victor5@gmail.com"], ["xp_url", "https://gis.aiesec.org/v1/people/551696"], ["xp_birthday_date", "1993-04-12"], ["xp_full_name", "Mauro Victor Alves Castro"], ["xp_last_name", "Castro"], ["xp_profile_photo_url", "https://gis-img.s3.amazonaws.com/missing_profile_m.svg"], ["xp_home_lc_id", 1], ["xp_home_mc_id", 2], ["xp_status", 3], ["xp_interviewed", "t"], ["xp_created_at", "2015-04-19 20:20:15.000000"], ["xp_updated_at", "2016-04-03 13:41:12.000000"], ["xp_views", 0], ["xp_favourites_count", 0], ["xp_gender", 0], ["xp_address_info", "{\"address_1\"=>\"Rua Longitudinal\", \"address_2\"=>\"Numero 228, Apartamento 201\", \"postcode\"=>\"74633300\", \"city\"=>\"Goiânia\", \"country\"=>\"Brazil\", \"coordinates\"=>{\"latitude\"=>\"-16.6658364\", \"longitude\"=>\"-49.238691\"}}"], ["xp_contact_info", "{\"website\"=>nil, \"email\"=>\"mauro.victor@aiesec.net\", \"phone\"=>\"+556296001243\", \"facebook\"=>\"mauro.vict\", \"twitter\"=>nil, \"instagram\"=>nil, \"linkedin\"=>nil}"], ["xp_current_office_id", 1], ["xp_cover_photo_urls", "https://gis-production.s3.amazonaws.com/profile_photos/original/1447427607.jpg"], ["xp_profile", "{\"earliest_start_date\"=>\"2015-01-01T00:00:00.000Z\", \"latest_end_date\"=>\"2016-01-01T00:00:00.000Z\", \"duration_min\"=>1, \"duration_max\"=>20, \"interested_in\"=>\"both\", \"visible_profile\"=>true, \"nationalities\"=>[{\"id\"=>367, \"name\"=>\"BRAZIL\"}], \"skills\"=>[{\"option\"=>nil, \"level\"=>2, \"id\"=>77, \"name\"=>\"Python\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>85, \"name\"=>\"GIT\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>165, \"name\"=>\"PC User Skills\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>107, \"name\"=>\"UNIX/Linux OS\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>210, \"name\"=>\"Ruby on Rails\"}], \"languages\"=>[{\"option\"=>nil, \"level\"=>2, \"id\"=>18, \"name\"=>\"English\"}, {\"option\"=>nil, \"level\"=>3, \"id\"=>41, \"name\"=>\"Portuguese\"}], \"backgrounds\"=>[{\"id\"=>268, \"name\"=>\"SOFTWARE DEVELOPMENT AND PROGRAMMING\"}, {\"id\"=>245, \"name\"=>\"FINANCE\"}], \"issues\"=>[{\"id\"=>275, \"name\"=>\"Organisational development\"}, {\"id\"=>274, \"name\"=>\"Microfinance\"}, {\"id\"=>273, \"name\"=>\"Entrepreneurship\"}], \"work_fields\"=>[{\"id\"=>742, \"name\"=>\"Training\"}, {\"id\"=>724, \"name\"=>\"Engineering\"}, {\"id\"=>715, \"name\"=>\"Accounting / Auditing\"}], \"preferred_organisations\"=>[{\"id\"=>328, \"name\"=>\"Non Governmental Organisations\"}, {\"id\"=>330, \"name\"=>\"Start Ups\"}, {\"id\"=>331, \"name\"=>\"Small and Medium Enterprises\"}], \"preferred_locations_info\"=>[{\"id\"=>1606, \"name\"=>\"BRAZIL\", \"full_name\"=>\"AIESEC in BRAZIL\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1606\"}, {\"id\"=>1627, \"name\"=>\"Latin America\", \"full_name\"=>\"AIESEC in Latin America\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1627\"}, {\"id\"=>1632, \"name\"=>\"Africa\", \"full_name\"=>\"AIESEC in Africa\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1632\"}], \"selected_programmes_info\"=>[{\"id\"=>1, \"short_name\"=>\"GCDP\"}], \"additional_info\"=>{}}"], ["xp_missing_profile_fields", "[]"], ["xp_nps_score", 6], ["xp_permissions", "{\"can_update\":true,\"can_edit_managers\":false,\"can_interview\":false,\"can_view_applications\":true,\"should_pay_at_apply\":false,\"has_paid_for_apply\":false,\"can_mark_apply_paid\":false,\"can_mark_gep\":false,\"can_apply\":true}"], ["created_at", "2016-04-10 14:53:54.378533"], ["updated_at", "2016-04-10 14:53:54.378533"]]
+  [1m[36m (106.6ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/main
+Completed 302 Found in 36606ms (ActiveRecord: 352.7ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 11:53:54 -0300
+Processing by MainController#index as HTML
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 551696]]
+  Rendered main/index.html.haml within layouts/application (1.7ms)
+  Rendered layouts/_navigation.html.haml (7.2ms)
+  Rendered layouts/_topnavbar.html.haml (4.3ms)
+  Rendered layouts/_footer.html.haml (1.4ms)
+Completed 200 OK in 38ms (Views: 36.0ms | ActiveRecord: 0.4ms)
+Started GET "/assets/patterns/header-profile-c05909898218a521d3bd19ba09a9a43338de6de5fdf1d3fc771b0ec28ae416c5.png" for 127.0.0.1 at 2016-04-10 11:53:54 -0300
+Started GET "/assets/fontawesome-webfont-ff82aeed6b9bb6701696c84d1b223d2e682eb78c89117a438ce6cfea8c498995.woff2?v=4.5.0" for 127.0.0.1 at 2016-04-10 11:53:54 -0300
+Started GET "/lc/host" for 127.0.0.1 at 2016-04-10 11:58:09 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (161.0ms)[0m  [1mCREATE TABLE "archives" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "owner" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (151.7ms)[0m  CREATE TABLE "expa_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_url" varchar, "xp_status" integer, "xp_current_status" integer, "xp_permissions" text, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_opportunity_id" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_person_id" integer, "xp_an_signed_at" datetime, "xp_experience_start_date" datetime, "xp_experience_end_date" datetime, "xp_matched_or_rejected_at" datetime, "xp_date_matched" datetime, "xp_date_realized" datetime, "xp_date_completed" datetime, "xp_date_ldm_completed" datetime, "xp_paid" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (154.8ms)[0m  [1mCREATE TABLE "expa_offices" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_name" varchar, "xp_full_name" varchar, "xp_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (165.8ms)[0m  CREATE TABLE "expa_opportunities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_title" varchar, "xp_url" varchar, "xp_status" integer, "xp_location" varchar, "xp_programmes" text, "xp_office_id" integer, "xp_application_count" integer, "xp_earliest_start_date" date, "xp_latest_end_date" date, "xp_applications_close_date" date, "xp_profile_photo_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (143.2ms)[0m  [1mCREATE TABLE "expa_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_email" varchar, "xp_url" varchar, "xp_birthday_date" date, "xp_full_name" varchar, "xp_last_name" varchar, "xp_profile_photo_url" varchar, "xp_home_lc_id" integer, "xp_home_mc_id" integer, "xp_status" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_phone" varchar, "xp_location" varchar, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_middles_names" varchar, "xp_introduction" varchar, "xp_aiesec_email" varchar, "xp_payment" boolean DEFAULT 'f', "xp_views" integer, "xp_favourites_count" integer, "xp_contacted_at" datetime, "xp_contacted_by" varchar, "xp_gender" integer, "xp_address_info" text, "xp_contact_info" varchar, "xp_current_office_id" integer, "xp_cv_info" varchar, "xp_profile_photos_urls" varchar, "xp_cover_photo_urls" varchar, "xp_profile" varchar, "xp_academic_experience" varchar, "xp_missing_profile_fields" varchar, "xp_nps_score" integer, "xp_permissions" varchar, "entity_exchange_lc_id" integer, "interested_program" integer, "interested_sub_product" integer, "how_got_to_know_aiesec" integer, "customized_fields" text, "control_podio" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (143.4ms)[0m  CREATE TABLE "host_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "full_name" varchar, "phone" integer, "email" varchar, "address" varchar, "cep" integer, "state" varchar, "city" varchar, "house_type" integer, "trainees_vacancy" integer, "weeks_vacancy" integer, "newest_lc" integer, "how_got_to_know_aiesec" integer, "tmp_responsable" integer, "date_approach" datetime, "date_alignment_meeting" datetime, "tmp_who_realized_meeting" integer, "is_favourite" boolean, "is_problematic" boolean, "is_non_grata_person" boolean, "is_non_grata_description" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (99.5ms)[0m  [1mCREATE TABLE "host_problems" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "reported_date" datetime, "problem_description" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (154.9ms)[0m  CREATE TABLE "trainee_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "full_name" varchar, "arrival_date" datetime, "departure_date" datetime, "local_committee" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (99.5ms)[0m  [1mCREATE TABLE "trainee_to_hosts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "entry_date" datetime, "exit_date" datetime, "host_evaluation" integer, "trainee_evaluation" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (110.0ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (110.3ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (121.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160410154037')
+  [1m[36m (112.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160222043320')[0m
+  [1m[35m (111.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160222043342')
+  [1m[36m (111.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160410152929')[0m
+  [1m[35m (178.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20151016071431')
+  [1m[36m (133.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160410153408')[0m
+  [1m[35m (133.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160328210852')
+  [1m[36m (122.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160222043401')[0m
+  [1m[35m (122.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160410153843')
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mExpaPerson Load (0.4ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.2ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.2ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36mExpaPerson Load (0.4ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.2ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36mExpaPerson Load (1.2ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.9ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.2ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.7ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.8ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36mExpaPerson Load (0.8ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.5ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.6ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.8ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.8ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35m (0.2ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "trainee_to_hosts"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "trainee_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_applications"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_offices"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "archives"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_problems"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_people"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:16:06', '2016-04-10 16:16:06', 980190962)
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.9ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.6ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.8ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35m (0.2ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "trainee_to_hosts"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "trainee_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_applications"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_offices"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "archives"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_problems"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:17:35', '2016-04-10 16:17:35', 980190962)
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.5ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (1.0ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.9ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (1.1ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (1.0ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.8ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (168.1ms)[0m  [1mCREATE TABLE "archives" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "owner" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (151.4ms)[0m  CREATE TABLE "expa_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_url" varchar, "xp_status" integer, "xp_current_status" integer, "xp_permissions" text, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_opportunity_id" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_person_id" integer, "xp_an_signed_at" datetime, "xp_experience_start_date" datetime, "xp_experience_end_date" datetime, "xp_matched_or_rejected_at" datetime, "xp_date_matched" datetime, "xp_date_realized" datetime, "xp_date_completed" datetime, "xp_date_ldm_completed" datetime, "xp_paid" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (154.8ms)[0m  [1mCREATE TABLE "expa_offices" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_name" varchar, "xp_full_name" varchar, "xp_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (154.8ms)[0m  CREATE TABLE "expa_opportunities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_title" varchar, "xp_url" varchar, "xp_status" integer, "xp_location" varchar, "xp_programmes" text, "xp_office_id" integer, "xp_application_count" integer, "xp_earliest_start_date" date, "xp_latest_end_date" date, "xp_applications_close_date" date, "xp_profile_photo_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (154.3ms)[0m  [1mCREATE TABLE "expa_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_email" varchar, "xp_url" varchar, "xp_birthday_date" date, "xp_full_name" varchar, "xp_last_name" varchar, "xp_profile_photo_url" varchar, "xp_home_lc_id" integer, "xp_home_mc_id" integer, "xp_status" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_phone" varchar, "xp_location" varchar, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_middles_names" varchar, "xp_introduction" varchar, "xp_aiesec_email" varchar, "xp_payment" boolean DEFAULT 'f', "xp_views" integer, "xp_favourites_count" integer, "xp_contacted_at" datetime, "xp_contacted_by" varchar, "xp_gender" integer, "xp_address_info" text, "xp_contact_info" varchar, "xp_current_office_id" integer, "xp_cv_info" varchar, "xp_profile_photos_urls" varchar, "xp_cover_photo_urls" varchar, "xp_profile" varchar, "xp_academic_experience" varchar, "xp_missing_profile_fields" varchar, "xp_nps_score" integer, "xp_permissions" varchar, "entity_exchange_lc_id" integer, "interested_program" integer, "interested_sub_product" integer, "how_got_to_know_aiesec" integer, "customized_fields" text, "control_podio" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (154.8ms)[0m  CREATE TABLE "host_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "full_name" varchar, "phone" integer(8), "email" varchar, "address" varchar, "cep" integer, "state" varchar, "city" varchar, "house_type" integer, "trainees_vacancy" integer, "weeks_vacancy" integer, "newest_lc" integer, "how_got_to_know_aiesec" integer, "tmp_responsable" integer, "date_approach" datetime, "date_alignment_meeting" datetime, "tmp_who_realized_meeting" integer, "is_favourite" boolean, "is_problematic" boolean, "is_non_grata_person" boolean, "is_non_grata_description" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (154.7ms)[0m  [1mCREATE TABLE "host_problems" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "reported_date" datetime, "problem_description" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (155.0ms)[0m  CREATE TABLE "trainee_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "full_name" varchar, "arrival_date" datetime, "departure_date" datetime, "local_committee" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (155.1ms)[0m  [1mCREATE TABLE "trainee_to_hosts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "entry_date" datetime, "exit_date" datetime, "host_evaluation" integer, "trainee_evaluation" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (158.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (110.4ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (100.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160410161946')
+  [1m[36m (111.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160222043320')[0m
+  [1m[35m (111.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160222043342')
+  [1m[36m (111.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160410152929')[0m
+  [1m[35m (122.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160410154037')
+  [1m[36m (133.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20151016071431')[0m
+  [1m[35m (133.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160410153408')
+  [1m[36m (122.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160328210852')[0m
+  [1m[35m (111.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160222043401')
+  [1m[36m (132.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160410153843')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mExpaPerson Load (0.7ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.5ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.5ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.4ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.6ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.5ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.3ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.3ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.6ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.4ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.3ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.3ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.2ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36mExpaPerson Load (0.8ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36mExpaPerson Load (0.7ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT "expa_people".* FROM "expa_people"[0m
+  [1m[35mExpaApplication Load (0.2ms)[0m  SELECT "expa_applications".* FROM "expa_applications"
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT "expa_offices".* FROM "expa_offices"[0m
+  [1m[35mExpaOpportunity Load (0.1ms)[0m  SELECT "expa_opportunities".* FROM "expa_opportunities"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "trainee_to_hosts"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "trainee_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_applications"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_offices"
+  [1m[36mFixture Insert (0.8ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "archives"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)[0m
+  [1m[35mFixture Delete (0.8ms)[0m  DELETE FROM "host_problems"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_people"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_opportunities"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:24:07', '2016-04-10 16:24:07', 298486374)
+  [1m[36m (164.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (179.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (153.6ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.7ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (115.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (120.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.3ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (123.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (121.2ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (146.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (143.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:27:34', '2016-04-10 16:27:34', 298486374)[0m
+  [1m[35m (137.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:27:34.252676"], ["updated_at", "2016-04-10 16:27:34.252676"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (145.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (121.4ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (127.6ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (121.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.3ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (109.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (110.3ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (109.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (132.5ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:28:34', '2016-04-10 16:28:34', 298486374)[0m
+  [1m[35m (182.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.3ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:28:34.601233"], ["updated_at", "2016-04-10 16:28:34.601233"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.5ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (179.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (142.6ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (130.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (110.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (102.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (121.2ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (103.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (121.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:35:11', '2016-04-10 16:35:11', 298486374)[0m
+  [1m[35m (139.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:35:11.503029"], ["updated_at", "2016-04-10 16:35:11.503029"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (169.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (132.4ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (232.6ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (104.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (123.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (132.1ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.3ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (180.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (154.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:36:47', '2016-04-10 16:36:47', 298486374)[0m
+  [1m[35m (135.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:36:48.113650"], ["updated_at", "2016-04-10 16:36:48.113650"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (154.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (154.4ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (153.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (143.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (120.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (99.2ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (110.5ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (99.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:39:12', '2016-04-10 16:39:12', 298486374)[0m
+  [1m[35m (158.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:39:13.118441"], ["updated_at", "2016-04-10 16:39:13.118441"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (165.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (132.4ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (130.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (154.5ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (128.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (154.4ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (145.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (143.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.8ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.5ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.6ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)
+  [1m[36mFixture Delete (0.7ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.7ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)
+  [1m[36mFixture Insert (0.9ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:41:04', '2016-04-10 16:41:04', 298486374)[0m
+  [1m[35m (183.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 0], ["created_at", "2016-04-10 16:41:05.114452"], ["updated_at", "2016-04-10 16:41:05.114452"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (125.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (109.6ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (98.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (110.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (112.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (110.2ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.3ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (115.5ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (121.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:44:02', '2016-04-10 16:44:02', 298486374)[0m
+  [1m[35m (204.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 91239], ["email", "mail.@mail.com"], ["address", "12 stree, 180"], ["created_at", "2016-04-10 16:44:02.533717"], ["updated_at", "2016-04-10 16:44:02.533717"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (170.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (132.4ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (97.5ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (120.9ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.4ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (133.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (132.3ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (136.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (154.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:45:21', '2016-04-10 16:45:21', 298486374)[0m
+  [1m[35m (153.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------
+HostPersonTest: test_data_validation_integer
+--------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 91239], ["email", "mail.@mail.com"], ["address", "12 stree, 180"], ["created_at", "2016-04-10 16:45:21.503185"], ["updated_at", "2016-04-10 16:45:21.503185"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "trainee_to_hosts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_to_hosts" ("entry_date", "exit_date", "host_evaluation", "trainee_evaluation", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:40:37.000000', '2016-04-10 12:40:37.000000', 1, 1, '2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "trainee_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Mauro Victor Castro', '2016-05-10 12:34:08.000000', '2016-06-10 12:34:08.000000', 434, '2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "trainee_people" ("full_name", "arrival_date", "departure_date", "local_committee", "created_at", "updated_at", "id") VALUES ('Bianca Seemann', '2016-04-10 12:34:08.000000', '2016-05-10 12:34:08.000000', 123, '2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "expa_applications"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_applications" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "expa_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_people" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_offices"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "expa_offices" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "archives"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "archives" ("name", "owner", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "host_problems"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_problems" ("reported_date", "problem_description", "created_at", "updated_at", "id") VALUES ('2016-04-10 12:38:43.000000', 'MyText', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "host_people"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Mauro Victor', 0, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "host_people" ("full_name", "phone", "email", "address", "cep", "state", "city", "house_type", "trainees_vacancy", "weeks_vacancy", "newest_lc", "how_got_to_know_aiesec", "tmp_responsable", "date_approach", "date_alignment_meeting", "tmp_who_realized_meeting", "is_favourite", "is_problematic", "is_non_grata_person", "is_non_grata_description", "created_at", "updated_at", "id") VALUES ('Pessoa2', 9999999999, 'MyString', 'MyString', 1, 'MyString', 'MyString', 1, 1, 1, 1, 1, 1, '2016-04-10 12:29:29.000000', '2016-04-10 12:29:29.000000', 1, 'f', 'f', 'f', 'MyText', '2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "expa_opportunities"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 980190962)
+  [1m[36mFixture Insert (0.8ms)[0m  [1mINSERT INTO "expa_opportunities" ("created_at", "updated_at", "id") VALUES ('2016-04-10 16:48:55', '2016-04-10 16:48:55', 298486374)[0m
+  [1m[35m (153.5ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+-------------------------
+HostPersonTest: test_save
+-------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "host_people" ("full_name", "phone", "email", "address", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["full_name", "Fulano de tal"], ["phone", 91239], ["email", "mail.@mail.com"], ["address", "12 stree, 180"], ["created_at", "2016-04-10 16:48:55.375317"], ["updated_at", "2016-04-10 16:48:55.375317"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------
+HostPersonTest: test_data_validation_datetime
+---------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------
+HostPersonTest: test_delete
+---------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "host_people" ("full_name", "created_at", "updated_at") VALUES (?, ?, ?)  [["full_name", "Fulano de tal"], ["created_at", "2016-04-10 16:48:55.381238"], ["updated_at", "2016-04-10 16:48:55.381238"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "host_people" WHERE "host_people"."id" = ?[0m  [["id", 980190963]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[35mExpaPerson Load (0.4ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_people" WHERE "expa_people"."id" = ?  [["id", 298486374]]
+  [1m[36m (162.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_people" WHERE "expa_people"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (187.7ms)[0m  commit transaction
+  [1m[36mExpaApplication Load (0.3ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (109.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_applications" WHERE "expa_applications"."id" = ?  [["id", 980190962]]
+  [1m[36m (110.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?  [["id", 298486374]]
+  [1m[36m (106.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_offices" WHERE "expa_offices"."id" = ?[0m  [["id", 980190962]]
+  [1m[35m (110.0ms)[0m  commit transaction
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?[0m  [["id", 298486374]]
+  [1m[35m (134.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  DELETE FROM "expa_opportunities" WHERE "expa_opportunities"."id" = ?  [["id", 980190962]]
+  [1m[36m (132.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.2ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_people"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_people"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "expa_applications"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "expa_applications"[0m
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT "expa_people".* FROM "expa_people"
+  [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
+  [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:31 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:34 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:36 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:38 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:41 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:58 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:22 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:25 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:30 -0300
