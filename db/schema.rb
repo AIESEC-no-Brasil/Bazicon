@@ -116,4 +116,57 @@ ActiveRecord::Schema.define(version: 20160328210852) do
     t.datetime "updated_at",                                null: false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "host_people", force: :cascade do |t|
+    t.string   "full_name"
+    t.integer  "phone",                    limit: 8
+    t.string   "email"
+    t.string   "address"
+    t.integer  "cep"
+    t.string   "state"
+    t.string   "city"
+    t.integer  "house_type"
+    t.integer  "trainees_vacancy"
+    t.integer  "weeks_vacancy"
+    t.integer  "newest_lc"
+    t.integer  "how_got_to_know_aiesec"
+    t.integer  "tmp_responsable"
+    t.datetime "date_approach"
+    t.datetime "date_alignment_meeting"
+    t.integer  "tmp_who_realized_meeting"
+    t.boolean  "is_favourite"
+    t.boolean  "is_problematic"
+    t.boolean  "is_non_grata_person"
+    t.text     "is_non_grata_description"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  create_table "host_problems", force: :cascade do |t|
+    t.datetime "reported_date"
+    t.text     "problem_description"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "trainee_people", force: :cascade do |t|
+    t.string   "full_name"
+    t.datetime "arrival_date"
+    t.datetime "departure_date"
+    t.integer  "local_committee"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "trainee_to_hosts", force: :cascade do |t|
+    t.datetime "entry_date"
+    t.datetime "exit_date"
+    t.integer  "host_evaluation"
+    t.integer  "trainee_evaluation"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+>>>>>>> 86f1f1cdf674002178a6ecd64c8c0b77775e4e18
 end

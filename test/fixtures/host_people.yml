@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  full_name: Mauro Victor
+  phone: asgjhasfgjha123414
+  email: MyString
+  address: MyString
+  cep: 1
+  state: MyString
+  city: MyString
+  house_type: 1
+  trainees_vacancy: 1
+  weeks_vacancy: 1
+  newest_lc: 1
+  how_got_to_know_aiesec: 1
+  tmp_responsable: 1
+  date_approach: 2016-04-10 12:29:29
+  date_alignment_meeting: 2016-04-10 12:29:29
+  tmp_who_realized_meeting: 1
+  is_favourite: false
+  is_problematic: false
+  is_non_grata_person: false
+  is_non_grata_description: MyText
+
+two:
+  full_name: Pessoa2
+  phone: 9999999999
+  email: MyString
+  address: MyString
+  cep: 1
+  state: MyString
+  city: MyString
+  house_type: 1
+  trainees_vacancy: 1
+  weeks_vacancy: 1
+  newest_lc: 1
+  how_got_to_know_aiesec: 1
+  tmp_responsable: 1
+  date_approach: 2016-04-10 12:29:29
+  date_alignment_meeting: 2016-04-10 12:29:29
+  tmp_who_realized_meeting: 1
+  is_favourite: false
+  is_problematic: false
+  is_non_grata_person: false
+  is_non_grata_description: MyText

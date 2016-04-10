@@ -1,0 +1,2 @@
+module LcHelper
+end

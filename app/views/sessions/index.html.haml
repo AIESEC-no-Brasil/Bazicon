@@ -7,7 +7,7 @@
         %a{:href => 'mailto:marcus.carvalho@aiesec.net'} MC VP IM 15-16.
     .col-md-6
       .ibox-content
-        %form.m-t{:action => "login", :controller => "sessions", :method => "post"}
+        %form.m-t{:action => login_path, :method => "post"}
           .form-group
             %input.form-control{:name => "email", :placeholder => "Email", :required => true, :type => "email"}
           .form-group
