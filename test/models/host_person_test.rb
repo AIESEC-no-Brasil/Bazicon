@@ -24,9 +24,6 @@ class HostPersonTest < ActiveSupport::TestCase
   	assert person.destroy, "Não deletou o usuário"
   end
 
-  def test_data_validation_datetime
-  end
-
   def teardown 
   end
 end

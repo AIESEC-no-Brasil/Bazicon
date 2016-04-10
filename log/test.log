@@ -1479,3 +1479,12 @@ HostPersonTest: test_delete
   [1m[36mExpaApplication Load (0.2ms)[0m  [1mSELECT "expa_applications".* FROM "expa_applications"[0m
   [1m[35mExpaOffice Load (0.1ms)[0m  SELECT "expa_offices".* FROM "expa_offices"
   [1m[36mExpaOpportunity Load (0.1ms)[0m  [1mSELECT "expa_opportunities".* FROM "expa_opportunities"[0m
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:31 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:34 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:36 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:38 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:41 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:31:58 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:22 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:25 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 15:32:30 -0300
