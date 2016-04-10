@@ -6,8 +6,8 @@ class HostPersonTest < ActiveSupport::TestCase
   # end
 
   def setup
-
   end
+
   def test_save
   	person = HostPerson.new
   	person.full_name = "Fulano de tal"
@@ -24,10 +24,7 @@ class HostPersonTest < ActiveSupport::TestCase
   	assert person.destroy, "Não deletou o usuário"
   end
 
-
-
   def test_data_validation_datetime
-
   end
 
   def teardown 
