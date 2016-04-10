@@ -1,6 +1,5 @@
 class LcController < ApplicationController
-	
-	def host
+	def list_flow
 		
 	end
 end
