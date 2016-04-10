@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410161946) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20160410154410) do
 
   create_table "archives", force: :cascade do |t|
     t.string   "name"
-    t.string   "owner"
+    t.integer  "office_id"
+    t.integer  "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +43,19 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.boolean  "xp_paid",                   default: false
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+  end
+
+  create_table "expa_current_positions", force: :cascade do |t|
+    t.integer  "xp_id"
+    t.string   "xp_position_name"
+    t.string   "xp_position_short_name"
+    t.string   "xp_url"
+    t.datetime "xp_start_date"
+    t.datetime "xp_end_date"
+    t.text     "xp_job_description"
+    t.integer  "xp_team_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "expa_offices", force: :cascade do |t|
@@ -109,64 +120,73 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.string   "xp_missing_profile_fields"
     t.integer  "xp_nps_score"
     t.string   "xp_permissions"
+    t.integer  "xp_current_position_id"
     t.integer  "entity_exchange_lc_id"
     t.integer  "interested_program"
     t.integer  "interested_sub_product"
     t.integer  "how_got_to_know_aiesec"
     t.text     "customized_fields"
     t.text     "control_podio"
+    t.datetime "xp_trainee_arrival_date"
+    t.datetime "xp_trainee_departure_date"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
 
-  create_table "host_people", force: :cascade do |t|
-    t.string   "full_name"
-    t.integer  "phone",                    limit: 8
-    t.string   "email"
-    t.string   "address"
-    t.integer  "cep"
-    t.string   "state"
-    t.string   "city"
-    t.integer  "house_type"
-    t.integer  "trainees_vacancy"
-    t.integer  "weeks_vacancy"
-    t.integer  "newest_lc"
-    t.integer  "how_got_to_know_aiesec"
-    t.integer  "tmp_responsable"
-    t.datetime "date_approach"
-    t.datetime "date_alignment_meeting"
-    t.integer  "tmp_who_realized_meeting"
-    t.boolean  "is_favourite"
-    t.boolean  "is_problematic"
-    t.boolean  "is_non_grata_person"
-    t.text     "is_non_grata_description"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+  create_table "expa_teams", force: :cascade do |t|
+    t.integer  "xp_id"
+    t.string   "xp_title"
+    t.string   "xp_team_type"
+    t.string   "xp_url"
+    t.integer  "xp_office_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "host_problems", force: :cascade do |t|
     t.datetime "reported_date"
     t.text     "problem_description"
+    t.integer  "host_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
 
-  create_table "trainee_people", force: :cascade do |t|
+  create_table "hosts", force: :cascade do |t|
     t.string   "full_name"
-    t.datetime "arrival_date"
-    t.datetime "departure_date"
-    t.integer  "local_committee"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "phone"
+    t.string   "email"
+    t.string   "address"
+    t.integer  "postal_code"
+    t.string   "state"
+    t.string   "city"
+    t.integer  "house_type"
+    t.integer  "trainees_vacancy"
+    t.integer  "weeks_vacancy"
+    t.integer  "nearest_lc_id"
+    t.integer  "how_got_to_know_aiesec"
+    t.integer  "tmp_responsable_id"
+    t.datetime "date_approach"
+    t.datetime "date_alignment_meeting"
+    t.integer  "tmp_who_realized_meeting_id"
+    t.boolean  "is_favourite",                default: false
+    t.boolean  "is_problematic",              default: false
+    t.boolean  "is_non_grata",                default: false
+    t.text     "non_grata_description"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
-  create_table "trainee_to_hosts", force: :cascade do |t|
+  create_table "hosts_people", force: :cascade do |t|
+    t.integer  "host_id"
+    t.integer  "person_id"
     t.datetime "entry_date"
-    t.datetime "exit_date"
-    t.integer  "host_evaluation"
-    t.integer  "trainee_evaluation"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "leave_date"
+    t.integer  "host_nps"
+    t.text     "host_nps_commentary"
+    t.integer  "trainee_nps"
+    t.text     "trainee_nps_commentary"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end

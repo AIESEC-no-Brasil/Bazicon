@@ -52,6 +52,12 @@ class CreateExpaPeople < ActiveRecord::Migration
       t.column :customized_fields, :text #json
       t.column :control_podio, :text #json
 
+
+
+
+      t.column :xp_trainee_arrival_date, :timestamp
+      t.column :xp_trainee_departure_date, :timestamp     
+
       t.timestamps null: false
     end
   end
