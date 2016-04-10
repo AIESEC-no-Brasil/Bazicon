@@ -1,7 +1,7 @@
-require 'test_helper'
+require 'minitest/autorun'
 
-class ExpaTeamTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class ExpaTeamTest < Minitest::Test
+  def teardown
+    Rake::Task['db:reset'].invoke
+  end
 end

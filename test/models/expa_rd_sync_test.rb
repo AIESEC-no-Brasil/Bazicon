@@ -10,18 +10,7 @@ class ExpaRdSyncTest < Minitest::Test
   end
 
   def teardown
-    ExpaPerson.all.each do |person|
-      person.destroy
-    end
-    ExpaApplication.all.each do |application|
-      application.destroy
-    end
-    ExpaOffice.all.each do |office|
-      office.destroy
-    end
-    ExpaOpportunity.all.each do |opportunity|
-      opportunity.destroy
-    end
+    Rake::Task['db:reset'].invoke
   end
 
   def test_insert_new_register_at_db

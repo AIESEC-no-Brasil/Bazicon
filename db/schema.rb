@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410161946) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "archives", force: :cascade do |t|
-    t.string   "name"
-    t.string   "owner"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20160410165715) do
 
   create_table "expa_applications", force: :cascade do |t|
     t.integer  "xp_id"
@@ -45,6 +35,19 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.boolean  "xp_paid",                   default: false
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+  end
+
+  create_table "expa_current_positions", force: :cascade do |t|
+    t.integer  "xp_id"
+    t.string   "xp_position_name"
+    t.string   "xp_position_short_name"
+    t.string   "xp_url"
+    t.datetime "xp_start_date"
+    t.datetime "xp_end_date"
+    t.text     "xp_job_description"
+    t.integer  "xp_team_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "expa_offices", force: :cascade do |t|
@@ -109,6 +112,7 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.string   "xp_missing_profile_fields"
     t.integer  "xp_nps_score"
     t.string   "xp_permissions"
+    t.integer  "xp_current_position_id"
     t.integer  "entity_exchange_lc_id"
     t.integer  "interested_program"
     t.integer  "interested_sub_product"
@@ -118,6 +122,26 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
+
+  create_table "expa_teams", force: :cascade do |t|
+    t.integer  "xp_id"
+    t.string   "xp_title"
+    t.integer  "xp_team_type"
+    t.string   "xp_url"
+    t.integer  "xp_office_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "file_tags", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "archive_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+# Could not dump table "files" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "host_people", force: :cascade do |t|
     t.string   "full_name"
@@ -149,6 +173,12 @@ ActiveRecord::Schema.define(version: 20160410161946) do
     t.text     "problem_description"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "trainee_people", force: :cascade do |t|

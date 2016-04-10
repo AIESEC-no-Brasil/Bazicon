@@ -15,8 +15,8 @@
           %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
 
 
-      %li{"class" => "#{is_active_controller('dashboard')}"}
-        = link_to lc_dash_path do
+      %li{"class" => "#{is_active_controller('main')}"}
+        = link_to main_path do
           %i.fa.fa-dashboard
           %span.nav-label{"data-i18n" => "nav.metrics"}
             Dashboard
@@ -39,7 +39,7 @@
         = link_to files_show_path do
           %i.fa.fa-files-o
           %span.nav-label{"data-i18n" => "nav.metrics"}
-            Arquivos
+            Gavetão
       %li.landing_link
         = link_to "http://www.aiesec.org.br" do
           %i.fa.fa-star

@@ -1,6 +1,7 @@
 class CreateHostPeople < ActiveRecord::Migration
   def change
     create_table :host_people do |t|
+
       t.string :full_name
       t.integer :phone
       t.string :email
