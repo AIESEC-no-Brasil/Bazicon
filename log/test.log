@@ -1,0 +1,241 @@
+Started GET "/hello" for 127.0.0.1 at 2016-04-10 11:26:37 -0300
+Started HEAD "/hello" for 127.0.0.1 at 2016-04-10 11:26:38 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 11:26:44 -0300
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.haml within layouts/empty (3.3ms)
+Completed 200 OK in 26193ms (Views: 26174.5ms | ActiveRecord: 0.0ms)
+Started GET "/assets/application-12d9b3047fb6ade6f962d987e2a49c9b7aafc6039b9e9321abd0354fbe48dfa7.css" for 127.0.0.1 at 2016-04-10 11:27:11 -0300
+Started GET "/assets/application-12f32c12540408753c3a0aac56f044e9681acea1591c2726c3b789857f0c3ccc.js" for 127.0.0.1 at 2016-04-10 11:27:11 -0300
+Started HEAD "/" for 127.0.0.1 at 2016-04-10 11:27:11 -0300
+Processing by SessionsController#index as */*
+  Rendered sessions/index.html.haml within layouts/empty (3.6ms)
+Completed 200 OK in 14ms (Views: 13.2ms | ActiveRecord: 0.0ms)
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:31:34 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"luan.corumba@aiesec.net", "password"=>"[FILTERED]"}
+Completed 500 Internal Server Error in 4649ms (ActiveRecord: 1.6ms)
+Started HEAD "/login" for 127.0.0.1 at 2016-04-10 11:31:38 -0300
+  [1m[36m (163.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (99.7ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateArchives (20151016071431)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "archives" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "owner" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151016071431"]]
+  [1m[35m (106.4ms)[0m  commit transaction
+Migrating to CreateExpaPeople (20160222043320)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "expa_people" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_email" varchar, "xp_url" varchar, "xp_birthday_date" date, "xp_full_name" varchar, "xp_last_name" varchar, "xp_profile_photo_url" varchar, "xp_home_lc_id" integer, "xp_home_mc_id" integer, "xp_status" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_phone" varchar, "xp_location" varchar, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_middles_names" varchar, "xp_introduction" varchar, "xp_aiesec_email" varchar, "xp_payment" boolean DEFAULT 'f', "xp_views" integer, "xp_favourites_count" integer, "xp_contacted_at" datetime, "xp_contacted_by" varchar, "xp_gender" integer, "xp_address_info" text, "xp_contact_info" varchar, "xp_current_office_id" integer, "xp_cv_info" varchar, "xp_profile_photos_urls" varchar, "xp_cover_photo_urls" varchar, "xp_profile" varchar, "xp_academic_experience" varchar, "xp_missing_profile_fields" varchar, "xp_nps_score" integer, "xp_permissions" varchar, "entity_exchange_lc_id" integer, "interested_program" integer, "interested_sub_product" integer, "how_got_to_know_aiesec" integer, "customized_fields" text, "control_podio" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043320"]]
+  [1m[35m (107.6ms)[0m  commit transaction
+Migrating to CreateExpaApplications (20160222043342)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "expa_applications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_url" varchar, "xp_status" integer, "xp_current_status" integer, "xp_permissions" text, "xp_created_at" datetime, "xp_updated_at" datetime, "xp_opportunity_id" integer, "xp_interviewed" boolean DEFAULT 'f', "xp_person_id" integer, "xp_an_signed_at" datetime, "xp_experience_start_date" datetime, "xp_experience_end_date" datetime, "xp_matched_or_rejected_at" datetime, "xp_date_matched" datetime, "xp_date_realized" datetime, "xp_date_completed" datetime, "xp_date_ldm_completed" datetime, "xp_paid" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043342"]]
+  [1m[35m (108.9ms)[0m  commit transaction
+Migrating to CreateExpaOffices (20160222043401)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "expa_offices" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_name" varchar, "xp_full_name" varchar, "xp_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160222043401"]]
+  [1m[35m (96.7ms)[0m  commit transaction
+Migrating to CreateExpaOpportunities (20160328210852)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "expa_opportunities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "xp_id" integer, "xp_title" varchar, "xp_url" varchar, "xp_status" integer, "xp_location" varchar, "xp_programmes" text, "xp_office_id" integer, "xp_application_count" integer, "xp_earliest_start_date" date, "xp_latest_end_date" date, "xp_applications_close_date" date, "xp_profile_photo_url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160328210852"]]
+  [1m[35m (97.7ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:39:02 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"luan.corumba@aiesec.net", "password"=>"[FILTERED]"}
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_email" = ? LIMIT 1[0m  [["xp_email", "luan.corumba@aiesec.net"]]
+  [1m[35mExpaOffice Load (0.2ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 100]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mExpaOffice Exists (0.2ms)[0m  SELECT  1 AS one FROM "expa_offices" WHERE "expa_offices"."xp_id" = 100 LIMIT 1
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "expa_offices" ("xp_full_name", "xp_name", "xp_id", "xp_url", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["xp_full_name", "AIESEC in ARACAJU"], ["xp_name", "ARACAJU"], ["xp_id", 100], ["xp_url", "https://gis.aiesec.org/v1/offices/100"], ["created_at", "2016-04-10 14:39:21.461116"], ["updated_at", "2016-04-10 14:39:21.461116"]]
+  [1m[35m (84.8ms)[0m  commit transaction
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1[0m  [["xp_id", 1606]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mExpaOffice Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "expa_offices" WHERE "expa_offices"."xp_id" = 1606 LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "expa_offices" ("xp_full_name", "xp_name", "xp_id", "xp_url", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["xp_full_name", "AIESEC in BRAZIL"], ["xp_name", "BRAZIL"], ["xp_id", 1606], ["xp_url", "https://gis.aiesec.org/v1/offices/1606"], ["created_at", "2016-04-10 14:39:21.550503"], ["updated_at", "2016-04-10 14:39:21.550503"]]
+  [1m[36m (73.4ms)[0m  [1mcommit transaction[0m
+Completed 500 Internal Server Error in 20208ms (ActiveRecord: 161.2ms)
+Started HEAD "/login" for 127.0.0.1 at 2016-04-10 11:39:22 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 11:39:29 -0300
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.haml within layouts/empty (3.3ms)
+Completed 200 OK in 1066ms (Views: 1065.7ms | ActiveRecord: 0.0ms)
+Started HEAD "/" for 127.0.0.1 at 2016-04-10 11:39:30 -0300
+Processing by SessionsController#index as */*
+  Rendered sessions/index.html.haml within layouts/empty (2.6ms)
+Completed 200 OK in 14ms (Views: 13.5ms | ActiveRecord: 0.0ms)
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:39:44 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"luan.corumba@aiesec.net", "password"=>"[FILTERED]"}
+  [1m[35mExpaPerson Load (0.1ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_email" = ? LIMIT 1  [["xp_email", "luan.corumba@aiesec.net"]]
+Completed 500 Internal Server Error in 5084ms (ActiveRecord: 0.1ms)
+Started HEAD "/login" for 127.0.0.1 at 2016-04-10 11:39:49 -0300
+Started GET "/" for 127.0.0.1 at 2016-04-10 11:42:49 -0300
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.haml within layouts/empty (9.1ms)
+Completed 200 OK in 1260ms (Views: 1249.8ms | ActiveRecord: 0.0ms)
+Started HEAD "/" for 127.0.0.1 at 2016-04-10 11:42:51 -0300
+Processing by SessionsController#index as */*
+  Rendered sessions/index.html.haml within layouts/empty (17.1ms)
+Completed 200 OK in 34ms (Views: 33.8ms | ActiveRecord: 0.0ms)
+Started POST "/login" for 127.0.0.1 at 2016-04-10 11:43:01 -0300
+Processing by SessionsController#login as HTML
+  Parameters: {"email"=>"luan.corumba@aiesec.net", "password"=>"[FILTERED]"}
+  [1m[36mExpaPerson Load (0.6ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_email" = ? LIMIT 1[0m  [["xp_email", "luan.corumba@aiesec.net"]]
+  [1m[35mExpaOffice Load (0.1ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 100]]
+  [1m[36mExpaOffice Load (0.1ms)[0m  [1mSELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1[0m  [["xp_id", 1606]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 100]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1[0m  [["xp_id", 1606]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "expa_offices".* FROM "expa_offices" WHERE "expa_offices"."xp_id" = ? LIMIT 1  [["xp_id", 1606]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mExpaPerson Exists (0.6ms)[0m  SELECT  1 AS one FROM "expa_people" WHERE "expa_people"."xp_id" = 6702 LIMIT 1
+  [1m[36mExpaPerson Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "expa_people" WHERE "expa_people"."xp_email" = 'luan.corumba@aiesec.net' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "expa_people" ("xp_id", "xp_email", "xp_url", "xp_birthday_date", "xp_full_name", "xp_last_name", "xp_profile_photo_url", "xp_home_lc_id", "xp_home_mc_id", "xp_status", "xp_interviewed", "xp_created_at", "xp_updated_at", "xp_views", "xp_favourites_count", "xp_contacted_at", "xp_gender", "xp_address_info", "xp_contact_info", "xp_current_office_id", "xp_cover_photo_urls", "xp_profile", "xp_missing_profile_fields", "xp_nps_score", "xp_permissions", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["xp_id", 6702], ["xp_email", "luan.corumba@aiesec.net"], ["xp_url", "https://gis.aiesec.org/v1/people/6702"], ["xp_birthday_date", "1990-09-29"], ["xp_full_name", "Luan Vasconcelos Corumba"], ["xp_last_name", "Corumba"], ["xp_profile_photo_url", "https://gis-production.s3.amazonaws.com/profile_photos/medium/1430863359.jpg"], ["xp_home_lc_id", 1], ["xp_home_mc_id", 2], ["xp_status", 1], ["xp_interviewed", "t"], ["xp_created_at", "2014-08-25 23:56:29.000000"], ["xp_updated_at", "2016-04-06 16:35:53.000000"], ["xp_views", 80], ["xp_favourites_count", 3], ["xp_contacted_at", "2016-01-11 02:25:04.000000"], ["xp_gender", 0], ["xp_address_info", "{\"address_1\"=>\"Rua Paulo Silva, 135\", \"address_2\"=>\"Apt 502 Bl 01\", \"postcode\"=>\"49032500\", \"city\"=>\"Aracaju\", \"country\"=>\"Brazil\"}"], ["xp_contact_info", "{\"website\"=>\"http://luan.corumba.net\", \"email\"=>\"luan@corumba.net\", \"phone\"=>\"+557991399554\", \"facebook\"=>\"luancorumba\", \"twitter\"=>nil, \"instagram\"=>nil, \"linkedin\"=>nil}"], ["xp_current_office_id", 2], ["xp_cover_photo_urls", "https://gis-production.s3.amazonaws.com/profile_photos/original/1409019651.jpg"], ["xp_profile", "{\"earliest_start_date\"=>\"2015-05-01T00:00:00.000Z\", \"latest_end_date\"=>\"2016-03-31T00:00:00.000Z\", \"duration_min\"=>6, \"duration_max\"=>60, \"interested_in\"=>\"both\", \"visible_profile\"=>true, \"nationalities\"=>[{\"id\"=>367, \"name\"=>\"BRAZIL\"}], \"skills\"=>[{\"option\"=>nil, \"level\"=>1, \"id\"=>79, \"name\"=>\"CSS\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>87, \"name\"=>\"HTML 5\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>143, \"name\"=>\"MySQL\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>142, \"name\"=>\"PostgreSQL\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>109, \"name\"=>\"Windows Operating Systems\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>112, \"name\"=>\"Android\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>107, \"name\"=>\"UNIX/Linux OS\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>134, \"name\"=>\"Eclipse\"}, {\"option\"=>nil, \"level\"=>0, \"id\"=>219, \"name\"=>\"Django\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>145, \"name\"=>\"MongoDB\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>158, \"name\"=>\"Leadership skills\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>128, \"name\"=>\"Database Design and Development Tools\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>84, \"name\"=>\"Ruby\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>77, \"name\"=>\"Python\"}, {\"option\"=>nil, \"level\"=>1, \"id\"=>211, \"name\"=>\"Java EE\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>69, \"name\"=>\"Javascript\"}, {\"option\"=>nil, \"level\"=>2, \"id\"=>66, \"name\"=>\"Java\"}], \"languages\"=>[{\"option\"=>nil, \"level\"=>2, \"id\"=>18, \"name\"=>\"English\"}, {\"option\"=>nil, \"level\"=>0, \"id\"=>48, \"name\"=>\"Spanish\"}], \"backgrounds\"=>[{\"id\"=>268, \"name\"=>\"SOFTWARE DEVELOPMENT AND PROGRAMMING\"}, {\"id\"=>247, \"name\"=>\"GRAPHIC DESIGN\"}, {\"id\"=>239, \"name\"=>\"COMPUTER SCIENCES\"}], \"issues\"=>[{\"id\"=>279, \"name\"=>\"Leadership\"}, {\"id\"=>275, \"name\"=>\"Organisational development\"}, {\"id\"=>273, \"name\"=>\"Entrepreneurship\"}], \"work_fields\"=>[{\"id\"=>727, \"name\"=>\"Information Technology\"}, {\"id\"=>722, \"name\"=>\"Design\"}, {\"id\"=>719, \"name\"=>\"Business Development\"}], \"preferred_organisations\"=>[{\"id\"=>328, \"name\"=>\"Non Governmental Organisations\"}, {\"id\"=>329, \"name\"=>\"Community Development Projects\"}, {\"id\"=>330, \"name\"=>\"Start Ups\"}, {\"id\"=>331, \"name\"=>\"Small and Medium Enterprises\"}, {\"id\"=>332, \"name\"=>\"Multinational Corporations\"}], \"preferred_locations_info\"=>[{\"id\"=>1535, \"name\"=>\"Argentina\", \"full_name\"=>\"AIESEC in Argentina\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1535\"}, {\"id\"=>1551, \"name\"=>\"COLOMBIA\", \"full_name\"=>\"AIESEC in COLOMBIA\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1551\"}, {\"id\"=>1553, \"name\"=>\"Peru\", \"full_name\"=>\"AIESEC in Peru\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1553\"}, {\"id\"=>1564, \"name\"=>\"POLAND\", \"full_name\"=>\"AIESEC in POLAND\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1564\"}, {\"id\"=>1566, \"name\"=>\"CHILE\", \"full_name\"=>\"AIESEC in CHILE\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1566\"}, {\"id\"=>1585, \"name\"=>\"INDIA\", \"full_name\"=>\"AIESEC in INDIA\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1585\"}, {\"id\"=>1596, \"name\"=>\"GERMANY\", \"full_name\"=>\"AIESEC in GERMANY\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1596\"}, {\"id\"=>1624, \"name\"=>\"BELGIUM\", \"full_name\"=>\"AIESEC in BELGIUM\", \"url\"=>\"https://gis.aiesec.org/v1/offices/1624\"}], \"selected_programmes_info\"=>[{\"id\"=>1, \"short_name\"=>\"GCDP\"}], \"additional_info\"=>{\"specific_programme\"=>\"global_volunteer\"}}"], ["xp_missing_profile_fields", "[]"], ["xp_nps_score", 10], ["xp_permissions", "{\"can_update\":true,\"can_edit_managers\":true,\"can_interview\":true,\"can_view_applications\":true,\"should_pay_at_apply\":false,\"has_paid_for_apply\":false,\"can_mark_apply_paid\":true,\"can_mark_gep\":false,\"can_apply\":true}"], ["created_at", "2016-04-10 14:43:12.803971"], ["updated_at", "2016-04-10 14:43:12.803971"]]
+  [1m[36m (123.8ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/main
+Completed 302 Found in 10934ms (ActiveRecord: 128.1ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 11:43:12 -0300
+Processing by MainController#index as HTML
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.6ms)
+  Rendered layouts/_navigation.html.haml (7.8ms)
+  Rendered layouts/_topnavbar.html.haml (5.7ms)
+  Rendered layouts/_footer.html.haml (1.3ms)
+Completed 200 OK in 35ms (Views: 33.3ms | ActiveRecord: 0.2ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 11:43:13 -0300
+Processing by MainController#index as */*
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.9ms)
+  Rendered layouts/_navigation.html.haml (6.6ms)
+  Rendered layouts/_topnavbar.html.haml (9.0ms)
+  Rendered layouts/_footer.html.haml (1.7ms)
+Completed 200 OK in 56ms (Views: 54.8ms | ActiveRecord: 0.2ms)
+Started GET "/assets/patterns/header-profile-c05909898218a521d3bd19ba09a9a43338de6de5fdf1d3fc771b0ec28ae416c5.png" for 127.0.0.1 at 2016-04-10 11:43:13 -0300
+Started GET "/assets/fontawesome-webfont-ff82aeed6b9bb6701696c84d1b223d2e682eb78c89117a438ce6cfea8c498995.woff2?v=4.5.0" for 127.0.0.1 at 2016-04-10 11:43:13 -0300
+Started GET "/files/index" for 127.0.0.1 at 2016-04-10 11:43:50 -0300
+Started HEAD "/files/index" for 127.0.0.1 at 2016-04-10 11:43:50 -0300
+Started GET "/lc/tm" for 127.0.0.1 at 2016-04-10 11:44:17 -0300
+Started HEAD "/lc/tm" for 127.0.0.1 at 2016-04-10 11:44:17 -0300
+Started GET "/lc/host" for 127.0.0.1 at 2016-04-10 11:44:34 -0300
+Started HEAD "/lc/host" for 127.0.0.1 at 2016-04-10 11:44:34 -0300
+Started GET "/lc/dash" for 127.0.0.1 at 2016-04-10 11:44:39 -0300
+Started HEAD "/lc/dash" for 127.0.0.1 at 2016-04-10 11:44:39 -0300
+Started GET "/files/index" for 127.0.0.1 at 2016-04-10 11:44:42 -0300
+Started HEAD "/files/index" for 127.0.0.1 at 2016-04-10 11:44:42 -0300
+Started GET "/lc/ogx" for 127.0.0.1 at 2016-04-10 11:44:46 -0300
+Started HEAD "/lc/ogx" for 127.0.0.1 at 2016-04-10 11:44:46 -0300
+Started GET "/main" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Processing by MainController#index as HTML
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.2ms)
+  Rendered layouts/_navigation.html.haml (1.0ms)
+  Rendered layouts/_topnavbar.html.haml (0.2ms)
+  Rendered layouts/_footer.html.haml (0.1ms)
+Completed 200 OK in 10ms (Views: 8.4ms | ActiveRecord: 0.3ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Processing by MainController#index as */*
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.1ms)
+  Rendered layouts/_navigation.html.haml (2.1ms)
+  Rendered layouts/_topnavbar.html.haml (0.4ms)
+  Rendered layouts/_footer.html.haml (0.1ms)
+Completed 200 OK in 33ms (Views: 31.6ms | ActiveRecord: 0.2ms)
+Started GET "/assets/application-12f32c12540408753c3a0aac56f044e9681acea1591c2726c3b789857f0c3ccc.js" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Started GET "/assets/application-12d9b3047fb6ade6f962d987e2a49c9b7aafc6039b9e9321abd0354fbe48dfa7.css" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Started GET "/assets/patterns/header-profile-c05909898218a521d3bd19ba09a9a43338de6de5fdf1d3fc771b0ec28ae416c5.png" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Started GET "/assets/fontawesome-webfont-ff82aeed6b9bb6701696c84d1b223d2e682eb78c89117a438ce6cfea8c498995.woff2?v=4.5.0" for 127.0.0.1 at 2016-04-10 11:54:03 -0300
+Started GET "/main" for 127.0.0.1 at 2016-04-10 12:08:57 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (3.5ms)
+  Rendered layouts/_navigation.html.haml (3.9ms)
+Completed 500 Internal Server Error in 1438ms (ActiveRecord: 3.1ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 12:08:58 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.1ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (1.4ms)
+  Rendered layouts/_navigation.html.haml (9.0ms)
+Completed 500 Internal Server Error in 23ms (ActiveRecord: 0.1ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 12:10:04 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (0.4ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (2.4ms)
+  Rendered layouts/_navigation.html.haml (30.1ms)
+Completed 500 Internal Server Error in 1273ms (ActiveRecord: 2.4ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 12:10:06 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.9ms)
+  Rendered layouts/_navigation.html.haml (31.8ms)
+Completed 500 Internal Server Error in 55ms (ActiveRecord: 0.2ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 12:12:12 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (1.2ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (3.2ms)
+  Rendered layouts/_navigation.html.haml (6.4ms)
+  Rendered layouts/_topnavbar.html.haml (3.5ms)
+  Rendered layouts/_footer.html.haml (1.0ms)
+Completed 200 OK in 1192ms (Views: 1100.6ms | ActiveRecord: 2.8ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 12:12:13 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (2.9ms)
+  Rendered layouts/_navigation.html.haml (6.5ms)
+  Rendered layouts/_topnavbar.html.haml (1.8ms)
+  Rendered layouts/_footer.html.haml (3.5ms)
+Completed 200 OK in 50ms (Views: 47.1ms | ActiveRecord: 0.2ms)
+Started GET "/assets/application-12d9b3047fb6ade6f962d987e2a49c9b7aafc6039b9e9321abd0354fbe48dfa7.css" for 127.0.0.1 at 2016-04-10 12:12:14 -0300
+Started GET "/assets/application-12f32c12540408753c3a0aac56f044e9681acea1591c2726c3b789857f0c3ccc.js" for 127.0.0.1 at 2016-04-10 12:12:14 -0300
+Started GET "/assets/patterns/header-profile-c05909898218a521d3bd19ba09a9a43338de6de5fdf1d3fc771b0ec28ae416c5.png" for 127.0.0.1 at 2016-04-10 12:12:16 -0300
+Started GET "/assets/fontawesome-webfont-ff82aeed6b9bb6701696c84d1b223d2e682eb78c89117a438ce6cfea8c498995.woff2?v=4.5.0" for 127.0.0.1 at 2016-04-10 12:12:16 -0300
+Started GET "/main" for 127.0.0.1 at 2016-04-10 12:13:54 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (0.4ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (3.7ms)
+  Rendered layouts/_navigation.html.haml (6.5ms)
+  Rendered layouts/_topnavbar.html.haml (2.0ms)
+Completed 500 Internal Server Error in 1296ms (ActiveRecord: 1.9ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 12:13:55 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.2ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (1.3ms)
+  Rendered layouts/_navigation.html.haml (32.3ms)
+  Rendered layouts/_topnavbar.html.haml (2.5ms)
+Completed 500 Internal Server Error in 62ms (ActiveRecord: 0.2ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 12:24:05 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (0.3ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (2.2ms)
+  Rendered layouts/_navigation.html.haml (8.4ms)
+  Rendered layouts/_topnavbar.html.haml (3.0ms)
+  Rendered layouts/_footer.html.haml (1.1ms)
+Completed 200 OK in 1086ms (Views: 1006.4ms | ActiveRecord: 2.0ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 12:24:06 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.1ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.8ms)
+  Rendered layouts/_navigation.html.haml (9.2ms)
+  Rendered layouts/_topnavbar.html.haml (5.2ms)
+  Rendered layouts/_footer.html.haml (1.2ms)
+Completed 200 OK in 37ms (Views: 35.9ms | ActiveRecord: 0.1ms)
+Started GET "/main" for 127.0.0.1 at 2016-04-10 15:13:35 -0300
+Processing by MainController#index as HTML
+  [1m[36mExpaPerson Load (0.2ms)[0m  [1mSELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1[0m  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.1ms)
+  Rendered layouts/_navigation.html.haml (2.1ms)
+  Rendered layouts/_topnavbar.html.haml (0.3ms)
+  Rendered layouts/_footer.html.haml (0.1ms)
+Completed 200 OK in 15ms (Views: 12.5ms | ActiveRecord: 0.2ms)
+Started HEAD "/main" for 127.0.0.1 at 2016-04-10 15:13:35 -0300
+Processing by MainController#index as */*
+  [1m[35mExpaPerson Load (0.3ms)[0m  SELECT  "expa_people".* FROM "expa_people" WHERE "expa_people"."xp_id" = ? LIMIT 1  [["xp_id", 6702]]
+  Rendered main/index.html.haml within layouts/application (0.1ms)
+  Rendered layouts/_navigation.html.haml (5.5ms)
+  Rendered layouts/_topnavbar.html.haml (0.3ms)
+  Rendered layouts/_footer.html.haml (0.1ms)
+Completed 200 OK in 20ms (Views: 18.8ms | ActiveRecord: 0.3ms)
