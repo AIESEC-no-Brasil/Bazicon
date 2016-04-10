@@ -1,0 +1,47 @@
+%nav.navbar-default.navbar-static-side{"role" => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav.metismenu
+      %li.nav-header
+        .dropdown.profile-element
+          %span
+            %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
+          %span.clear
+            %span.block.m-t-xs
+              %strong.font-bold
+                = @user.xp_full_name.split(' ')[0]
+            %span.text-muted.text-xs.block
+              = @user.xp_email.split('@')[0]
+        .logo-element
+          %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
+
+
+      %li{"class" => "#{is_active_controller('dashboard')}"}
+        = link_to lc_dash_path do
+          %i.fa.fa-dashboard
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            Dashboard
+      %li{"class" => "#{is_active_controller('ogx')}"}
+        = link_to lc_ogx_path do
+          %i.fa.fa-paper-plane
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            OGX
+      %li{"class" => "#{is_active_controller('tm')}"}
+        = link_to lc_tm_path do
+          %i.fa.fa-users
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            Membresia
+      %li{"class" => "#{is_active_controller('host')}"}
+        = link_to lc_host_path do
+          %i.fa.fa-leaf
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            Host
+      %li{"class" => "#{is_active_controller('files')}"}
+        = link_to files_index_path do
+          %i.fa.fa-files-o
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            Arquivos
+      %li.landing_link
+        = link_to "http://www.aiesec.org.br" do
+          %i.fa.fa-star
+          %span.nav-label{"data-i18n" => "nav.metrics"}
+            Site AIESEC in Brasil
