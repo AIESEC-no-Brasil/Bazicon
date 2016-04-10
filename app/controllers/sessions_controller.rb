@@ -1,8 +1,10 @@
+##
+# Control everything about Session: Login, Logout etc. It also control the initial page
 class SessionsController < ApplicationController
   # GET /
   def index
     unless session[:expa_id].blank?
-      redirect_to "/main"
+      redirect_to main_path
       return
     end
     render layout: "empty"
@@ -29,7 +31,7 @@ class SessionsController < ApplicationController
       user.save
       reset_session
       session[:expa_id] = user.xp_id
-      redirect_to "/main"
+      redirect_to main_path
     end
   end
 

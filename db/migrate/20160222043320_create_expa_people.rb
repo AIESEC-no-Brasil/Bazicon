@@ -42,6 +42,7 @@ class CreateExpaPeople < ActiveRecord::Migration
       t.column :xp_nps_score, :integer #done
       #t.column :xp_current_experience, :string #TODO: struct
       t.column :xp_permissions, :string #json #done
+      t.column :xp_current_position_id, :integer #foreigner_key (current_position)
 
       t.column :entity_exchange_lc_id, :integer #done #foreigner_key (office)
       t.column :interested_program, :integer #enum

@@ -4,7 +4,7 @@ class ExpaPerson < ActiveRecord::Base
   enum interested_program: [:global_volunteer, :global_talents]
   enum interested_sub_product: [:global_volunteer_arab, :global_volunteer_east_europe, :global_volunteer_africa, :global_volunteer_asia, :global_volunteer_latam, :global_talents_start_up, :global_talents_educacional, :global_talents_IT, :global_talents_management]
   enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :other]
-
+  enum role: [:mc, :eb, :other ]
   belongs_to :xp_home_lc, class_name: 'ExpaOffice'
   belongs_to :xp_home_mc, class_name: 'ExpaOffice'
   belongs_to :xp_current_office, class_name: 'ExpaOffice'
@@ -86,6 +86,16 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_nps_score = data.nps_score.to_i unless data.nps_score.nil?
     #self.xp_current_experience = data.current_experience #TODO: struct
     self.xp_permissions = data.permissions unless data.permissions.nil?
+  end
+
+  def get_role
+    if self.xp_current_office == self.xp_home_mc
+      self.role[:mc]
+    elsif
+      self.role[:eb]
+    else
+      self.role[:other]
+    end
   end
 
   #TODO Unit Test
