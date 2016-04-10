@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: a527835bd47ccecd1e52cd0737890d8991a30877
+  revision: aa002854d0f30f29d992953b3c4681692f5cb346
   specs:
     expa (0.1.0.3)
 
@@ -186,7 +186,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    spring (1.6.4)
+    spring (1.7.0)
     sprockets (3.6.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)

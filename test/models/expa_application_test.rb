@@ -8,6 +8,7 @@ class ExpaApplicationTest < Minitest::Test
     end
     teardown
   end
+  
 
   def teardown
     ExpaPerson.all.each do |person|
