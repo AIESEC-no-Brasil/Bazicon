@@ -1,4 +1,4 @@
-class FilesController < ApplicationController
+class ArchivesController < ApplicationController
 
 
   # GET /main/files

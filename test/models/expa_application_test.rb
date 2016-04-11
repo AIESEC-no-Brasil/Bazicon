@@ -10,6 +10,6 @@ class ExpaApplicationTest < Minitest::Test
   end
 
   def teardown
-    Rake::Task['db:reset'].invoke
+    ActiveRecord::Base.subclasses.each(&:delete_all)
   end
 end

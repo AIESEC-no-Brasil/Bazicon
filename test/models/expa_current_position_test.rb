@@ -2,6 +2,6 @@ require 'minitest/autorun'
 
 class ExpaCurrentPositionTest < Minitest::Test
   def teardown
-    Rake::Task['db:reset'].invoke
+    ActiveRecord::Base.subclasses.each(&:delete_all)
   end
 end

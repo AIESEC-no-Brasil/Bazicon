@@ -10,7 +10,7 @@ class ExpaRdSyncTest < Minitest::Test
   end
 
   def teardown
-    Rake::Task['db:reset'].invoke
+    ActiveRecord::Base.subclasses.each(&:delete_all)
   end
 
   def test_insert_new_register_at_db
@@ -74,7 +74,7 @@ class ExpaRdSyncTest < Minitest::Test
     assert(ExpaApplication.all.count == 1, 'DB should have only 1 register, but it has ' + ExpaApplication.all.count.to_s)
 
     same_xp_application = xp_application.clone
-    same_xp_application.url = xp_application.url + ' test'
+    same_xp_application.url = URI(xp_application.url.to_s + ' test')
 
     xp_sync.update_db_applications(xp_application)
     assert(ExpaApplication.all.count == 1, 'DB should have only 1 register, but it has ' + ExpaApplication.all.count.to_s)

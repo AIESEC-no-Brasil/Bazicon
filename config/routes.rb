@@ -9,7 +9,7 @@ Myapp::Application.routes.draw do
   post "/login" => "sessions#login", as: "login"
 
   get "/main" => "main#index", as: "main"
-  get "/main/files" => "files#show", as: "files_show"
+  get "/main/archives" => "archives#show", as: "archives_show"
 
 
 

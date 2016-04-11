@@ -11,6 +11,10 @@ class ExpaPerson < ActiveRecord::Base
   belongs_to :xp_current_office, class_name: 'ExpaOffice'
   belongs_to :entity_exchange_lc, class_name: 'ExpaOffice'
 
+  has_many :uploaded_files, class_name: 'Archive', foreign_key: 'person'
+  has_many :responsibled_hosts, class_name: 'Host', foreign_key: 'tmp_responsible'
+  has_many :meeted_hosts, class_name: 'Host', foreign_key: 'tmp_who_realized_meeting'
+
   validates :xp_id,
             uniqueness: true,
             presence: false

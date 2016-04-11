@@ -1,6 +1,6 @@
-class CreateFiles < ActiveRecord::Migration
+class CreateArchives < ActiveRecord::Migration
   def change
-    create_table :files do |t|
+    create_table :archives do |t|
 
       t.column :name, :string
       t.column :office_id, :integer #foreigner_key (office)
@@ -12,7 +12,7 @@ class CreateFiles < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :file_tags do |t|
+    create_table :archive_tags do |t|
       t.column :tag_id, :integer #foreigner_key (tag)
       t.column :archive_id, :integer #foreigner_key (archive)
       t.timestamps null: false

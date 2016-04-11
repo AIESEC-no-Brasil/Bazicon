@@ -10,7 +10,7 @@ class ExpaPersonTest < Minitest::Test
   end
 
   def teardown
-    Rake::Task['db:reset'].invoke
+    ActiveRecord::Base.subclasses.each(&:delete_all)
   end
 
   def populate_db

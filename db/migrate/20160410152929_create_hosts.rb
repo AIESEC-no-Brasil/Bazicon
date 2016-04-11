@@ -34,7 +34,7 @@ class CreateHosts < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :hosts_people do |t|
+    create_table :host_people do |t|
       t.column :host_id, :integer #foreigner_key (Host)
       t.column :person_id, :integer #foreigner_key (ExpaPerson)
       t.column :entry_date, :timestamp

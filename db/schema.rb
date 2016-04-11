@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410165715) do
+ActiveRecord::Schema.define(version: 20160410154410) do
+
+  create_table "archive_tags", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "archive_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+# Could not dump table "archives" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "expa_applications", force: :cascade do |t|
     t.integer  "xp_id"
@@ -119,6 +129,8 @@ ActiveRecord::Schema.define(version: 20160410165715) do
     t.integer  "how_got_to_know_aiesec"
     t.text     "customized_fields"
     t.text     "control_podio"
+    t.datetime "xp_trainee_arrival_date"
+    t.datetime "xp_trainee_departure_date"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
@@ -133,70 +145,56 @@ ActiveRecord::Schema.define(version: 20160410165715) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "file_tags", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "archive_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-# Could not dump table "files" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
-
   create_table "host_people", force: :cascade do |t|
-    t.string   "full_name"
-    t.integer  "phone",                    limit: 8
-    t.string   "email"
-    t.string   "address"
-    t.integer  "cep"
-    t.string   "state"
-    t.string   "city"
-    t.integer  "house_type"
-    t.integer  "trainees_vacancy"
-    t.integer  "weeks_vacancy"
-    t.integer  "newest_lc"
-    t.integer  "how_got_to_know_aiesec"
-    t.integer  "tmp_responsable"
-    t.datetime "date_approach"
-    t.datetime "date_alignment_meeting"
-    t.integer  "tmp_who_realized_meeting"
-    t.boolean  "is_favourite"
-    t.boolean  "is_problematic"
-    t.boolean  "is_non_grata_person"
-    t.text     "is_non_grata_description"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "host_id"
+    t.integer  "person_id"
+    t.datetime "entry_date"
+    t.datetime "leave_date"
+    t.integer  "host_nps"
+    t.text     "host_nps_commentary"
+    t.integer  "trainee_nps"
+    t.text     "trainee_nps_commentary"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "host_problems", force: :cascade do |t|
     t.datetime "reported_date"
     t.text     "problem_description"
+    t.integer  "host_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "hosts", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "address"
+    t.integer  "postal_code"
+    t.string   "state"
+    t.string   "city"
+    t.integer  "house_type"
+    t.integer  "trainees_vacancy"
+    t.integer  "weeks_vacancy"
+    t.integer  "nearest_lc_id"
+    t.integer  "how_got_to_know_aiesec"
+    t.integer  "tmp_responsable_id"
+    t.datetime "date_approach"
+    t.datetime "date_alignment_meeting"
+    t.integer  "tmp_who_realized_meeting_id"
+    t.boolean  "is_favourite",                default: false
+    t.boolean  "is_problematic",              default: false
+    t.boolean  "is_non_grata",                default: false
+    t.text     "non_grata_description"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "trainee_people", force: :cascade do |t|
-    t.string   "full_name"
-    t.datetime "arrival_date"
-    t.datetime "departure_date"
-    t.integer  "local_committee"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  create_table "trainee_to_hosts", force: :cascade do |t|
-    t.datetime "entry_date"
-    t.datetime "exit_date"
-    t.integer  "host_evaluation"
-    t.integer  "trainee_evaluation"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
   end
 
 end

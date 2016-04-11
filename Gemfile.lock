@@ -237,6 +237,7 @@ DEPENDENCIES
   jquery-rails (~> 4.0, >= 4.0.5)
   json
   mechanize
+  minitest
   oauth2
   passenger
   pg
