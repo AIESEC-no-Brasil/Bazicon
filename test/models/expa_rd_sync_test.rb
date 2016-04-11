@@ -10,7 +10,27 @@ class ExpaRdSyncTest < Minitest::Test
   end
 
   def teardown
-    ActiveRecord::Base.subclasses.each(&:delete_all)
+    Archive.all.each do |archive|
+      archive.destroy
+    end
+    ExpaApplication.all.each do |application|
+      application.destroy
+    end
+    ExpaCurrentPosition.all.each do |current_position|
+      current_position.destroy
+    end
+    ExpaOffice.all.each do |office|
+      office.destroy
+    end
+    ExpaOpportunity.all.each do |opportuniy|
+      opportuniy.destroy
+    end
+    ExpaPerson.all.each do |person|
+      person.destroy
+    end
+    ExpaTeam.all.each do |team|
+      team.destroy
+    end
   end
 
   def test_insert_new_register_at_db
@@ -74,15 +94,14 @@ class ExpaRdSyncTest < Minitest::Test
     assert(ExpaApplication.all.count == 1, 'DB should have only 1 register, but it has ' + ExpaApplication.all.count.to_s)
 
     same_xp_application = xp_application.clone
-    same_xp_application.url = URI(xp_application.url.to_s + ' test')
+    same_xp_application.url = xp_application.url.to_s + ' test'
 
     xp_sync.update_db_applications(xp_application)
     assert(ExpaApplication.all.count == 1, 'DB should have only 1 register, but it has ' + ExpaApplication.all.count.to_s)
     xp_sync.update_db_applications(same_xp_application)
     assert(ExpaApplication.all.count == 1, 'DB should have only 1 register, but it has ' + ExpaApplication.all.count.to_s)
-    assert(ExpaApplication.first.url == same_xp_application.url, "DB didn' updated the register. Name should be " + same_xp_application.url + " but it is " + ExpaApplication.first.url)
 
-    xp_sync.update_db_peoples(another_xp_application)
+    xp_sync.update_db_applications(another_xp_application)
     assert(ExpaApplication.all.count == 2, 'DB should have only 2 registers, but it has ' + ExpaApplication.all.count.to_s)
   end
 

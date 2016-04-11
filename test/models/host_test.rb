@@ -1,11 +1,31 @@
 require 'minitest/autorun'
 
 class HostTest < Minitest::Test
-  # test "the truth" do
-  #   assert true
-  # end
-
   def setup
+  end
+
+  def teardown
+    Archive.all.each do |archive|
+      archive.destroy
+    end
+    ExpaApplication.all.each do |application|
+      application.destroy
+    end
+    ExpaCurrentPosition.all.each do |current_position|
+      current_position.destroy
+    end
+    ExpaOffice.all.each do |office|
+      office.destroy
+    end
+    ExpaOpportunity.all.each do |opportuniy|
+      opportuniy.destroy
+    end
+    ExpaPerson.all.each do |person|
+      person.destroy
+    end
+    ExpaTeam.all.each do |team|
+      team.destroy
+    end
   end
 
   def test_save
@@ -111,23 +131,5 @@ class HostTest < Minitest::Test
     host.save    
 
     assert(hosts.count == 4, "Retornou valor qndo não deveria. Retornou " + hosts.count.to_s + " e deveria retonar 4")
-  end
-
-  def teardown 
-    ExpaPerson.all.each do |person|
-      person.destroy
-    end
-    ExpaApplication.all.each do |application|
-      application.destroy
-    end
-    ExpaOffice.all.each do |office|
-      office.destroy
-    end
-    ExpaOpportunity.all.each do |opportunity|
-      opportunity.destroy
-    end
-    Host.all.each do |host|
-      host.destroy
-    end
   end
 end

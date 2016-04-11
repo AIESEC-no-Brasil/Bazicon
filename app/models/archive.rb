@@ -1,5 +1,5 @@
 class Archive < ActiveRecord::Base
-  enum type: [:pdf, :word, :excel, :ppt, :image, :sound, :video, :other]
+  enum type_of_file: [:pdf, :word, :excel, :ppt, :image, :sound, :video, :other]
 
   belongs_to :office, class_name: 'ExpaOffice'
   belongs_to :person , class_name: 'ExpaPerson'

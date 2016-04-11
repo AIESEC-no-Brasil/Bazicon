@@ -5,9 +5,9 @@ class CreateArchives < ActiveRecord::Migration
       t.column :name, :string
       t.column :office_id, :integer #foreigner_key (office)
       t.column :person_id, :integer #foreigner_key (people)
-      t.column :type, :integer #enum
-      t.column :is_deleted, :bool
-      t.column :is_private, :bool
+      t.column :type_of_file, :integer #enum
+      t.column :is_deleted, :bool, default: false
+      t.column :is_private, :bool, default: false
 
       t.timestamps null: false
     end
