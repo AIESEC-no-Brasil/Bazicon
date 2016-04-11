@@ -3,7 +3,13 @@ class ArchivesController < ApplicationController
 
   # GET /main/files
   def show
-
+    user_role = @user.get_role
+    if user_role == ExpaPerson.roles[:role_mc]
+      @office = ExpaOffice.find_by_xp_id(1606) #Brazil
+    else
+      @office = @user.xp_home_lc
+    end
+    @files = ArchiveDAO.list_from_office(@office)
   end
 
   def show_private
