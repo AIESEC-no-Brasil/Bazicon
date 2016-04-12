@@ -12,6 +12,8 @@ class DigitalTransformationController < ApplicationController
 
     if EXPA.client.nil?
       expa = EXPA.setup()
+    else
+      expa = EXPA.client
     end
 
     expa.auth(userName,password)
