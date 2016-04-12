@@ -30,8 +30,8 @@
           %i.fa.fa-users
           %span.nav-label{"data-i18n" => "nav.metrics"}
             Membresia
-      %li{"class" => "#{is_active_controller('host')}"}
-        = link_to lc_host_path do
+      %li{"class" => "#{is_active_controller('hosts')}"}
+        = link_to '/hosts/index' do
           %i.fa.fa-leaf
           %span.nav-label{"data-i18n" => "nav.metrics"}
             Host
