@@ -10,16 +10,6 @@ Myapp::Application.routes.draw do
 
   get "/main" => "main#index", as: "main"
   get "/main/files" => "files#show", as: "files_show"
-
-
-
-
-
-
-
-
-
-
   get "lc/dash"
   get "lc/host"
   get "lc/ogx"

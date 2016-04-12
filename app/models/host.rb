@@ -24,14 +24,14 @@ module Hosts
 		def list_problematics
 			Host.where(is_problematic: true)
 		end
+		
 		def list_leads
 			Host.where({tmp_responsable_id: nil,
 						date_approach: nil,
 						date_alignment_meeting: nil,
-						tmp_who_realized_meeting_id: nil.
+						tmp_who_realized_meeting_id: nil,
 						is_favourite: false,
-						is_problematic: false,
-						is_non_grata: false})
+						is_problematic: false})
 		end	
 		
 		'''
