@@ -5,7 +5,6 @@ class ExpaRdSyncTest < Minitest::Test
     if EXPA.client.nil?
       xp = EXPA.setup()
       xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
-      teardown
     end
   end
 

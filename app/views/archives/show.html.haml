@@ -13,19 +13,16 @@
       .ibox.float-e-margins
         .ibox-content
           .file-manager
-            %h5 Apresentar:
+            %h5 Apresentar
             %a.file-control.active{href: "#"}Todos
             %a.file-control{href: "#"}PDF
             %a.file-control{href: "#"}Word
             %a.file-control{href: "#"}Excel
             %a.file-control{href: "#"}PPT
-            %a.file-control{href: "#"}Imanges
-            %a.file-control{href: "#"}Sons (Roll Call)
-            %a.file-control{href: "#"}Videos
+            %a.file-control{href: "#"}Imagens
+            %a.file-control{href: "#"}Áudio (Roll Call)
+            %a.file-control{href: "#"}Vídeos
             %a.file-control{href: "#"}Outros
-
-            .hr-line-dashed
-            %button.btn.btn-primary.btn-block Upload
             .hr-line-dashed
             %h5 Filtros
             %ul.folder-list{style: "padding: 0"}
@@ -41,6 +38,16 @@
                 %a{href: "#"}
                   %i.fa.fa-star-half
                   Público e Privado
+            %h5.tag-title
+              Tags
+            %ul.tag-list{style: "padding: 0"}
+              - Tag.all.each do |tag|
+                %li
+                  %a{href: "#"}
+                  = tag.name
+            %button.btn.btn-default.btn-block Filtrar
+            .hr-line-dashed
+            %button.btn.btn-primary.btn-block Upload
             .clearfix
 
 .col-lg-9.animated.fadeInRight

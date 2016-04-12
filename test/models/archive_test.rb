@@ -419,7 +419,7 @@ class ArchiveTest < Minitest::Test
     files = ArchiveDAO.list_public_excel_from_office(office_mc)
     assert(files.count == 1, 'DB has register. It was supposed to have 1, but it has ' + files.count.to_s + ' registers')
     files = ArchiveDAO.list_private_excel_from_office(office_mc)
-    assert(files.count == 1, 'DB has register. It was supposed to have 2, but it has ' + files.count.to_s + ' registers')
+    assert(files.count == 2, 'DB has register. It was supposed to have 2, but it has ' + files.count.to_s + ' registers')
 
     file = Archive.new
     file.office = office_lc

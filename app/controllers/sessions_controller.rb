@@ -3,10 +3,6 @@
 class SessionsController < ApplicationController
   # GET /
   def index
-    unless session[:expa_id].blank?
-      redirect_to main_path
-      return
-    end
     render layout: "empty"
   end
 
