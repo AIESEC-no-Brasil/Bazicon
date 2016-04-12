@@ -5,8 +5,8 @@
       .col-lg-12
         .ibox
           .ibox-content
-            %h2 Que dificuldade você está encontrando para achar a vaga ideal?
-            = form_tag(digital_transformation_difficulties_success_path, method: 'post', class: 'wizard-big', id: 'form') do
+            %h2 O que te impediria de fazer um intercâmbio nas próximas férias?
+            = form_tag(digital_transformation_prevents_success_path, method: 'post', class: 'wizard-big', id: 'form') do
               %h1 Quem é você?
               %fieldset{:style => "height: auto"}
                 %h2 Informações da sua conta
@@ -27,13 +27,21 @@
                       %input#password.form-control.required{:name => "password", :type => "password"}
               %h1 Nos conte mais
               %fieldset{:style => "height: auto"}
-                %h2 Nos conte mais
                 .row
                   .form-group
                     .col-lg-12
+                      - @options.each do |option|
+                        .i-checks
+                          %label
+                            %input{type: 'radio', value: "#{option[0]}", name: 'preventOption'}
+                            %i
+                            = option[1]
+                    .col-lg-12#extra-field{hidden: true}
                       %label Que dificuldades você está encontrando para achar a vaga ideal? *
-                      %textarea#difficulties.form-control.required{:name => "difficulties", :rows => "7", :style => "resize: none"}
+                      %textarea#difficulties.form-control{:name => "preventDetail", :rows => "7", :style => "resize: none"}
+
     .col-lg-2
+
 - content_for :javascript do
   :javascript
     $(function() {
@@ -92,4 +100,22 @@
 
       $("#form").steps(settings).validate({});
 
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+
+      $( "input" ).on('ifChecked', function(event) {
+        if ($(this).val() == 'other') {
+            $('#extra-field').show('fast','linear');
+            $('#difficulties').addClass('required');
+        }
+        else  {
+            $('#extra-field').hide('fast','linear');
+            $('#difficulties').removeClass('required');
+        }
+
+      });
+
     });
+
