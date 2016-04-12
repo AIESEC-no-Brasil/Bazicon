@@ -12,6 +12,8 @@ gem 'haml'
 
 gem 'dropbox-sdk'
 
+gem 'minitest'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 gem 'bootstrap-sass'

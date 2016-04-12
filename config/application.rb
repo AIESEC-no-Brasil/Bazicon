@@ -31,7 +31,8 @@ module Myapp
       end if File.exists?(env_file)
     end
 
-    config.assets.precompile += [ 'appviews.css', 'cssanimations.css', 'dashboards.css', 'forms.css', 'gallery.css', 'graphs.css', 'mailbox.css', 'miscellaneous.css', 'pages.css', 'tables.css', 'uielements.css', 'widgets.css', 'files.css' ]
-    config.assets.precompile += [ 'appviews.js', 'cssanimations.js', 'dashboards.js', 'forms.js', 'gallery.js', 'graphs.js', 'mailbox.js', 'miscellaneous.js', 'pages.js', 'tables.js', 'uielements.js', 'widgets.js', 'files.js' ]
+    config.assets.precompile += [ 'appviews.css', 'archives.css', 'cssanimations.css', 'dashboards.css', 'digital_transformation.css', 'forms.css', 'gallery.css', 'graphs.css', 'mailbox.css', 'miscellaneous.css', 'pages.css', 'tables.css', 'uielements.css', 'widgets.css', 'files.css' ]
+    config.assets.precompile += [ 'appviews.js',  'archives.js', 'cssanimations.js', 'dashboards.js', 'digital_transformation.js', 'forms.js', 'gallery.js', 'graphs.js', 'mailbox.js', 'miscellaneous.js', 'pages.js', 'tables.js', 'uielements.js', 'widgets.js', 'files.js' ]
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

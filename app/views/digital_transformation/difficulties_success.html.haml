@@ -1,0 +1,23 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-4
+    .col-lg-4
+      .widget-head-color-box.navy-bg.text-center
+        .m-b-md
+          %h2.font-bold.no-margins
+            = @user.xp_full_name
+          %small= @user.xp_email
+        %img.img-circle.m-b-md{:src => @user.xp_profile_photo_url}
+      .widget-text-box.navy-bg.text-center
+        %h5.media-heading O que te impediria de fazer um intercâmbio nas próximas férias?
+        %p
+          .fa.fa-quote-left
+          = JSON.parse(@user.customized_fields)['difficulty']['value']
+          .fa.fa-quote-right
+      .widget-text-box.text-center
+        %h4.media-heading
+          Lembre-se de manter seu perfil atualizado clicando
+          %a{:href => @user.xp_url.gsub('gis','opportunities'), target: '_blank'} aqui
+        %p Muito obrigado! Agora que já sabemos que problemas você está tendo na sua busca pela vaga ideal, alguém da AIESEC mais próxima entrará em contato para te ajudar
+
+    .col-lg-4

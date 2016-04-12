@@ -3,10 +3,6 @@
 class SessionsController < ApplicationController
   # GET /
   def index
-    unless session[:expa_id].blank?
-      redirect_to main_path
-      return
-    end
     render layout: "empty"
   end
 
@@ -20,7 +16,7 @@ class SessionsController < ApplicationController
 
     if expa.get_token.nil?
       flash[:warning] = "E-mail ou senha inválida"
-      redirect_to(:action => "error")
+      redirect_to(:action => "error") #TODO
     else
       user = ExpaPerson.find_by_xp_email(mail)
       if user.nil?

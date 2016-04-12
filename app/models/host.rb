@@ -2,17 +2,17 @@ class Host < ActiveRecord::Base
 	enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :other]
 	enum house_type: [:family_house, :hostel, :dorm, :flat]
 
-	belongs_to :nearest_lc_id, class_name: 'ExpaOffice'
-	belongs_to :tmp_responsable_id, class_name: 'ExpaPerson'
-	belongs_to :tmp_who_realized_meeting_id, class_name: 'ExpaPerson'
+	belongs_to :nearest_lc, class_name: 'ExpaOffice'
+	belongs_to :tmp_responsable, class_name: 'ExpaPerson'
+	belongs_to :tmp_who_realized_meeting, class_name: 'ExpaPerson'
 
 	has_many :hosts_people, class_name: 'HostPerson'
 	has_many :trainees, through: :hosts_people	
 end
 
 class HostPerson < ActiveRecord::Base
-	belongs_to :host_id, class_name: 'Host'
-	belongs_to :person_id, class_name: 'ExpaPerson'
+	belongs_to :host, class_name: 'Host'
+	belongs_to :person, class_name: 'ExpaPerson'
 end
 
 class HostProblem < ActiveRecord::Base

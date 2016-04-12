@@ -1,0 +1,121 @@
+#wrapper.gray-bg
+  .wrapper.wrapper-content.animated.fadeInRight.center-block
+    .col-lg-2
+    .col-lg-8
+      .col-lg-12
+        .ibox
+          .ibox-content
+            %h2 O que te impediria de fazer um intercâmbio nas próximas férias?
+            = form_tag(digital_transformation_prevents_success_path, method: 'post', class: 'wizard-big', id: 'form') do
+              %h1 Quem é você?
+              %fieldset{:style => "height: auto"}
+                %h2 Informações da sua conta
+                %p Utilizaremos essas informações para saber quem é você :)
+                %p
+                  Essa é a mesma conta que você usa para logar
+                  %a{:href => "https://auth.aiesec.org/users/sign_in", :target => "_blank"} aqui
+                - flash.each do |name, msg|
+                  %p
+                    = content_tag :div, msg, class: name
+                .row
+                  .col-lg-12
+                    .form-group
+                      %label E-mail *
+                      %input#userName.form-control.required.email{:name => "userName", :type => "text"}
+                    .form-group
+                      %label Senha *
+                      %input#password.form-control.required{:name => "password", :type => "password"}
+              %h1 Nos conte mais
+              %fieldset{:style => "height: auto"}
+                .row
+                  .form-group
+                    .col-lg-12
+                      - @options.each do |option|
+                        .i-checks
+                          %label
+                            %input{type: 'radio', value: "#{option[0]}", name: 'preventOption'}
+                            %i
+                            = option[1]
+                    .col-lg-12#extra-field{hidden: true}
+                      %label Que dificuldades você está encontrando para achar a vaga ideal? *
+                      %textarea#difficulties.form-control{:name => "preventDetail", :rows => "7", :style => "resize: none"}
+
+    .col-lg-2
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+
+      var settings = {
+        labels: {
+          finish: "Enviar",
+          next: "Próximo",
+          previous: "Anterior",
+        },
+
+        enableCancelButton: false,
+
+        bodyTag: "fieldset",
+
+        onStepChanging: function (event, currentIndex, newIndex) {
+          // Always allow going backward even if the current step contains invalid fields!
+          if (currentIndex > newIndex) {
+            return true;
+          }
+
+          var form = $(this);
+
+          // Clean up if user went backward before
+          if (currentIndex < newIndex) {
+            // To remove error styles
+            $(".body:eq(" + newIndex + ") label.error", form).remove();
+            $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+          }
+
+          // Disable validation on fields that are disabled or hidden.
+          form.validate().settings.ignore = ":disabled,:hidden";
+
+          // Start validation; Prevent going forward if false
+          return form.valid();
+        },
+
+        onFinishing: function (event, currentIndex) {
+          var form = $(this);
+
+          // Disable validation on fields that are disabled.
+          // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+          form.validate().settings.ignore = ":disabled";
+
+          // Start validation; Prevent form submission if false
+          return form.valid();
+        },
+
+        onFinished: function (event, currentIndex) {
+          var form = $(this);
+
+          // Submit form input
+          form.submit();
+        }
+      };
+
+      $("#form").steps(settings).validate({});
+
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+
+      $( "input" ).on('ifChecked', function(event) {
+        if ($(this).val() == 'other') {
+            $('#extra-field').show('fast','linear');
+            $('#difficulties').addClass('required');
+        }
+        else  {
+            $('#extra-field').hide('fast','linear');
+            $('#difficulties').removeClass('required');
+        }
+
+      });
+
+    });
+

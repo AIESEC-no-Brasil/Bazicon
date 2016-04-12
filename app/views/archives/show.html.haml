@@ -1,0 +1,74 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-9
+    %h2 Gavetão
+    %ol.breadcrumb
+      %li
+        %a{href: "#"} Home
+      %li.active
+        %strong Gavetão
+
+.wrapper.wrapper-content
+  .row
+    .col-lg-3
+      .ibox.float-e-margins
+        .ibox-content
+          .file-manager
+            %h5 Apresentar
+            %a.file-control.active{href: "#"}Todos
+            %a.file-control{href: "#"}PDF
+            %a.file-control{href: "#"}Word
+            %a.file-control{href: "#"}Excel
+            %a.file-control{href: "#"}PPT
+            %a.file-control{href: "#"}Imagens
+            %a.file-control{href: "#"}Áudio (Roll Call)
+            %a.file-control{href: "#"}Vídeos
+            %a.file-control{href: "#"}Outros
+            .hr-line-dashed
+            %h5 Filtros
+            %ul.folder-list{style: "padding: 0"}
+              %li
+                %a{href: "#"}
+                  %i.fa.fa-star
+                  Público
+              %li
+                %a{href: "#"}
+                  %i.fa.fa-star-o
+                  Privado
+              %li
+                %a{href: "#"}
+                  %i.fa.fa-star-half
+                  Público e Privado
+            %h5.tag-title
+              Tags
+            %ul.tag-list{style: "padding: 0"}
+              - Tag.all.each do |tag|
+                %li
+                  %a{href: "#"}
+                  = tag.name
+            %button.btn.btn-default.btn-block Filtrar
+            .hr-line-dashed
+            %button.btn.btn-primary.btn-block Upload
+            .clearfix
+
+.col-lg-9.animated.fadeInRight
+  .row
+    .col-lg-12
+      - @files.each do |file|
+        .file-box
+          .file
+            %a{href: "#"}
+              %span.corner
+
+              .image
+                %img.img-responsive{alt: "image", src: "#{image_path('p1.jpg')}"}
+              .file-name
+                = file.name
+                %br
+                %small Adicionado em:
+                = file.created_at.strftime('%dd %bbb %YYYY')
+                %small Adicionado por:
+                = file.person.xp_full_name.split(' ').first
+                %small Entidade:
+                = file.office.xp_name
+                %small Tipo:
+                = file.type_of_file
