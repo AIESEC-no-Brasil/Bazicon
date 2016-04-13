@@ -4,16 +4,13 @@
       %li.nav-header
         .dropdown.profile-element
           %span
-            %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
+            %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}", "id" => "profile_photo"}
           %span.clear
             %span.block.m-t-xs
               %strong.font-bold
                 = @user.xp_full_name.split(' ')[0]
             %span.text-muted.text-xs.block
               = @user.xp_email.split('@')[0]
-        .logo-element
-          %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
-
 
       %li{"class" => "#{is_active_controller('main')}"}
         = link_to main_path do
