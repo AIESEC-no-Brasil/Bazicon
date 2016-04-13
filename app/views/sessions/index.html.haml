@@ -5,12 +5,13 @@
       %p O time de IM é muito legal.
     .col-md-6
       .ibox-content
-        %form.m-t{:action => login_path, :method => "post"}
+        =form_tag login_path, class: "m-t" do
           .form-group
-            %input.form-control{:name => "email", :placeholder => "Email", :required => true, :type => "email"}
+            =email_field_tag'email','', class: 'form-control', placeholder: 'Email'
           .form-group
-            %input.form-control{:name => "password", :placeholder => "Password", :required => true, :type => "password"}
-          %button.btn.btn-primary.block.full-width.m-b{:type => "submit"} Entrar
+            =password_field_tag 'password', '', class: 'form-control', placeholder: 'Senha'
+          .form-group
+            =button_tag("Entrar", type: 'submit', class: 'btn btn-primary block full-width m-b')
   %hr
   .row
     .col-md-6

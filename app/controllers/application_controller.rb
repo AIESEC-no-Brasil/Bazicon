@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_filter :validates_logged_user
 
   helper_method :validates_logged_user
+
+
   #TODO change name
   def validates_logged_user
     @user = ExpaPerson.find_by_xp_id(session[:expa_id])

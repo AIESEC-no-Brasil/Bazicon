@@ -2,4 +2,6 @@ log/test.log
 db/schema.rb
 db/test.sqlite3
 config/local_env.yml
-tmp/test.sqlite3
+tmp
+log/production.log
+log/development.log
