@@ -1,8 +1,8 @@
 #wrapper.gray-bg
   .wrapper.wrapper-content.animated.fadeInRight.center-block
-    .col-lg-2
-    .col-lg-8
-      .col-lg-12
+    .col-xs-2
+    .col-xs-8
+      .col-xs-12
         .ibox
           .ibox-content
             - if params['programa'] == 'GCDP'
@@ -19,14 +19,14 @@
                   %p
                     = content_tag :div, msg.html_safe, class: name
                 .row
-                  .col-lg-6.b-r
+                  .col-xs-6.b-r
                     .form-group
                       %label Nome *
                       %input#name.form-control.required{:name => "name", :type => "text"}
                     .form-group
                       %label Sobrenome *
                       %input#lastname.form-control.required{:name => "lastname", :type => "text"}
-                  .col-lg-6
+                  .col-xs-6
                     .form-group
                       %label E-mail *
                       %input#userName.form-control.required.email{:name => "email", :type => "text"}
@@ -39,7 +39,7 @@
               %fieldset{:style => "height: auto"}
                 .row
                   .form-group
-                    .col-lg-6.b-r
+                    .col-xs-6.b-r
                       #study-level
                         %label Escolaridade *
                         %select.form-control.m-b.required#study-level-form{name: 'study-level'}
@@ -58,7 +58,7 @@
                           - DigitalTransformation.courses.each do |option|
                             %option
                               = option
-                    .col-lg-6.text-center
+                    .col-xs-6.text-center
                       .fa.big-icon.fa-graduation-cap{style: 'color: gray'}
               %h1
                 .fa.fa-plane
@@ -66,7 +66,7 @@
               %fieldset{:style => "height: auto"}
                 .row
                   .form-group
-                    .col-lg-6.b-r
+                    .col-xs-6.b-r
                       #sub-productrm-control.m-b.required{name: 'sub-product'}
                         - if params['programa'] == 'GCDP'
                           %label Região de interesse *
@@ -101,10 +101,10 @@
                         Eu concordo com os
                         %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
 
-                    .col-lg-6.text-center
+                    .col-xs-6.text-center
                       .fa.big-icon.fa-plane{style: 'color: gray'}
 
-    .col-lg-2
+    .col-xs-2
 - content_for :javascript do
   :javascript
     $(function() {

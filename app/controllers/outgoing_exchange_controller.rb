@@ -13,11 +13,32 @@ class OutgoingExchangeController < ApplicationController
     ExpaPerson.count(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now, interested_program: ExpaPerson.interested_programs[:global_volunteer])
     # Leads oGIP esse mês
     ExpaPerson.count(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now, interested_program: ExpaPerson.interested_programs[:global_talents])
+    # Leads por semana esse mês total
+    # Leads por dia esse mês total
+    # Leads por semana esse mês oGCDP
+    # Leads por dia esse mês oGCDP
+    # Leads por semana esse mês oGIP
+    # Leads por dia esse mês oGIP
 
+    # MA total esse mês
     # MA oGCDP esse mês
     # MA oGIP esse mês
+    # MA por semana esse mês total
+    # MA por dia esse mês total
+    # MA por semana esse mês oGCDP
+    # MA por dia esse mês oGCDP
+    # MA por semana esse mês oGIP
+    # MA por dia esse mês oGIP
+
+    # RE total esse mês
     # RE oGCDP esse mês
     # RE oGIP esse mês
+    # RE por semana esse mês total
+    # RE por dia esse mês total
+    # RE por semana esse mês oGCDP
+    # RE por dia esse mês oGCDP
+    # RE por semana esse mês oGIP
+    # RE por dia esse mês oGIP
 
     # Leads total mês passado
     ExpaPerson.count(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1))
@@ -85,10 +106,18 @@ class OutgoingExchangeController < ApplicationController
     # Numero RE por mes ano passado total
     # Numero RE por mes ano passado oGCDP
     # Numero RE por mes ano passado oGIP
+
+    @people = filter_list_leads
   end
 
   # GET /ogx/detail
   def detail
+
+  end
+
+  private
+
+  def filter_list_leads
 
   end
 end

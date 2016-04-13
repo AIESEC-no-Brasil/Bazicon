@@ -1,8 +1,8 @@
 #wrapper.gray-bg
   .wrapper.wrapper-content.animated.fadeInRight.center-block
-    .col-lg-2
-    .col-lg-8
-      .col-lg-12
+    .col-xs-2
+    .col-xs-8
+      .col-xs-12
         .ibox
           .ibox-content
             %h2 O que te impediria de fazer um intercâmbio nas próximas férias?
@@ -18,7 +18,7 @@
                   %p
                     = content_tag :div, msg, class: name
                 .row
-                  .col-lg-12
+                  .col-xs-12
                     .form-group
                       %label E-mail *
                       %input#userName.form-control.required.email{:name => "userName", :type => "text"}
@@ -29,18 +29,18 @@
               %fieldset{:style => "height: auto"}
                 .row
                   .form-group
-                    .col-lg-12
+                    .col-xs-12
                       - @options.each do |option|
                         .i-checks
                           %label
                             %input{type: 'radio', value: "#{option[0]}", name: 'preventOption'}
                             %i
                             = option[1]
-                    .col-lg-12#extra-field{hidden: true}
+                    .col-xs-12#extra-field{hidden: true}
                       %label Que dificuldades você está encontrando para achar a vaga ideal? *
                       %textarea#difficulties.form-control{:name => "preventDetail", :rows => "7", :style => "resize: none"}
 
-    .col-lg-2
+    .col-xs-2
 
 - content_for :javascript do
   :javascript
