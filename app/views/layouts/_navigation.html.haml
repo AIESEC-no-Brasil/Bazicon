@@ -7,7 +7,7 @@
             %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
           %span.clear
             %span.block.m-t-xs
-              %strong.font-bold
+              %p#user-name
                 = @user.xp_full_name.split(' ')[0]
             %span.text-muted.text-xs.block
               = @user.xp_email.split('@')[0]
