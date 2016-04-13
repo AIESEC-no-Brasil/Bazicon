@@ -1,11 +1,11 @@
 .nav > li > a {
-  color: $nav-text-color;
+  color: #fff;
   font-weight: 600;
   padding: 14px 20px 14px 25px;
 }
 
 .nav.navbar-right > li > a {
-  color: #999c9e;
+  color: #ffffff;
 }
 
 .nav > li.active > a {
@@ -13,8 +13,8 @@
 }
 
 .navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus {
-  background-color: darken($nav-bg, 3%);
-  color: white;
+  background-color: darken(#007ff1, 3%);
+  color: black;
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
@@ -34,8 +34,8 @@
 }
 
 .navbar-default {
-  background-color: transparent;
-  border-color: $nav-bg;
+  background-color: #007ff1;
+  border-color: #007ff1;
 }
 
 .navbar-top-links li {
@@ -143,7 +143,7 @@
 
 .nav-header {
   padding: 33px 25px;
-  background: $nav-profil-pattern;
+  background: #007ff1;
 
 }
 
@@ -165,11 +165,11 @@
 }
 
 .nav-header a {
-  color: #DFE4ED;
+  color: #fff;
 }
 
 .nav-header .text-muted {
-  color: #8095a8;
+  color: #fff;
 }
 
 .minimalize-styl-2 {
@@ -267,13 +267,13 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   position: absolute;
   left: 70px;
   top: 0;
-  background-color: $nav-bg;
+  background-color: #007ff1;
   padding: 10px 10px 10px 10px;
   font-size: 12px;
 }
 
 .canvas-menu.mini-navbar .nav-second-level {
-  background: darken($nav-bg, 3%);
+  background: darken(#007ff1, 3%);
 }
 
 .mini-navbar li.active .nav-second-level {
@@ -291,23 +291,23 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .navbar-default .special_link a span.label {
-  background: #fff;
+  background: #007ff1;
   color: $navy;
 }
 
 .navbar-default .landing_link a {
-  background: lighten($navy, 3%);
-  color: white;
+  background: #fff;
+  color: #007ff1;
 }
 
 .navbar-default .landing_link a:hover {
-  background: $navy !important;
-  color: white;
+  background: #fff!important;
+  color: #007ff1;
 }
 
 .navbar-default .landing_link a span.label {
   background: #fff;
-  color: lighten($navy, 3%);
+  color: lighten(#007ff1, 3%);
 }
 
 .logo-element {
@@ -412,7 +412,7 @@ body.canvas-menu .logo-element {
 
 body.mini-navbar .nav-header {
   padding: 0;
-  background-color: $navy;
+  background-color: #007ff1;
 }
 
 body.canvas-menu .nav-header {
@@ -527,4 +527,9 @@ body.canvas-menu nav.navbar-static-side {
 body.canvas-menu.mini-navbar nav.navbar-static-side {
   display: block;
   width: 220px;
+}
+p#user-name{
+  color:#fff;
+  font-size: 18px;
+  font-weight: bold;
 }

@@ -1,5 +1,6 @@
 db/schema.rb
 db/test.sqlite3
 config/local_env.yml
-tmp/*
-log/*
+tmp/
+log/
+.idea/
