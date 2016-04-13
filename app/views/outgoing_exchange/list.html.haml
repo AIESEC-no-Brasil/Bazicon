@@ -1,0 +1,712 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-9
+    %h2 OGX
+    %ol.breadcrumb
+      %li
+        %a{href: main_url} Home
+      %li.active
+        %a{href: outgoing_exchange_dash_url} Análise
+      %li
+        %strong Gestão
+  .col-lg-3
+    %ul.nav.navbar-top-links.navbar-right
+      %li
+        %label Expansor / Expansão
+        %select.form-control.m-b.required{name: 'local_committee'}
+          %option
+            Opções CLs
+
+.wrapper.wrapper-content.animated.fadeIn
+  .p-w-md.m-t-sm
+    .row
+      .col-sm-4
+        %h1.m-b-xs
+          780
+          %span
+          %small
+            (
+            12
+            .fa.fa-child
+          %span
+          %small
+            13
+            .fa.fa-briefcase
+            )
+        %small
+          Leads nesse mês (Gráfico por semana)
+        #sparkline1.m-b-sm
+        .row
+          %p Mês passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+        .row
+          %p Ano passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+      .col-sm-4
+        %h1.m-b-xs
+          300
+          %span
+          %small
+            (
+            12
+            .fa.fa-child
+          %span
+          %small
+            13
+            .fa.fa-briefcase
+            )
+        %small
+          Matches esse mês (Gráfico por semana)
+        #sparkline2.m-b-sm
+        .row
+          %p Mês passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+        .row
+          %p Ano passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+      .col-sm-4
+        %h1.m-b-xs
+          300
+          %span
+          %small
+            (
+            12
+            .fa.fa-child
+          %span
+          %small
+            13
+            .fa.fa-briefcase
+            )
+        %small
+          Realizes esse mês (Gráfico por semana)
+        #sparkline3.m-b-sm
+        .row
+          %p Mês passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+        .row
+          %p Ano passado
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-child
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #D32F2F"} 32%
+          .col-xs-6
+            %small.stats-label
+              .fa.fa-briefcase
+              Crescimento %
+            %h4
+              %span{style: "color: #607D8B"} 236
+              %span{style:"color: #4CAF50"} 32%
+    .row
+      .col-sm-12
+        .row.m-t-xs
+          .col-xs-3
+            %h5.m-b-xs EPs prontos para viajar
+            %h1.no-margins
+              500
+              %i.fa.fa-child
+            .font-bold.text-navy
+              30% do total
+          .col-xs-3
+            %h5.m-b-xs EPs viajando
+            %h1.no-margins
+              600
+              %i.fa.fa-child
+            .font-bold.text-navy
+              30% do total
+          .col-xs-3
+            %h5.m-b-xs EPs prontos para viajar
+            %h1.no-margins
+              500
+              %i.fa.fa-briefcase
+            .font-bold.text-navy
+              70% do total
+          .col-xs-3
+            %h5.m-b-xs EPs viajando
+            %h1.no-margins
+              600
+              %i.fa.fa-briefcase
+            .font-bold.text-navy
+              70% do total
+    .row
+      .col-sm-6
+        %table.table.small.m-t-sm
+          %tbody
+            %tr
+              %td
+                %strong 142
+                Mundo Árabe
+              %td
+                %strong 22
+                Mundo Árabe
+            %tr
+              %td
+                %strong 61
+                Leste Europeu
+              %td
+                %strong 54
+                Leste Europeu
+            %tr
+              %td
+                %strong 154
+                África
+              %td
+                %strong 32
+                África
+            %tr
+              %td
+                %strong 154
+                Ásia
+              %td
+                %strong 32
+                Ásia
+            %tr
+              %td
+                %strong 154
+                América Latina
+              %td
+                %strong 142
+                América Latina
+      .col-sm-6
+        %table.table.small.m-t-sm
+          %tbody
+            %tr
+              %td
+                %strong 142
+                Start Up
+              %td
+                %strong 22
+                Start Up
+            %tr
+              %td
+                %strong 142
+                Educacional
+              %td
+                %strong 22
+                Educacional
+            %tr
+              %td
+                %strong 142
+                Tecnologia da Informação
+              %td
+                %strong 22
+                Tecnologia da Informação
+            %tr
+              %td
+                %strong 142
+                Gestão
+              %td
+                %strong 22
+                Gestão
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-child.fa-3x
+          %br
+          %strong{style: "color: #2196F3"} 2016
+          %br
+          %strong{style: "color: #F44336"} 2015
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              Leads
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard4-chart.flot-chart-content
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-briefcase.fa-3x
+          %br
+          %strong{style: "color: #2196F3"} 2016
+          %br
+          %strong{style: "color: #F44336"} 2015
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              Leads
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard5-chart.flot-chart-content
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-globe.fa-3x
+          %br
+          %strong{style: "color: #2196F3"} 2016
+          %br
+          %strong{style: "color: #F44336"} 2015
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              Leads
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard6-chart.flot-chart-content
+    .row
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            Tipos de filtros:
+            .ibox-tools
+              .btn-group{"data-toggle" => "buttons-checkbox"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-smile-o.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "EP Prioridade"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-meh-o.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "EP normal"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-frown-o.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "EP com dificuldades"}
+
+              .btn-group{"data-toggle" => "buttons-checkbox"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-child.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "GCDP"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-globe.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "Todos!!! (Incluindo pessoas antes do BAZICON está no ar"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %i.fa.fa-briefcase.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "GIP"}
+
+              .btn-group{"data-toggle" => "buttons-checkbox"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Open"} OP
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "In Progress"} IP
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Accepted"} AC
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Approved"} AP
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Realized"} RE
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Completed"} CO
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  %div{"data-toggle" => "tooltip", "data-placement" => "top", title: "Return Day"} RD
+
+              .btn-group{"data-toggle" => "buttons-checkbox"}
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  Abordado
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  EPI
+                %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
+                  OPS
+
+              .btn-group
+                %button.btn.btn-success.btn-outline{type: 'button', "aria-pressed" => false}
+                  .fa.fa-search.fa-2x
+
+
+          .ibox-content
+            .input-daterange.input-group#datepicker
+              %input.input-sm.form-control{type: 'text', name: 'start', value: '05/14/2014'}
+              %span.input-group-addon até
+              %input.input-sm.form-control{type: 'text', name: 'start', value: '05/22/2014'}
+
+            %hr
+            %input#filter.form-control.input-sm.m-b-xs{:placeholder => "Essa opção de busca ainda não foi programada", :type => "text"}
+              %table.footable.table.table-stripped{"data-filter" => "#filter", "data-page-size" => "8"}
+                %thead
+                  %tr
+                    %th
+                    %th.text-center Data Inscrição
+                    %th.text-center Nome
+                    %th.text-center Sub-Produto
+                    %th.text-center Universidade
+                    %th.text-center Projeto
+                    %th.text-center País/CL
+                    %th.text-center Status
+                    %th{"data-toggle" => "tooltip", "data-placement" => "top", title: "Abordado / EPI / OPS"} A/E/O
+                %tbody
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Open
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label In Progress
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Accepted
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Approved
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Realizing
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Completed
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                  %tr.gradeA
+                    %td.text-center
+                      .fa.fa-smile-o{style: "color: #00796B"}
+                      .fa.fa-meh-o{style: "color: #00796B"}
+                      .fa.fa-frown-o{style: "color: #00796B"}
+                    %td.text-center
+                      21/03/1988
+                    %td.text-center
+                      Nome
+                    %td.text-center
+                      Sub-Produto
+                    %td.text-center
+                      Universidade
+                    %td.text-center
+                      Projeto
+                    %td.text-center
+                      País + CL
+                    %td.text-center
+                      .label Return Day
+                    %td.text-center
+                      .fa.fa-check{style: "color: #8BC34A"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                      .fa.fa-ban{style: "color: #F44336"}
+                %tfoot
+                  %tr
+                    %td{:colspan => "9"}
+                      %ul.pagination.pull-right
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+
+        var sparklineCharts = function(){
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44], {
+                type: 'line',
+                width: '100%',
+                height: '50',
+                lineColor: '#1ab394',
+                fillColor: "transparent"
+            });
+
+            $("#sparkline2").sparkline([32, 11, 25, 37, 41], {
+                type: 'line',
+                width: '100%',
+                height: '50',
+                lineColor: '#1ab394',
+                fillColor: "transparent"
+            });
+
+            $("#sparkline3").sparkline([32, 11, 25, 37, 41], {
+                type: 'line',
+                width: '100%',
+                height: '50',
+                lineColor: '#1ab394',
+                fillColor: "transparent"
+            });
+        };
+
+        var sparkResize;
+
+        $(window).resize(function(e) {
+            clearTimeout(sparkResize);
+            sparkResize = setTimeout(sparklineCharts, 500);
+        });
+
+        sparklineCharts();
+
+
+
+
+        var data1_dash4 = [[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,20],[11,10],[12,13]];
+        var data2_dash4 = [[1,2],[2,7],[3,4],[4,11],[5,4],[6,2],[7,5],[8,11],[9,5],[10,4],[11,1],[12,5]];
+        var data3_dash4 = [[1,5],[2,6],[3,7],[4,12],[5,2],[6,12],[7,2],[8,14],[9,5],[10,1],[11,20],[12,2]];
+        var data4_dash4 = [[1,20],[2,2],[3,33],[4,23],[5,1],[6,4],[7,7],[8,15],[9,19],[10,45],[11,2],[12,7]];
+        var data1_dash5 = [[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,20],[11,10],[12,13]];
+        var data2_dash5 = [[1,2],[2,7],[3,4],[4,11],[5,4],[6,2],[7,5],[8,11],[9,5],[10,4],[11,1],[12,5]];
+        var data3_dash5 = [[1,5],[2,6],[3,7],[4,12],[5,2],[6,12],[7,2],[8,14],[9,5],[10,1],[11,20],[12,2]];
+        var data4_dash5 = [[1,20],[2,2],[3,33],[4,23],[5,1],[6,4],[7,7],[8,15],[9,19],[10,45],[11,2],[12,7]];
+        var data1_dash6 = [[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,20],[11,10],[12,13]];
+        var data2_dash6 = [[1,2],[2,7],[3,4],[4,11],[5,4],[6,2],[7,5],[8,11],[9,5],[10,4],[11,1],[12,5]];
+        var data3_dash6 = [[1,5],[2,6],[3,7],[4,12],[5,2],[6,12],[7,2],[8,14],[9,5],[10,1],[11,20],[12,2]];
+        var data4_dash6 = [[1,20],[2,2],[3,33],[4,23],[5,1],[6,4],[7,7],[8,15],[9,19],[10,45],[11,2],[12,7]];
+
+        $("#flot-dashboard4-chart").length && $.plot($("#flot-dashboard4-chart"),
+        [data1_dash4,data2_dash4],{
+            series: {
+                lines: {
+                    show: false,
+                    fill: true
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.4
+                },
+                points: {
+                    radius: 1,
+                    show: true
+                },
+                shadowSize: 2
+            },
+            grid: {
+                clickable: true,
+                hoverable: true,
+                borderWidth: 0,
+                color: 'transparent'
+            },
+            colors: ["#F44336", "#2196F3"],
+            xaxis:{},
+            yaxis: {},
+            tooltip: false
+          }
+        );
+
+        $("#flot-dashboard5-chart").length && $.plot($("#flot-dashboard5-chart"),
+        [data1_dash5,data2_dash5],{
+            series: {
+                lines: {
+                    show: false,
+                    fill: true
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.4
+                },
+                points: {
+                    radius: 1,
+                    show: true
+                },
+                shadowSize: 2
+            },
+            grid: {
+                hoverable: true,
+                borderWidth: 0,
+                color: 'transparent'
+            },
+            colors: ["#F44336", "#2196F3"],
+            xaxis:{},
+            yaxis: {},
+            tooltip: false
+          }
+        );
+
+        $("#flot-dashboard6-chart").length && $.plot($("#flot-dashboard6-chart"),
+        [data1_dash6,data2_dash6],{
+            series: {
+                lines: {
+                    show: false,
+                    fill: true
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.4
+                },
+                points: {
+                    radius: 1,
+                    show: true
+                },
+                shadowSize: 2
+            },
+            grid: {
+                hoverable: true,
+                borderWidth: 0,
+                color: 'transparent'
+            },
+            colors: ["#F44336", "#2196F3"],
+            xaxis:{},
+            yaxis: {},
+            tooltip: false
+          }
+        );
+
+        $(document).ready(function(){
+           $('[data-toggle="tooltip"]').tooltip();
+        });
+
+    });

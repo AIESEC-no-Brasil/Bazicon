@@ -75,11 +75,6 @@ class ExpaRdSync
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
 
-    study_level = DigitalTransformation.study_level
-    entities = DigitalTransformation.hash_entities_podio
-    universities = DigitalTransformation.hash_universities_podio
-    courses = DigitalTransformation.hash_courses_podio
-
     people = ExpaPerson.where.not(control_podio: nil).order(xp_updated_at: :desc)
     people.each do |person|
       if JSON.parse(person.control_podio).key?('podio_status') && JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido'
@@ -101,17 +96,17 @@ class ExpaRdSync
           fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
         end
         fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}] unless person.xp_phone.nil?
-        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = entities[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
+        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
         fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
         fields['sub-produto'] = sub_product unless person.interested_sub_product.nil?
-        fields['entidade-mais-proxima'] = entities[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
+        fields['entidade-mais-proxima'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['como-conheceu-a-aiesec'] = ExpaPerson.how_got_to_know_aiesecs[person.how_got_to_know_aiesec] + 1 unless person.how_got_to_know_aiesec.nil?
-        fields['escolaridade'] = study_level.index(JSON.parse(person.control_podio)['escolaridade']['value'])
+        fields['escolaridade'] = JSON.parse(person.control_podio)['study_level']
         if JSON.parse(person.control_podio).key?('universidade')
-          fields['universidade'] = podio_helper_find_item_by_unique_id(universities[JSON.parse(person.control_podio)['universidade']['value']],'universidade').first['item_id']
+          fields['universidade'] = JSON.parse(person.customized_fields)['universidade']['item_id']
         end
         if JSON.parse(person.control_podio).key?('curso')
-          fields['curso'] = podio_helper_find_item_by_unique_id(courses[JSON.parse(person.control_podio)['curso']['value']],'curso').first['item_id']
+          fields['curso'] = JSON.parse(person.customized_fields)['curso']['item_id']
         end
 
         puts fields

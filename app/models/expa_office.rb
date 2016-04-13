@@ -11,10 +11,15 @@ class ExpaOffice < ActiveRecord::Base
             uniqueness: true,
             presence: false
 
-  def update_from_expa(data)
+  def update_from_expa(data, entity_name = nil)
     self.xp_full_name = data.full_name unless data.full_name.nil?
-    self.xp_name = data.name unless data.name.nil?
     self.xp_id = data.id unless data.id.nil?
     self.xp_url = data.url.to_s unless data.url.nil?
+
+    self.xp_name = if entity_name.nil?
+                     data.name unless data.name.nil?
+                   else
+                     entity_name
+                   end
   end
 end

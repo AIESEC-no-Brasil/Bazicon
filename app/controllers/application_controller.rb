@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     @user = ExpaPerson.find_by_xp_id(session[:expa_id])
     # Sometimes when we are in test enviroment, we delete the database but keep the session cookie. This forces the User creation on database on these cases
     controllers_to_ignore = ['sessions', 'digital_transformation']
-    if @user.nil? && !controllers_to_ignore.include?(params['controller']) || session[:expa_id].blank?
+    if @user.nil? && !controllers_to_ignore.include?(params['controller'])
       reset_session
       return redirect_to index_path
     end
