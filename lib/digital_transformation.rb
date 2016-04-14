@@ -23,12 +23,8 @@ module DigitalTransformation
        'Gestão']
     end
 
-    def entities
-      hash_entities_podio_expa.keys
-    end
-
     def hash_entities_podio_expa
-      {'CL' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
+      {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
        'ALFENAS' => {'ids' => [479,362627844], 'programs' => ['oGCDP']},
        'ARACAJU' => {'ids' => [100,306817550], 'programs' => ['oGCDP']},
        'ARARAQUARA' => {'ids' => [435,362628166], 'programs' => ['oGCDP']},
@@ -102,7 +98,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = []
       hash_entities.each do |entity|
-        res_hash << entity.key if entity['programs'].include?('oGCDP')
+        res_hash << entity[0] if entity[1]['programs'].include?('oGCDP')
       end
       res_hash
     end
@@ -111,7 +107,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = []
       hash_entities.each do |entity|
-        res_hash << entity.key if entity['programs'].include?('oGIP')
+        res_hash << entity[0] if entity[1]['programs'].include?('oGIP')
       end
       res_hash
     end

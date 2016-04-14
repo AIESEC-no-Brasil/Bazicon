@@ -3,7 +3,7 @@
     %h2 Gavetão
     %ol.breadcrumb
       %li
-        %a{href: "#"} Home
+        %a{href: main_url} Home
       %li.active
         %strong Gavetão
 
@@ -47,9 +47,55 @@
                   = tag.name
             %button.btn.btn-default.btn-block Filtrar
             .hr-line-dashed
-            %button.btn.btn-primary.btn-block Upload
-            .clearfix
-
+            %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
+            #myModal.modal.inmodal{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
+              .modal-dialog
+                .modal-content.animated.bounceInRight
+                  .modal-header
+                    %button.close{"data-dismiss" => "modal", :type => "button"}
+                      %span{"aria-hidden" => "true"} ×
+                      %span.sr-only Close
+                    %i.fa.fa-laptop.modal-icon
+                    %h4.modal-title Modal title
+                    %small.font-bold Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  .modal-body
+                    .ibox.float-e-margins
+                    .ibox-title
+                      %h5
+                        Chosen select
+                        %small http://harvesthq.github.io/chosen/
+                      .ibox-tools
+                        %a.collapse-link
+                          %i.fa.fa-chevron-up
+                        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                          %i.fa.fa-wrench
+                        %ul.dropdown-menu.dropdown-user
+                          %li
+                            %a{:href => "#"} Config option 1
+                          %li
+                            %a{:href => "#"} Config option 2
+                        %a.close-link
+                          %i.fa.fa-times
+                    .ibox-content
+                      %p
+                        With chosen select uesr can fase chose from large in select input.
+                      .form-group
+                        %label.font-noraml Multi select
+                        .input-group
+                          %select.chosen-select{"data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:350px;", :tabindex => "4"}
+                            %option{:value => ""} Select
+                            %option{:value => "United States"} United States
+                            %option{:value => "United Kingdom"} United Kingdom
+                            %option{:value => "Afghanistan"} Afghanistan
+                            %option{:value => "Aland Islands"} Aland Islands
+                            %option{:value => "Albania"} Albania
+                            %option{:value => "Algeria"} Algeria
+                    .form-group
+                      %label Sample Input
+                      %input.form-control{:placeholder => "Enter your email", :type => "email"}/
+                  .modal-footer
+                    %button.btn.btn-white{"data-dismiss" => "modal", :type => "button"} Close
+                    %button.btn.btn-primary{:type => "button"} Save changes
 .col-lg-9.animated.fadeInRight
   .row
     .col-lg-12

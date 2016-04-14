@@ -40,13 +40,5 @@ class ExpaPersonTest < Minitest::Test
 
   end
 
-  def test_what_programs
-    params = {'per_page' => 1, 'filters[status]' => 'completed'}
-    people = EXPA::People.list_by_param(params).first
-    xp_sync = ExpaRdSync.new
-    xp_sync.update_db_peoples(people)
-    person = ExpaPerson.all.first
-
-    assert(!person.list_programs.blank?, 'No programme was returned. Function is not working or database is not being well populated')
-  end
+  
 end

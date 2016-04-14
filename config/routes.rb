@@ -12,13 +12,17 @@ Myapp::Application.routes.draw do
   get '/main/archives' => 'archives#show', as: 'archives_show'
 
   # Digital Transformation
-
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
   get '/dt/prevents'              => 'digital_transformation#prevents',             as: 'digital_transformation_prevents'
   get '/expa/sign_up'             => 'digital_transformation#expa_sign_up',         as: 'expa_sign_up'
   post '/dt/difficulties_success' => 'digital_transformation#difficulties_success', as: 'digital_transformation_difficulties_success'
   post '/dt/prevents_success'     => 'digital_transformation#prevents_success',     as: 'digital_transformation_prevents_success'
   post '/expa/sign_up'            => 'digital_transformation#expa_sign_up_success', as: 'expa_sign_up_success'
+
+  # Outgoing Exchange
+  get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'
+  get '/ogx/list'   => 'outgoing_exchange#list',   as: 'outgoing_exchange_list'
+  get '/ogx/detail' => 'outgoing_exchange#detail', as: 'outgoing_exchange_detail'
 
 
   get 'lc/dash'

@@ -1,0 +1,185 @@
+#wrapper.gray-bg
+  .wrapper.wrapper-content.animated.fadeInRight.center-block
+    .col-xs-2
+    .col-xs-8
+      .col-xs-12
+        .ibox
+          .ibox-content
+            - if params['programa'] == 'GCDP'
+              %h2 Seja o líder que o mundo precisa!
+            - elsif params['programa'] == 'GIP'
+              %h2 Traga o mundo para o seu currículo!
+            = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
+              %input{name: 'programa', value: "#{params['programa']}", hidden: true}
+              %h1
+                .fa.fa-user
+                Informações pessoais
+              %fieldset{:style => "height: auto"}
+                - flash.each do |name, msg|
+                  %p
+                    = content_tag :div, msg.html_safe, class: name
+                .row
+                  .col-xs-6.b-r
+                    .form-group
+                      %label Nome *
+                      %input#name.form-control.required{:name => "name", :type => "text"}
+                    .form-group
+                      %label Sobrenome *
+                      %input#lastname.form-control.required{:name => "lastname", :type => "text"}
+                  .col-xs-6
+                    .form-group
+                      %label E-mail *
+                      %input#userName.form-control.required.email{:name => "email", :type => "text"}
+                    .form-group
+                      %label Senha *
+                      %input#password.form-control.required{:name => "password", :type => "password"}
+              %h1
+                .fa.fa-graduation-cap
+                Escolaridade
+              %fieldset{:style => "height: auto"}
+                .row
+                  .form-group
+                    .col-xs-6.b-r
+                      #study-level
+                        %label Escolaridade *
+                        %select.form-control.m-b.required#study-level-form{name: 'study-level'}
+                          - DigitalTransformation.study_level.each do |option|
+                            %option{value: "#{option}"}
+                              = option
+                      #university{hidden: true}
+                        %label Universidade *
+                        %select.form-control.m-b#university-form{name: 'university'}
+                          - DigitalTransformation.universities.each do |option|
+                            %option
+                              = option
+                      #course{hidden: true}
+                        %label Curso *
+                        %select.form-control.m-b#course-form{name: 'course'}
+                          - DigitalTransformation.courses.each do |option|
+                            %option
+                              = option
+                    .col-xs-6.text-center
+                      .fa.big-icon.fa-graduation-cap{style: 'color: gray'}
+              %h1
+                .fa.fa-plane
+                AIESEC
+              %fieldset{:style => "height: auto"}
+                .row
+                  .form-group
+                    .col-xs-6.b-r
+                      #sub-productrm-control.m-b.required{name: 'sub-product'}
+                        - if params['programa'] == 'GCDP'
+                          %label Região de interesse *
+                          %select.form-control.m-b.required{name: 'sub-product'}
+                            - DigitalTransformation.sub_product_global_citizen.each do |option|
+                              %option
+                                = option
+                        - elsif params['programa'] == 'GIP'
+                          %label Sub-produto de interesse *
+                          %select.form-control.m-b.required{name: 'sub-product'}
+                            - DigitalTransformation.sub_product_global_talent.each do |option|
+                              %option
+                                = option
+                      #how-get-to-know-aiesec
+                        %label Como conheceu a AIESEC? *
+                        %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
+                          - DigitalTransformation.how_got_to_know_aiesec.each do |option|
+                            %option
+                              = option
+                        %label AIESEC mais próxima *
+                        %select.form-control.m-b.required{name: 'nearest_lc'}
+                          - if params['programa'] == 'GCDP'
+                            - DigitalTransformation.entities_ogcdp.each do |option|
+                              %option
+                                = option
+                          - elsif params['programa'] == 'GIP'
+                            - DigitalTransformation.entities_ogip.each do |option|
+                              %option
+                                = option
+                      %input#accepTerms.required{name: 'acceptTerms', type: 'checkbox', 'aria-required' => true}
+                      %label{for: 'acceptTerms'}
+                        Eu concordo com os
+                        %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
+
+                    .col-xs-6.text-center
+                      .fa.big-icon.fa-plane{style: 'color: gray'}
+
+    .col-xs-2
+- content_for :javascript do
+  :javascript
+    $(function() {
+
+      var settings = {
+        labels: {
+          finish: "Enviar",
+          next: "Próximo",
+          previous: "Anterior",
+        },
+
+        enableCancelButton: false,
+        transitionEffect: 'fade',
+
+        bodyTag: "fieldset",
+
+        onStepChanging: function (event, currentIndex, newIndex) {
+          // Always allow going backward even if the current step contains invalid fields!
+          if (currentIndex > newIndex) {
+            return true;
+          }
+
+          var form = $(this);
+
+          // Clean up if user went backward before
+          if (currentIndex < newIndex) {
+            // To remove error styles
+            $(".body:eq(" + newIndex + ") label.error", form).remove();
+            $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+          }
+
+          // Disable validation on fields that are disabled or hidden.
+          form.validate().settings.ignore = ":disabled,:hidden";
+
+          // Start validation; Prevent going forward if false
+          return form.valid();
+        },
+
+        onFinishing: function (event, currentIndex) {
+          var form = $(this);
+
+          // Disable validation on fields that are disabled.
+          // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+          form.validate().settings.ignore = ":disabled";
+
+          // Start validation; Prevent form submission if false
+          return form.valid();
+        },
+
+        onFinished: function (event, currentIndex) {
+          var form = $(this);
+
+          // Submit form input
+          form.submit();
+        }
+      };
+
+      $("#form").steps(settings).validate({});
+
+      $("select#study-level-form").change(function() {
+        select_text = $(this).find('option:selected').val()
+        if (select_text == 'Ensino Superior' ||
+           select_text == 'Mestrado' ||
+           select_text == 'Doutorado') {
+          $('#university').show('fast','linear');
+          $('#university-form').addClass('required');
+          $('#course').show('fast','linear');
+          $('#course-form').addClass('required');
+        }
+        else {
+          $('#university').hide('fast','linear');
+          $('#university-form').removeClass('required');
+          $('#course').hide('fast','linear');
+          $('#course-form').removeClass('required');
+        }
+      });
+
+    });

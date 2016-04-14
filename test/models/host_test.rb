@@ -26,6 +26,9 @@ class HostTest < Minitest::Test
     ExpaTeam.all.each do |team|
       team.destroy
     end
+    Host.all.each do |host|
+      host.destroy
+    end
   end
 
   def test_save
@@ -44,56 +47,33 @@ class HostTest < Minitest::Test
   	assert person.destroy, "Não deletou o usuário"
   end
 
-  def test_list_all_leads
+  def test_list_all_free
+    hosts = Host.list_free
+    assert(hosts.count == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts} instead")
 
-    host = Host.new 
-    host.full_name = "Free 1"
-    host.tmp_responsable_id = 124535
-    host.date_approach = "2016-04-10 12:29:29"
-    host.date_alignment_meeting = "2016-04-10 12:29:29"
-    host.tmp_who_realized_meeting_id = 345632
-    host.is_favourite = false
-    host.is_problematic = false
-    host.save
+    #creating leads that doesn't have tmp responsable or for realize
+    lead = Host.new
+    lead.full_name = "Lead 1"
+    lead.tmp_responsable_id = 78789
+    lead.save
 
-    host = Host.new 
-    host.full_name = "Free 2"
-    host.tmp_responsable_id = 856886
-    host.date_approach = "2016-04-10 12:12:29"
-    host.date_alignment_meeting = "2016-04-10 10:29:29"
-    host.tmp_who_realized_meeting_id = 345632
-    host.is_favourite = false
-    host.is_problematic = false
-    host.save
+    lead = Host.new
+    lead.full_name = "Lead 2"
+    lead.tmp_who_realized_meeting_id = 79887
+    lead.save
 
-    host = Host.new 
-    host.full_name = "Lead 1"
-    host.tmp_responsable_id = 856886
-    host.save
+    lead = Host.new
+    lead.full_name = "Lead 3"
+    lead.save
 
-    host = Host.new 
-    host.full_name = "Lead 2"
-    host.tmp_responsable_id = 856886
-    host.tmp_who_realized_meeting_id = 345632
-    host.is_favourite = false
-    host.is_problematic = false
-    host.save
+    hosts = Host.list_free
+    assert(hosts.count == 0, "Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts} instead")
 
-    host = Host.new 
-    host.full_name = "Lead 3"
-    host.tmp_responsable_id = 856886
-    host.tmp_who_realized_meeting_id = 345632
-    host.is_favourite = false
-    host.is_problematic = false
-    host.save
 
-    list = Hosts.list_leads
-
-    assert(list.length == 3, "Retornou o número errado de leads, ŕetornou #{list.count} pessoas e devieria ser 3")
   end
 
   def test_list_all_problematics
-    hosts = Hosts.list_problematics
+    hosts = Host.list_problematics
     assert(hosts.count == 0, "Retornou valor qndo não deveria. Retornou #{hosts.count.to_s} e deveria retonar 0")
   
     host = Host.new
@@ -104,7 +84,7 @@ class HostTest < Minitest::Test
     host.full_name = "queridinho 2"
     host.save
 
-    hosts = Hosts.list_problematics
+    hosts = Host.list_problematics
     assert(hosts.count == 0, "Retornou valor qndo não deveria. Retornou #{hosts.count.to_s} e deveria retonar 0")
   
     host = Host.new
@@ -112,7 +92,7 @@ class HostTest < Minitest::Test
     host.is_problematic = true
     host.save
 
-    hosts = Hosts.list_problematics
+    hosts = Host.list_problematics
     assert(hosts.count == 1, "Retornou valor qndo não deveria. Retornou #{hosts.count.to_s} e deveria retonar 1")
   
     host = Host.new

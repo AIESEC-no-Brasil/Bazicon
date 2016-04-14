@@ -13,7 +13,7 @@
 }
 
 .navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus {
-  background-color: darken($nav-bg, 3%);
+  background-color: darken($nav-bg, 4%);
   color: white;
 }
 
@@ -152,8 +152,8 @@
 }
 
 .nav > li.active {
-  border-left: 4px solid darken($navy, 2%);
-  background: darken($nav-bg, 3%);
+  border-left: 4px solid $navy;
+  background: darken($nav-bg, 4%);
 }
 
 .nav.nav-second-level > li.active {
@@ -169,7 +169,7 @@
 }
 
 .nav-header .text-muted {
-  color: #8095a8;
+  color: $light-gray;
 }
 
 .minimalize-styl-2 {
@@ -273,7 +273,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .canvas-menu.mini-navbar .nav-second-level {
-  background: darken($nav-bg, 3%);
+  background: darken($nav-bg, 4%);
 }
 
 .mini-navbar li.active .nav-second-level {
@@ -296,7 +296,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .navbar-default .landing_link a {
-  background: lighten($navy, 3%);
+  background: $navy;
   color: white;
 }
 
@@ -307,7 +307,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 
 .navbar-default .landing_link a span.label {
   background: #fff;
-  color: lighten($navy, 3%);
+  color: $navy;
 }
 
 .logo-element {

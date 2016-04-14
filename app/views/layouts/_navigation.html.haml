@@ -4,44 +4,41 @@
       %li.nav-header
         .dropdown.profile-element
           %span
-            %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
+            %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}", "id" => "profile_photo"}
           %span.clear
             %span.block.m-t-xs
-              %strong.font-bold
+              %p#user-name
                 = @user.xp_full_name.split(' ')[0]
             %span.text-muted.text-xs.block
               = @user.xp_email.split('@')[0]
-        .logo-element
-          %img.img-circle{"alt" => "profile picture", "src" => "#{image_url @user.xp_profile_photo_url}"}
-
 
       %li{"class" => "#{is_active_controller('main')}"}
         = link_to main_path do
           %i.fa.fa-dashboard
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.main"}
             Dashboard
-      %li{"class" => "#{is_active_controller('ogx')}"}
-        = link_to lc_ogx_path do
+      %li{"class" => "#{is_active_controller('outgoing_exchange')}"}
+        = link_to outgoing_exchange_dash_path do
           %i.fa.fa-paper-plane
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.outgoing_exchange"}
             OGX
-      %li{"class" => "#{is_active_controller('tm')}"}
+      %li{"class" => "#{is_active_controller('lc_tm')}"}
         = link_to lc_tm_path do
           %i.fa.fa-users
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.tm"}
             Membresia
       %li{"class" => "#{is_active_controller('hosts')}"}
         = link_to '/hosts/index' do
           %i.fa.fa-leaf
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.host"}
             Host
-      %li{"class" => "#{is_active_controller('files')}"}
+      %li{"class" => "#{is_active_controller('archives')}"}
         = link_to archives_show_path do
           %i.fa.fa-files-o
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.archives"}
             Gavetão
       %li.landing_link
         = link_to "http://www.aiesec.org.br", :target => "_blank" do
           %i.fa.fa-star
-          %span.nav-label{"data-i18n" => "nav.metrics"}
+          %span.nav-label{"data-i18n" => "nav.landing"}
             Site AIESEC in Brasil
