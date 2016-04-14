@@ -102,10 +102,10 @@ class ExpaRdSync
         fields['entidade-mais-proxima'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['como-conheceu-a-aiesec'] = ExpaPerson.how_got_to_know_aiesecs[person.how_got_to_know_aiesec] + 1 unless person.how_got_to_know_aiesec.nil?
         fields['escolaridade'] = JSON.parse(person.control_podio)['study_level']
-        if JSON.parse(person.control_podio).key?('universidade')
+        if JSON.parse(person.customized_fields).key?('universidade')
           fields['universidade'] = JSON.parse(person.customized_fields)['universidade']['item_id']
         end
-        if JSON.parse(person.control_podio).key?('curso')
+        if JSON.parse(person.customized_fields).key?('curso')
           fields['curso'] = JSON.parse(person.customized_fields)['curso']['item_id']
         end
 

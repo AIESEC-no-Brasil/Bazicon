@@ -107,7 +107,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = []
       hash_entities.keys.each do |entity|
-        res_hash << entity if hash_entities[entity]['programs'].include?('oGCDP')
+        res_hash << entity if hash_entities[entity]['programs'].include?('oGIP')
       end
       res_hash
     end
