@@ -3,6 +3,18 @@
 class SessionsController < ApplicationController
   # GET /
   def index
+    if session[:expa_id]
+      if EXPA.client.nil?
+        expa = EXPA.setup()
+      else
+        expa = nil
+        EXPA.client = nil
+        expa = EXPA.setup()
+      end
+
+      expa.auth(session[:mail],session[:pass])
+      return redirect_to main_path
+    end
     render layout: "empty"
   end
 
@@ -11,7 +23,14 @@ class SessionsController < ApplicationController
     mail = params[:email]
     pass = params[:password]
 
-    expa = EXPA.setup()
+    if EXPA.client.nil?
+      expa = EXPA.setup()
+    else
+      expa = nil
+      EXPA.client = nil
+      expa = EXPA.setup()
+    end
+
     expa.auth(mail,pass)
 
     if expa.get_token.nil?
@@ -27,6 +46,8 @@ class SessionsController < ApplicationController
       user.save
       reset_session
       session[:expa_id] = user.xp_id
+      session[:mail] = mail
+      session[:password] = pass
       redirect_to main_path
     end
   end
@@ -34,7 +55,6 @@ class SessionsController < ApplicationController
   # GET /
   def logout
     reset_session
-    session[:expa_id] = nil
     redirect_to root_path
   end
 end
