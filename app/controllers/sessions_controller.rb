@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
     mail = params[:email]
     pass = params[:password]
 
-    EXPAHelper.auth(mail, pass)
+    expa = EXPAHelper.auth(mail, pass)
 
     if expa.get_token.nil?
       flash[:warning] = "E-mail ou senha inválida"
