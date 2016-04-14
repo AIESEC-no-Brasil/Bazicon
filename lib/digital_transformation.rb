@@ -97,8 +97,8 @@ module DigitalTransformation
     def entities_ogcdp
       hash_entities = hash_entities_podio_expa
       res_hash = []
-      hash_entities.each do |entity|
-        res_hash << entity[0] if entity[1]['programs'].include?('oGCDP')
+      hash_entities.keys.each do |entity|
+        res_hash << entity if hash_entities[entity]['programs'].include?('oGCDP')
       end
       res_hash
     end
@@ -107,7 +107,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = []
       hash_entities.each do |entity|
-        res_hash << entity[0] if entity[1]['programs'].include?('oGIP')
+        res_hash << entity if hash_entities[entity]['programs'].include?('oGCDP')
       end
       res_hash
     end
@@ -116,7 +116,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = {}
       hash_entities.each do |entity|
-        res_hash[entity.key] = entity['ids'][1]
+        res_hash[entity] = hash_entities[entity]['ids'][1]
       end
       res_hash
     end
@@ -125,7 +125,7 @@ module DigitalTransformation
       hash_entities = hash_entities_podio_expa
       res_hash = {}
       hash_entities.each do |entity|
-        res_hash[entity.key] = entity['ids'][0]
+        res_hash[entity] = hash_entities[entity]['ids'][0]
       end
       res_hash
     end
