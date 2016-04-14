@@ -1,19 +1,15 @@
 module EXPAHelper
   class << self
     def auth(email, password)
-      expa = setup
-      expa.auth(email, password)
+      setup(email,password)
     end
 
     private
 
-    def setup
-      expa = if EXPA.client.nil?
-               EXPA.setup()
-             else
-               EXPA.client= nil
-               EXPA.setup()
-             end
+    def setup(email, password)
+      expa = EXPA::Client.new
+      expa.auth(email,password)
+      EXPA.client=expa
     end
   end
 end

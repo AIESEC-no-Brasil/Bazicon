@@ -160,7 +160,7 @@ class DigitalTransformationController < ApplicationController
     rescue => exception
       puts exception.to_s
     else
-      expa = EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
       time = Time.now - 60 # 1 minute windows
       people = EXPA::People.list_everyone_created_after(time)
