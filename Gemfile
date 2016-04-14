@@ -4,6 +4,7 @@ gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 
 gem 'json'
 
+gem 'whenever', :require => false
 gem 'clockwork', :require => false
 gem 'expa', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'mechanize'

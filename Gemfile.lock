@@ -63,6 +63,7 @@ GEM
     capistrano-rails (1.1.6)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    chronic (0.10.2)
     clockwork (1.2.0)
       activesupport
       tzinfo
@@ -223,6 +224,8 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     webrobots (0.1.2)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -258,6 +261,7 @@ DEPENDENCIES
   turbolinks
   uglifier
   web-console (~> 2.0)
+  whenever
 
 BUNDLED WITH
    1.11.2
