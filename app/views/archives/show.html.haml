@@ -25,6 +25,12 @@
             %a.file-control{href: "#"}Outros
             .hr-line-dashed
             %h5 Filtros
+            .switch
+              .onoffswitch
+                %input{type: "checkbox", class: "onoffswitch-checkbox", id: "type"}
+                  %label{class:"onoffswitch-label", for: "type"}
+                    %span.onoffswitch-inner
+                    %span.onoffswitch-switch
             %ul.folder-list{style: "padding: 0"}
               %li
                 %a{href: "#"}
@@ -36,7 +42,7 @@
                   Privado
               %li
                 %a{href: "#"}
-                  %i.fa.fa-star-half
+                  %i.fa.fa-star-half-empty
                   Público e Privado
             %h5.tag-title
               Tags
