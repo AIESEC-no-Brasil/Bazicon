@@ -5,3 +5,4 @@ config/local_env.yml
 tmp
 log/production.log
 log/development.log
+db/test.sqlite3
