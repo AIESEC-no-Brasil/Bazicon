@@ -4,15 +4,8 @@ class SessionsController < ApplicationController
   # GET /
   def index
     if session[:expa_id]
-      if EXPA.client.nil?
-        expa = EXPA.setup()
-      else
-        expa = nil
-        EXPA.client = nil
-        expa = EXPA.setup()
-      end
 
-      expa.auth(session[:mail],session[:pass])
+      EXPAHelper.auth(session[:mail],session[:pass])
       return redirect_to main_path
     end
     render layout: "empty"
@@ -23,15 +16,7 @@ class SessionsController < ApplicationController
     mail = params[:email]
     pass = params[:password]
 
-    if EXPA.client.nil?
-      expa = EXPA.setup()
-    else
-      expa = nil
-      EXPA.client = nil
-      expa = EXPA.setup()
-    end
-
-    expa.auth(mail,pass)
+    EXPAHelper.auth(mail, pass)
 
     if expa.get_token.nil?
       flash[:warning] = "E-mail ou senha inválida"

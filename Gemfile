@@ -14,6 +14,8 @@ gem 'dropbox-sdk'
 
 gem 'minitest'
 
+gem 'rack-cache'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 gem 'bootstrap-sass'
