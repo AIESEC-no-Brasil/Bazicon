@@ -54,6 +54,7 @@ gem 'bcrypt'
 
 # Use of passenger as app server
 gem 'passenger'
+gem 'thin'
 
 #Para atualizar o Robozinho do Podio
 gem 'podio'
