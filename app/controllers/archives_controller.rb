@@ -25,20 +25,17 @@ class ArchivesController < ApplicationController
     @archives = Files.all
   end
 
-  def upload(upload=params[:file], is_private= params[:show], committeeId = params[:committeeId])
+  def upload(upload=params[:file], is_private= params[:show])
     unless upload == nil || Files.find_by_name("#{upload.original_filename}")
       file = open(upload.path())
       #Save a record with the data about who uploaded the file
       record = Files.new
       record.name = upload.original_filename
-      if !committeeId
-        committeeId = session[:committee]
-      end
       if !is_private
         is_private = false
       end
-      record.office_id = committeeId
-      record.user_id = session[:user_id]
+      record.office_id = @user.xp_current_office.xp_id
+      record.user_id = @user.xp_id
       record.is_private = is_private
       record.is_deleted = false
       record.save
