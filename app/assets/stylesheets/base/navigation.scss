@@ -1,11 +1,11 @@
 .nav > li > a {
-  color: #fff;
+  color: $nav-text-color;
   font-weight: 600;
   padding: 14px 20px 14px 25px;
 }
 
 .nav.navbar-right > li > a {
-  color: #ffffff;
+  color: #999c9e;
 }
 
 .nav > li.active > a {
@@ -13,8 +13,8 @@
 }
 
 .navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus {
-  background-color: darken(#007ff1, 3%);
-  color: black;
+  background-color: darken($nav-bg, 4%);
+  color: white;
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
@@ -34,8 +34,8 @@
 }
 
 .navbar-default {
-  background-color: #007ff1;
-  border-color: #007ff1;
+  background-color: transparent;
+  border-color: $nav-bg;
 }
 
 .navbar-top-links li {
@@ -143,7 +143,7 @@
 
 .nav-header {
   padding: 33px 25px;
-  background: #007ff1;
+  background: $nav-profil-pattern;
 
 }
 
@@ -152,8 +152,8 @@
 }
 
 .nav > li.active {
-  border-left: 4px solid darken($navy, 2%);
-  background: darken($nav-bg, 3%);
+  border-left: 4px solid $navy;
+  background: darken($nav-bg, 4%);
 }
 
 .nav.nav-second-level > li.active {
@@ -165,11 +165,11 @@
 }
 
 .nav-header a {
-  color: #fff;
+  color: #DFE4ED;
 }
 
 .nav-header .text-muted {
-  color: #fff;
+  color: $light-gray;
 }
 
 .minimalize-styl-2 {
@@ -267,13 +267,13 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   position: absolute;
   left: 70px;
   top: 0;
-  background-color: #007ff1;
+  background-color: $nav-bg;
   padding: 10px 10px 10px 10px;
   font-size: 12px;
 }
 
 .canvas-menu.mini-navbar .nav-second-level {
-  background: darken(#007ff1, 3%);
+  background: darken($nav-bg, 4%);
 }
 
 .mini-navbar li.active .nav-second-level {
@@ -291,23 +291,23 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .navbar-default .special_link a span.label {
-  background: #007ff1;
+  background: #fff;
   color: $navy;
 }
 
 .navbar-default .landing_link a {
-  background: #fff;
-  color: #007ff1;
+  background: $navy;
+  color: white;
 }
 
 .navbar-default .landing_link a:hover {
-  background: #fff!important;
-  color: #007ff1;
+  background: $navy !important;
+  color: white;
 }
 
 .navbar-default .landing_link a span.label {
   background: #fff;
-  color: lighten(#007ff1, 3%);
+  color: $navy;
 }
 
 .logo-element {
@@ -412,7 +412,7 @@ body.canvas-menu .logo-element {
 
 body.mini-navbar .nav-header {
   padding: 0;
-  background-color: #007ff1;
+  background-color: $navy;
 }
 
 body.canvas-menu .nav-header {
@@ -527,9 +527,4 @@ body.canvas-menu nav.navbar-static-side {
 body.canvas-menu.mini-navbar nav.navbar-static-side {
   display: block;
   width: 220px;
-}
-p#user-name{
-  color:#fff;
-  font-size: 18px;
-  font-weight: bold;
 }

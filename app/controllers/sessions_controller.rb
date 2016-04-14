@@ -18,9 +18,9 @@ class SessionsController < ApplicationController
 
     expa = EXPAHelper.auth(mail, pass)
 
-    if expa.get_token.nil?
+    if EXPA.client.get_token.nil?
       flash[:warning] = "E-mail ou senha inválida"
-      redirect_to(:action => "error")
+      return redirect_to(:action => "index")
     else
       user = ExpaPerson.find_by_xp_email(mail)
       if user.nil?

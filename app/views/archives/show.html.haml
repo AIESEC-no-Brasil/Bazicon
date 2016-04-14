@@ -59,37 +59,27 @@
                     %h4.modal-title Modal title
                     %small.font-bold Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   .modal-body
-                    .ibox.float-e-margins
-                    .ibox-title
-                      %h5
-                        Chosen select
-                        %small http://harvesthq.github.io/chosen/
-                      .ibox-tools
-                        %a.collapse-link
-                          %i.fa.fa-chevron-up
-                        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                          %i.fa.fa-wrench
-                        %ul.dropdown-menu.dropdown-user
-                          %li
-                            %a{:href => "#"} Config option 1
-                          %li
-                            %a{:href => "#"} Config option 2
-                        %a.close-link
-                          %i.fa.fa-times
-                    .ibox-content
-                      %p
-                        With chosen select uesr can fase chose from large in select input.
-                      .form-group
-                        %label.font-noraml Multi select
-                        .input-group
-                          %select.chosen-select{"data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:350px;", :tabindex => "4"}
-                            %option{:value => ""} Select
-                            %option{:value => "United States"} United States
-                            %option{:value => "United Kingdom"} United Kingdom
-                            %option{:value => "Afghanistan"} Afghanistan
-                            %option{:value => "Aland Islands"} Aland Islands
-                            %option{:value => "Albania"} Albania
-                            %option{:value => "Algeria"} Algeria
+                    .form-group
+                      %label.font-noraml Multi select
+                      .input-group
+                        %select.chosen-select{"data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:350px;", :tabindex => "4"}
+                          %option{:value => ""} Select
+                          %option{:value => "United States"} United States
+                          %option{:value => "United Kingdom"} United Kingdom
+                      .ibox-title.back-change
+                        :javascript
+                            $(function() {
+                              var config = {
+                                  '.chosen-select': {},
+                                  '.chosen-select-deselect': { allow_single_deselect: true },
+                                  '.chosen-select-no-single': { disable_search_threshold: 10 },
+                                  '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+                                  '.chosen-select-width': { width: "95%" }
+                              }
+                              for (var selector in config) {
+                                  $(selector).chosen(config[selector]);
+                              }
+                            });
                     .form-group
                       %label Sample Input
                       %input.form-control{:placeholder => "Enter your email", :type => "email"}/
