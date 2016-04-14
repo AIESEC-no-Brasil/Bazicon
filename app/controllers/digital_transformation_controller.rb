@@ -10,7 +10,7 @@ class DigitalTransformationController < ApplicationController
     password = params['password']
     difficulty = params['difficulties']
 
-    EXPAHelper.auth(user_name, password)
+    expa = EXPAHelper.auth(user_name, password)
     if expa.get_token.nil?
       flash['text-danger'] = 'Sua conta não foi encontrada. Verifique se você digitou seu e-mail e senha corretamente'
       return redirect_to digital_transformation_difficulties_path
@@ -55,7 +55,7 @@ class DigitalTransformationController < ApplicationController
     prevent_option = params['preventOption']
     prevent_detail = params['preventDetail']
 
-    EXPAHelper.auth(user_name, password)
+    expa = EXPAHelper.auth(user_name, password)
     if expa.get_token.nil?
       flash['text-danger'] = 'Sua conta não foi encontrada. Verifique se você digitou seu e-mail e senha corretamente'
       return redirect_to digital_transformation_prevents_path
@@ -160,7 +160,7 @@ class DigitalTransformationController < ApplicationController
     rescue => exception
       puts exception.to_s
     else
-      EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      expa = EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
       time = Time.now - 60 # 1 minute windows
       people = EXPA::People.list_everyone_created_after(time)
