@@ -114,18 +114,18 @@ module DigitalTransformation
 
     def hash_entities_podio
       hash_entities = hash_entities_podio_expa
-      res_hash = {}
+      res_hash = {'nil' => nil}
       hash_entities.each do |entity|
-        res_hash{entity, hash_entities[entity]['ids'][1]}
+        res_hash[entity] = hash_entities[entity]['ids'][1]
       end
       res_hash
     end
 
     def hash_entities_expa
       hash_entities = hash_entities_podio_expa
-      res_hash = {}
+      res_hash = {'nil' => nil}
       hash_entities.each do |entity|
-        res_hash{entity, hash_entities[entity]['ids'][0]}
+        res_hash[entity] = hash_entities[entity]['ids'][0]
       end
       res_hash
     end
