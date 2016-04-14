@@ -14,8 +14,8 @@ class Host < ActiveRecord::Base
 	end
 
 	def self.list_free
-		Host.where.not({tmp_responsable_id: nil,
-					tmp_who_realized_meeting_id: nil})
+		Host.where.not("tmp_responsable_id=? AND
+					tmp_who_realized_meeting_id=? AND date_approach=? AND date_alignment_meeting>?", nil, nil, nil, Time.now)
 	end
 end
 

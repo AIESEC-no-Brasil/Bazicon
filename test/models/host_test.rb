@@ -49,7 +49,7 @@ class HostTest < Minitest::Test
 
   def test_list_all_free
     hosts = Host.list_free
-    assert(hosts.count == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts} instead")
+    assert(hosts.length == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
 
     #creating leads that doesn't have tmp responsable or for realize
     lead = Host.new
@@ -67,7 +67,43 @@ class HostTest < Minitest::Test
     lead.save
 
     hosts = Host.list_free
-    assert(hosts.count == 0, "Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts} instead")
+    assert(hosts.count == 0, "Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+
+    #lead with date_alignment_meeting < Time.now
+    lead = Host.new
+    lead.full_name = "Lead 4"
+    lead.tmp_responsable_id = 78789
+    lead.tmp_who_realized_meeting_id = 79887
+    lead.date_approach = Time.new(2016,4,10)
+    date_alignment_meeting = Time.new(2016,4,5)
+    lead.save
+
+    hosts = Host.list_free
+    assert(hosts.count == 0, "Assert 3) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+
+    free = Host.new
+    free.full_name = "Free 1"
+    free.tmp_responsable_id = 78789
+    free.tmp_who_realized_meeting_id = 79887
+    free.date_approach = Time.new(2016,4,10)
+    free.date_alignment_meeting = Time.new(2016,4,Time.now.day - 3)
+    free.save
+
+    hosts = Host.list_free
+    assert(hosts.count == 1, "Assert 4) Wrong number of hosts. It was supposed to be 1, it got #{hosts.count} instead")
+
+    (1..10).each do |i|
+      free = Host.new 
+      free.full_name = "Free #{i}"
+      free.tmp_responsable_id = 78789
+      free.tmp_who_realized_meeting_id = 79887
+      free.date_approach = Time.new(2016,4,10)
+      free.date_alignment_meeting = Time.new(2016,4,0+i)
+      free.save
+    end
+
+    hosts = Host.list_free
+    assert(hosts.count == 10+1, "Assert 5) It shoul read 10 free hosts. It read #{hosts.count} instead")
 
 
   end
