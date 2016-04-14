@@ -13,8 +13,9 @@
       %li
         %label Expansor / Expansão
         %select.form-control.m-b.required{name: 'local_committee'}
-          %option
-            Opções CLs
+          - for i in 0...@expansor_expansions.count
+            %option{value: "#{i}"}
+              = @expansor_expansions[i][0]
 
 .wrapper.wrapper-content.animated.fadeIn
   .p-w-md.m-t-sm
@@ -22,7 +23,7 @@
       .col-sm-12.text-center
         %h1.m-b-xs
           .fa.fa-globe
-          780
+          = @info['leads_total']
           %small
             Leads
           %span

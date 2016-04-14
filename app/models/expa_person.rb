@@ -96,11 +96,11 @@ class ExpaPerson < ActiveRecord::Base
 
   def get_role
     if self.xp_current_office == self.xp_home_mc
-      'mc'
+      ExpaPerson.roles[:role_mc]
     elsif self.xp_current_position.team.team_type == Team.where("team_type <> ?", Team.team_types[:eb])
       ExpaPerson.roles[:role_eb]
     else
-      'other'
+      ExpaPerson.roles[:role_other]
     end
   end
 

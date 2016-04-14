@@ -132,7 +132,7 @@ class ExpaRdSync
         fields['expa-id'] = person.xp_id.to_i unless person.xp_id.nil?
         fields['email'] = [{'type' => 'home', 'value' => person.xp_email.to_s}] unless person.xp_email.nil?
         fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}] unless person.xp_phone.nil?
-        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.entities[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
+        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
 
         puts fields
