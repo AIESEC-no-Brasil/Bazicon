@@ -107,7 +107,12 @@ class HostTest < Minitest::Test
 
 
   end
-
+  
+  def test_list_all_leads
+    hosts_leads = Host.list_leads
+    assert(hosts_leads.count == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+  end
+  
   def test_list_all_problematics
     hosts = Host.list_problematics
     assert(hosts.count == 0, "Retornou valor qndo não deveria. Retornou #{hosts.count.to_s} e deveria retonar 0")
