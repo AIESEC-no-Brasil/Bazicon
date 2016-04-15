@@ -138,11 +138,11 @@ class ExpaRdSync
         fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}] unless person.xp_phone.nil?
         fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
-        fields['escolaridade'] = JSON.parse(person.customized_fields)['study_level'] if JSON.parse(person.customized_fields).key?('study_level')
-        if JSON.parse(person.customized_fields).key?('universidade')
+        fields['escolaridade'] = JSON.parse(person.customized_fields)['escolaridade'] if JSON.parse(person.customized_fields).include?('escolaridade')
+        if JSON.parse(person.customized_fields).include?('universidade')
           fields['universidade'] = JSON.parse(person.customized_fields)['universidade']['item_id']
         end
-        if JSON.parse(person.customized_fields).key?('curso')
+        if JSON.parse(person.customized_fields).include?('curso')
           fields['curso'] = JSON.parse(person.customized_fields)['curso']['item_id']
         end
 
