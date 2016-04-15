@@ -15,6 +15,13 @@ class ExpaPerson < ActiveRecord::Base
   has_many :responsibled_hosts, class_name: 'Host', foreign_key: 'tmp_responsible'
   has_many :meeted_hosts, class_name: 'Host', foreign_key: 'tmp_who_realized_meeting'
 
+  has_many :comments_that_i_own, class_name: 'ExpaPersonComment', foreign_key: 'owner_id'
+  has_many :received_comments, through: :comments_that_i_own
+  has_many :comments_that_i_made, class_name: 'ExpaPersonComment', foreign_key: 'person_id'
+  has_many :made_comments, through: :comments_that_i_made
+
+  has_and_belongs_to_many :ep_managers, class_name: 'ExpaPerson', :join_table => 'expa_person_ep_managers', :foreign_key => 'person_id', :association_foreign_key => 'manager_id'
+
   validates :xp_id,
             uniqueness: true,
             presence: false
@@ -153,7 +160,7 @@ class ExpaPerson < ActiveRecord::Base
   end
 
   def get_sub_product_string
-    case self.interested_sub_product
+    case ExpaPerson.interested_sub_products[self.interested_sub_product]
       when 0 then 'Mundo Árabe'
       when 1 then 'Leste Europeu'
       when 2 then 'África'
@@ -174,4 +181,9 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_aiesec_email.downcase unless self.xp_aiesec_email.nil?
   end
 
+end
+
+class ExpaPersonComment < ActiveRecord::Base
+  belongs_to :person, class_name: 'ExpaPerson'
+  belongs_to :owner, class_name: 'ExpaPerson'
 end

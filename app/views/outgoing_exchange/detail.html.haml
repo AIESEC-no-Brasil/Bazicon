@@ -1,0 +1,278 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-9
+    %h2 OGX
+    %ol.breadcrumb
+      %li
+        %a{href: main_url} Home
+      %li.active
+        %a{href: outgoing_exchange_dash_url} Análise
+      %li
+        %a{href: outgoing_exchange_list_url} Gestão
+      %li
+        %strong
+          = @person.xp_full_name.split(' ')[0].to_s + ' / Expa ID: ' + @person.xp_id.to_s
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.m-b-lg.m-t-lg
+    .col-md-6
+      .profile-image
+        %img.img-circle.circle-border.m-b-md{:alt => "profile", :src => "#{@person.xp_profile_photo_url}"}
+      .profile-info
+        %div
+          %div
+            %h2.no-margins
+              = @person.xp_full_name
+            %h4
+              = @person.xp_email
+            - unless @person.xp_location.nil?
+              %small
+                Local: #{@person.xp_location}
+            %h4
+              .fa.fa-smile-o{style: "color: #00796B"}
+              .fa.fa-meh-o{style: "color: #00796B"}
+              .fa.fa-frown-o{style: "color: #00796B"}
+    .col-md-6
+      %table.table.small.m-b-xs
+        %tbody
+          %tr
+            %td
+              %strong Data inscrição
+              = @person.xp_created_at.strftime('%d/%m/%y')
+            %td
+              %strong Status
+              = @person.xp_status
+          %tr
+            %td
+              %strong CL EXPA
+              = @person.xp_home_lc.xp_name
+            %td
+              %strong CL OGX
+              - if @person.entity_exchange_lc
+                = @person.entity_exchange_lc.xp_name
+              - else
+                = @person.xp_home_lc.xp_name
+          %tr
+            %td
+              %strong Programa
+              - if @person.interested_program == 'global_volunteer' || @person.list_programs.include?('GCDP')
+                GCDP
+                .fa.fa-child.fa-2x
+              - elsif @person.interested_program == 'global_talents' || @person.list_programs.include?('GIP')
+                GIP
+                .fa.fa-briefcase.fa-2x
+              - else
+                Não especificado
+                .fa.fa-globe.fa-2x
+            %td
+              %strong Sub-Produto
+              - if @person.interested_program == 'global_volunteer' || @person.interested_program == 'global_talents'
+                = @person.get_sub_product_string
+              - else
+                Não especificado
+          - if !@person.customized_fields.nil? && JSON.parse(@person.customized_fields).include?('escolaridade')
+            %tr
+              - if !@person.customized_fields.nil? && JSON.parse(@person.customized_fields).include?('universidade')
+                %td
+                  %strong Universidade
+                  = DigitalTransformation.universities[JSON.parse(@person.customized_fields)['universidade']]
+                %td
+                  %strong Curso
+                  = DigitalTransformation.courses[JSON.parse(@person.customized_fields)['curso']]
+              - else
+                %td
+                %strong Escolaridade
+                = JSON.parse(@person.customized_fields)['escolaridade']
+
+  .row
+    .col-lg-3
+      .ibox
+        .ibox-content
+          %h3 Comentário
+          %p.small
+            Escreva um comentário sobre #{@person.xp_full_name.split(' ')[0]}
+          .form-group
+            %textarea.form-control{:placeholder => "Escreva seu comentário aqui", :rows => "3"}
+          %button.btn.btn-primary.btn-block Enviar
+      - @person.comments_that_i_own.each do |comment|
+        .ibox
+          .ibox-content
+            .social-avatar
+              %a.pull-left
+                %img{href: "#{comment.owner.xp_profile_photo_url}"}
+              .media-body
+                = comment.owner.xp_name
+                %small.text-muted
+                  = comment.created_at('%d/%m/%y - %H:%M:%S')
+        .ibox
+          .ibox-content
+            .client-avatar
+            %h3 Foto do comentarista + Nome + Data
+            %p.small
+              Comentários
+    .col-lg-3
+      - @custom_fields.each do |field|
+        - unless field[0] == 'nil'
+          .social-feed-box
+            .social-body
+              %h3
+                = field[1]['field_name']
+              %p
+                = field[1]['value']
+      .social-feed-box
+        .social-body
+          %h3 Crie um novo campo customizável
+          .form-group
+            %input.form-control{:placeholder => "Título", type: 'text'}
+          .form-group
+            %textarea.form-control{:placeholder => "Texto", :rows => "3"}
+          %button.btn.btn-primary.btn-block Enviar
+    .col-lg-3.m-b-lg
+      - if DigitalTransformation.hash_entities_expa.values.count(@person.xp_home_lc.xp_id) > 1
+        .vertical-timeline-block
+          .vertical-timeline-icon.lazur-bg
+            %i.fa.fa-coffee
+          .vertical-timeline-content
+            %label.font-normal
+              Trocar Extensor/Extensão
+            .input-group
+              %select.form-control.m-b.required{name: 'extension_change'}
+                - for i in 0...DigitalTransformation.hash_entities_expa.values.count(@person.xp_home_lc.xp_id)
+                  %option{value: "#{i}"}
+                    = DigitalTransformation.hash_entities_expa.map{ |k,v| v==@person.xp_home_lc.xp_id ? k : nil }.compact[i]
+              %span.input-group-btn
+                %button.btn.btn-primary{type: 'button'}
+                  .fa.fa-plane
+
+      .vertical-timeline-block
+        .vertical-timeline-icon.lazur-bg
+          %i.fa.fa-coffee
+        .vertical-timeline-content
+          %label.font-normal
+            Especificar Programa e Sub-produto
+          .input-group
+            %select.form-control.m-b.required{name: 'program_product'}
+              - for i in 0...@program_product_array.size
+                %option{value: "#{i}"}
+                  = @program_product_array[i][0] + ' / ' + @program_product_array[i][1]
+            %span.input-group-btn
+              %button.btn.btn-primary{type: 'button'}
+                .fa.fa-plane
+
+      .vertical-timeline-block
+        .vertical-timeline-icon.lazur-bg
+          %i.fa.fa-coffee
+        .vertical-timeline-content
+          %label.font-normal
+            Trocar universidade
+          .input-group
+            %select.form-control.m-b.required{name: 'university'}
+              - for i in 1...DigitalTransformation.universities.size
+                %option{value: "#{i}"}
+                  = DigitalTransformation.universities[i]
+            %span.input-group-btn
+              %button.btn.btn-primary{type: 'button'}
+                .fa.fa-plane
+
+      .vertical-timeline-block
+        .vertical-timeline-icon.lazur-bg
+          %i.fa.fa-coffee
+        .vertical-timeline-content
+          %label.font-normal
+            Trocar curso
+          .input-group
+            %select.form-control.m-b.required{name: 'courses'}
+              - for i in 1...DigitalTransformation.courses.size
+                %option{value: "#{i}"}
+                  = DigitalTransformation.courses[i]
+            %span.input-group-btn
+              %button.btn.btn-primary{type: 'button'}
+                .fa.fa-plane
+
+      .vertical-timeline-block
+        .vertical-timeline-icon.lazur-bg
+          %i.fa.fa-coffee
+        .vertical-timeline-content
+          %label.font-normal
+            Lista de aplicações
+
+
+    .col-lg-3.m-b-lg
+      #vertical-timeline.vertical-container.light-timeline.no-margins
+        .vertical-timeline-block
+          .vertical-timeline-icon.navy-bg
+            %i.fa.fa-briefcase
+          .vertical-timeline-content
+            - if @person.ep_managers.blank?
+              %label.font-normal
+                Não tenho EP manager ainda
+                .fa.fa-frown-o
+              .small.text-center
+                Agenda uma abordagem, marque uma EPI, faça um OPS e seja meu Manager
+                .fa.fa-smile-o
+            - else
+              %label.font-normal
+                EP Manager
+              .social-avatar
+              %a.pull-left
+                %img{href: "#{@person.ep_managers[0].xp_profile_photo_url}"}
+              .media-body
+                = @person.ep_managers[0].xp_name
+
+        .vertical-timeline-block
+          .vertical-timeline-icon.navy-bg
+            %i.fa.fa-briefcase
+          .vertical-timeline-content
+            .form-group#data_abordagem
+              %label.font-normal
+                Abordagem
+              .input-group.date
+                %span.input-group-addon
+                  %i.fa.fa-calendar
+                %input.form-control.datepicker{type: 'text', name: 'abordagem_date', value: "#{Time.new.strftime('%d/%m/%Y')}"}
+                %span.input-group-btn
+                  %button.btn.btn-primary{type: 'button'}
+                    .fa.fa-plane
+        .vertical-timeline-block
+          .vertical-timeline-icon.blue-bg
+            %i.fa.fa-briefcase
+          .vertical-timeline-content
+            .form-group#data_epi
+              %label.font-normal
+                EPI
+              .input-group.date
+                %span.input-group-addon
+                  %i.fa.fa-calendar
+                %input.form-control.datepicker{type: 'text', name: 'epi_date', value: "#{Time.new.strftime('%d/%m/%Y')}"}
+                %span.input-group-btn
+                  %button.btn.btn-primary{type: 'button'}
+                    .fa.fa-plane
+        .vertical-timeline-block
+          .vertical-timeline-icon.lazur-bg
+            %i.fa.fa-coffee
+          .vertical-timeline-content
+            .form-group#data_ops
+              %label.font-normal
+                EPI
+              .input-group.date
+                %span.input-group-addon
+                  %i.fa.fa-calendar
+                %input.form-control.datepicker{type: 'text', name: 'ops_date', value: "#{Time.new.strftime('%d/%m/%Y')}"}
+                %span.input-group-btn
+                  %button.btn.btn-primary{type: 'button'}
+                    .fa.fa-plane
+
+
+
+- content_for :javascript do
+  :javascript
+
+    $(function() {
+
+      $('.datepicker').datepicker({
+        language: "pt-BR",
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: true
+      });
+    });
+

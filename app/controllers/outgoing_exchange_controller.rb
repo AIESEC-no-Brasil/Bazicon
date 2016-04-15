@@ -5,6 +5,7 @@ class OutgoingExchangeController < ApplicationController
 
   end
 
+  # GET /ogx/list
   # GET /ogx/list?lc=INTEGER&page=INTEGER&date_start=STRING&date_end=STRING
   def list
     prepare_expansor_expansions
@@ -38,12 +39,54 @@ class OutgoingExchangeController < ApplicationController
     @people = filter_list_leads(lc_list_query,page, date_start, date_end)
   end
 
-  # GET /ogx/detail
+  # GET /ogx/detail?id=INTEGER
   def detail
+    return redirect_to main_path unless params.include?('id')
 
+    EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    @person = ExpaPerson.find_by_xp_id(params['id'])
+    if @person.nil?
+      @person = ExpaPerson.new
+    end
+    begin
+      person = EXPA::People.find_by_id(params['id'])
+      @person.update_from_expa(EXPA::People.find_by_id(params['id']))
+    rescue
+      return redirect_to main_path
+    end
+
+    generate_program_product_array
+    prepare_custom_fields(@person)
   end
 
   private
+
+  def generate_program_product_array
+    programs = DigitalTransformation.interested_program
+    programs = programs[1,programs.size]
+
+    gcdp = DigitalTransformation.sub_product_global_citizen
+    gcdp = gcdp[1,gcdp.size]
+
+    gip = DigitalTransformation.sub_product_global_talent
+    gip = gcdp[1,gip.size]
+
+    @program_product_array = [programs[0]].product(gcdp)+[programs[1]].product(gip)
+  end
+
+  def prepare_custom_fields(person)
+    @custom_fields = {'nil' => nil}
+
+    unless person.customized_fields.nil?
+      keys = JSON.parse(person.customized_fields).keys
+      keys.each do |key|
+        if key == 'escolaridade' || key == 'universidade' || key == 'curso'
+        elsif key == 'prevents' || key == 'difficulty'
+          @custom_fields[key] = JSON.parse(person.customized_fields)[key]
+        end
+      end
+    end
+  end
 
   def prepare_information_list(search_lc_query)
     @info = {}

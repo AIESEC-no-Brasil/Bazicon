@@ -152,8 +152,8 @@ class DigitalTransformationController < ApplicationController
     auth_form.field_with(:name => 'user[password]').value = password
     auth_form.field_with(:name => 'user[country]').value = 'Brazil'
     auth_form.field_with(:name => 'user[mc]').value = '1606'
-    auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[lc]['ids'][0]
-    auth_form.field_with(:name => 'user[lc_input]').value = lc
+    auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa.values[lc]['ids'][0]
+    auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa.keys[lc]
 
     begin
       page = agent.submit(auth_form, auth_form.buttons.first)
@@ -170,12 +170,12 @@ class DigitalTransformationController < ApplicationController
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
 
-          office = ExpaOffice.find_by_xp_name(lc)
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc])
           if office.nil?
             office = ExpaOffice.new
 
             DigitalTransformation.hash_entities_podio_expa.each do |entity|
-              if entity[0] == lc
+              if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc]
                 office.xp_id = entity[1]['ids'][0]
                 office.xp_full_name = entity[0]
                 office.xp_name = entity[0]
@@ -192,7 +192,7 @@ class DigitalTransformationController < ApplicationController
           case interested_program
             when 'GCDP'
               person.interested_program = 'global_volunteer'
-              case DigitalTransformation.sub_product_global_citizen.index(sub_product)
+              case sub_product
                 when 1 then person.interested_sub_product = 'global_volunteer_arab'
                 when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
                 when 3 then person.interested_sub_product = 'global_volunteer_africa'
@@ -201,7 +201,7 @@ class DigitalTransformationController < ApplicationController
               end
             when 'GIP'
               person.interested_program = 'global_talents'
-              case DigitalTransformation.sub_product_global_talent.index(sub_product)
+              case sub_product
                 when 1 then person.interested_sub_product = 'global_talents_start_up'
                 when 2 then person.interested_sub_product = 'global_talents_educacional'
                 when 3 then person.interested_sub_product = 'global_talents_IT'
@@ -216,12 +216,14 @@ class DigitalTransformationController < ApplicationController
                    JSON.parse(person.control_podio)
                  end
 
-          json['escolaridade'] = study_level
+          json['escolaridade'] = DigitalTransformation.study_level[study_level]
 
           case study_level
             when 'Ensino Superior', 'Mestrado', 'Doutorado'
-              json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio[university], value: university}
-              json['curso'] = {item_id: DigitalTransformation.hash_courses_podio[course], value: course}
+              json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university],
+                                      value: DigitalTransformation.hash_universities_podio.keys[university]}
+              json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course],
+                                      value: DigitalTransformation.hash_courses_podio.keys[course]}
           end
 
           json['podio_status'] = 'lead_decidido'
@@ -234,17 +236,17 @@ class DigitalTransformationController < ApplicationController
                    JSON.parse(person.customized_fields)
                  end
 
-          json['escolaridade'] = DigitalTransformation.study_level.index(study_level) - 1
+          json['escolaridade'] = study_level
 
           case study_level
-            when 'Ensino Superior', 'Mestrado', 'Doutorado'
-              json['universidade'] = DigitalTransformation.universities.index(university) - 1
-              json['curso'] = DigitalTransformation.courses.index(course) - 1
+            when '4', '5', '6'
+              json['universidade'] = university
+              json['curso'] = course
           end
           person.customized_fields = json.to_json.to_s
 
           #como conheceu a AIESEC
-          person.how_got_to_know_aiesec = DigitalTransformation.how_got_to_know_aiesec.index(how_got_to_know_aiesec) - 1
+          person.how_got_to_know_aiesec = how_got_to_know_aiesec
 
           person.save
           xp_sync = ExpaRdSync.new

@@ -612,9 +612,6 @@
 
 
           .ibox-content
-
-
-
             %input#filter.form-control.input-sm.m-b-xs{:placeholder => "Essa opção de busca ainda não foi programada", :type => "text"}
               %table.footable.table.table-stripped{"data-filter" => "#filter", "data-page-size" => "8"}
                 %thead
@@ -631,32 +628,37 @@
                     %th.text-center{"data-toggle" => "tooltip", "data-placement" => "top", title: "Abordado / EPI / OPS"} A/E/O
                 %tbody
                   - @people.each do |person|
+
                     %tr.gradeA
                       %td.text-center
                         .fa.fa-smile-o{style: "color: #00796B"}
                         .fa.fa-meh-o{style: "color: #00796B"}
                         .fa.fa-frown-o{style: "color: #00796B"}
-                        - if person.list_programs.include?('GCDP')
+                        - if person.list_programs.include?('GCDP') || person.interested_program == 'global_volunteer'
                           .fa.fa-child
-                        - if person.list_programs.include?('GIP')
+                        - if person.list_programs.include?('GIP') || person.interested_program == 'global_talents'
                           .fa.fa-briefcase
                       %td.text-center
                         = person.xp_created_at.strftime('%d/%m/%y')
                       %td.text-center
-                        .client-avatar
-                          %img{src: "#{image_url person.xp_profile_photo_url}"}
+                        %a{href: outgoing_exchange_detail_url + '?id=' + person.xp_id.to_s}
+                          .client-avatar
+                            %img{src: "#{image_url person.xp_profile_photo_url}"}
                       %td.text-center
-                        = person.xp_full_name
+                        %a{href: outgoing_exchange_detail_url + '?id=' + person.xp_id.to_s}
+                          = person.xp_full_name
                       %td.text-center
                         = person.get_sub_product_string
-                      %td.text-center
-                        = person.get_university_string
+                      %td.small.text-center
+                        - if !person.customized_fields.nil? && JSON.parse(person.customized_fields).include?('universidade')
+                          = DigitalTransformation.universities[JSON.parse(person.customized_fields)['universidade']]
                       %td.text-center
                         Projeto
                       %td.text-center
                         País + CL
                       %td.text-center
-                        .label Open
+                        .label
+                          = person.xp_status
                       %td.text-center
                         .fa.fa-check{style: "color: #8BC34A"}
                         .fa.fa-ban{style: "color: #F44336"}
@@ -767,7 +769,13 @@
 
         $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
 
-        $('#data_5 .input-daterange').datepicker({keyboardNavigation: false,forceParse: false,autoclose: true, format: 'dd/mm/yyyy', language: 'pt-BR'});
+        $('#data_5 .input-daterange').datepicker({
+          keyboardNavigation: false,
+          forceParse: false,
+          autoclose: true,
+          format: 'dd/mm/yyyy',
+          language: 'pt-BR'
+        });
 
         $('#flot-dashboard4-chart').click(function() {
           if ($('#flot-dashboard4-chart-btn-leads').hasClass('btn-primary')) {

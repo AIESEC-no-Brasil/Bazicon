@@ -43,21 +43,33 @@
                       #study-level
                         %label Escolaridade *
                         %select.form-control.m-b.required#study-level-form{name: 'study-level'}
-                          - DigitalTransformation.study_level.each do |option|
-                            %option{value: "#{option}"}
-                              = option
+                          - for i in 0..DigitalTransformation.study_level.size
+                            - if i == 0
+                              %option{value: ""}
+                                = DigitalTransformation.study_level[i]
+                            -else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.study_level[i]
                       #university{hidden: true}
                         %label Universidade *
                         %select.form-control.m-b#university-form{name: 'university'}
-                          - DigitalTransformation.universities.each do |option|
-                            %option
-                              = option
+                          - for i in 0..DigitalTransformation.universities.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.universities[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.universities[i]
                       #course{hidden: true}
                         %label Curso *
                         %select.form-control.m-b#course-form{name: 'course'}
-                          - DigitalTransformation.courses.each do |option|
-                            %option
-                              = option
+                          - for i in 0..DigitalTransformation.courses.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.courses[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.courses[i]
                     .col-xs-6.text-center
                       .fa.big-icon.fa-graduation-cap{style: 'color: gray'}
               %h1
@@ -71,31 +83,51 @@
                         - if params['programa'] == 'GCDP'
                           %label Região de interesse *
                           %select.form-control.m-b.required{name: 'sub-product'}
-                            - DigitalTransformation.sub_product_global_citizen.each do |option|
-                              %option
-                                = option
+                            - for i in 0..DigitalTransformation.sub_product_global_citizen.size
+                              - if i == 0
+                                %option{value: ''}
+                                  = DigitalTransformation.sub_product_global_citizen[i]
+                              - else
+                                %option{value: "#{i}"}
+                                  = DigitalTransformation.sub_product_global_citizen[i]
                         - elsif params['programa'] == 'GIP'
                           %label Sub-produto de interesse *
                           %select.form-control.m-b.required{name: 'sub-product'}
-                            - DigitalTransformation.sub_product_global_talent.each do |option|
-                              %option
-                                = option
+                            - for i in 0..DigitalTransformation.sub_product_global_talent.size
+                              - if i == 0
+                                %option{value: ''}
+                                  = DigitalTransformation.sub_product_global_citizen[i]
+                              - else
+                                %option{value: "#{i}"}
+                                  = DigitalTransformation.sub_product_global_citizen[i]
                       #how-get-to-know-aiesec
                         %label Como conheceu a AIESEC? *
                         %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
-                          - DigitalTransformation.how_got_to_know_aiesec.each do |option|
-                            %option
-                              = option
+                          - for i in 0..DigitalTransformation.how_got_to_know_aiesec.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.how_got_to_know_aiesec[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.how_got_to_know_aiesec[i]
                         %label AIESEC mais próxima *
                         %select.form-control.m-b.required{name: 'nearest_lc'}
                           - if params['programa'] == 'GCDP'
-                            - DigitalTransformation.entities_ogcdp.each do |option|
-                              %option
-                                = option
+                            - for i in 0..DigitalTransformation.entities_ogcdp.size
+                              - if i == 0
+                                %option{value: ''}
+                                  = DigitalTransformation.entities_ogcdp[i]
+                              - else
+                                %option{value: "#{i}"}
+                                  = DigitalTransformation.entities_ogcdp[i]
                           - elsif params['programa'] == 'GIP'
-                            - DigitalTransformation.entities_ogip.each do |option|
-                              %option
-                                = option
+                            - for i in 0..DigitalTransformation.entities_ogip.size
+                              - if i == 0
+                                %option{value: ''}
+                                  = DigitalTransformation.entities_ogip[i]
+                              - else
+                                %option{value: "#{i}"}
+                                  = DigitalTransformation.entities_ogip[i]
                       %input#accepTerms.required{name: 'acceptTerms', type: 'checkbox', 'aria-required' => true}
                       %label{for: 'acceptTerms'}
                         Eu concordo com os
@@ -166,9 +198,9 @@
 
       $("select#study-level-form").change(function() {
         select_text = $(this).find('option:selected').val()
-        if (select_text == 'Ensino Superior' ||
-           select_text == 'Mestrado' ||
-           select_text == 'Doutorado') {
+        if (select_text == '4' ||
+           select_text == '5' ||
+           select_text == '6') {
           $('#university').show('fast','linear');
           $('#university-form').addClass('required');
           $('#course').show('fast','linear');
