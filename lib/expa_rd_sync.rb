@@ -96,16 +96,20 @@ class ExpaRdSync
           fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
         end
         fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}] unless person.xp_phone.nil?
-        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
+        if person.entity_exchange_lc.nil?
+          fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
+        else
+          fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name]
+        end
         fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
         fields['sub-produto'] = sub_product unless person.interested_sub_product.nil?
         fields['entidade-mais-proxima'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['como-conheceu-a-aiesec'] = ExpaPerson.how_got_to_know_aiesecs[person.how_got_to_know_aiesec] + 1 unless person.how_got_to_know_aiesec.nil?
-        fields['escolaridade'] = JSON.parse(person.control_podio)['study_level']
-        if JSON.parse(person.control_podio).key?('universidade')
+        fields['escolaridade'] = JSON.parse(person.customized_fields)['study_level'] if JSON.parse(person.customized_fields).key?('study_level')
+        if JSON.parse(person.customized_fields).key?('universidade')
           fields['universidade'] = JSON.parse(person.customized_fields)['universidade']['item_id']
         end
-        if JSON.parse(person.control_podio).key?('curso')
+        if JSON.parse(person.customized_fields).key?('curso')
           fields['curso'] = JSON.parse(person.customized_fields)['curso']['item_id']
         end
 
@@ -132,8 +136,18 @@ class ExpaRdSync
         fields['expa-id'] = person.xp_id.to_i unless person.xp_id.nil?
         fields['email'] = [{'type' => 'home', 'value' => person.xp_email.to_s}] unless person.xp_email.nil?
         fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}] unless person.xp_phone.nil?
-        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = entities[person.xp_home_lc.xp_name] unless person.xp_home_lc.nil?
+        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio[person.entity_exchange_lc.xp_name] unless person.entity_exchange_lc.nil?
         fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
+        unless person.customized_fields.nil?
+          fields['escolaridade'] = JSON.parse(person.customized_fields)['escolaridade'] if JSON.parse(person.customized_fields).include?('escolaridade')
+          if JSON.parse(person.customized_fields).include?('universidade')
+            fields['universidade'] = JSON.parse(person.customized_fields)['universidade']['item_id']
+          end
+          if JSON.parse(person.customized_fields).include?('curso')
+            fields['curso'] = JSON.parse(person.customized_fields)['curso']['item_id']
+          end
+        end
+
 
         puts fields
         Podio::Item.create(podio_ogcdp_leads, {:fields => fields})

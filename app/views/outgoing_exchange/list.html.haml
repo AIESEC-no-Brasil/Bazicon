@@ -13,8 +13,9 @@
       %li
         %label Expansor / Expansão
         %select.form-control.m-b.required{name: 'local_committee'}
-          %option
-            Opções CLs
+          - for i in 0...@expansor_expansions.count
+            %option{value: "#{i}"}
+              = @expansor_expansions[i][0]
 
 .wrapper.wrapper-content.animated.fadeIn
   .p-w-md.m-t-sm
@@ -22,15 +23,15 @@
       .col-sm-12.text-center
         %h1.m-b-xs
           .fa.fa-globe
-          780
+          = @info['leads_this_month'].to_i
           %small
             Leads
           %span
-          12
+          = @info['ma_this_month'].to_i
           %small
             MA
           %span
-          13
+          = @info['re_this_month'].to_i
           %small
             RE
         %small Total
@@ -54,49 +55,93 @@
             = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"}
-                32%
-                .fa.fa-level-up
-                .fa.fa-level-down
+              %span{style: "color: #607D8B"}
+              = @info['leads_past_month'].to_i
+              - if @info['leads_this_month'] > @info['leads_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_this_month']/@info['leads_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_this_month']/@info['leads_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_past_month'].to_i
+              - if @info['ma_this_month'] > @info['ma_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_this_month']/@info['ma_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_this_month']/@info['ma_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['re_past_month'].to_i
+              - if @info['re_this_month'] > @info['re_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_this_month']/@info['re_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_this_month']/@info['re_past_month']-1)*100).round(2).to_s + '%'
         .row
           %p.text-center
             = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['leads_past_year'].to_i
+              - if @info['leads_this_month'] > @info['leads_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_past_year'].to_i
+              - if @info['ma_this_month'] > @info['ma_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_this_month']/@info['ma_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_this_month']/@info['ma_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['re_past_year'].to_i
+              - if @info['re_this_month'] > @info['re_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_this_month']/@info['re_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_this_month']/@info['re_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
     %hr
 
     .row
       .col-sm-6.text-center.b-r
         %h1.m-b-xs
           .fa.fa-child
-          300
+          = @info['leads_ogcdp_this_month'].to_i
           %small
             Leads
           %span
-          12
+          = @info['ma_ogcdp_this_month'].to_i
           %small
             MA
           %span
-          13
+          = @info['re_ogcdp_this_month'].to_i
           %small
             RE
         %small GCDP
@@ -121,27 +166,67 @@
             = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['leads_ogcdp_past_month'].to_i
+              - if @info['leads_ogcdp_this_month'] > @info['leads_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_ogcdp_this_month']/@info['leads_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_ogcdp_this_month']/@info['leads_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_month'].to_i
+              - if @info['ma_ogcdp_this_month'] > @info['ma_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_month'].to_i
+              - if @info['re_ogcdp_this_month'] > @info['re_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
         .row
           %p.text-center
             = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['leads_ogcdp_past_year'].to_i
+              - if @info['leads_ogcdp_this_month'] > @info['leads_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_ogcdp_this_month']/@info['leads_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_ogcdp_this_month']/@info['leads_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_year'].to_i
+              - if @info['ma_ogcdp_this_month'] > @info['ma_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"} 236
@@ -149,15 +234,15 @@
       .col-sm-6.text-center
         %h1.m-b-xs
           .fa.fa-briefcase
-          300
+          = @info['leads_ogip_this_month'].to_i
           %small
             Leads
           %span
-          12
+          = @info['ma_ogip_this_month'].to_i
           %small
             MA
           %span
-          13
+          = @info['re_ogip_this_month'].to_i
           %small
             RE
         %small GIP
@@ -181,31 +266,79 @@
             = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['leads_ogip_past_month'].to_i
+              - if @info['leads_ogip_this_month'] > @info['leads_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_ogip_this_month']/@info['leads_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_ogip_this_month']/@info['leads_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogip_past_month'].to_i
+              - if @info['ma_ogip_this_month'] > @info['ma_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-centerE
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['re_ogip_past_month'].to_i
+              - if @info['re_ogip_this_month'] > @info['re_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
         .row
           %p.text-center
             = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #D32F2F"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['leads_ogip_past_year'].to_i
+              - if @info['leads_ogip_this_month'] > @info['leads_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_ogip_this_month']/@info['leads_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_ogip_this_month']/@info['leads_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogip_past_year'].to_i
+              - if @info['ma_ogip_this_month'] > @info['ma_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
           .col-xs-4.text-center
             %h4
-              %span{style: "color: #607D8B"} 236
-              %span{style:"color: #4CAF50"} 32%
+              %span{style: "color: #607D8B"}
+              = @info['re_ogip_past_year'].to_i
+              - if @info['re_ogip_this_month'] > @info['re_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
     %hr
     .row.b-r
       .col-sm-12
@@ -213,119 +346,155 @@
           .col-xs-3.text-center
             %h5.m-b-xs EPs prontos para viajar
             %h1.no-margins
-              500
+              = @info['ma_ogcdp_total']
               %i.fa.fa-child
             .font-bold.text-navy
-              30% do total
+              = (@info['ma_ogcdp_total']*100/@info['ma_total']).to_s + '% do total'
           .col-xs-3.text-center
             %h5.m-b-xs EPs viajando
             %h1.no-margins
-              600
+              = @info['re_ogcdp_total']
               %i.fa.fa-child
             .font-bold.text-navy
-              30% do total
+              = (@info['re_ogcdp_total']*100/@info['re_total']).to_s + '% do total'
           .col-xs-3.text-center
             %h5.m-b-xs EPs prontos para viajar
             %h1.no-margins
-              500
+              = @info['ma_ogip_total']
               %i.fa.fa-briefcase
             .font-bold.text-navy
-              70% do total
+              = (@info['ma_ogip_total']*100/@info['ma_total']).to_s + '% do total'
           .col-xs-3.text-center
             %h5.m-b-xs EPs viajando
             %h1.no-margins
-              600
+              = @info['re_ogip_total']
               %i.fa.fa-briefcase
             .font-bold.text-navy
-              70% do total
+              = (@info['re_ogip_total']*100/@info['re_total']).to_s + '% do total'
     .row
       .col-sm-6
         %table.table.small.m-t-sm
           %tbody
             %tr.text-center
               %td
-                %strong 142
+                %strong
+                  = @info['ma_arab']
                 Mundo Árabe
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_arab']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
-                %strong 22
+                %strong
+                  = @info['re_arab']
                 Mundo Árabe
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_arab']*100/@info['re_ogcdp_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 61
+                %strong
+                  = @info['ma_east_europe']
                 Leste Europeu
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_east_europe']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
-                %strong 54
+                %strong
+                  = @info['re_east_europe']
                 Leste Europeu
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_east_europe']*100/@info['re_ogcdp_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 154
+                %strong
+                  = @info['ma_africa']
                 África
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_africa']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
-                %strong 32
+                %strong
+                  = @info['re_africa']
                 África
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_africa']*100/@info['re_ogcdp_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 154
+                %strong
+                  = @info['ma_asia']
                 Ásia
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_asia']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
-                %strong 32
+                %strong
+                  = @info['re_asia']
                 Ásia
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_asia']*100/@info['re_ogcdp_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 154
+                %strong
+                  = @info['ma_latam']
                 América Latina
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_latam']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
-                %strong 142
+                %strong
+                  = @info['re_latam']
                 América Latina
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_latam']*100/@info['re_ogcdp_total']).to_s + '%'
       .col-sm-6
         %table.table.small.m-t-sm
           %tbody
             %tr.text-center
               %td
-                %strong 142
+                %strong
+                  = @info['ma_start_up']
                 Start Up
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_start_up']*100/@info['ma_ogip_total']).to_s + '%'
               %td
-                %strong 22
+                %strong
+                  = @info['re_start_up']
                 Start Up
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_start_up']*100/@info['re_ogip_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 142
+                %strong
+                  = @info['ma_educacional']
                 Educacional
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_educacional']*100/@info['ma_ogip_total']).to_s + '%'
               %td
-                %strong 22
+                %strong
+                  = @info['re_educacional']
                 Educacional
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_educacional']*100/@info['re_ogip_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 142
+                %strong
+                  = @info['ma_it']
                 Tecnologia da Informação
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_it']*100/@info['ma_ogip_total']).to_s + '%'
               %td
-                %strong 22
+                %strong
+                  = @info['re_it']
                 Tecnologia da Informação
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_it']*100/@info['re_ogip_total']).to_s + '%'
             %tr.text-center
               %td
-                %strong 142
+                %strong
+                  = @info['ma_management']
                 Gestão
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['ma_management']*100/@info['ma_ogip_total']).to_s + '%'
               %td
-                %strong 22
+                %strong
+                  = @info['re_management']
                 Gestão
-                %strong.text-success 30%
+                %strong.text-success
+                  = (@info['re_management']*100/@info['re_ogip_total']).to_s + '%'
     .row
       .col-lg-12
         .small.pull-left.col-md-3.m-l-lg.m-t-md
@@ -461,188 +630,37 @@
                     %th.text-center Status
                     %th.text-center{"data-toggle" => "tooltip", "data-placement" => "top", title: "Abordado / EPI / OPS"} A/E/O
                 %tbody
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Open
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label In Progress
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Accepted
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Approved
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Realizing
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Completed
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                  %tr.gradeA
-                    %td.text-center
-                      .fa.fa-smile-o{style: "color: #00796B"}
-                      .fa.fa-meh-o{style: "color: #00796B"}
-                      .fa.fa-frown-o{style: "color: #00796B"}
-                    %td.text-center
-                      21/03/1988
-                    %td.text-center
-                      .client-avatar
-                        %img{src: "#{image_url @user.xp_profile_photo_url}"}
-                    %td.text-center
-                      Nome
-                    %td.text-center
-                      Sub-Produto
-                    %td.text-center
-                      Universidade
-                    %td.text-center
-                      Projeto
-                    %td.text-center
-                      País + CL
-                    %td.text-center
-                      .label Return Day
-                    %td.text-center
-                      .fa.fa-check{style: "color: #8BC34A"}
-                      .fa.fa-ban{style: "color: #F44336"}
-                      .fa.fa-ban{style: "color: #F44336"}
+                  - @people.each do |person|
+                    %tr.gradeA
+                      %td.text-center
+                        .fa.fa-smile-o{style: "color: #00796B"}
+                        .fa.fa-meh-o{style: "color: #00796B"}
+                        .fa.fa-frown-o{style: "color: #00796B"}
+                        - if person.list_programs.include?('GCDP')
+                          .fa.fa-child
+                        - if person.list_programs.include?('GIP')
+                          .fa.fa-briefcase
+                      %td.text-center
+                        = person.xp_created_at.strftime('%d/%m/%y')
+                      %td.text-center
+                        .client-avatar
+                          %img{src: "#{image_url person.xp_profile_photo_url}"}
+                      %td.text-center
+                        = person.xp_full_name
+                      %td.text-center
+                        = person.get_sub_product_string
+                      %td.text-center
+                        = person.get_university_string
+                      %td.text-center
+                        Projeto
+                      %td.text-center
+                        País + CL
+                      %td.text-center
+                        .label Open
+                      %td.text-center
+                        .fa.fa-check{style: "color: #8BC34A"}
+                        .fa.fa-ban{style: "color: #F44336"}
+                        .fa.fa-ban{style: "color: #F44336"}
                 %tfoot
                   %tr
                     %td{:colspan => "10"}
@@ -821,9 +839,7 @@
 
     $.getScript('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js',function(){
 
-    $('#main .img-responsive').lazyload({
-
-      });
+    $('#main .img-responsive').lazyload({});
 
 
     });

@@ -8,7 +8,6 @@ class ExpaOffice < ActiveRecord::Base
   has_many :host_at_office, class_name: 'Host', foreign_key: 'nearest_lc'
 
   validates :xp_id,
-            uniqueness: true,
             presence: false
 
   def update_from_expa(data, entity_name = nil)
