@@ -49,7 +49,7 @@ class HostTest < Minitest::Test
 
   def test_list_all_free
     hosts = Host.list_free
-    assert(hosts.length == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+    assert(hosts.length == 0, "List Free Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
 
     #creating leads that doesn't have tmp responsable or for realize
     lead = Host.new
@@ -67,7 +67,7 @@ class HostTest < Minitest::Test
     lead.save
 
     hosts = Host.list_free
-    assert(hosts.count == 0, "Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+    assert(hosts.count == 0, "List Free Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
 
     #lead with date_alignment_meeting < Time.now
     lead = Host.new
@@ -75,12 +75,13 @@ class HostTest < Minitest::Test
     lead.tmp_responsable_id = 78789
     lead.tmp_who_realized_meeting_id = 79887
     lead.date_approach = Time.new(2016,4,10)
-    date_alignment_meeting = Time.new(2016,4,5)
+    lead.date_alignment_meeting = Time.new(2016,4,Time.now.day+2)
     lead.save
 
     hosts = Host.list_free
-    assert(hosts.count == 0, "Assert 3) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+    assert(hosts.count == 0, "List Free Assert 3) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
 
+    #host free with date_alignment_meeting < Time.now
     free = Host.new
     free.full_name = "Free 1"
     free.tmp_responsable_id = 78789
@@ -90,7 +91,7 @@ class HostTest < Minitest::Test
     free.save
 
     hosts = Host.list_free
-    assert(hosts.count == 1, "Assert 4) Wrong number of hosts. It was supposed to be 1, it got #{hosts.count} instead")
+    assert(hosts.count == 1, "List Free Assert 4) Wrong number of hosts. It was supposed to be 1, it got #{hosts.count} instead")
 
     (1..10).each do |i|
       free = Host.new 
@@ -110,7 +111,57 @@ class HostTest < Minitest::Test
   
   def test_list_all_leads
     hosts_leads = Host.list_leads
-    assert(hosts_leads.count == 0, "Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts.count} instead")
+    assert(hosts_leads.count == 0, "List Leads=>Assert 1) Wrong number of hosts. It was supposed to be 0, it got #{hosts_leads.count} instead")
+
+    (1..10).each do |i|
+      free = Host.new 
+      free.full_name = "Free #{i}"
+      free.tmp_responsable_id = 78789
+      free.tmp_who_realized_meeting_id = 79887
+      free.date_approach = Time.new(2016,4,10)
+      free.date_alignment_meeting = Time.new(2016,4,0+i)
+      free.save
+    end
+
+    hosts_leads = Host.list_leads
+    assert(hosts_leads.count == 0, "List Leads=>Assert 2) Wrong number of hosts. It was supposed to be 0, it got #{hosts_leads.count} instead")
+    
+    lead = Host.new
+    lead.full_name = "Lead 1"
+    lead.tmp_responsable_id = 78789
+    lead.tmp_who_realized_meeting_id = 79887
+    lead.date_approach = Time.new(2016,4,10)
+    lead.date_alignment_meeting = Time.new(2016,4,Time.now.day + 1)
+    lead.save
+
+    lead = Host.new
+    lead.full_name = "Lead 2"
+    lead.tmp_responsable_id = 78789
+    lead.tmp_who_realized_meeting_id = 79887
+    lead.date_approach = Time.new(2016,4,10)
+    lead.date_alignment_meeting = Time.new(2016,4,Time.now.day + 2)
+    lead.save
+
+    hosts_leads = Host.list_leads
+    assert(hosts_leads.count == 2, "List Leads=>Assert 3) Wrong number of hosts. It was supposed to be 2, it got #{hosts_leads.count} instead")
+
+    Host.all.each do |host|
+      host.destroy
+    end
+
+    (1..100).each do |i|
+      lead = Host.new 
+      lead.full_name = "Lead #{i}"
+      lead.tmp_responsable_id = 78789
+      lead.tmp_who_realized_meeting_id = 79887
+      #no date_approach
+      lead.date_alignment_meeting = Time.new(2016,4,10)
+      lead.save
+    end
+
+    hosts_leads = Host.list_leads
+    assert(hosts_leads.count == 100, "List Leads=>Assert 4) Wrong number of hosts. It was supposed to be 100, it got #{hosts_leads.count} instead")
+
   end
   
   def test_list_all_problematics

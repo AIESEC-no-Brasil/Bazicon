@@ -19,6 +19,16 @@ class Host < ActiveRecord::Base
 						AND date_approach=? 
 						AND date_alignment_meeting>?", nil, nil, nil, Time.now)
 	end
+
+	def self.list_leads
+		Host.where("tmp_responsable_id=? 
+					OR tmp_who_realized_meeting_id=? 
+					OR date_approach=?
+					OR date_alignment_meeting=?
+					OR date_alignment_meeting>?", nil, nil, nil, nil, Time.now)
+	end
+
+
 end
 
 class HostPerson < ActiveRecord::Base
