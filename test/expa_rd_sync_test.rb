@@ -144,3 +144,6 @@ class ExpaRdSyncTest < Minitest::Test
     assert(ExpaApplication.all.count == applications.count, 'DB should have ' + applications.count.to_s + ' registers , but it has ' + ExpaApplication.all.count.to_s)
   end
 end
+
+
+  
