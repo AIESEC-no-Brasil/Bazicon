@@ -50,6 +50,7 @@ class ExpaPerson < ActiveRecord::Base
       end
     end
 
+
     self.xp_id = data.id unless data.id.nil?
     self.xp_email = data.email unless data.email.nil?
     self.xp_url = data.url.to_s unless data.url.nil?

@@ -159,10 +159,11 @@ class DigitalTransformationController < ApplicationController
       page = agent.submit(auth_form, auth_form.buttons.first)
     rescue => exception
       puts exception.to_s
-    else
+    ensure
       EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-      time = Time.now - 60 # 1 minute windows
+      sleep(2)
+      time = Time.now - 60 * 2# 2 minute windows
       people = EXPA::People.list_everyone_created_after(time)
       people.each do |xp_person|
         if xp_person.email == email
@@ -175,14 +176,13 @@ class DigitalTransformationController < ApplicationController
 
             DigitalTransformation.hash_entities_podio_expa.each do |entity|
               if entity[0] == lc
-                office.xp_id = entity[1]['ids'][0] unless data.id.nil?
-                office.xp_full_name = entity
-                office.xp_name = entity
+                office.xp_id = entity[1]['ids'][0]
+                office.xp_full_name = entity[0]
+                office.xp_name = entity[0]
+                office.save
                 break
               end
             end
-
-            office.save!
           end
 
           #Entidade mais próxima != Entidade EXPA
