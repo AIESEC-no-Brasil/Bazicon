@@ -124,7 +124,7 @@ class ExpaPerson < ActiveRecord::Base
 
   def list_programs
     if self.xp_status == 'open'
-      return nil
+      return []
     else
       programs = {}
       list_programmes = []
@@ -146,6 +146,25 @@ class ExpaPerson < ActiveRecord::Base
       programs.keys
     end
   end
+
+  def get_university_string
+    (JSON.parse(self.customized_fields).include?('universidade') ? JSON.parse(self.customized_fields)['universidade'] : '') unless self.customized_fields.nil?
+  end
+
+  def get_sub_product_string
+    case self.interested_sub_product
+      when 0 then 'Mundo Árabe'
+      when 1 then 'Leste Europeu'
+      when 2 then 'África'
+      when 3 then 'Ásia'
+      when 4 then 'Latam'
+      when 5 then 'Start-up'
+      when 6 then 'Educacional'
+      when 7 then 'Tecnologia da Informação'
+      when 8 then 'Gestão'
+    end
+  end
+
 
   private
 
