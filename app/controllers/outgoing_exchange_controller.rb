@@ -9,9 +9,17 @@ class OutgoingExchangeController < ApplicationController
   def list
     prepare_expansor_expansions
     if params.include?('lc')
-      search_lc_query = @expansor_expansions[params['lc']][1]
+      lc_info_query = @expansor_expansions[params['lc']][1]
+      if @user.list_programs == ExpaPerson.roles[:role_mc]
+        lc_list_query = @expansor_expansions[params['lc']][1]
+      elsif @user.xp_home_lc_id == @expansor_expansions[params['lc']][1]
+        lc_list_query = @expansor_expansions[params['lc']][1]
+      else
+        lc_list_query = @expansor_expansions[0][1]
+      end
     else
-      search_lc_query = @expansor_expansions[0][1]
+      lc_info_query = @expansor_expansions[0][1]
+      lc_list_query = @expansor_expansions[0][1]
     end
     if params.include?('lc')
       page = params['page']
@@ -22,12 +30,12 @@ class OutgoingExchangeController < ApplicationController
       date_start = DateTime.strptime(params['date_start'], '%d-%m-%y').to_time
       date_end = DateTime.strptime(params['date_end'], '%d-%m-%y').to_time
     else
-      date_start = Time.new.beginning_of_month
+      date_start = Time.new(Time.new.year, Time.new.month, 1)
       date_end = Time.new
     end
 
-    prepare_information_list(search_lc_query)
-    @people = filter_list_leads(search_lc_query,page, date_start, date_end)
+    prepare_information_list(lc_info_query)
+    @people = filter_list_leads(lc_list_query,page, date_start, date_end)
   end
 
   # GET /ogx/detail
@@ -102,24 +110,24 @@ class OutgoingExchangeController < ApplicationController
     @info['ma_ogip_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
     @info['re_ogip_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
 
-    @info['ma_arab']
-    @info['ma_east_europe']
-    @info['ma_africa']
-    @info['ma_volunteer_asia']
-    @info['ma_latam']
-    @info['re_arab']
-    @info['re_east_europe']
-    @info['re_africa']
-    @info['re_volunteer_asia']
-    @info['re_latam']
-    @info['ma_start_up']
-    @info['ma_educacional']
-    @info['ma_it']
-    @info['ma_management']
-    @info['re_start_up']
-    @info['re_educacional']
-    @info['re_it']
-    @info['re_management']
+    @info['ma_arab'] = 10.0
+    @info['ma_east_europe'] = 10.0
+    @info['ma_africa'] = 10.0
+    @info['ma_asia'] = 10.0
+    @info['ma_latam'] = 10.0
+    @info['re_arab'] = 10.0
+    @info['re_east_europe'] = 10.0
+    @info['re_africa'] = 10.0
+    @info['re_asia'] = 10.0
+    @info['re_latam'] = 10.0
+    @info['ma_start_up'] = 10.0
+    @info['ma_educacional'] = 10.0
+    @info['ma_it'] = 10.0
+    @info['ma_management'] = 10.0
+    @info['re_start_up'] = 10.0
+    @info['re_educacional'] = 10.0
+    @info['re_it'] = 10.0
+    @info['re_management'] = 10.0
 
     # Numero Lead por mes esse ano total
     for i in 1..Time.new.month

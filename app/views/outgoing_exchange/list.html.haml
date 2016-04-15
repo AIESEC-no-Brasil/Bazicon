@@ -97,7 +97,7 @@
               = @info['leads_past_year'].to_i
               - if @info['leads_this_month'] > @info['leads_past_year']
                 %span{style:"color: #4CAF50"}
-                  = ((@info['least_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
+                  = ((@info['leads_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
                   .fa.fa-level-up
               - else
                 %span{style:"color: #D32F2F"}
@@ -380,13 +380,13 @@
                 %strong
                   = @info['ma_arab']
                 Mundo Árabe
-                %strong.text-success 30%
+                %strong.text-success
                   = (@info['ma_arab']*100/@info['ma_ogcdp_total']).to_s + '%'
               %td
                 %strong
                   = @info['re_arab']
                 Mundo Árabe
-                %strong.text-success 30%
+                %strong.text-success
                   = (@info['re_arab']*100/@info['re_ogcdp_total']).to_s + '%'
             %tr.text-center
               %td
@@ -469,7 +469,6 @@
                 Educacional
                 %strong.text-success
                   = (@info['re_educacional']*100/@info['re_ogip_total']).to_s + '%'
-                %strong.text-success 30%
             %tr.text-center
               %td
                 %strong
@@ -840,9 +839,7 @@
 
     $.getScript('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js',function(){
 
-    $('#main .img-responsive').lazyload({
-
-      });
+    $('#main .img-responsive').lazyload({});
 
 
     });
