@@ -79,7 +79,6 @@ class ExpaRdSync
     people = ExpaPerson.order(xp_created_at: :desc)
     people.each do |person|
       if person.control_podio.nil? || JSON.parse(person.control_podio).key?('podio_status')
-        person.update_from_expa(EXPA::People.find_by_id(person.xp_id))
         if person.interested_program == 'global_volunteer'
           podio_app_decided_leads = 15290822
           sub_product = person.interested_sub_product.to_i + 1 unless person.interested_sub_product.nil?
@@ -88,7 +87,10 @@ class ExpaRdSync
           sub_product = person.interested_sub_product.to_i - 4 unless person.interested_sub_product.nil?
         end
 
-        unless person.control_podio.nil? || JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' || JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
+        unless person.control_podio.nil? ||
+            JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' ||
+            JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' ||
+            JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
           fields = {}
           fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
           fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
@@ -101,7 +103,7 @@ class ExpaRdSync
             fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
           end
 
-          unless person.entity_exchange_lc.nil?
+          if person.entity_exchange_lc.nil?
             entity_podio_id = DigitalTransformation.hash_entities_podio_expa[person.xp_home_lc.xp_name]['ids'][1] if DigitalTransformation.hash_entities_podio_expa.include?(person.xp_home_lc.xp_name)
           else
             entity_podio_id = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1]
@@ -122,16 +124,19 @@ class ExpaRdSync
             elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_decidido'
             end
           end
+
+          Podio::Item.update(entity_podio_id, {:fields => fields})
         end
       end
 
       json = if person.control_podio.nil?
-               person.control_podio = {}
+               {}
              else
                JSON.parse(person.control_podio)
              end
 
-      json['podio_status'] = 'bazicon2'
+      json['podio_status'] = 'bazicon3'
+      person.control_podio = json.to_json.to_s
       person.save
     end
   end
