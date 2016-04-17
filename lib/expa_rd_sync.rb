@@ -88,7 +88,7 @@ class ExpaRdSync
           sub_product = person.interested_sub_product.to_i - 4 unless person.interested_sub_product.nil?
         end
 
-        unless JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' || JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
+        unless person.control_podio.nil? || JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' || JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
           fields = {}
           fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
           fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
@@ -111,15 +111,16 @@ class ExpaRdSync
           fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
           fields['sub-produto'] = sub_product unless person.interested_sub_product.nil?
 
-          if JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
-              JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
-              JSON.parse(person.control_podio)['podio_status'] == 'podio_final' ||
-              JSON.parse(person.control_podio)['podio_status'] == 'bazicon'
+          unless person.control_podio_nil?
+            if JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
+                JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
+                JSON.parse(person.control_podio)['podio_status'] == 'podio_final' ||
+                JSON.parse(person.control_podio)['podio_status'] == 'bazicon'
               fields['universidade'] = JSON.parse(person.control_podio)['universidade']['item_id'] if JSON.parse(person.control_podio).key?('universidade')
               fields['curso'] = JSON.parse(person.control_podio)['curso']['item_id']if JSON.parse(person.control_podio).key?('curso')
-          elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_final'
-          elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_decidido'
-
+            elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_final'
+            elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_decidido'
+            end
           end
         end
       end
