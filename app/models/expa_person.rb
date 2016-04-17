@@ -1,6 +1,6 @@
 class ExpaPerson < ActiveRecord::Base
   enum xp_status: [:open, :in_progress, :matched, :realized, :completed, :other]
-  enum xp_gender: [:male, :female]
+  enum xp_gender: [:male, :female, :prefer_not_to_answer]
   enum interested_program: [:global_volunteer, :global_talents]
   enum interested_sub_product: [:global_volunteer_arab, :global_volunteer_east_europe, :global_volunteer_africa, :global_volunteer_asia, :global_volunteer_latam, :global_talents_start_up, :global_talents_educacional, :global_talents_IT, :global_talents_management]
   enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :how_got_to_know_aiesec_other]
@@ -82,7 +82,7 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_favourites_count = data.favourites_count.to_i unless data.favourites_count.nil?
     self.xp_contacted_at = data.contacted_at unless data.contacted_at.nil?
     self.xp_contacted_by = data.contacted_by unless data.contacted_by.nil?
-    self.xp_gender = data.gender.downcase unless data.gender.nil?
+    self.xp_gender = data.gender.downcase.gsub(' ','_') unless data.gender.nil?
     self.xp_address_info = data.address_info unless data.address_info.nil?
     self.xp_contact_info = data.contact_info unless data.contact_info.nil?
     self.xp_current_office = current_office unless current_office.nil?

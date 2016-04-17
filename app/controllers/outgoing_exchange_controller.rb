@@ -46,13 +46,15 @@ class OutgoingExchangeController < ApplicationController
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
     @person = ExpaPerson.find_by_xp_id(params['id'])
     if @person.nil?
-      @person = ExpaPerson.new
-    end
-    begin
-      person = EXPA::People.find_by_id(params['id'])
-      @person.update_from_expa(EXPA::People.find_by_id(params['id']))
-    rescue
       return redirect_to main_path
+    else
+      begin
+        @person.update_from_expa(EXPA::People.find_by_id(params['id']))
+        @person.save
+      rescue => exception
+        puts exception
+        return redirect_to main_path
+      end
     end
 
     generate_program_product_array
