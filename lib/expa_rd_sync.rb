@@ -77,66 +77,61 @@ class ExpaRdSync
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
     people = ExpaPerson.order(xp_created_at: :desc)
-    people.each do |person|
-      if person.control_podio.nil? || JSON.parse(person.control_podio).key?('podio_status')
-        if person.interested_program == 'global_volunteer'
-          podio_app_decided_leads = 15290822
-          sub_product = person.interested_sub_product.to_i + 1 unless person.interested_sub_product.nil?
-        elsif person.interested_program == 'global_talents'
-          podio_app_decided_leads = 15291951
-          sub_product = person.interested_sub_product.to_i - 4 unless person.interested_sub_product.nil?
-        end
-
-        unless person.control_podio.nil? ||
-            JSON.parse(person.control_podio)['podio_status'] == 'bazicon4' ||
-            JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
-          fields = {}
-          fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
-          fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
-          fields['expa-id'] = person.xp_id unless person.xp_id.nil?
-          fields['email'] = [{'type' => 'home', 'value' => person.xp_email}] unless person.xp_email.nil?
-
-          if !person.customized_fields.nil? && JSON.parse(person.customized_fields).key?('telefone')
-            fields['telefone'] = [{'type' => 'home', 'value' => JSON.parse(person.customized_fields)['telefone']}]
-          elsif !person.xp_phone.nil?
-            fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
-          end
-
-          if person.entity_exchange_lc.nil?
-            entity_podio_id = DigitalTransformation.hash_entities_podio_expa[person.xp_home_lc.xp_name]['ids'][1] if DigitalTransformation.hash_entities_podio_expa.include?(person.xp_home_lc.xp_name)
+    begin
+      people.each do |person|
+        if person.control_podio.nil? || JSON.parse(person.control_podio).key?('podio_status')
+          if person.interested_program == 'global_volunteer'
+            podio_app_decided_leads = 15290822
+            sub_product = person.interested_sub_product.to_i + 1 unless person.interested_sub_product.nil?
+          elsif person.interested_program == 'global_talents'
+            podio_app_decided_leads = 15291951
+            sub_product = person.interested_sub_product.to_i - 4 unless person.interested_sub_product.nil?
           else
-            entity_podio_id = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1]
+            podio_app_decided_leads = 15290822 #GCDP
+            sub_product = nil
           end
 
-          fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = entity_podio_id unless entity_podio_id.nil?
-          fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
-          fields['sub-produto'] = sub_product unless person.interested_sub_product.nil?
 
-          unless person.control_podio.nil?
-            if JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
-                JSON.parse(person.control_podio)['podio_status'] == 'lead_decidido' ||
-                JSON.parse(person.control_podio)['podio_status'] == 'podio_final' ||
-                JSON.parse(person.control_podio)['podio_status'] == 'bazicon'
-              fields['universidade'] = JSON.parse(person.control_podio)['universidade']['item_id'] if JSON.parse(person.control_podio).key?('universidade')
-              fields['curso'] = JSON.parse(person.control_podio)['curso']['item_id']if JSON.parse(person.control_podio).key?('curso')
-            elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_final'
-            elsif JSON.parse(person.control_podio)['podio_status'] == 'podio_decidido'
+          unless (person.control_podio.nil? ||
+              JSON.parse(person.control_podio)['podio_status'] == 'bazicon7' ||
+              JSON.parse(person.control_podio)['podio_status'] == 'podio_lead') &&
+              person.entity_exchange_lc.nil?
+            fields = {}
+            fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
+            fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
+            fields['expa-id'] = person.xp_id unless person.xp_id.nil?
+            fields['email'] = [{'type' => 'home', 'value' => person.xp_email}] unless person.xp_email.nil?
+
+            if !person.customized_fields.nil? && JSON.parse(person.customized_fields).key?('telefone')
+              fields['telefone'] = [{'type' => 'home', 'value' => JSON.parse(person.customized_fields)['telefone']}]
+            elsif !person.xp_phone.nil?
+              fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
             end
+
+            fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1] unless person.entity_exchange_lc.nil?
+            fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
+            fields['sub-produto'] = sub_product unless sub_product.nil?
+
+            fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
+            fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
+
+            puts fields
+            Podio::Item.create(podio_app_decided_leads, {:fields => fields})
           end
-
-          Podio::Item.create(entity_podio_id, {:fields => fields})
         end
+
+        json = if person.control_podio.nil?
+                 {}
+               else
+                 JSON.parse(person.control_podio)
+               end
+
+        json['podio_status'] = 'bazicon7'
+        person.control_podio = json.to_json.to_s
+        person.save
       end
-
-      json = if person.control_podio.nil?
-               {}
-             else
-               JSON.parse(person.control_podio)
-             end
-
-      json['podio_status'] = 'bazicon4'
-      person.control_podio = json.to_json.to_s
-      person.save
+    rescue
+      return
     end
   end
 
@@ -169,6 +164,7 @@ class ExpaRdSync
           person = nil
         rescue => exception
           puts exception.to_s
+          return
         end
       end
       puts item
