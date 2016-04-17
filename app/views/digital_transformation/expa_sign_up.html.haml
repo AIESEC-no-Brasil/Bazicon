@@ -43,7 +43,7 @@
                       #study-level
                         %label Escolaridade *
                         %select.form-control.m-b.required#study-level-form{name: 'study-level'}
-                          - for i in 0..DigitalTransformation.study_level.size
+                          - for i in 0...DigitalTransformation.study_level.size
                             - if i == 0
                               %option{value: ""}
                                 = DigitalTransformation.study_level[i]
@@ -53,7 +53,7 @@
                       #university{hidden: true}
                         %label Universidade *
                         %select.form-control.m-b#university-form{name: 'university'}
-                          - for i in 0..DigitalTransformation.universities.size
+                          - for i in 0...DigitalTransformation.universities.size
                             - if i == 0
                               %option{value: ''}
                                 = DigitalTransformation.universities[i]
@@ -63,7 +63,7 @@
                       #course{hidden: true}
                         %label Curso *
                         %select.form-control.m-b#course-form{name: 'course'}
-                          - for i in 0..DigitalTransformation.courses.size
+                          - for i in 0...DigitalTransformation.courses.size
                             - if i == 0
                               %option{value: ''}
                                 = DigitalTransformation.courses[i]
@@ -83,7 +83,7 @@
                         - if params['programa'] == 'GCDP'
                           %label Região de interesse *
                           %select.form-control.m-b.required{name: 'sub-product'}
-                            - for i in 0..DigitalTransformation.sub_product_global_citizen.size
+                            - for i in 0...DigitalTransformation.sub_product_global_citizen.size
                               - if i == 0
                                 %option{value: ''}
                                   = DigitalTransformation.sub_product_global_citizen[i]
@@ -93,7 +93,7 @@
                         - elsif params['programa'] == 'GIP'
                           %label Sub-produto de interesse *
                           %select.form-control.m-b.required{name: 'sub-product'}
-                            - for i in 0..DigitalTransformation.sub_product_global_talent.size
+                            - for i in 0...DigitalTransformation.sub_product_global_talent.size
                               - if i == 0
                                 %option{value: ''}
                                   = DigitalTransformation.sub_product_global_citizen[i]
@@ -103,7 +103,7 @@
                       #how-get-to-know-aiesec
                         %label Como conheceu a AIESEC? *
                         %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
-                          - for i in 0..DigitalTransformation.how_got_to_know_aiesec.size
+                          - for i in 0...DigitalTransformation.how_got_to_know_aiesec.size
                             - if i == 0
                               %option{value: ''}
                                 = DigitalTransformation.how_got_to_know_aiesec[i]
@@ -113,7 +113,7 @@
                         %label AIESEC mais próxima *
                         %select.form-control.m-b.required{name: 'nearest_lc'}
                           - if params['programa'] == 'GCDP'
-                            - for i in 0..DigitalTransformation.entities_ogcdp.size
+                            - for i in 0...DigitalTransformation.entities_ogcdp.size
                               - if i == 0
                                 %option{value: ''}
                                   = DigitalTransformation.entities_ogcdp[i]
@@ -121,7 +121,7 @@
                                 %option{value: "#{i}"}
                                   = DigitalTransformation.entities_ogcdp[i]
                           - elsif params['programa'] == 'GIP'
-                            - for i in 0..DigitalTransformation.entities_ogip.size
+                            - for i in 0...DigitalTransformation.entities_ogip.size
                               - if i == 0
                                 %option{value: ''}
                                   = DigitalTransformation.entities_ogip[i]

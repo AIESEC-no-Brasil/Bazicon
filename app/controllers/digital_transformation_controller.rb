@@ -122,20 +122,20 @@ class DigitalTransformationController < ApplicationController
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (interested_program == 'GCDP' && sub_product == 'Sub-Produtos Cidadão Global') ||
-        (interested_program == 'GIP' && sub_product == 'Sub-Produtos Talentos Globais')
+    elsif (interested_program == 'GCDP' && sub_product == '') ||
+        (interested_program == 'GIP' && sub_product == '')
       flash['text-danger'] = "Você deve selecionar um sub-produto"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif how_got_to_know_aiesec == 'Como conheceu a AIESEC?'
+    elsif how_got_to_know_aiesec == ''
       flash['text-danger'] = "Nos conte como conheceu a AIESEC"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (study_level == 'Ensino Superior' ||
-          study_level == 'Mestrado' ||
-          study_level == 'Doutorado') &&
-          (university == 'Universidade' || course == 'Curso')
+    elsif (study_level == '4' ||
+          study_level == '5' ||
+          study_level == '6') &&
+          (university == '' || course == '')
       flash['text-danger'] = "Campos 'Universidade' e 'Curso' são obrigatórios caso você tenha algum tipo de ensino superior"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif lc == 'Comitê Local'
+    elsif lc == ''
       flash['text-danger'] = "É necessário escolher o comitê mais perto de você para cadastrar uma nova conta"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
@@ -152,8 +152,8 @@ class DigitalTransformationController < ApplicationController
     auth_form.field_with(:name => 'user[password]').value = password
     auth_form.field_with(:name => 'user[country]').value = 'Brazil'
     auth_form.field_with(:name => 'user[mc]').value = '1606'
-    auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa.values[lc]['ids'][0]
-    auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa.keys[lc]
+    auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0]
+    auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
 
     begin
       page = agent.submit(auth_form, auth_form.buttons.first)
@@ -170,12 +170,12 @@ class DigitalTransformationController < ApplicationController
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
 
-          office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc])
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
           if office.nil?
             office = ExpaOffice.new
 
             DigitalTransformation.hash_entities_podio_expa.each do |entity|
-              if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc]
+              if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
                 office.xp_id = entity[1]['ids'][0]
                 office.xp_full_name = entity[0]
                 office.xp_name = entity[0]
@@ -192,7 +192,7 @@ class DigitalTransformationController < ApplicationController
           case interested_program
             when 'GCDP'
               person.interested_program = 'global_volunteer'
-              case sub_product
+              case sub_product.to_i
                 when 1 then person.interested_sub_product = 'global_volunteer_arab'
                 when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
                 when 3 then person.interested_sub_product = 'global_volunteer_africa'
@@ -201,7 +201,7 @@ class DigitalTransformationController < ApplicationController
               end
             when 'GIP'
               person.interested_program = 'global_talents'
-              case sub_product
+              case sub_product.to_i
                 when 1 then person.interested_sub_product = 'global_talents_start_up'
                 when 2 then person.interested_sub_product = 'global_talents_educacional'
                 when 3 then person.interested_sub_product = 'global_talents_IT'
@@ -216,14 +216,14 @@ class DigitalTransformationController < ApplicationController
                    JSON.parse(person.control_podio)
                  end
 
-          json['escolaridade'] = DigitalTransformation.study_level[study_level]
+          json['escolaridade'] = DigitalTransformation.study_level[study_level.to_i]
 
-          case study_level
-            when 'Ensino Superior', 'Mestrado', 'Doutorado'
-              json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university],
-                                      value: DigitalTransformation.hash_universities_podio.keys[university]}
-              json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course],
-                                      value: DigitalTransformation.hash_courses_podio.keys[course]}
+          case study_level.to_i
+            when 4,5,6
+              json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university.to_i],
+                                      value: DigitalTransformation.hash_universities_podio.keys[university.to_i]}
+              json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course.to_i],
+                                      value: DigitalTransformation.hash_courses_podio.keys[course.to_i]}
           end
 
           json['podio_status'] = 'lead_decidido'
