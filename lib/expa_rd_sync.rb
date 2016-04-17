@@ -88,8 +88,7 @@ class ExpaRdSync
         end
 
         unless person.control_podio.nil? ||
-            JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' ||
-            JSON.parse(person.control_podio)['podio_status'] == 'bazicon2' ||
+            JSON.parse(person.control_podio)['podio_status'] == 'bazicon4' ||
             JSON.parse(person.control_podio)['podio_status'] == 'podio_lead'
           fields = {}
           fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
@@ -125,7 +124,7 @@ class ExpaRdSync
             end
           end
 
-          Podio::Item.update(entity_podio_id, {:fields => fields})
+          Podio::Item.create(entity_podio_id, {:fields => fields})
         end
       end
 
@@ -135,7 +134,7 @@ class ExpaRdSync
                JSON.parse(person.control_podio)
              end
 
-      json['podio_status'] = 'bazicon3'
+      json['podio_status'] = 'bazicon4'
       person.control_podio = json.to_json.to_s
       person.save
     end
