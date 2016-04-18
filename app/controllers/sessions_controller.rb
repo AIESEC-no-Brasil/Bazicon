@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
         user = ExpaPerson.new
         user.update_from_expa(EXPA::CurrentPerson.get_current_person)
       end
-      user.update_from_expa(EXPA::People.find_by_id(user.xp_id))
+      user.update_from_expa(EXPA::CurrentPerson.get_current_person)
       user.save
       reset_session
       session[:expa_id] = user.xp_id

@@ -1,6 +1,6 @@
 class ExpaCurrentPosition < ActiveRecord::Base
 
-  belongs_to :xp_team_id, class_name: 'ExpaTeam'
+  belongs_to :xp_team, class_name: 'ExpaTeam'
 
   validates :xp_id,
             uniqueness: true,
@@ -9,7 +9,7 @@ class ExpaCurrentPosition < ActiveRecord::Base
   def update_from_expa(data)
     unless data.team.nil?
       team = ExpaTeam.find_by_xp_id(data.team.id)
-      if current_office.nil?
+      if team.nil?
         team = ExpaTeam.new
         team.update_from_expa(data.team)
         team.save
