@@ -11,7 +11,6 @@
 //= require jsKnob/jquery.knob.js
 //= require nouslider/jquery.nouislider.min.js
 //= require switchery/switchery.js
-//= require chosen/chosen.jquery.js
 //= require fullcalendar/moment.min.js
 //= require clockpicker/clockpicker.js
 //= require daterangepicker/daterangepicker.js
@@ -19,3 +18,4 @@
 //= require touchspin/jquery.bootstrap-touchspin.min.js
 //= require bootstrap-markdown/bootstrap-markdown.js
 //= require bootstrap-markdown/markdown.js
+//= require chosen.jquery.js

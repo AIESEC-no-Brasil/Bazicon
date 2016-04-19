@@ -43,8 +43,7 @@
             %ul.tag-list{style: "padding: 0"}
               - Tag.all.each do |tag|
                 %li
-                  %a{href: "#"}
-                  = tag.name
+                  %a{href: "#"}= tag.name
             %button.btn.btn-default.btn-block Filtrar
             .hr-line-dashed
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
@@ -59,30 +58,30 @@
                     %h4.modal-title Modal title
                     %small.font-bold Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   .modal-body
-                    .form-group
-                      %label.font-noraml Multi select
-                      .input-group
-                        %select.chosen-select{"data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:350px;", :tabindex => "4"}
-                          %option{:value => ""} Select
-                          %option{:value => "United States"} United States
-                          %option{:value => "United Kingdom"} United Kingdom
-                      .ibox-title.back-change
-                        :javascript
-                            $(function() {
-                              var config = {
-                                  '.chosen-select': {},
-                                  '.chosen-select-deselect': { allow_single_deselect: true },
-                                  '.chosen-select-no-single': { disable_search_threshold: 10 },
-                                  '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-                                  '.chosen-select-width': { width: "95%" }
-                              }
-                              for (var selector in config) {
-                                  $(selector).chosen(config[selector]);
-                              }
-                            });
-                    .form-group
-                      %label Sample Input
-                      %input.form-control{:placeholder => "Enter your email", :type => "email"}/
+                    .ibox-content
+                      .form-group
+                        .btn-group
+                          %label.btn.btn-primary{:for => "inputImage", :title => "Upload image file"}
+                            %input#inputImage.hide{:accept => "image/*", :name => "file", :type => "file"}
+                              Escolha o arquivo
+                        %label Permissão do arquivo
+                        %br
+                        %label.control-label{:style => "width:50%;"}
+                          .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
+                            %label
+                              %input{:name => "is_private", :type => "radio", :value => false}
+                                %i
+                                Público
+                          .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
+                            %label
+                              %input{:checked => "", :name => "is_private", :type => "radio", :value => true}
+                                %i
+                                Privado
+                        %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
+                        .input-group{:style => "width:100%;"}
+                          %select.chosen-select{ "data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
+                            - Tag.all.each do |tag|
+                              %option{:value => -tag.id}=tag.name
                   .modal-footer
                     %button.btn.btn-white{"data-dismiss" => "modal", :type => "button"} Close
                     %button.btn.btn-primary{:type => "button"} Save changes
@@ -108,3 +107,25 @@
                 = file.office.xp_name
                 %small Tipo:
                 = file.type_of_file
+  :javascript
+    $(function() {
+
+      $('.i-checks').iCheck({
+          checkboxClass: 'icheckbox_square-green',
+          radioClass: 'iradio_square-green',
+      });
+
+    });
+
+    $(function() {
+      var config = {
+          '.chosen-select': {},
+          '.chosen-select-deselect': { allow_single_deselect: true },
+          '.chosen-select-no-single': { disable_search_threshold: 10 },
+          '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+          '.chosen-select-width': { width: "95%" }
+      }
+      for (var selector in config) {
+          $(selector).chosen(config[selector]);
+      }
+    });

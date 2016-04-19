@@ -10,6 +10,7 @@ class ExpaPerson < ActiveRecord::Base
   belongs_to :xp_home_mc, class_name: 'ExpaOffice'
   belongs_to :xp_current_office, class_name: 'ExpaOffice'
   belongs_to :entity_exchange_lc, class_name: 'ExpaOffice'
+  belongs_to :xp_current_position, class_name: 'ExpaCurrentPosition'
 
   has_many :xp_applications, class_name: 'ExpaApplication', foreign_key: 'xp_person_id'
 
@@ -58,6 +59,14 @@ class ExpaPerson < ActiveRecord::Base
         current_office.save
       end
     end
+    unless data.current_position.nil?
+      current_position = ExpaCurrentPosition.find_by_xp_id(data.current_position.id)
+      if current_position.nil?
+        current_position = ExpaCurrentPosition.new
+        current_position.update_from_expa(data.current_position)
+        current_position.save
+      end
+    end
 
 
     self.xp_id = data.id unless data.id.nil?
@@ -101,13 +110,13 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_nps_score = data.nps_score.to_i unless data.nps_score.nil?
     #self.xp_current_experience = data.current_experience #TODO: struct
     self.xp_permissions = data.permissions unless data.permissions.nil?
-    self.xp_current_position = data.current_position unless data.current_position.nil?
+    self.xp_current_position = current_position unless current_position.nil?
   end
 
   def get_role
     if self.xp_current_office == self.xp_home_mc
       ExpaPerson.roles[:role_mc]
-    elsif self.xp_current_position.team.team_type == Team.where("team_type <> ?", Team.team_types[:eb])
+    elsif self.xp_current_position.xp_team.xp_team_type == 'eb'
       ExpaPerson.roles[:role_eb]
     else
       ExpaPerson.roles[:role_other]
