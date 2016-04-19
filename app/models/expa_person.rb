@@ -116,7 +116,7 @@ class ExpaPerson < ActiveRecord::Base
   def get_role
     if self.xp_current_office == self.xp_home_mc
       ExpaPerson.roles[:role_mc]
-    elsif self.xp_current_position.xp_team.xp_team_type == 'eb'
+    elsif !self.xp_current_position.nil? && self.xp_current_position.xp_team.xp_team_type == 'eb'
       ExpaPerson.roles[:role_eb]
     else
       ExpaPerson.roles[:role_other]
