@@ -8,13 +8,4 @@ class Archive < ActiveRecord::Base
   has_many :tags, through: :archive_tags, class_name: 'Tag'
 end
 
-class ArchiveTag < ActiveRecord::Base
-  belongs_to :tag, class_name: 'Tag'
-  belongs_to :archive, class_name: 'Archive'
-end
-
-class Tag < ActiveRecord::Base
-  has_many :archive_tags, class_name: 'ArchiveTag'
-  has_many :archives, through: :archive_tags, class_name: 'Archive'
-end
 
