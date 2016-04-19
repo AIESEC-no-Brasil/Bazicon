@@ -90,6 +90,8 @@ GEM
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    groupdate (2.5.2)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     http-cookie (1.0.2)
@@ -241,6 +243,7 @@ DEPENDENCIES
   expa!
   faraday (~> 0.8.10)
   font-awesome-rails
+  groupdate
   haml
   jbuilder
   jquery-rails (~> 4.0, >= 4.0.5)

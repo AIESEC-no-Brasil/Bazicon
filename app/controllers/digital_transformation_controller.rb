@@ -246,7 +246,7 @@ class DigitalTransformationController < ApplicationController
           person.customized_fields = json.to_json.to_s
 
           #como conheceu a AIESEC
-          person.how_got_to_know_aiesec = how_got_to_know_aiesec
+          person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
 
           person.save
           xp_sync = ExpaRdSync.new

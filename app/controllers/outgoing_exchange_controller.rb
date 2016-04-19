@@ -93,126 +93,122 @@ class OutgoingExchangeController < ApplicationController
   def prepare_information_list(search_lc_query)
     @info = {}
 
-    @info['leads_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).count.to_f
-    @info['leads_ogcdp_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).count.to_f
-    @info['leads_ogip_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_talents]).count.to_f
-    @info['leads_ogip_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_talents]).count.to_f
-    @info['leads_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).count.to_f
-    @info['leads_ogcdp_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).count.to_f
-    @info['leads_ogip_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).count.to_f
-    @info['leads_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).count.to_f
-    @info['leads_ogcdp_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).count.to_f
-    @info['leads_ogip_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).count.to_f
-
-    @info['ma_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogcdp_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogip_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogcdp_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogip_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogcdp_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['ma_ogip_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-
-    @info['re_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogcdp_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogip_this_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogcdp_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogip_past_month'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month - 1, 1)..(Time.new(Time.new.year, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogcdp_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['re_ogip_past_year'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year - 1, Time.new.month - 1, 1)..(Time.new(Time.new.year - 1, Time.new.month, 1) - 1)).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-
-    # Leads por semana esse mês total
-    # Leads por dia esse mês total
-    # Leads por semana esse mês oGCDP
-    # Leads por dia esse mês oGCDP
-    # Leads por semana esse mês oGIP
-    # Leads por dia esse mês oGIP
-
-
-    # MA por semana esse mês total
-    # MA por dia esse mês total
-    # MA por semana esse mês oGCDP
-    # MA por dia esse mês oGCDP
-    # MA por semana esse mês oGIP
-    # MA por dia esse mês oGIP
-
-
-    # RE por semana esse mês total
-    # RE por dia esse mês total
-    # RE por semana esse mês oGCDP
-    # RE por dia esse mês oGCDP
-    # RE por semana esse mês oGIP
-    # RE por dia esse mês oGIP
-
-
-    @info['ma_total'] = ExpaPerson.where(search_lc_query).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['re_total'] = ExpaPerson.where(search_lc_query).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['ma_ogcdp_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['re_ogcdp_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_volunteer]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-    @info['ma_ogip_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:matched]).count.to_f
-    @info['re_ogip_total'] = ExpaPerson.where(search_lc_query).where(interested_program: ExpaPerson.interested_programs[:global_talents]).where(xp_status: ExpaPerson.xp_statuses[:realized]).count.to_f
-
-    @info['ma_arab'] = 10.0
-    @info['ma_east_europe'] = 10.0
-    @info['ma_africa'] = 10.0
-    @info['ma_asia'] = 10.0
-    @info['ma_latam'] = 10.0
-    @info['re_arab'] = 10.0
-    @info['re_east_europe'] = 10.0
-    @info['re_africa'] = 10.0
-    @info['re_asia'] = 10.0
-    @info['re_latam'] = 10.0
-    @info['ma_start_up'] = 10.0
-    @info['ma_educacional'] = 10.0
-    @info['ma_it'] = 10.0
-    @info['ma_management'] = 10.0
-    @info['re_start_up'] = 10.0
-    @info['re_educacional'] = 10.0
-    @info['re_it'] = 10.0
-    @info['re_management'] = 10.0
-
-    # Numero Lead por mes esse ano total
-    for i in 1..Time.new.month
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year, i, 1)..Time.new)
-    end
-    # Numero Lead por mes esse ano oGCDP
-    for i in 1..Time.new.month
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year, i, 1)..Time.new, interested_program: ExpaPerson.interested_programs[:global_volunteer])
-    end
-    # Numero Lead por mes esse ano oGIP
-    for i in 1..Time.new.month
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year, i, 1)..Time.new, interested_program: ExpaPerson.interested_programs[:global_talents])
+    sql_lc_query =
+    if search_lc_query.keys.first == :xp_home_mc
+      sql_lc_query = 'expa_people.xp_home_mc_id = ' + search_lc_query.values[0].id.to_s
+    elsif search_lc_query.keys.first == :xp_home_lc
+      sql_lc_query = 'expa_people.xp_home_lc_id = ' + search_lc_query.values[0].id.to_s
+    elsif search_lc_query.keys.first == :entity_exchange_lc
+      sql_lc_query = 'expa_people.entity_exchange_lc_id = ' + search_lc_query.values[0].id.to_s
     end
 
-    # Numero MA por mes esse ano total
-    # Numero MA por mes esse ano oGCDP
-    # Numero MA por mes esse ano oGIP
-    # Numero RE por mes esse ano total
-    # Numero RE por mes esse ano oGCDP
-    # Numero RE por mes esse ano oGIP
+    this_year_string = "'#{Time.new(Time.new.year, 1, 1).strftime('%Y/%m/%d')}' AND '#{Time.now.strftime('%Y/%m/%d')}')"
+    past_year_string = "'#{Time.new(Time.new.year - 1, 1, 1).strftime('%Y/%m/%d')}' AND '#{(Time.new(Time.new.year, 1, 1) - 1).strftime('%Y/%m/%d')}')"
+
+    this_month_string = "'#{Time.new(Time.new.year, Time.new.month, 1).strftime('%Y/%m/%d')}' AND '#{Time.now.strftime('%Y/%m/%d')}')"
+    past_month_string = "'#{Time.new(Time.new.year, Time.new.month-1, 1).strftime('%Y/%m/%d')}' AND '#{(Time.new(Time.new.year, Time.new.month, 1) - 1).strftime('%Y/%m/%d')}')"
+    this_month_past_year_string = "'#{Time.new(Time.new.year - 1, Time.new.month, 1).strftime('%Y/%m/%d')}' AND '#{(Time.new(Time.new.year - 1, Time.new.month, 1) -1).strftime('%Y/%m/%d')}')"
+
+    sql_gcdp = "expa_opportunities.xp_programmes LIKE '%GCDP%'"
+    sql_gip = "expa_opportunities.xp_programmes LIKE '%GIP%'"
+    sql_ogx = "(expa_opportunities.xp_programmes LIKE '%GCDP%' OR expa_opportunities.xp_programmes LIKE '%GIP%')"
+
+    sql_re = "(expa_applications.xp_current_status = 4 OR expa_applications.xp_status = 4)"
+    sql_ma = "(expa_applications.xp_current_status = 3 OR expa_applications.xp_status = 3)"
+
+    @info['leads_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_month_string).count.to_f
+    @info['leads_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_month_string).count.to_f
+    @info['leads_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_month_past_year_string).count.to_f
+
+    @info['ip_ogcdp'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND expa_people.xp_status = 1 AND " + sql_gcdp).count
+    @info['ip_ogip'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND expa_people.xp_status = 1 AND " + sql_gip).count
+
+    @info['ma_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
+    @info['ma_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
+    @info['ma_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
+
+    @info['re_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
+    @info['re_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
+    @info['re_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
+
+    @info['ma_ogcdp_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ma + " AND " + sql_gcdp).count.to_f
+    @info['ma_ogcdp_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_ma + " AND " + sql_gcdp).count.to_f
+    @info['ma_ogcdp_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_ma + " AND " + sql_gcdp).count.to_f
+
+    @info['ma_ogip_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ma + " AND " + sql_gip).count.to_f
+    @info['ma_ogip_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_ma + " AND " + sql_gip).count.to_f
+    @info['ma_ogip_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_ma + " AND " + sql_gip).count.to_f
+
+    @info['re_ogcdp_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_re + " AND " + sql_gcdp).count.to_f
+    @info['re_ogcdp_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_re + " AND " + sql_gcdp).count.to_f
+    @info['re_ogcdp_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_re + " AND " + sql_gcdp).count.to_f
+
+    @info['re_ogip_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_re + " AND " + sql_gip).count.to_f
+    @info['re_ogip_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_re + " AND " + sql_gip).count.to_f
+    @info['re_ogip_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_re + " AND " + sql_gip).count.to_f
+
+    @info['leads_this_month_per_week'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).group_by_week(:xp_created_at).count.values
+    @info['leads_this_month_per_day'] = ExpaPerson.where(search_lc_query).where(xp_created_at: Time.new(Time.new.year, Time.new.month, 1)..Time.now).group_by_day(:xp_created_at).count.values
+
+    @info['ma_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ogx + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['ma_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ogx + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['ma_ogcdp_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gcdp + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['ma_ogcdp_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gcdp + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['ma_ogip_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['ma_ogip_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+
+    @info['re_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ogx + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['re_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ogx + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['re_ogcdp_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gcdp + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['re_ogcdp_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gcdp + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['re_ogip_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+    @info['re_ogip_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| i.to_i }
+
+    @info['ma_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + "AND" + sql_ogx).count.to_f
+    @info['re_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + "AND" + sql_ogx).count.to_f
+
+    @info['ma_ogcdp_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp).count
+    @info['re_ogcdp_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp).count
+
+    @info['ma_ogip_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gip).count
+    @info['re_ogip_total'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gip).count
+
+    @info['ma_arab'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 0").count
+    @info['ma_east_europe'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 1").count
+    @info['ma_africa'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 2").count
+    @info['ma_asia'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 3").count
+    @info['ma_latam'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 4").count
+    @info['re_arab'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 0").count
+    @info['re_east_europe'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 1").count
+    @info['re_africa'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 2").count
+    @info['re_asia'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 3").count
+    @info['re_latam'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 4").count
+    @info['ma_start_up'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 5").count
+    @info['ma_educacional'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 6").count
+    @info['ma_it'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 7").count
+    @info['ma_management'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_ma + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 8").count
+    @info['re_start_up'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 5").count
+    @info['re_educacional'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 6").count
+    @info['re_it'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 7").count
+    @info['re_management'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_re + " AND " + sql_gcdp + "AND expa_people.interested_sub_product = 8").count
 
 
-    # Numero Lead por mes ano passado total
-    for i in 1..12
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year - 1, i, 1)..Time.new)
-    end
-    # Numero Lead por mes ano passado oGCDP
-    for i in 1..12
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year - 1, i, 1)..Time.new, interested_program: ExpaPerson.interested_programs[:global_volunteer])
-    end
-    # Numero Lead por mes ano passado oGIP
-    for i in 1..12
-      ExpaPerson.count(search_lc_query, xp_created_at: Time.new(Time.new.year - 1, i, 1)..Time.new, interested_program: ExpaPerson.interested_programs[:global_talents])
-    end
-    # Numero MA por mes ano passado total
-    # Numero MA por mes ano passado oGCDP
-    # Numero MA por mes ano passado oGIP
-    # Numero RE por mes ano passado total
-    # Numero RE por mes ano passado oGCDP
-    # Numero RE por mes ano passado oGIP
+    @info['leads_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_ogx + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_ogcdp_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_gcdp + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_ogip_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_gip + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_ogx + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_ogcdp_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_gcdp + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_ogip_this_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_year_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+
+    @info['leads_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_ogx + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_ogcdp_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gcdp + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['ma_ogip_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gip + " AND " + sql_ma + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_ogx + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_ogcdp_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gcdp + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+    @info['re_ogip_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 DESC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
+
   end
 
   def prepare_expansor_expansions

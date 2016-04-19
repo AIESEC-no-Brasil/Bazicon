@@ -43,7 +43,27 @@ class ExpaRdSync
   def list_applications
     setup_expa_api
     params = {'per_page' => 100}
-    total_items = EXPA::Applicaations.total_items
+    total_items = EXPA::Applications.total_items
+    total_pages = total_items / params['per_page']
+    total_pages = total_pages + 1 if total_items % params['per_page'] > 0
+
+    for i in 1...total_pages
+      params['page'] = i
+      applications = EXPA::Applications.list_by_param(params)
+      applications.each do |xp_application|
+        update_db_applications(xp_application)
+      end
+    end
+  end
+
+  def list_approved_realized_applications
+    setup_expa_api
+    params = {'per_page' => 100}
+    params['filter[status]'] = 'realized'
+    params['filter[status]'] = 'approved'
+    params['filters[programmes]'] = 1 #GCDP
+    params['filters[programmes]'] = 2 #GIP
+    total_items = EXPA::Applications.total_items
     total_pages = total_items / params['per_page']
     total_pages = total_pages + 1 if total_items % params['per_page'] > 0
 
@@ -66,6 +86,7 @@ class ExpaRdSync
         update_db_peoples(xp_person)
       else
         person = update_db_peoples(xp_person)
+        person.save
         send_to_rd(person, nil, self.rd_identifiers[:open], nil)
       end
     end
@@ -77,25 +98,24 @@ class ExpaRdSync
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
     people = ExpaPerson.order(xp_created_at: :desc)
-    begin
-      people.each do |person|
+    i = 0
+    people.each do |person|
+      if i < 50
         if person.control_podio.nil? || JSON.parse(person.control_podio).key?('podio_status')
-          if person.interested_program == 'global_volunteer'
-            podio_app_decided_leads = 15290822
-            sub_product = person.interested_sub_product.to_i + 1 unless person.interested_sub_product.nil?
-          elsif person.interested_program == 'global_talents'
-            podio_app_decided_leads = 15291951
-            sub_product = person.interested_sub_product.to_i - 4 unless person.interested_sub_product.nil?
-          else
-            podio_app_decided_leads = 15290822 #GCDP
-            sub_product = nil
-          end
+          if (person.control_podio.nil? || JSON.parse(person.control_podio)['podio_status'] != 'baziconX') && !person.entity_exchange_lc.nil?
+            if person.interested_program == 'global_volunteer'
+              podio_app_decided_leads = 15290822
+              sub_product = nil
+              sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] + 1 unless person.interested_sub_product.nil?
+            elsif person.interested_program == 'global_talents'
+              podio_app_decided_leads = 15291951
+              sub_product = nil
+              sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] - 4 unless person.interested_sub_product.nil?
+            else
+              podio_app_decided_leads = 15290822 #GCDP
+              sub_product = nil
+            end
 
-
-          unless (person.control_podio.nil? ||
-              JSON.parse(person.control_podio)['podio_status'] == 'bazicon7' ||
-              JSON.parse(person.control_podio)['podio_status'] == 'podio_lead') &&
-              person.entity_exchange_lc.nil?
             fields = {}
             fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
             fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
@@ -112,11 +132,13 @@ class ExpaRdSync
             fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
             fields['sub-produto'] = sub_product unless sub_product.nil?
 
-            fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
-            fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
+            unless person.control_podio.nil?
+              fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
+              fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
+            end
 
-            puts fields
             Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+            i = i + 1
           end
         end
 
@@ -126,12 +148,14 @@ class ExpaRdSync
                  JSON.parse(person.control_podio)
                end
 
-        json['podio_status'] = 'bazicon7'
-        person.control_podio = json.to_json.to_s
-        person.save
+        unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
+          json['podio_status'] = 'baziconX'
+          person.control_podio = json.to_json.to_s
+          person.save
+        end
+      else
+        break
       end
-    rescue
-      return
     end
   end
 

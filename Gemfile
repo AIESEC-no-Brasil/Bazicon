@@ -17,6 +17,8 @@ gem 'minitest'
 
 gem 'rack-cache'
 
+gem 'groupdate'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 gem 'bootstrap-sass'
