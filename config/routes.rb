@@ -10,6 +10,7 @@ Myapp::Application.routes.draw do
   # Archives
   get '/main'          => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
+  post 'upload'        => 'archives#upload', as: 'upload'
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'

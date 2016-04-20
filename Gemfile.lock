@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: 50c6ddec2c00917b5853344df459708eba6f858c
+  revision: a41141aa977cab72f107b1e8cc70ff7dbacdc654
   specs:
     expa (0.1.0.3)
 
@@ -64,7 +64,7 @@ GEM
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     chronic (0.10.2)
-    clockwork (1.2.0)
+    clockwork (2.0.0)
       activesupport
       tzinfo
     coffee-rails (4.1.1)
