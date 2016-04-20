@@ -29,6 +29,8 @@ Myapp::Application.routes.draw do
   get 'lc/host'
   get 'lc/ogx'
   get 'lc/tm'
+
+  get '/hosts/index'
   get 'files/index'
 end
 

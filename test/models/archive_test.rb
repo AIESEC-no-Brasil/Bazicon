@@ -820,4 +820,6 @@ class ArchiveTest < Minitest::Test
     files = ArchiveDAO.list_private_other_from_office(office_mc)
     assert(files.count == 2, 'DB has register. It was supposed to be empty but it has' + files.count.to_s + ' register')
   end
+
+  
 end

@@ -49,8 +49,7 @@
             %ul.tag-list{style: "padding: 0"}
               - Tag.all.each do |tag|
                 %li
-                  %a{href: "#"}
-                  = tag.name
+                  %a{href: "#"}= tag.name
             %button.btn.btn-default.btn-block Filtrar
             .hr-line-dashed
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
@@ -61,47 +60,38 @@
                     %button.close{"data-dismiss" => "modal", :type => "button"}
                       %span{"aria-hidden" => "true"} ×
                       %span.sr-only Close
-                    %i.fa.fa-laptop.modal-icon
-                    %h4.modal-title Modal title
-                    %small.font-bold Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    %i.fa.fa-cloud-upload.modal-icon
+                    %h4.modal-title Upload de arquivos
                   .modal-body
-                    .ibox.float-e-margins
-                    .ibox-title
-                      %h5
-                        Chosen select
-                        %small http://harvesthq.github.io/chosen/
-                      .ibox-tools
-                        %a.collapse-link
-                          %i.fa.fa-chevron-up
-                        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                          %i.fa.fa-wrench
-                        %ul.dropdown-menu.dropdown-user
-                          %li
-                            %a{:href => "#"} Config option 1
-                          %li
-                            %a{:href => "#"} Config option 2
-                        %a.close-link
-                          %i.fa.fa-times
                     .ibox-content
-                      %p
-                        With chosen select uesr can fase chose from large in select input.
                       .form-group
-                        %label.font-noraml Multi select
-                        .input-group
-                          %select.chosen-select{"data-placeholder" => "Choose a Country...", :multiple => "multiple", :style => "width:350px;", :tabindex => "4"}
-                            %option{:value => ""} Select
-                            %option{:value => "United States"} United States
-                            %option{:value => "United Kingdom"} United Kingdom
-                            %option{:value => "Afghanistan"} Afghanistan
-                            %option{:value => "Aland Islands"} Aland Islands
-                            %option{:value => "Albania"} Albania
-                            %option{:value => "Algeria"} Algeria
-                    .form-group
-                      %label Sample Input
-                      %input.form-control{:placeholder => "Enter your email", :type => "email"}/
+                        .btn-group
+                          =file_field_tag 'attachment',:style => "width:100%",:class =>"btn btn-success"
+                          -if @user.get_role != ExpaPerson.roles[:role_other]
+                            %br
+                            %br
+                            %label Permissão do arquivo
+                            %br
+                            %label.control-label{:style => "width:100%;"}
+                              .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
+                                %label
+                                  %input{:name => "is_private", :type => "radio", :value => false}
+                                    %i
+                                    Público
+                              .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
+                                %label
+                                  %input{:checked => "", :name => "is_private", :type => "radio", :value => true}
+                                    %i
+                                    Privado
+                        %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
+                        .input-group{:style => "width:100%;"}
+                          %select.chosen-select{ "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
+                            - Tag.all.each do |tag|
+                              %option{:value => -tag.id}=tag.name
                   .modal-footer
-                    %button.btn.btn-white{"data-dismiss" => "modal", :type => "button"} Close
-                    %button.btn.btn-primary{:type => "button"} Save changes
+                    %button.btn.btn-success{"data-dismiss" => "modal"}
+                      %i.fa.fa-upload
+                      Enviar arquivo
 .col-lg-9.animated.fadeInRight
   .row
     .col-lg-12
@@ -124,3 +114,25 @@
                 = file.office.xp_name
                 %small Tipo:
                 = file.type_of_file
+:javascript
+    $(function() {
+
+      $('.i-checks').iCheck({
+          checkboxClass: 'icheckbox_square-green',
+          radioClass: 'iradio_square-green',
+      });
+
+    });
+
+    $(function() {
+      var config = {
+          '.chosen-select': {},
+          '.chosen-select-deselect': { allow_single_deselect: true },
+          '.chosen-select-no-single': { disable_search_threshold: 10 },
+          '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+          '.chosen-select-width': { width: "95%" }
+      }
+      for (var selector in config) {
+          $(selector).chosen(config[selector]);
+      }
+    });

@@ -10,6 +10,7 @@ class ArchivesController < ApplicationController
       @office = @user.xp_home_lc
     end
     @files = ArchiveDAO.list_from_office(@office)
+    @tags = Tag.all
   end
 
   def show_private

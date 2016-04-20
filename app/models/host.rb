@@ -8,6 +8,27 @@ class Host < ActiveRecord::Base
 
 	has_many :hosts_people, class_name: 'HostPerson'
 	has_many :trainees, through: :hosts_people	
+
+	def self.list_problematics
+		Host.where(is_problematic: true)
+	end
+
+	def self.list_free
+		Host.where.not("tmp_responsable_id=? 
+						AND tmp_who_realized_meeting_id=? 
+						AND date_approach=? 
+						AND date_alignment_meeting>?", nil, nil, nil, Time.now)
+	end
+
+	def self.list_leads
+		Host.where("tmp_responsable_id=? 
+					OR tmp_who_realized_meeting_id=? 
+					OR date_approach=?
+					OR date_alignment_meeting=?
+					OR date_alignment_meeting>?", nil, nil, nil, nil, Time.now)
+	end
+
+
 end
 
 class HostPerson < ActiveRecord::Base
@@ -19,31 +40,3 @@ class HostProblem < ActiveRecord::Base
 	belongs_to :host_problems, class_name: 'Host'
 end
 
-module Hosts
-	class << self
-		def list_problematics
-			Host.where(is_problematic: true)
-		end
-		
-		def list_leads
-			Host.where({tmp_responsable_id: nil,
-						date_approach: nil,
-						date_alignment_meeting: nil,
-						tmp_who_realized_meeting_id: nil,
-						is_favourite: false,
-						is_problematic: false})
-		end	
-		
-		'''
-		def list_free
-			Host.where({Host.tmp_responsable_id.not_eq(nil): true, 
-						Host.date_approach.not_eq(nil): true, 
-						Host.date_alignment_meeting.not_eq(nil): true,
-						Host.tmp_who_realized_meeting_id.not_eq(nil): true,
-						Host.is_favourite.not_eq(nil): true,
-						Host.is_problematic.not_eq(nil): true,
-						Host.is_non_grata.not_eq(nil): true})
-		end
-		'''
-	end
-end

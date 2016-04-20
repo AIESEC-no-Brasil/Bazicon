@@ -5,6 +5,7 @@ gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 gem 'json'
 
 gem 'whenever', :require => false
+gem 'clockwork', :require => false
 gem 'expa', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'mechanize'
 
@@ -15,6 +16,8 @@ gem 'dropbox-sdk'
 gem 'minitest'
 
 gem 'rack-cache'
+
+gem 'groupdate'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -53,7 +56,6 @@ end
 gem 'bcrypt'
 
 # Use of passenger as app server
-gem 'passenger'
 gem 'thin'
 
 #Para atualizar o Robozinho do Podio

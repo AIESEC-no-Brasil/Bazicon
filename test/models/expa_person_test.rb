@@ -49,4 +49,6 @@ class ExpaPersonTest < Minitest::Test
 
     assert(!person.list_programs.blank?, 'No programme was returned. Function is not working or database is not being well populated')
   end
+
+  
 end

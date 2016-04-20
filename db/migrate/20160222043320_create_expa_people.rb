@@ -52,13 +52,29 @@ class CreateExpaPeople < ActiveRecord::Migration
       t.column :customized_fields, :text #json
       t.column :control_podio, :text #json
 
-
-
+      t.column :ep_manager_id, :integer #foreigner_key (people)
+      t.column :approach_date, :timestamp
+      t.column :epi_date, :timestamp
+      t.column :ops_date, :timestamp
 
       t.column :xp_trainee_arrival_date, :timestamp
       t.column :xp_trainee_departure_date, :timestamp     
 
       t.timestamps null: false
+    end
+
+    create_table :expa_person_comments do |t|
+      t.column :person_id, :integer #foreigner_key (people) #Profile of the person that got the comment
+      t.column :owner_id, :integer #foreigner_key (people) #Person that left the comment
+      t.column :title, :string
+      t.column :comment, :text
+
+      t.timestamps null: false
+    end
+
+    create_table :expa_person_ep_managers do |t|
+      t.column :person_id, :integer #foreigner_key (people)
+      t.column :manager_id, :integer #foreigner_key (people)
     end
   end
 end

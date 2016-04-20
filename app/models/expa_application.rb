@@ -1,7 +1,8 @@
 class ExpaApplication < ActiveRecord::Base
-  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined] #TODO: Use prefix when they launch outside edge
-  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined] #TODO: Use prefix when they launch outside edge
+  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager] #TODO: Use prefix when they launch outside edge
+  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager] #TODO: Use prefix when they launch outside edge
 
+  belongs_to :xp_person, class_name: 'ExpaPerson'
   belongs_to :xp_opportunity, class_name: 'ExpaOpportunity'
 
   validates :xp_id,

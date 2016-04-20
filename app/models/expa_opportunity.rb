@@ -1,6 +1,7 @@
 class ExpaOpportunity < ActiveRecord::Base
 
   belongs_to :xp_office, class_name: 'ExpaOffice'
+  has_many :xp_application, class_name: 'ExpaApplication', foreign_key: 'xp_opportunity_id', primary_key: 'xp_id'
 
   validates :xp_id,
             uniqueness: true,

@@ -1,7 +1,6 @@
 class ExpaTeam < ActiveRecord::Base
-  enum xp_team_type: [:eb, :other]
 
-  belongs_to :xp_office_id, class_name: 'ExpaOffice'
+  belongs_to :xp_office, class_name: 'ExpaOffice'
 
   validates :xp_id,
             uniqueness: true,
