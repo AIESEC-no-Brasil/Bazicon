@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reported_date: 2016-04-22 13:51:30
+  problem_description: MyText
+  host_id: 1
+
+two:
+  reported_date: 2016-04-22 13:51:30
+  problem_description: MyText
+  host_id: 1
