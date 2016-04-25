@@ -1,4 +1,5 @@
 require 'dropbox_sdk'
+require 'open-uri'
 class ArchivesController < ApplicationController
 
 
@@ -9,6 +10,12 @@ class ArchivesController < ApplicationController
     @archives=[]
     @archives.concat(show_private)
     @archives.concat(show_public)
+    @archives.each do |archive|
+      if archive.type_of_file == 'image'
+        thumbnail = $client.thumbnail("/#{archive.name}", 'l')
+        open("app/assets/images/thumbnails/thumb_#{archive.id.to_s}.jpg","wb") {|f| f.puts thumbnail}
+      end
+    end
   end
 
   def show_private
@@ -46,7 +53,7 @@ class ArchivesController < ApplicationController
       end
       response = $client.put_file("/#{record.id}.#{record.name.split(".").last}", file)
     redirect_to 'archives_show'
-      end
+  end
   #POST 'remove'
   def remove (file_id = params[:id] )
     file = Archive.find_by_id(file_id)
