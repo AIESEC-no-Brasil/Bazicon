@@ -1,6 +1,8 @@
 class ArchivesController < ApplicationController
 
 
+    $client = DropboxClient.new("Euuw5wSC1UAAAAAAAAAAB7srD5VuQIx79Pehcie30V_uNicxhXCqKTQJc70_dvh7")
+
   # GET /main/files
   def show
     user_role = @user.get_role
@@ -26,23 +28,20 @@ class ArchivesController < ApplicationController
     @archives = Files.all
   end
 
-  def upload(upload=params[:file], is_private= params[:show])
-    unless upload == nil || Files.find_by_name("#{upload.original_filename}")
+  def upload(upload=params[:file], is_private = params[:is_private],tags = params[:tags] )
       file = open(upload.path())
       #Save a record with the data about who uploaded the file
-      record = Files.new
+      record = Archive.new
       record.name = upload.original_filename
-      if !is_private
-        is_private = false
-      end
-      record.office_id = @user.xp_current_office.xp_id
-      record.user_id = @user.xp_id
+      record.office= @user.xp_current_office
+      record.person = @user
       record.is_private = is_private
       record.is_deleted = false
+      record.type_of_file = record.get_file_type record.name.split(".").last
       record.save
       #Saving all the selected tags for the file
-      if $tags_id != nil
-        for t in $tags_id
+      if tags != nil
+        for t in tags
           archiveTag = ArchiveTag.new
           archiveTag.tag_id = t
           archiveTag.archive_id = record.id
@@ -50,8 +49,7 @@ class ArchivesController < ApplicationController
         end
       end
       response = $client.put_file("/#{record.id}.#{record.name.split(".").last}", file)
-    end
-    redirect_to authentication_files_path
+    redirect_to 'archives_show'
   end
 
 end

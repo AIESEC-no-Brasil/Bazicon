@@ -14,7 +14,7 @@ class ExpaPerson < ActiveRecord::Base
 
   has_many :xp_applications, class_name: 'ExpaApplication', foreign_key: 'xp_person_id'
 
-  has_many :uploaded_files, class_name: 'Archive', foreign_key: 'person'
+  has_many :uploaded_file, class_name: 'Archive', foreign_key: 'person'
   has_many :responsibled_hosts, class_name: 'Host', foreign_key: 'tmp_responsible'
   has_many :meeted_hosts, class_name: 'Host', foreign_key: 'tmp_who_realized_meeting'
 
