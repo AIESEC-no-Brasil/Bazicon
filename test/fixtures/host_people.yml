@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  full_name: MyString
+  phone: MyString
+  email: MyString
+  address: MyString
+  postal_code: 1
+  state: MyString
+  city: MyString
+  house_type: 1
+  trainees_vacancy: 1
+  weeks_vacancy: 1
+  nearest_lc_id: 1
+  how_got_to_know_aiesec: 1
+  tmp_responsable_id: 1
+  date_approach: 2016-04-22 13:50:31
+  date_alignment_meeting: 2016-04-22 13:50:31
+  tmp_who_realized_meeting_id: 1
+  is_favourite: false
+  is_problematic: false
+  is_non_grata: false
+  non_grata_description: MyText
+
+two:
+  full_name: MyString
+  phone: MyString
+  email: MyString
+  address: MyString
+  postal_code: 1
+  state: MyString
+  city: MyString
+  house_type: 1
+  trainees_vacancy: 1
+  weeks_vacancy: 1
+  nearest_lc_id: 1
+  how_got_to_know_aiesec: 1
+  tmp_responsable_id: 1
+  date_approach: 2016-04-22 13:50:31
+  date_alignment_meeting: 2016-04-22 13:50:31
+  tmp_who_realized_meeting_id: 1
+  is_favourite: false
+  is_problematic: false
+  is_non_grata: false
+  non_grata_description: MyText

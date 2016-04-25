@@ -5,4 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-# Leads = Host.create([{full_name: "Lead 1"}]) 
+# Leads = Host.create([{full_name: "Lead 1"}])
+tags = Tag.create([{ name: 'TM' }, { name: 'ICX' },{ name: 'OGX' },{ name: 'GCDP' },{ name: 'GIP' }, { name: 'FIN' },
+                   { name: 'MKT' },{ name: 'OUTPUT' },{ name: 'APRESENTAÇÃO' },{name: 'TREINAMENTO' },
+                   {name: 'FERRAMENTA'}, {name: 'RELATÒRIO'}   ])

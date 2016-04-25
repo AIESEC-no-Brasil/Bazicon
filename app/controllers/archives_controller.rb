@@ -1,3 +1,4 @@
+require 'dropbox_sdk'
 class ArchivesController < ApplicationController
 
 
@@ -5,29 +6,24 @@ class ArchivesController < ApplicationController
 
   # GET /main/files
   def show
-    user_role = @user.get_role
-    if user_role == ExpaPerson.roles[:role_mc]
-      @office = ExpaOffice.find_by_xp_id(1606) #Brazil
-    else
-      @office = @user.xp_home_lc
-    end
-    @files = ArchiveDAO.list_from_office(@office)
-    @tags = Tag.all
+    @archives=[]
+    @archives.concat(show_private)
+    @archives.concat(show_public)
   end
 
   def show_private
-    if @user.position == "mc"
-      @archives = Files.where(is_private: true)
+    if @user.get_role == ExpaPerson.roles[:role_mc]
+      Archive.where(is_private: true)
     # or if someone is from a LC
     else
-      @archives.concat(Files.where(is_private: true , office_id: @user.xp_current_office.xp_id))
+      Archive.where(is_private: true , office_id: @user.xp_current_office.id)
     end
   end
 
   def show_public
-    @archives = Files.all
+    Archive.where(is_private: false)
   end
-
+  #POST 'upload'
   def upload(upload=params[:file], is_private = params[:is_private],tags = params[:tags] )
       file = open(upload.path())
       #Save a record with the data about who uploaded the file
@@ -50,6 +46,12 @@ class ArchivesController < ApplicationController
       end
       response = $client.put_file("/#{record.id}.#{record.name.split(".").last}", file)
     redirect_to 'archives_show'
+      end
+  #POST 'remove'
+  def remove (file_id = params[:id] )
+    file = Archive.find_by_id(file_id)
+    file.is_deleted= true
+    file.save
+    redirect_to 'archives_show'
   end
-
 end
