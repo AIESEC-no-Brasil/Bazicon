@@ -91,7 +91,6 @@ class HostPersonTest < ActiveSupport::TestCase
 	  	person.tmp_responsable_id = 78789
 		person.tmp_who_realized_meeting_id = 79887
 		person.date_approach = Time.new(2016,4,10)
-		person.date_alignment_meeting = 78789
 		person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
 	  	person.save
 	end

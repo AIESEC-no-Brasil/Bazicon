@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  full_name: MyString
+  full_name: "FUlano de Tal"
   phone: MyString
   email: MyString
   address: MyString

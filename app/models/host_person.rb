@@ -8,10 +8,9 @@ class HostPerson < ActiveRecord::Base
 	end
 
 	def self.list_free
-		free = HostPerson.where.not("tmp_responsable_id=? 
-									AND tmp_who_realized_meeting_id=?
-									AND date_approach=?
-									AND date_alignment_meeting=?
-									AND date_alignment_meeting>=?", nil, nil, nil, nil, Time.now)
+		free = HostPerson.where("tmp_responsable_id != ? 
+								and tmp_who_realized_meeting_id !=?
+								and date_approach != ?
+								and date_alignment_meeting < ?", nil, nil, nil, Time.now)
 	end
 end

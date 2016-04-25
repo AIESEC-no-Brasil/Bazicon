@@ -9,3 +9,11 @@
 tags = Tag.create([{ name: 'TM' }, { name: 'ICX' },{ name: 'OGX' },{ name: 'GCDP' },{ name: 'GIP' }, { name: 'FIN' },
                    { name: 'MKT' },{ name: 'OUTPUT' },{ name: 'APRESENTAÇÃO' },{name: 'TREINAMENTO' },
                    {name: 'FERRAMENTA'}, {name: 'RELATÒRIO'}   ])
+
+
+(1..15).each do |f|
+	free = HostPerson.new
+	free.full_name = "Free #{f}"
+	free.date_approach = Time.new(2016,4,21)
+	free.save
+end
