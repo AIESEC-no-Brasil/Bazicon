@@ -16,6 +16,7 @@ class HostPerson < ActiveRecord::Base
 	end
 
 	def self.list_allocated
+		allocated = HostPerson.where()
 	end
 
 	def self.list_realized
