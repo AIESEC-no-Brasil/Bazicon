@@ -50,9 +50,9 @@
                       %span.sr-only Close
                     %i.fa.fa-cloud-upload.modal-icon
                     %h4.modal-title Upload de arquivo
-                  .modal-body
-                    .ibox-content
-                      = form_tag({action: :upload}, {multipart: true}) do
+                  = form_tag({action: :upload}, {multipart: true}) do
+                    .modal-body
+                      .ibox-content
                         .form-group
                           =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn"
                           -if @user.get_role != ExpaPerson.roles[:role_other]
@@ -71,8 +71,8 @@
                             %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha pelo menos uma tag para o arquivo", :multiple => "multiple", :style => "width: auto;", :tabindex => "4"}
                               - Tag.all.each do |tag|
                                 %option{:value => tag.id}=tag.name
-                  .modal-footer
-                    =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
+                    .modal-footer
+                      =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
     .col-lg-9.animated.fadeInRight
       .row
         .col-lg-12
@@ -103,8 +103,6 @@
                     = file.person.xp_full_name.split(' ').first
                     %small Entidade:
                     = file.office.xp_name
-                    %small Tipo:
-                    = file.type_of_file
             -elsif !file.is_deleted
               .file-box
                 .file
@@ -112,32 +110,35 @@
                   .image
                     %img.img-responsive{alt: "image", src: "#{image_path("thumbnails/thumb_#{file.id.to_s}.jpg")}" }
                   -path =  "/"+file.id.to_s+ "." +file.name.split(".").last
-                  .buttons
-                    .btn.btn-success
-                      %a{href: ($client.shares path)['url'], style: "color:fff;"}
-                        %i.fa.fa-eye
-                    .btn.btn-success
-                      %a{href:download(path), style: "color:fff;"}
-                        %i.fa.fa-download
-                    -if (file.is_private==true && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb]))|| !file.is_private
+                  .button-section
+                    .buttons
                       .btn.btn-success
-                        %a{style: "color:fff;"}
-                          %i.fa.fa-edit
-                      = form_tag({action: :remove}, style: "display:inline;") do
-                        = hidden_field_tag(:id, file.id)
-                        = button_tag(type: "submit", class: "btn btn-success") do
-                          %i.fa.fa-remove
+                        %a{href: ($client.shares path)['url'], style: "color:fff;"}
+                          %i.fa.fa-eye
+                      .btn.btn-success
+                        %a{href:download(path), style: "color:fff;"}
+                          %i.fa.fa-download
+                      -if (file.is_private==true && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb]))|| !file.is_private
+                        %button.btn.btn-primary{"data-target" => "#editModal", "data-toggle" => "modal", :type => "button"}
+                          %a{href: archives_edit_path(file.id), remote: true, style: "color:fff;"}
+                            %i.fa.fa-edit
+                        = form_tag({action: :remove}, style: "display:inline;") do
+                          = hidden_field_tag(:id, file.id)
+                          = button_tag(type: "submit", class: "btn btn-success") do
+                            %i.fa.fa-trash
                   .file-name
                     = file.name
                     %br
                     %small Adicionado em:
-                    = file.created_at.strftime('%dd %bbb %YYYY')
+                    = file.created_at.strftime('%d %b %Y')
+                    %br
                     %small Adicionado por:
                     = file.person.xp_full_name.split(' ').first
+                    %br
                     %small Entidade:
                     = file.office.xp_name
-                    %small Tipo:
-                    = file.type_of_file
+
+#edit-modal.modal.fade
 
 
 

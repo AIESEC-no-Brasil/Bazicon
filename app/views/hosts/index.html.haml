@@ -1,1 +1,125 @@
-Em construção
+.row.wrapper.border-bottom.white-bg.page-heading
+	.col-lg-10
+		%h2 Hosts
+	.col-lg-2
+
+.wrapper.wrapper-content.animated.fadeInRight
+	.row
+		.col-lg-12
+			.ibox.float-e-margins
+				.ibox-title
+					%h5 Leads
+					.ibox-tools
+						%a.collapse-link
+							%i.fa.fa-chevron-up 
+				.ibox-content
+					%table.table.table-striped.table-bordered.table-hover.dataTables-example
+						%thead
+							%tr 
+								%th Nome
+								%th Telefone
+								%th Email
+								%th Endereço
+								%th CEP
+								%th Vagas p EPs
+								%th Tempo Disp.
+								%th Cl mais Próximo
+								%th TMP Resp.
+								%th Abord.
+								%th Alin.
+								%th TMP que fez Alin.
+						%tbody
+							%tr.gradeX
+								%td Host 1
+								%td 99999999
+								%td m
+								%td Rua S. José 666
+								%td.center 8988413
+								%td.center 2
+								%td.center 4
+								%td Goiânia
+								%td.center 71247
+								%td 12/05/1996
+								%td 12/05/2016
+								%td.center 71247
+
+.wrapper.wrapper-content.animated.fadeInRight
+	.row
+		.col-lg-12
+			.ibox.float-e-margins
+				.ibox-title
+					%h5 Livres
+					.ibox-tools
+						%a.collapse-link
+							%i.fa.fa-chevron-up 
+				.ibox-content
+					%table.table.table-striped.table-bordered.table-hover.dataTables-example
+						%thead
+							%tr 
+								%th Nome
+								%th Telefone
+								%th Email
+								%th Endereço
+								%th CEP
+								%th Vagas p EPs
+								%th Tempo Disp.
+								%th Cl mais Próximo
+								%th TMP Resp.
+								%th Abord.
+								%th Alin.
+								%th TMP que fez Alin.
+						%tbody
+							-HostPerson.list_free.each do |f|
+								%tr.gradeX
+									%td= f.full_name
+									%td= f.phone
+									%td= f.email
+									%td= f.address
+									%td.center= f.postal_code
+									%td.center= f.trainees_vacancy
+									%td.center= f.weeks_vacancy
+									%td= f.nearest_lc_id
+									%td.center= f.tmp_responsable_id
+									%td= f.date_approach
+									%td= f.date_alignment_meeting
+									%td= f.tmp_who_realized_meeting_id
+
+.wrapper.wrapper-content.animated.fadeInRight
+	.row
+		.col-lg-12
+			.ibox.float-e-margins
+				.ibox-title
+					%h5 Alocados
+					.ibox-tools
+						%a.collapse-link
+							%i.fa.fa-chevron-up 
+				.ibox-content
+					%table.table.table-striped.table-bordered.table-hover.dataTables-example
+						%thead
+							%tr 
+								%th Nome
+								%th Telefone
+								%th Email
+								%th Endereço
+								%th CEP
+								%th Vagas p EPs
+								%th Tempo Disp.
+								%th Cl mais Próximo
+								%th TMP Resp.
+								%th Abord.
+								%th Alin.
+								%th TMP que fez Alin.
+						%tbody
+							%tr.gradeX
+								%td Host 1
+								%td 99999999
+								%td m
+								%td Rua S. José 666
+								%td.center 8988413
+								%td.center 2
+								%td.center 4
+								%td Goiânia
+								%td.center 71247
+								%td 12/05/1996
+								%td 12/05/2016
+								%td.center 71247
