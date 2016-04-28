@@ -125,8 +125,8 @@
                       %a{href:download(path), style: "color:fff;"}
                         %i.fa.fa-download
                     -if (file.is_private==true && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb]))|| !file.is_private
-                      .btn.btn-success
-                        %a{style: "color:fff;"}
+                      %button.btn.btn-primary{"data-target" => "#editModal", "data-toggle" => "modal", :type => "button"}
+                        %a{href: archives_edit_path(file.id), remote: true, style: "color:fff;"}
                           %i.fa.fa-edit
                       = form_tag({action: :remove}, style: "display:inline;") do
                         = hidden_field_tag(:id, file.id)
@@ -143,6 +143,7 @@
                     = file.office.xp_name
                     %small Tipo:
                     = file.type_of_file
+#edit-modal.modal.fade
 
 
 

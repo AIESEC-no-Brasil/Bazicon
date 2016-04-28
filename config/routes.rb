@@ -10,8 +10,11 @@ Myapp::Application.routes.draw do
   # Archives
   get '/main'          => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
+  get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
   post 'upload'        => 'archives#upload', as: 'upload'
   post  '/main/archives' =>'archives#remove', as: 'remove'
+  post  'update' =>'archives#update', as: 'update'
+
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
@@ -34,5 +37,6 @@ Myapp::Application.routes.draw do
 
   get '/hosts/index'
   get 'files/index'
-end
 
+
+end
