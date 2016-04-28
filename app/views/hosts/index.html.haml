@@ -1,125 +1,212 @@
 .row.wrapper.border-bottom.white-bg.page-heading
-	.col-lg-10
-		%h2 Hosts
-	.col-lg-2
+  .col-lg-10
+    %h2 Hosts
+  .col-lg-2
 
 .wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Leads
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							%tr.gradeX
-								%td Host 1
-								%td 99999999
-								%td m
-								%td Rua S. José 666
-								%td.center 8988413
-								%td.center 2
-								%td.center 4
-								%td Goiânia
-								%td.center 71247
-								%td 12/05/1996
-								%td 12/05/2016
-								%td.center 71247
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Leads
+          .ibox-tools
+            %a.collapse-link
+              %i.fa.fa-chevron-up
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                %a{:href => "#"} Config option 1
+              %li
+                %a{:href => "#"} Config option 2
+            %a.close-link
+              %i.fa.fa-times
+        .ibox-content
+          %table.table.table-striped.table-bordered.table-hover.dataTables-example
+            %thead
+              %tr 
+                %th Nome
+                %th Telefone
+                %th Email
+                %th Endereço
+                %th CEP
+                %th Vagas p EPs
+                %th Tempo Disp.
+                %th Cl mais Próximo
+                %th TMP Resp.
+                %th Abord.
+                %th Alin.
+                %th TMP que fez Alin.
+            %tbody
+              -HostPerson.list_leads.each do |l|
+                %tr.gradeA
+                  %td.host-table-body= l.full_name
+                  %td.host-table-body= l.phone
+                  %td.host-table-body= l.email
+                  %td.host-table-body= l.address
+                  %td.host-table-body= l.postal_code
+                  %td.host-table-body= l.trainees_vacancy
+                  %td.host-table-body= l.weeks_vacancy
+                  %td.host-table-body= l.nearest_lc_id
+                  %td.host-table-body= l.tmp_responsable_id
+                  %td.host-table-body= l.date_approach
+                  %td.host-table-body= l.date_alignment_meeting
+                  %td.host-table-body= l.tmp_who_realized_meeting_id
 
 .wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Livres
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							-HostPerson.list_free.each do |f|
-								%tr.gradeX
-									%td= f.full_name
-									%td= f.phone
-									%td= f.email
-									%td= f.address
-									%td.center= f.postal_code
-									%td.center= f.trainees_vacancy
-									%td.center= f.weeks_vacancy
-									%td= f.nearest_lc_id
-									%td.center= f.tmp_responsable_id
-									%td= f.date_approach
-									%td= f.date_alignment_meeting
-									%td= f.tmp_who_realized_meeting_id
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Livres
+          .ibox-tools
+            %a.collapse-link
+              %i.fa.fa-chevron-up
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                %a{:href => "#"} Config option 1
+              %li
+                %a{:href => "#"} Config option 2
+            %a.close-link
+              %i.fa.fa-times
+        .ibox-content
+          %table.table.table-striped.table-bordered.table-hover.dataTables-example
+            %thead
+              %tr 
+                %th Nome
+                %th Telefone
+                %th Email
+                %th Endereço
+                %th CEP
+                %th Vagas p EPs
+                %th Tempo Disp.
+                %th Cl mais Próximo
+                %th TMP Resp.
+                %th Abord.
+                %th Alin.
+                %th TMP que fez Alin.
+            %tbody
+              -HostPerson.list_free.each do |f|
+                %tr.gradeA
+                  %td.host-table-body= f.full_name
+                  %td.host-table-body= f.phone
+                  %td.host-table-body= f.email
+                  %td.host-table-body= f.address
+                  %td.host-table-body= f.postal_code
+                  %td.host-table-body= f.trainees_vacancy
+                  %td.host-table-body= f.weeks_vacancy
+                  %td.host-table-body= f.nearest_lc_id
+                  %td.host-table-body= f.tmp_responsable_id
+                  %td.host-table-body= f.date_approach
+                  %td.host-table-body= f.date_alignment_meeting
+                  %td.host-table-body= f.tmp_who_realized_meeting_id
 
 .wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Alocados
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							%tr.gradeX
-								%td Host 1
-								%td 99999999
-								%td m
-								%td Rua S. José 666
-								%td.center 8988413
-								%td.center 2
-								%td.center 4
-								%td Goiânia
-								%td.center 71247
-								%td 12/05/1996
-								%td 12/05/2016
-								%td.center 71247
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Alocados
+          .ibox-tools
+            %a.collapse-link
+              %i.fa.fa-chevron-up
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                %a{:href => "#"} Config option 1
+              %li
+                %a{:href => "#"} Config option 2
+            %a.close-link
+              %i.fa.fa-times
+        .ibox-content
+          %table.table.table-striped.table-bordered.table-hover.dataTables-example
+            %thead
+              %tr 
+                %th.host-table-head Nome
+                %th.host-table-head Telefone
+                %th.host-table-head Email
+                %th.host-table-head Endereço
+                %th.host-table-head CEP
+                %th.host-table-head Vagas p EPs
+                %th.host-table-head Tempo Disp.
+                %th.host-table-head Cl mais Próximo
+                %th.host-table-head TMP Resp.
+                %th.host-table-head Abord.
+                %th.host-table-head Alin.
+                %th.host-table-head TMP que fez Alin.
+            %tbody
+              %tr.gradeA
+                %td.host-table-body ANsadnasfa dfasdfsda fasdgfadsg
+                %td.host-table-body Telefone
+                %td.host-table-body Email
+                %td.host-table-body Endereço
+                %td.host-table-body CEP
+                %td.host-table-body Vagas p EPs
+                %td.host-table-body Tempo Disp.
+                %td.host-table-body Cl mais Próximo
+                %td.host-table-body TMP Resp.
+                %td.host-table-body Abord.
+                %td.host-table-body Alin.
+                %td.host-table-body TMP que fez Alin.
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+    
+        $('.dataTables-example').DataTable({
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'pdf', title: 'ExampleFile'},
+    
+                {extend: 'print',
+                    customize: function (win){
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+    
+                        $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                    }
+                }
+            ]
+    
+        });
+    
+        /* Init DataTables */
+        var oTable = $('#editable').dataTable();
+    
+        /* Apply the jEditable handlers to the table */
+        oTable.$('td').editable( '../example_ajax.php', {
+            "callback": function( sValue, y ) {
+                var aPos = oTable.fnGetPosition( this );
+                oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+            },
+            "submitdata": function ( value, settings ) {
+                return {
+                    "row_id": this.parentNode.getAttribute('id'),
+                    "column": oTable.fnGetPosition( this )[2]
+                };
+            },
+    
+            "width": "90%",
+            "height": "100%"
+        } );
+    
+    
+    });
+    
+    function fnClickAddRow() {
+        $('#editable').dataTable().fnAddData( [
+            "Custom row",
+            "New row",
+            "New row",
+            "New row",
+            "New row" ] );
+    
+    }

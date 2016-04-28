@@ -10,10 +10,26 @@ tags = Tag.create([{ name: 'TM' }, { name: 'ICX' },{ name: 'OGX' },{ name: 'GCDP
                    { name: 'MKT' },{ name: 'OUTPUT' },{ name: 'APRESENTAÇÃO' },{name: 'TREINAMENTO' },
                    {name: 'FERRAMENTA'}, {name: 'RELATÒRIO'}   ])
 
-
-(1..15).each do |f|
-	free = HostPerson.new
-	free.full_name = "Free #{f}"
-	free.date_approach = Time.new(2016,4,21)
-	free.save
+(1..3).each do |i|
+  person = HostPerson.new
+  person.full_name = "Free #{i}"
+  person.phone = 91239
+  person.email = "mail.@mail.com"
+  person.address = "12 stree, 180"
+  person.tmp_responsable_id = 78789
+  person.tmp_who_realized_meeting_id = 79887
+  person.date_approach = Time.new(2016,4,10)
+  person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
+  person.save
 end
+
+(4..6).each do |i|
+  person = HostPerson.new
+  person.full_name = "Lead #{i}"
+  person.phone = 91239
+  person.email = "mail.@mail.com"
+  person.address = "12 stree, 180"
+  person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day+2)
+  person.save
+end
+
