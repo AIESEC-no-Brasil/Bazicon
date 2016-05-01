@@ -34,20 +34,15 @@
             %a.file-control{href: "#"}Vídeos
             %a.file-control{href: "#"}Outros
             .hr-line-dashed
+            %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
+            .hr-line-dashed
             %h5 Filtros
-            %ul.folder-list{style: "padding: 0"}
-              %li
-                %a{href: archives_show_path(:permissao => "publico")}
-                  %i.fa.fa-star
-                  Público
-              %li
-                %a{href: archives_show_path(:permissao => "privado")}
-                  %i.fa.fa-star-o
-                  Privado
-              %li
-                %a{href: archives_show_path(:permissao => "todos")}
-                  %i.fa.fa-star-half
-                  Público e Privado
+            .switch
+              .onoffswitch
+                %input{type: "checkbox", class: "onoffswitch-checkbox", id: "type"}
+                  %label{class:"onoffswitch-label", for: "type"}
+                    %span.onoffswitch-inner
+                    %span.onoffswitch-switch
             %h5.tag-title
               Tags
               = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get"}) do
@@ -57,6 +52,7 @@
                   - Tag.all.each do |tag|
                     %li
                     %button.btn.btn-default.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
+                .clearfix
                 %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
             #myModal.modal.inmodal{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
@@ -67,12 +63,12 @@
                       %span{"aria-hidden" => "true"} ×
                       %span.sr-only Close
                     %i.fa.fa-cloud-upload.modal-icon
-                    %h4.modal-title Upload de arquivos
-                  .modal-body
-                    .ibox-content
-                      = form_tag({action: :upload}, {multipart: true}) do
+                    %h4.modal-title Upload de arquivo
+                  = form_tag({action: :upload}, {multipart: true}) do
+                    .modal-body
+                      .ibox-content
                         .form-group
-                          =file_field_tag 'file',:style => "width:100%",:class =>"btn btn-success"
+                          =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn"
                           -if @user.get_role != ExpaPerson.roles[:role_other]
                             %br
                             %label Permissão do arquivo

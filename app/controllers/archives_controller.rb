@@ -23,13 +23,6 @@ class ArchivesController < ApplicationController
     end
   end
 
-  def retrieve_selected_tags
-    tags_ids= params[:tags_ids]
-    ids = []
-    archive_ids = Archive.select("archives.id").joins(:archive_tags).where("tag_id IN ?",tags_ids.split(",").map(&:to_i))
-    @archives = Archive.where("id IN ?",archive_ids)
-    redirect_to archives_show_path(:archives => @archives) and return
-  end
 
   #POST /update
   def update (is_private = params[:is_private], tags = params[:tags], file_id = params[:file_id])
@@ -58,26 +51,13 @@ class ArchivesController < ApplicationController
     @file = Archive.find_by_id(file_id)
   end
 
-  def retrieve_files (permission)
-    if permission == "todos"
-      if @user.get_role == ExpaPerson.roles[:role_mc]
-        Archive.all.paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
-        # or if someone is from a LC
-      else
-        Archive.where('(is_private = ? AND office_id =  ?) OR (is_private= ?)',true, @user.xp_current_office_id,false).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
-      end
-    elsif permission=="privado"
-      if @user.get_role == ExpaPerson.roles[:role_mc]
-        Archive.where(is_private:true).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
-        # or if someone is from a LC
-      else
-        Archive.where(is_private:true, office_id: @user.xp_current_office_id).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
-      end
+  def show_private
+    if @user.get_role == ExpaPerson.roles[:role_mc]
+      Archive.where(is_private: true)
+      # or if someone is from a LC
     else
-      Archive.where(is_private:false).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
-
+      Archive.where(is_private: true , office_id: @user.xp_current_office.id)
     end
-
   end
 
   def show_public
@@ -121,5 +101,5 @@ class ArchivesController < ApplicationController
 
   end
 
-  private :delete_archive_tags, :show_public
+  private :delete_archive_tags, :show_public, :show_private
 end
