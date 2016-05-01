@@ -1,16 +1,34 @@
 require 'dropbox_sdk'
 class ArchivesController < ApplicationController
 
-
+  FILES_PER_PAGE = 2
   $client = DropboxClient.new("Euuw5wSC1UAAAAAAAAAAB7srD5VuQIx79Pehcie30V_uNicxhXCqKTQJc70_dvh7")
   helper_method :get_file
 
   # GET /main/files
   def show
-    @archives=[]
-    @archives.concat(show_private)
-    @archives.concat(show_public)
+    tags_ids= params[:tags]
+    if tags_ids.nil?
+      @archives=[]
+      permissao=params[:permissao]
+      @archives.concat(retrieve_files(permissao))
+      @archives
+    else
+      archive_ids = []
+      archive_ids_sql = Archive.select("archives.id as file_id").joins(:archive_tags).where("archive_tags.tag_id IN (?)", tags_ids.split(",").map(&:to_i))
+      for archive in archive_ids_sql
+        archive_ids << archive.file_id
+      end
+      @archives = Archive.where("id IN (?)",archive_ids).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+    end
+  end
 
+  def retrieve_selected_tags
+    tags_ids= params[:tags_ids]
+    ids = []
+    archive_ids = Archive.select("archives.id").joins(:archive_tags).where("tag_id IN ?",tags_ids.split(",").map(&:to_i))
+    @archives = Archive.where("id IN ?",archive_ids)
+    redirect_to archives_show_path(:archives => @archives) and return
   end
 
   #POST /update
@@ -40,13 +58,26 @@ class ArchivesController < ApplicationController
     @file = Archive.find_by_id(file_id)
   end
 
-  def show_private
-    if @user.get_role == ExpaPerson.roles[:role_mc]
-      Archive.where(is_private: true)
-      # or if someone is from a LC
+  def retrieve_files (permission)
+    if permission == "todos"
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        Archive.all.paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+        # or if someone is from a LC
+      else
+        Archive.where('(is_private = ? AND office_id =  ?) OR (is_private= ?)',true, @user.xp_current_office_id,false).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+      end
+    elsif permission=="privado"
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        Archive.where(is_private:true).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+        # or if someone is from a LC
+      else
+        Archive.where(is_private:true, office_id: @user.xp_current_office_id).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+      end
     else
-      Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+      Archive.where(is_private:false).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+
     end
+
   end
 
   def show_public
@@ -90,5 +121,5 @@ class ArchivesController < ApplicationController
 
   end
 
-  private :delete_archive_tags, :show_public, :show_private
+  private :delete_archive_tags, :show_public
 end
