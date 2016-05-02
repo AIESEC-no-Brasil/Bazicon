@@ -8,7 +8,7 @@
 }
 
 .selected-button-selected{
-  background-color : #007ff1;
+
 }
 .clearfix {
   margin-bottom: 15px;
@@ -25,11 +25,14 @@
   margin: 0 auto;
   vertical-align: middle;
 }
-
+.buttons {
+  display: none;
+}
 .button-section:hover .buttons {
   display: block;
 }
 
 .image {
+  position: absolute;
   z-index: 0;
 }

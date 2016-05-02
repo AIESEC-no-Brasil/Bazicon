@@ -23,18 +23,19 @@ class ArchivesController < ApplicationController
         archive_ids << archive.file_id
       end
       @archives = Archive.where("id IN (?)",archive_ids).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+
     end
   end
 
   def retrieve_files(permissao)
-    if permissao = "privado"
+    if permissao == "privado"
       if @user.get_role == ExpaPerson.roles[:role_mc]
         return Archive.where(is_private: true)
         # or if someone is from a LC
       else
        return Archive.where(is_private: true , office_id: @user.xp_current_office.id)
       end
-    elsif permissao ="publico"
+    elsif permissao == "publico"
       Archive.where(is_private: false)
     else
       if @user.get_role == ExpaPerson.roles[:role_mc]
@@ -92,13 +93,14 @@ class ArchivesController < ApplicationController
   def upload(upload=params[:file], is_private = params[:is_private],tags = params[:tags] )
     file = open(upload.path())
     #Save a record with the data about who uploaded the file
+    file_extension = File.extname(upload.original_filename)
     record = Archive.new
-    record.name = upload.original_filename
+    record.name = File.basename(upload.original_filename,file_extension)
     record.office= @user.xp_current_office
     record.person = @user
     record.is_private = is_private
     record.is_deleted = false
-    record.type_of_file = record.get_file_type record.name.split(".").last
+    record.archive_extension= file_extension
     record.save
     #Saving all the selected tags for the file
     if tags != nil
@@ -109,7 +111,7 @@ class ArchivesController < ApplicationController
         archiveTag.save
       end
     end
-    response = $client.put_file("/#{record.id}.#{record.name.split(".").last}", file)
+    response = $client.put_file("/#{record.id}#{record.archive_extension}", file)
     redirect_to 'archives_show'
   end
   #POST 'remove'
