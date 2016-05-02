@@ -55,44 +55,12 @@
                 .clearfix
                 %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
-            #myModal.modal.inmodal{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
-              .modal-dialog
-                .modal-content.animated.bounceInRight
-                  .modal-header
-                    %button.close{"data-dismiss" => "modal", :type => "button"}
-                      %span{"aria-hidden" => "true"} ×
-                      %span.sr-only Close
-                    %i.fa.fa-cloud-upload.modal-icon
-                    %h4.modal-title Upload de arquivo
-                  = form_tag({action: :upload}, {multipart: true}) do
-                    .modal-body
-                      .ibox-content
-                        .form-group
-                          =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn"
-                          -if @user.get_role != ExpaPerson.roles[:role_other]
-                            %br
-                            %label Permissão do arquivo
-                            %br
-                            %label.control-label{:style => "width:100%;"}
-                              .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
-                                =radio_button_tag "is_private",false
-                                =label_tag "Público"
-                              .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
-                                =radio_button_tag  "is_private",true
-                                =label_tag "Privado"
-                          %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
-                          .input-group{:style => "width:100%;"}
-                            %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
-                              - Tag.all.each do |tag|
-                                %option{:value => tag.id}=tag.name
-                        =submit_tag "Enviar arquivo", :class =>"btn btn-success", :style => "margin-top:5%;float:right;", :onclick => "closeModal()"
-                  .modal-footer
+            = render 'upload'
     .col-lg-9.animated.fadeInRight
       .row
         .col-lg-12
-          .div{id: "files"}
-            = render 'files'
-#edit-modal.modal.fade
+          = render 'files'
+
 
 
 

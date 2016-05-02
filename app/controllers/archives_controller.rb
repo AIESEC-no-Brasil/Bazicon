@@ -11,6 +11,9 @@ class ArchivesController < ApplicationController
     if tags_ids.nil?
       @archives=[]
       permissao=params[:permissao]
+      if permissao.nil?
+        permissao = "todos"
+      end
       @archives.concat(retrieve_files(permissao))
       @archives
     else
@@ -23,6 +26,28 @@ class ArchivesController < ApplicationController
     end
   end
 
+  def retrieve_files(permissao)
+    if permissao = "privado"
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where(is_private: true)
+        # or if someone is from a LC
+      else
+       return Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+      end
+    elsif permissao ="publico"
+      Archive.where(is_private: false)
+    else
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.all
+        # or if someone is from a LC
+      else
+        archives = Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+        archives.concat(Archive.where(is_private: false))
+        return archives
+      end
+
+    end
+  end
 
   #POST /update
   def update (is_private = params[:is_private], tags = params[:tags], file_id = params[:file_id])

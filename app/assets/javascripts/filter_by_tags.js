@@ -20,26 +20,6 @@ function buttonSelected(e) {
 
 
 
-
-
-function checkSelectedTags(){
-
-
-    var selectedElements = document.getElementsByClassName("select-button-selected");
-    var idSelectedElements = [];
-    for (i = 0; i < selectedElements.length; i++) {
-        idSelectedElements[i] = selectedElements[i].getAttribute("value");
-    }
-
-    $.ajax({
-        url: "archives",
-        beforeSend: function(xhr){ xhr.setRequestHeader("Accept", "text/html") },
-        type: "get",
-        data: {tags_ids: idSelectedElements},
-        dataType: "html"
-    });
-}
-
 function checkSelectedTag(){
 
 

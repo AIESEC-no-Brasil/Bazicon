@@ -1,12 +1,13 @@
 //= require commerce.css
-//= require forms.css
 //= require chosen.min.css
+//= require forms.css
 
-select-button{
+
+.select-button{
 
 }
 
-selected-button-selected{
+.selected-button-selected{
   background-color : #007ff1;
 }
 .clearfix {
@@ -24,14 +25,11 @@ selected-button-selected{
   margin: 0 auto;
   vertical-align: middle;
 }
-.buttons {
-  display: none;
-}
+
 .button-section:hover .buttons {
   display: block;
 }
 
 .image {
-  position: absolute;
   z-index: 0;
 }
