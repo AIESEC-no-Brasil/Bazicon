@@ -76,9 +76,10 @@
         -path =  "/"+file.id.to_s+file.archive_extension
         .button-section
           .buttons
-            .btn.btn-success
-              %a{href: url, target:'_blank',  style: "color:fff;"}
-                %i.fa.fa-eye
+            -if file.get_file_type == Archive.type_of_files[:pdf] || file.get_file_type == Archive.type_of_files[:word] || file.get_file_type == Archive.type_of_files[:ppt] || file.get_file_type == Archive.type_of_files[:image]
+              .btn.btn-success
+                %a{href: url, target:'_blank',  style: "color:fff;"}
+                  %i.fa.fa-eye
             .btn.btn-success
               %a{href:download(path), style: "color:fff;"}
                 %i.fa.fa-download
