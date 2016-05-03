@@ -27,7 +27,7 @@
         .button-section
           .buttons
             .btn.btn-success
-              %a{href: ($client.shares path)['url'], style: "color:fff;"}
+              %a{href: ($client.media path)['url'], style: "color:fff;"}
                 %i.fa.fa-eye
             .btn.btn-success
               %a{style: "color:fff;"}
@@ -38,27 +38,29 @@
         .file-name
           = file.name
           %br
-          %small Adicionado em:
-          = file.created_at.strftime('%dd %bbb %YYYY')
+          %small Adicionado em: #{file.created_at.strftime('%d %b %Y')}
           %br
-          %small Adicionado por:
-          = file.person.xp_full_name.split(' ').first
+          %small Adicionado por: #{file.person.xp_full_name.split(' ').first}
           %br
-          %small Entidade:
-          = file.office.xp_name
+          %small Entidade: #{file.office.xp_name}
   -elsif !file.is_deleted
     .file-box
       .file
         %span.corner
+        -path =  "/"+file.id.to_s+file.archive_extension
+        -url = "https://"
         .image
           -if file.get_file_type == Archive.type_of_files[:pdf]
             %i.icon-thumbnail.fa-file-pdf-o
+            -url = url+"docs.google.com/gview?url=#{($client.media path)['url']}&embedded=true"
           -elsif file.get_file_type == Archive.type_of_files[:word]
             %i.icon-thumbnail.fa-file-word-o
+            -url = url+"docs.google.com/gview?url=#{($client.media path)['url']}&embedded=true"
           -elsif file.get_file_type == Archive.type_of_files[:excel]
             %i.icon-thumbnail.fa-file-excel-o
           -elsif file.get_file_type == Archive.type_of_files[:ppt]
             %i.icon-thumbnail.fa-file-powerpoint-o
+            -url = url+"docs.google.com/gview?url=#{($client.media path)['url']}&embedded=true"
           -elsif file.get_file_type == Archive.type_of_files[:sound]
             %i.icon-thumbnail.fa-file-sound-o
           -elsif file.get_file_type == Archive.type_of_files[:video]
@@ -70,11 +72,12 @@
               %img.img-responsive{alt: "image", src: "#{image_path("thumbnails/thumb_#{file.id.to_s}.jpg")}"}
             -else
               %i.icon-thumbnail.fa-file-photo-o
-        -path =  "/"+file.id.to_s+'.'+file.archive_extension
+            -url = "#{($client.media path)['url']}"
+        -path =  "/"+file.id.to_s+file.archive_extension
         .button-section
           .buttons
             .btn.btn-success
-              %a{href: ($client.shares path)['url'], style: "color:fff;"}
+              %a{href: url, target:'_blank',  style: "color:fff;"}
                 %i.fa.fa-eye
             .btn.btn-success
               %a{href:download(path), style: "color:fff;"}
@@ -90,12 +93,9 @@
         .file-name
           = file.name
           %br
-          %small Adicionado em:
-          = file.created_at.strftime('%d %b %Y')
+          %small Adicionado em: #{file.created_at.strftime('%d %b %Y')}
           %br
-          %small Adicionado por:
-          = file.person.xp_full_name.split(' ').first
+          %small Adicionado por: #{file.person.xp_full_name.split(' ').first}
           %br
-          %small Entidade:
-          = file.office.xp_name
+          %small Entidade: #{file.office.xp_name}
 #edit-modal.modal.fade
