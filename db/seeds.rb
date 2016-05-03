@@ -33,3 +33,30 @@ end
   person.save
 end
 
+
+(7..9).each do |i|
+  host = HostPerson.new
+  host.full_name = "Free #{i}"
+  host.phone = 91239
+  host.email = "mail.@mail.com"
+  host.address = "12 stree, 180"
+  host.tmp_responsable_id = 78789
+  host.tmp_who_realized_meeting_id = 79887
+  host.date_approach = Time.new(2016,4,10)
+  host.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
+  host.save
+  trainee = TraineePerson.new
+  trainee.full_name = "Trainee #{i}"
+  trainee.entry_date = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
+  trainee.save
+  t2h = TraineeToHost.new
+  
+  trainee2host = TraineeToHost.new
+  trainee2host.host_person_id = host.id
+  trainee2host.trainee_person_id = trainee.id
+  trainee2host.entry_date = trainee.entry_date
+  trainee2host.save
+end
+
+
+
