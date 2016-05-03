@@ -16,7 +16,7 @@
   display: block;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid $navy;
+  border: 2px solid $blue;
   border-radius: 2px;
 }
 
@@ -45,17 +45,17 @@
 }
 
 .onoffswitch-inner:before {
-  content: "ON";
+  content: "Públicos";
   padding-left: 10px;
-  background-color: $navy;
+  background-color: $blue;
   color: #FFFFFF;
 }
 
 .onoffswitch-inner:after {
-  content: "OFF";
+  content: "Privados";
   padding-right: 10px;
   background-color: #FFFFFF;
-  color: #999999;
+  color: $blue;
   text-align: right;
 }
 
@@ -63,7 +63,7 @@
   width: 20px;
   margin: 0;
   background: #FFFFFF;
-  border: 2px solid $navy;
+  border: 2px solid $blue;
   border-radius: 2px;
   position: absolute;
   top: 0;
@@ -951,7 +951,7 @@ div.dt-button-info {
 /* SWITCHES */
 .onoffswitch {
   position: relative;
-  width: 54px;
+  width: 70px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -965,7 +965,7 @@ div.dt-button-info {
   display: block;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #1AB394;
+  border: 2px solid $blue;
   border-radius: 3px;
 }
 
@@ -996,17 +996,17 @@ div.dt-button-info {
 }
 
 .onoffswitch-inner:before {
-  content: "ON";
+  content: "Público";
   padding-left: 7px;
-  background-color: #1AB394;
+  background-color: $blue;
   color: #FFFFFF;
 }
 
 .onoffswitch-inner:after {
-  content: "OFF";
+  content: "Privado";
   padding-right: 7px;
   background-color: #FFFFFF;
-  color: #919191;
+  color: $blue;
   text-align: right;
 }
 
@@ -1015,12 +1015,12 @@ div.dt-button-info {
   width: 18px;
   margin: 0;
   background: #FFFFFF;
-  border: 2px solid #1AB394;
+  border: 2px solid $blue;
   border-radius: 3px;
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 36px;
+  right: 56px;
   -moz-transition: all 0.3s ease-in 0s;
   -webkit-transition: all 0.3s ease-in 0s;
   -o-transition: all 0.3s ease-in 0s;

@@ -13,6 +13,16 @@
       .ibox.float-e-margins
         .ibox-content
           .file-manager
+            %div{style: "display:block"}
+              %form.pull-left.mail-search{:action => archives_show_path, :method => "get", :id => "search-form"}
+                .input-group
+                  %input.form-control.input-sm{:name => "pesquisa", :placeholder => "Digite o nome do arquivo", :type => "text"}
+                    .input-group-btn
+                      %button.btn.btn-sm.btn-primary{:type => "submit"}
+                        Pesquisar
+            %br
+            %br
+            .hr-line-dashed
             %h5 Apresentar
             %a.file-control.active{href: "#"}Todos
             %a.file-control{href: "#"}PDF
@@ -24,138 +34,39 @@
             %a.file-control{href: "#"}Vídeos
             %a.file-control{href: "#"}Outros
             .hr-line-dashed
+            %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
+            .hr-line-dashed
             %h5 Filtros
-            %ul.folder-list{style: "padding: 0"}
-              %li
-                %a{href: "#"}
-                  %i.fa.fa-star
-                  Público
-              %li
-                %a{href: "#"}
-                  %i.fa.fa-star-o
-                  Privado
-              %li
-                %a{href: "#"}
-                  %i.fa.fa-star-half
-                  Público e Privado
+            .switch
+              .onoffswitch
+                %input{type: "checkbox", class: "onoffswitch-checkbox", id: "type"}
+                  %label{class:"onoffswitch-label", for: "type"}
+                    %span.onoffswitch-inner
+                    %span.onoffswitch-switch
             %h5.tag-title
               Tags
-            %ul.tag-list{style: "padding: 0"}
-              - Tag.all.each do |tag|
-                %li
-                  %a{href: "#"}= tag.name
-            %button.btn.btn-default.btn-block Filtrar
+              = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
+                %input{type: "hidden", name: "tags", id: "tags"}
+                -hidden_field(:permissao,"todos")
+                %ul.tag-list{style: "padding: 0"}
+                  - Tag.all.each do |tag|
+                    %li
+                    %button.btn.btn-default.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
+                .clearfix
+                %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
-            #myModal.modal.inmodal{"aria-hidden" => "true", :role => "dialog", :tabindex => "-1"}
-              .modal-dialog
-                .modal-content.animated.bounceInRight
-                  .modal-header
-                    %button.close{"data-dismiss" => "modal", :type => "button"}
-                      %span{"aria-hidden" => "true"} ×
-                      %span.sr-only Close
-                    %i.fa.fa-cloud-upload.modal-icon
-                    %h4.modal-title Upload de arquivos
-                  .modal-body
-                    .ibox-content
-                      = form_tag({action: :upload}, {multipart: true}) do
-                        .form-group
-                          =file_field_tag 'file',:style => "width:100%",:class =>"btn btn-success"
-                          -if @user.get_role != ExpaPerson.roles[:role_other]
-                            %br
-                            %label Permissão do arquivo
-                            %br
-                            %label.control-label{:style => "width:100%;"}
-                              .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
-                                =radio_button_tag "is_private",false
-                                =label_tag "Público"
-                              .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
-                                =radio_button_tag  "is_private",true
-                                =label_tag "Privado"
-                          %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
-                          .input-group{:style => "width:100%;"}
-                            %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
-                              - Tag.all.each do |tag|
-                                %option{:value => tag.id}=tag.name
-                        =submit_tag "Enviar arquivo", :class =>"btn btn-success", :style => "margin-top:5%;float:right;", :onclick => "closeModal()"
-                  .modal-footer
+            = render 'upload'
     .col-lg-9.animated.fadeInRight
       .row
         .col-lg-12
-          - @archives.each do |file|
-            -if file.is_deleted && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb])
-              .file-box{ style: "opacity:0.3;"}
-                .file
-                  %span.corner
-                  .image
-                    %img.img-responsive{alt: "image", src: "#{image_path('p1.jpg')}"}
-                  -path =  "/"+file.id.to_s+ "." +file.name.split(".").last
-                  .buttons
-                    .btn.btn-success
-                      %a{href: ($client.shares path)['url'], style: "color:fff;"}
-                        %i.fa.fa-eye
-                    .btn.btn-success
-                      %a{style: "color:fff;"}
-                        %i.fa.fa-edit
-                    .btn.btn-success
-                      %a{href:download(path), style: "color:fff;"}
-                        %i.fa.fa-download
-                  .file-name
-                    = file.name
-                    %br
-                    %small Adicionado em:
-                    = file.created_at.strftime('%dd %bbb %YYYY')
-                    %small Adicionado por:
-                    = file.person.xp_full_name.split(' ').first
-                    %small Entidade:
-                    = file.office.xp_name
-                    %small Tipo:
-                    = file.type_of_file
-            -elsif !file.is_deleted
-              .file-box
-                .file
-                  %span.corner
-                  .image
-                    %img.img-responsive{alt: "image", src: "#{image_path('p1.jpg')}"}
-                  -path =  "/"+file.id.to_s+ "." +file.name.split(".").last
-                  .buttons
-                    .btn.btn-success
-                      %a{href: ($client.shares path)['url'], style: "color:fff;"}
-                        %i.fa.fa-eye
-                    .btn.btn-success
-                      %a{href:download(path), style: "color:fff;"}
-                        %i.fa.fa-download
-                    -if (file.is_private==true && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb]))|| !file.is_private
-                      %button.btn.btn-primary{"data-target" => "#editModal", "data-toggle" => "modal", :type => "button"}
-                        %a{href: archives_edit_path(file.id), remote: true, style: "color:fff;"}
-                          %i.fa.fa-edit
-                      = form_tag({action: :remove}, style: "display:inline;") do
-                        = hidden_field_tag(:id, file.id)
-                        = button_tag(type: "submit", class: "btn btn-success") do
-                          %i.fa.fa-remove
-                  .file-name
-                    = file.name
-                    %br
-                    %small Adicionado em:
-                    = file.created_at.strftime('%dd %bbb %YYYY')
-                    %small Adicionado por:
-                    = file.person.xp_full_name.split(' ').first
-                    %small Entidade:
-                    = file.office.xp_name
-                    %small Tipo:
-                    = file.type_of_file
-#edit-modal.modal.fade
+          %div{id:"files"}
+            = render 'files'
+
 
 
 
 :javascript
-    $(function() {
 
-      $('.i-checks').iCheck({
-          checkboxClass: 'icheckbox_square-green',
-          radioClass: 'iradio_square-green',
-      });
-
-    });
 
     $(function() {
       var config = {
@@ -174,3 +85,16 @@
     function closeModal(){
         $('#myModal').modal('hide');
       }
+
+    $(function() {
+      $("#search_form input").keyup(function() {
+        $.get($("#search_form").attr("show"), $("#search_form").serialize(), null, "script");
+        return false;
+      });
+      $(function() {
+      $("#filter input").keyup(function() {
+        $.get($("#filter").attr("show"), $("#filter").serialize(), null, "script");
+        return false;
+      });
+
+    });

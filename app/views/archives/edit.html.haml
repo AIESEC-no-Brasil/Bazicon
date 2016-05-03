@@ -4,10 +4,10 @@
       %button.close{"data-dismiss" => "modal", :type => "button"}
         %a{href: archives_show_path,"aria-hidden" => "true"} ×
         %span.sr-only Close
-      %h3= "Editando arquivo :#{@file.name}"
-    .modal-body
-      .ibox-content
-        = form_tag({action: :update}, {multipart: true}) do
+      %h3= "Editando arquivo: #{@file.name}"
+    = form_tag({action: :update}, {multipart: true}) do
+      .modal-body
+        .ibox-content
           .form-group
             =hidden_field_tag :file_id, @file.id
             -if @user.get_role != ExpaPerson.roles[:role_other]
@@ -36,8 +36,8 @@
                     %option{:value => tag.id,:selected => "selected"}=tag.name
                   -else
                     %option{:value => tag.id}=tag.name
-          =submit_tag "Enviar arquivo", :class =>"btn btn-success", :style => "margin-top:5%;float:right;", :onclick => "closeModal()"
-    .modal-footer
+      .modal-footer
+        =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
 :javascript
     $(function() {
 
