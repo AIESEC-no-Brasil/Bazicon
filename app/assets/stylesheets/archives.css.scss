@@ -1,7 +1,15 @@
 //= require commerce.css
-//= require forms.css
 //= require chosen.min.css
+//= require forms.css
 
+
+.select-button{
+
+}
+
+.selected-button-selected{
+
+}
 .clearfix {
   margin-bottom: 15px;
 }
@@ -29,7 +37,14 @@
   z-index: 0;
 }
 .icon-thumbnail {
-  font-size: 14;
+  display: inline-block;
+  font: normal normal normal 62px/1 FontAwesome;
+  font-size: 62;
+  text-rendering: auto;
   vertical-align: middle;
-  margin: 0 auto;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -mos-osx-font-smoothing: grayscale;
+  width: 198px;
+  line-height: 1.6;
 }

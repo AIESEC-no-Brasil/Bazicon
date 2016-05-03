@@ -1,25 +1,52 @@
 require 'dropbox_sdk'
-require 'open-uri'
 class ArchivesController < ApplicationController
 
-
+  FILES_PER_PAGE = 2
   $client = DropboxClient.new("Euuw5wSC1UAAAAAAAAAAB7srD5VuQIx79Pehcie30V_uNicxhXCqKTQJc70_dvh7")
   helper_method :get_file
 
   # GET /main/files
   def show
-    @archives=[]
-    @archives.concat(show_private)
-    @archives.concat(show_public)
-    # puts $client.metadata('/').inspect
-    # Provisorio, estava testando como pegar o thumbnail do dropbox para imagens.
-    # Setar o thumbnail no upload, e atualizar na edição
-    # Para outros tipos de documentos, copiar um thumbnail padrão, como PDF, música, etc
-    @archives.each do |archive|
-      if archive.type_of_file == 'image'
-        thumbnail = $client.thumbnail("/#{archive.name}", 'l')
-        open("app/assets/images/thumbnails/thumb_#{archive.id.to_s}.jpg","wb") {|f| f.puts thumbnail}
+    tags_ids= params[:tags]
+    puts $client.metadata('/').inspect
+    if tags_ids.nil?
+      @archives=[]
+      permissao=params[:permissao]
+      if permissao.nil?
+        permissao = "todos"
       end
+      @archives.concat(retrieve_files(permissao))
+      @archives
+    else
+      archive_ids = []
+      archive_ids_sql = Archive.select("archives.id as file_id").joins(:archive_tags).where("archive_tags.tag_id IN (?)", tags_ids.split(",").map(&:to_i))
+      for archive in archive_ids_sql
+        archive_ids << archive.file_id
+      end
+      @archives = Archive.where("id IN (?)",archive_ids).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+    end
+  end
+
+  def retrieve_files(permissao)
+    if permissao == "privado"
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where(is_private: true)
+        # or if someone is from a LC
+      else
+       return Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+      end
+    elsif permissao == "publico"
+      Archive.where(is_private: false)
+    else
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.all
+        # or if someone is from a LC
+      else
+        archives = Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+        archives.concat(Archive.where(is_private: false))
+        return archives
+      end
+
     end
   end
 
@@ -66,13 +93,14 @@ class ArchivesController < ApplicationController
   def upload(upload=params[:file], is_private = params[:is_private],tags = params[:tags] )
     file = open(upload.path())
     #Save a record with the data about who uploaded the file
+    file_extension = File.extname(upload.original_filename)
     record = Archive.new
-    record.name = upload.original_filename
+    record.name = File.basename(upload.original_filename,file_extension)
     record.office= @user.xp_current_office
     record.person = @user
     record.is_private = is_private
     record.is_deleted = false
-    record.type_of_file = record.get_file_type record.name.split(".").last
+    record.archive_extension= file_extension
     record.save
     #Saving all the selected tags for the file
     if tags != nil
@@ -83,7 +111,7 @@ class ArchivesController < ApplicationController
         archiveTag.save
       end
     end
-    response = $client.put_file("/#{record.id}.#{record.name.split(".").last}", file)
+    response = $client.put_file("/#{record.id}#{record.archive_extension}", file)
     redirect_to 'archives_show'
   end
   #POST 'remove'
