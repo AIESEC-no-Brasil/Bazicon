@@ -7,6 +7,8 @@ class Archive < ActiveRecord::Base
   has_many :archive_tags, class_name: 'ArchiveTag'
   has_many :tags, through: :archive_tags, class_name: 'Tag'
 
+
+
   def get_file_type file_type
     if file_type== 'jpg' || file_type =='jpeg'  || file_type =='png' || file_type =='jpeg' ||
         file_type =='bmp' || file_type =='gif' || file_type =='tif'
@@ -28,5 +30,10 @@ class Archive < ActiveRecord::Base
     end
     return Archive.type_of_files[:other]
   end
+
+
+
+
 end
+
 

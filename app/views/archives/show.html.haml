@@ -14,9 +14,9 @@
         .ibox-content
           .file-manager
             %div{style: "display:block"}
-              %form.pull-right.mail-search{:action => "", :method => "get"}
+              %form.pull-left.mail-search{:action => archives_show_path, :method => "get", :id => "search-form"}
                 .input-group
-                  %input.form-control.input-sm{:name => "search", :placeholder => "Digite o nome do arquivo", :type => "text"}
+                  %input.form-control.input-sm{:name => "pesquisa", :placeholder => "Digite o nome do arquivo", :type => "text"}
                     .input-group-btn
                       %button.btn.btn-sm.btn-primary{:type => "submit"}
                         Pesquisar
@@ -45,7 +45,7 @@
                     %span.onoffswitch-switch
             %h5.tag-title
               Tags
-              = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get"}) do
+              = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
                 %input{type: "hidden", name: "tags", id: "tags"}
                 -hidden_field(:permissao,"todos")
                 %ul.tag-list{style: "padding: 0"}
@@ -59,7 +59,8 @@
     .col-lg-9.animated.fadeInRight
       .row
         .col-lg-12
-          = render 'files'
+          %div{id:"files"}
+            = render 'files'
 
 
 
@@ -84,3 +85,16 @@
     function closeModal(){
         $('#myModal').modal('hide');
       }
+
+    $(function() {
+      $("#search_form input").keyup(function() {
+        $.get($("#search_form").attr("show"), $("#search_form").serialize(), null, "script");
+        return false;
+      });
+      $(function() {
+      $("#filter input").keyup(function() {
+        $.get($("#filter").attr("show"), $("#filter").serialize(), null, "script");
+        return false;
+      });
+
+    });

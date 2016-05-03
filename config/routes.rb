@@ -11,6 +11,7 @@ Myapp::Application.routes.draw do
   get '/main'          => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
+  post 'restore_archive' => 'archives#restore_archive', as: 'restore_archive'
   post 'upload'        => 'archives#upload', as: 'upload'
   post  '/main/archives/remove' =>'archives#remove', as: 'remove'
   post  'update' =>'archives#update', as: 'update'

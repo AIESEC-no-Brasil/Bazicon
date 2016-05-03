@@ -1,26 +1,28 @@
 - @archives.each do |file|
-  -if file.is_deleted && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb])
+  -if file.is_deleted
     .file-box{ style: "opacity:0.3;"}
       .file
         %span.corner
         .image
           %img.img-responsive{alt: "image", src: "#{image_path('p1.jpg')}"}
-        -path =  "/"+file.id.to_s+file.archive_extension
-        .buttons
-          .btn.btn-success
-            %a{href: ($client.shares path)['url'], style: "color:fff;"}
-              %i.fa.fa-eye
-          .btn.btn-success
-            %a{style: "color:fff;"}
-              %i.fa.fa-edit
-          .btn.btn-success
-            %a{href:download(path), style: "color:fff;"}
-              %i.fa.fa-download
+        - path =  "/"+file.id.to_s+file.archive_extension
+        .button-section
+          .buttons
+            .btn.btn-success
+              %a{href: ($client.shares path)['url'], style: "color:fff;"}
+                %i.fa.fa-eye
+            .btn.btn-success
+              %a{href:download(path), style: "color:fff;"}
+                %i.fa.fa-download
+            = form_tag({action: :restore_archive}, style: "display:inline;") do
+              = hidden_field_tag(:id, file.id)
+              %button.btn.btn-primary{ :type => "submit"}
+                %i.fa.fa-recycle
         .file-name
           = file.name
           %br
           %small Adicionado em:
-          = file.created_at.strftime('%dd %bbb %YYYY')
+          = file.created_at.strftime('%d %b %Y')
           %small Adicionado por:
           = file.person.xp_full_name.split(' ').first
           %small Entidade:
