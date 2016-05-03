@@ -11,6 +11,7 @@ class ArchivesController < ApplicationController
     @archives=[]
     @archives.concat(show_private)
     @archives.concat(show_public)
+    # puts $client.metadata('/').inspect
     # Provisorio, estava testando como pegar o thumbnail do dropbox para imagens.
     # Setar o thumbnail no upload, e atualizar na edição
     # Para outros tipos de documentos, copiar um thumbnail padrão, como PDF, música, etc

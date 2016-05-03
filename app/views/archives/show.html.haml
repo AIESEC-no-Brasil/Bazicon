@@ -108,7 +108,10 @@
                 .file
                   %span.corner
                   .image
-                    %img.img-responsive{alt: "image", src: "#{image_path("thumbnails/thumb_#{file.id.to_s}.jpg")}" }
+                    -if file.type_of_file=='image'
+                      %img.img-responsive{alt: "image", src: "#{image_path("thumbnails/thumb_#{file.id.to_s}.jpg")}" }
+                    -elsif file.type_of_file=='pdf'
+                      %i.fa.fa-file-pdf-o.icon-thumbnail
                   -path =  "/"+file.id.to_s+ "." +file.name.split(".").last
                   .button-section
                     .buttons
