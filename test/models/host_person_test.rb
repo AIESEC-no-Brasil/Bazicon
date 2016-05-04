@@ -168,16 +168,16 @@ class HostPersonTest < ActiveSupport::TestCase
   		
   	(1..3).each do |i|
 	 	person = HostPerson.new
-	  	person.full_name = "Free #{i}"
-	  	person.phone = 91239
-	  	person.email = "mail.@mail.com"
-	  	person.address = "12 stree, 180"
-	  	person.tmp_responsable_id = 78789
-		person.tmp_who_realized_meeting_id = 79887
+  	person.full_name = "Free #{i}"
+  	person.phone = 91239
+  	person.email = "mail.@mail.com"
+  	person.address = "12 stree, 180"
+  	person.tmp_responsable_id = 78789
+	  person.tmp_who_realized_meeting_id = 79887
 		person.date_approach = Time.new(2016,4,10)
 		person.date_alignment_meeting = 78789
 		person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
-	  	person.save
+  	person.save
 	end
 
   	hosts = HostPerson.list_leads

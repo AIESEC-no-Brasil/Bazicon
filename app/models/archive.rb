@@ -28,5 +28,10 @@ class Archive < ActiveRecord::Base
     end
     return Archive.type_of_files[:other]
   end
+
+
+
+
 end
+
 

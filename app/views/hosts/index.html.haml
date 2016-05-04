@@ -1,125 +1,661 @@
 .row.wrapper.border-bottom.white-bg.page-heading
-	.col-lg-10
-		%h2 Hosts
-	.col-lg-2
-
+  .col-lg-10
+    %h2 Hosts
+  .col-lg-2
 .wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Leads
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							%tr.gradeX
-								%td Host 1
-								%td 99999999
-								%td m
-								%td Rua S. José 666
-								%td.center 8988413
-								%td.center 2
-								%td.center 4
-								%td Goiânia
-								%td.center 71247
-								%td 12/05/1996
-								%td 12/05/2016
-								%td.center 71247
+  .row
+    .col-sm-8
+      .ibox
+        .ibox-content
+          .input-group
+            %input.input.form-control{:placeholder => "Search client ", :type => "text"}
+              %span.input-group-btn
+                %button.btn.btn.btn-primary{:type => "button"}
+                  %i.fa.fa-search
+                  Search
+          .clients-list
+            %ul.nav.nav-tabs
+              %span.pull-right.small.text-muted 1406 Elements
+              %li.active
+                %a{"data-toggle" => "tab", :href => "#tab-1"}
+                  %i.fa.fa-user
+                  Leads
+              %li
+                %a{"data-toggle" => "tab", :href => "#tab-2"}
+                  %i.fa.fa-child
+                  Livres
+              %li
+                %a{"data-toggle" => "tab", :href => "#tab-3"}
+                  %i.fa.fa-calendar-o
+                  Alocados
+              %li
+                %a{"data-toggle" => "tab", :href => "#tab-4"}
+                  %i.fa.fa-check
+                  Realized
+            .tab-content
+              #tab-1.tab-pane.active
+                .full-height-scroll
+                  .table-responsive
+                    %table.table.table-striped.table-hover
+                      %tbody
+                        -HostPerson.list_leads.each do |l|
+                          %tr
+                            %td.client-avatar
+                              %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg"}
+                            %td
+                              %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
+                                =l.full_name
+                            %td 
+                              =l.city
+                            %td.contact-type
+                              %i.fa.fa-envelope
+                            %td 
+                              =l.email
+                            %td.client-status
+                              -if l.is_favourite == true
+                                %span.label.label-primary Favorito
+                        %tr
+                          %td.client-avatar
+                            %a{:href => ""}
+                              %img{:alt => "image", :src => image_path('a6.jpg')}/
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
+                          %td Mone Industries
+                          %td.contact-type
+                            %i.fa.fa-phone                           
+                          %td +400 468 921
+                          %td.client-status
+                            %span.label.label-primary Favorito
+                        %tr
 
-.wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Livres
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							-HostPerson.list_free.each do |f|
-								%tr.gradeX
-									%td= f.full_name
-									%td= f.phone
-									%td= f.email
-									%td= f.address
-									%td.center= f.postal_code
-									%td.center= f.trainees_vacancy
-									%td.center= f.weeks_vacancy
-									%td= f.nearest_lc_id
-									%td.center= f.tmp_responsable_id
-									%td= f.date_approach
-									%td= f.date_alignment_meeting
-									%td= f.tmp_who_realized_meeting_id
+              #tab-2.tab-pane
+                .full-height-scroll
+                  .table-responsive
+                    %table.table.table-striped.table-hover
+                      %tbody
+                        %tr
+                          %td.client-avatar
+                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
+                              João Silva
+                          %td Tellus Institute
+                          %td.contact-type
+                            %i.fa.fa-envelope
+                          %td gravida@rbisit.com
+                          %td.client-status
+                            %span.label.label-primary Favorito
+                        %tr
+                          %td.client-avatar
+                            %a{:href => ""}
+                              %img{:alt => "image", :src => image_path('a6.jpg')}/
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
+                          %td Mone Industries
+                          %td.contact-type
+                            %i.fa.fa-phone                           
+                          %td +400 468 921
+                          %td.client-status
+                        %tr
 
-.wrapper.wrapper-content.animated.fadeInRight
-	.row
-		.col-lg-12
-			.ibox.float-e-margins
-				.ibox-title
-					%h5 Alocados
-					.ibox-tools
-						%a.collapse-link
-							%i.fa.fa-chevron-up 
-				.ibox-content
-					%table.table.table-striped.table-bordered.table-hover.dataTables-example
-						%thead
-							%tr 
-								%th Nome
-								%th Telefone
-								%th Email
-								%th Endereço
-								%th CEP
-								%th Vagas p EPs
-								%th Tempo Disp.
-								%th Cl mais Próximo
-								%th TMP Resp.
-								%th Abord.
-								%th Alin.
-								%th TMP que fez Alin.
-						%tbody
-							%tr.gradeX
-								%td Host 1
-								%td 99999999
-								%td m
-								%td Rua S. José 666
-								%td.center 8988413
-								%td.center 2
-								%td.center 4
-								%td Goiânia
-								%td.center 71247
-								%td 12/05/1996
-								%td 12/05/2016
-								%td.center 71247
+              #tab-3.tab-pane
+                .full-height-scroll
+                  .table-responsive
+                    %table.table.table-striped.table-hover
+                      %tbody
+                        %tr
+                          %td.client-avatar
+                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
+                              João Américo
+                          %td Tellus Institute
+                          %td.contact-type
+                            %i.fa.fa-envelope
+                          %td gravida@rbisit.com
+                          %td.client-status
+                            %span.label.label-primary Favorito
+                        %tr
+                          %td.client-avatar
+                            %a{:href => ""}
+                              %img{:alt => "image", :src => image_path('a6.jpg')}/
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
+                          %td Mone Industries
+                          %td.contact-type
+                            %i.fa.fa-phone                           
+                          %td +400 468 921
+                          %td.client-status
+                        %tr
+
+              #tab-4.tab-pane
+                .full-height-scroll
+                  .table-responsive
+                    %table.table.table-striped.table-hover
+                      %tbody
+                        %tr
+                          %td.client-avatar
+                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
+                              João Américo
+                          %td Tellus Institute
+                          %td.contact-type
+                            %i.fa.fa-envelope
+                          %td gravida@rbisit.com
+                          %td.client-status
+                            %span.label.label-primary Favorito
+                        %tr
+                          %td.client-avatar
+                            %a{:href => ""}
+                              %img{:alt => "image", :src => image_path('a6.jpg')}/
+                          %td
+                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
+                          %td Mone Industries
+                          %td.contact-type
+                            %i.fa.fa-phone                           
+                          %td +400 468 921
+                          %td.client-status
+                            %span.label.label-primary Favorito
+                        %tr
+                        
+    .col-sm-4
+      .ibox
+        .ibox-content
+          .tab-content
+            #contact-1.tab-pane.active
+              .row.m-b-lg
+                .col-lg-8.text-center
+                  %h2 Nicki Smith
+                  .m-b-sm
+                    %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg", :style => "width: 100px"}
+                .col-lg-3.widget.style1
+                  .col-xs-5.text-center
+                    %h2 10
+
+              .client-detail
+                .full-height-scroll
+                  %strong Dados Pessoais
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right 09:00 pm
+                      Telefone
+                    %li.list-group-item
+                      %span.pull-right 10:16 am
+                      Email
+                    %li.list-group-item
+                      %span.pull-right 08:22 pm
+                      Endereço
+                    %li.list-group-item
+                      %span.pull-right 11:06 pm
+                      CEP
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Estado
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Cidade
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Tipo de Casa
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Vagas para EPs
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Tempo disponível
+                  %strong Como conheceu a AIESEC
+                  %p
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                  %hr/
+                  %button.btn.btn-w-m.btn-danger Problemas
+
+            #contact-2.tab-pane
+              .row.m-b-lg
+                .col-lg-4.text-center
+                  %h2 Edan Randall
+                  .m-b-sm
+                    %img.img-circle{:alt => "image", :src => image_path('a3.jpg'), :style => "width: 62px"}
+                .col-lg-8
+                  %strong
+                    About me
+                  %p
+                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default tempor incididunt model text.
+                  %button.btn.btn-primary.btn-sm.btn-block{:type => "button"}
+                    %i.fa.fa-envelope
+                    Send Message
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right 09:00 pm
+                      Lorem Ipsum available
+                    %li.list-group-item
+                      %span.pull-right 10:16 am
+                      Latin words, combined
+                    %li.list-group-item
+                      %span.pull-right 08:22 pm
+                      Open new shop
+                    %li.list-group-item
+                      %span.pull-right 11:06 pm
+                      The generated Lorem Ipsum
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Content here, content here
+                  %strong Notes
+                  %p
+                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+            #contact-3.tab-pane
+              .row.m-b-lg
+                .col-lg-4.text-center
+                  %h2 Jasper Carson
+                  .m-b-sm
+                    %img.img-circle{:alt => "image", :src => image_path('a4.jpg'), :style => "width: 62px"}
+                .col-lg-8
+                  %strong
+                    About me
+                  %p
+                    Latin professor at Hampden-Sydney College in Virginia, looked  embarrassing hidden in the middle.
+                  %button.btn.btn-primary.btn-sm.btn-block{:type => "button"}
+                    %i.fa.fa-envelope
+                    Send Message
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right 09:00 pm
+                      Aldus PageMaker including
+                    %li.list-group-item
+                      %span.pull-right 10:16 am
+                      Finibus Bonorum et Malorum
+                    %li.list-group-item
+                      %span.pull-right 08:22 pm
+                      Write a letter to Sandra
+                    %li.list-group-item
+                      %span.pull-right 11:06 pm
+                      Standard chunk of Lorem
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      Open new shop
+                  %strong Notes
+                  %p
+                    Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+            #contact-4.tab-pane
+              .row.m-b-lg
+                .col-lg-4.text-center
+                  %h2 Reuben Pacheco
+                  .m-b-sm
+                    %img.img-circle{:alt => "image", :src => image_path('a5.jpg'), :style => "width: 62px"}
+                .col-lg-8
+                  %strong
+                    About me
+                  %p
+                    Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,written in 45 BC. This book is a treatise on.
+                  %button.btn.btn-primary.btn-sm.btn-block{:type => "button"}
+                    %i.fa.fa-envelope
+                    Send Message
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right 09:00 pm
+                      The point of using
+                    %li.list-group-item
+                      %span.pull-right 10:16 am
+                      Lorem Ipsum is that it has
+                    %li.list-group-item
+                      %span.pull-right 08:22 pm
+                      Text, and a search for 'lorem ipsum'
+                    %li.list-group-item
+                      %span.pull-right 11:06 pm
+                      Passages of Lorem Ipsum
+                    %li.list-group-item
+                      %span.pull-right 12:00 am
+                      If you are going
+                  %strong Notes
+                  %p
+                    Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+            #company-1.tab-pane
+              .m-b-lg
+                %h2 Tellus Institute
+                %p
+                  Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,written in 45 BC. This book is a treatise on.
+                %div
+                  %small Active project completion with: 48%
+                  .progress.progress-mini
+                    .progress-bar{:style => "width: 48%;"}
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right
+                        %span.label.label-primary NEW
+                      The point of using
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-warning WAITING
+                      Lorem Ipsum is that it has
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-danger BLOCKED
+                      If you are going
+                  %strong Notes
+                  %p
+                    Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+            #company-2.tab-pane
+              .m-b-lg
+                %h2 Penatibus Consulting
+                %p
+                  There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.
+                %div
+                  %small Active project completion with: 22%
+                  .progress.progress-mini
+                    .progress-bar{:style => "width: 22%;"}
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right
+                        %span.label.label-warning WAITING
+                      Aldus PageMaker
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-primary NEW
+                      Lorem Ipsum, you need to be sure
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-danger BLOCKED
+                      The generated Lorem Ipsum
+                  %strong Notes
+                  %p
+                    Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+            #company-3.tab-pane
+              .m-b-lg
+                %h2 Ultrices Incorporated
+                %p
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text.
+                %div
+                  %small Active project completion with: 72%
+                  .progress.progress-mini
+                    .progress-bar{:style => "width: 72%;"}
+              .client-detail
+                .full-height-scroll
+                  %strong Last activity
+                  %ul.list-group.clear-list
+                    %li.list-group-item.fist-item
+                      %span.pull-right
+                        %span.label.label-danger BLOCKED
+                      Hidden in the middle of text
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-primary NEW
+                      Non-characteristic words etc.
+                    %li.list-group-item
+                      %span.pull-right
+                        %span.label.label-warning WAITING
+                      Bonorum et Malorum
+                  %strong Notes
+                  %p
+                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.
+                  %hr/
+                  %strong Timeline activity
+                  #vertical-timeline.vertical-container.dark-timeline
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-bolt
+                      .vertical-timeline-content
+                        %p
+                          There are many variations of passages of Lorem Ipsum available.
+                        %span.vertical-date.small.text-muted 06:10 pm - 11.03.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.navy-bg
+                        %i.fa.fa-warning
+                      .vertical-timeline-content
+                        %p
+                          The generated Lorem Ipsum is therefore.
+                        %span.vertical-date.small.text-muted 02:50 pm - 03.10.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-coffee
+                      .vertical-timeline-content
+                        %p
+                          Conference on the sales results for the previous year.
+                        %span.vertical-date.small.text-muted 2:10 pm - 12.06.2014
+                    .vertical-timeline-block
+                      .vertical-timeline-icon.gray-bg
+                        %i.fa.fa-briefcase
+                      .vertical-timeline-content
+                        %p
+                          Many desktop publishing packages and web page editors now use Lorem.
+                        %span.vertical-date.small.text-muted 4:20 pm - 10.05.2014

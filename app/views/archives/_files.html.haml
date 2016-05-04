@@ -1,5 +1,5 @@
 - @archives.each do |file|
-  -if file.is_deleted && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb])
+  -if file.is_deleted
     .file-box{ style: "opacity:0.3;"}
       .file
         %span.corner
@@ -30,11 +30,12 @@
               %a{href: ($client.media path)['url'], style: "color:fff;"}
                 %i.fa.fa-eye
             .btn.btn-success
-              %a{style: "color:fff;"}
-                %i.fa.fa-edit
-            .btn.btn-success
               %a{href:download(path), style: "color:fff;"}
                 %i.fa.fa-download
+            = form_tag({action: :restore_archive}, style: "display:inline;") do
+              = hidden_field_tag(:id, file.id)
+              %button.btn.btn-primary{ :type => "submit"}
+                %i.fa.fa-recycle
         .file-name
           = file.name
           %br

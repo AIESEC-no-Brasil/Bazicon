@@ -1,4 +1,4 @@
-module ArchivesHelper
+module ArchiveHelper
 
   def download(path)
     $client.shares(path)
@@ -6,5 +6,6 @@ module ArchivesHelper
     res = Net::HTTP.get_response(URI("#{$client.shares(path)['url']}"))
     a = "#{res['location'].to_s[0...-1]}1"
   end
+
 
 end

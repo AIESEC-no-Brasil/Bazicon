@@ -20,5 +20,5 @@ function checkSelectedTag(){
         idSelectedElements[i] = selectedElements[i].getAttribute("value");
     }
     document.getElementById("tags").value = idSelectedElements;
-
+    
 }
