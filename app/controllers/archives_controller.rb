@@ -8,7 +8,6 @@ class ArchivesController < ApplicationController
   # GET /main/files
   def show
     tags_ids= params[:tags]
-    puts $client.metadata('/').inspect
     if tags_ids.nil?
       @archives=[]
       permissao=params[:permissao]
