@@ -16,10 +16,10 @@
             %div{style: "display:block"}
               %form.pull-left.mail-search{:action => archives_show_path, :method => "get", :id => "search-form"}
                 .input-group
-                  %input.form-control.input-sm{:name => "pesquisa", :placeholder => "Digite o nome do arquivo", :type => "text"}
+                  %input.form-control.input-sm{:name => "pesquisa", :placeholder => "Digite o nome do arquivo", :type => "text", :style => "font-size:12px;"}
                     .input-group-btn
-                      %button.btn.btn-sm.btn-primary{:type => "submit"}
-                        Pesquisar
+                      %button.btn.btn-sm.btn-primary.btn-search{:type => "submit", :style => "height:30px;"}
+                        %i.fa.fa-search
             %br
             %br
             .hr-line-dashed
@@ -48,17 +48,16 @@
                 %input{type: "checkbox", id: "showDeleted"}
                 %label{for: "showDeleted"}
                   Documentos deletados
-            %h5.tag-title
-              Tags
-              = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
-                %input{type: "hidden", name: "tags", id: "tags"}
-                -hidden_field(:permissao,"todos")
-                %ul.tag-list{style: "padding: 0"}
-                  - Tag.all.each do |tag|
-                    %li
-                    %button.btn.btn-default.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
-                .clearfix
-                %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
+            %h5 Tags
+            = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
+              %input{type: "hidden", name: "tags", id: "tags"}
+              -hidden_field(:permissao,"todos")
+              %ul.tag-list{style: "padding: 0"}
+                - Tag.all.each do |tag|
+                  %li
+                    %button.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
+              .clearfix
+              %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
             = render 'upload'
     .col-lg-9.animated.fadeInRight
       .row

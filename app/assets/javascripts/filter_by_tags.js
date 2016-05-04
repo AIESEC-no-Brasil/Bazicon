@@ -5,7 +5,7 @@ function buttonSelected(e) {
 
     var target = e.target;
     current_class = target.getAttribute("class");
-    target.setAttribute("class",  current_class ==="btn btn-default select-button" ? "btn btn-danger select-button-selected" :  "btn btn-default select-button");
+    target.setAttribute("class",  current_class ==="select-button" ? "select-button-selected" :  "select-button");
 
 }
 
@@ -20,5 +20,5 @@ function checkSelectedTag(){
         idSelectedElements[i] = selectedElements[i].getAttribute("value");
     }
     document.getElementById("tags").value = idSelectedElements;
-    
+
 }

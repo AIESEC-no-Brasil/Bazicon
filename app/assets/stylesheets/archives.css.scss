@@ -4,11 +4,27 @@
 
 
 .select-button{
-
+  font-size: 10px;
+  padding: 5px 12px;
+  color: inherit;
+  background-color: #f3f3f4;
+  border-radius: 2px;
+  border: 1px solid #e7eaec;
+  margin-right: 5px;
+  margin-top: 5px;
+  display: block;
 }
 
-.selected-button-selected{
-
+.select-button-selected{
+  font-size: 10px;
+  padding: 5px 12px;
+  color: #ffffff;
+  background-color: #ffc845;
+  border-radius: 2px;
+  border: 1px solid #ffc845;
+  margin-right: 5px;
+  margin-top: 5px;
+  display: block;
 }
 .clearfix {
   margin-bottom: 15px;
