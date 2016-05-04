@@ -7,7 +7,6 @@ class ArchivesController < ApplicationController
 
   # GET /main/archives
   def show
-
     selected_tags_ids = params[:tags]
     file_permission = params[:permissao]
     search = params[:pesquisa]

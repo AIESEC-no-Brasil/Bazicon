@@ -37,12 +37,17 @@
             %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
             .hr-line-dashed
             %h5 Filtros
-            .switch
-              .onoffswitch
-                %input{type: "checkbox", class: "onoffswitch-checkbox", id: "type"}
-                  %label{class:"onoffswitch-label", for: "type"}
-                    %span.onoffswitch-inner
-                    %span.onoffswitch-switch
+            .checkbox.checkbox-primary
+              %input{type: "checkbox", id: "showPrivate", checked:"true"}
+              %label{for:"showPrivate"}
+                Documentos privados
+              %input{type: "checkbox", id: "showPublic", checked:"true"}
+              %label{for: "showPublic"}
+                Documentos públicos
+              -if @user.get_role == ExpaPerson.roles[:role_mc] || @user.get_role == ExpaPerson.roles[:role_eb]
+                %input{type: "checkbox", id: "showDeleted"}
+                %label{for: "showDeleted"}
+                  Documentos deletados
             %h5.tag-title
               Tags
               = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
@@ -54,14 +59,12 @@
                     %button.btn.btn-default.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
                 .clearfix
                 %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
-            %button.btn.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}Upload
             = render 'upload'
     .col-lg-9.animated.fadeInRight
       .row
         .col-lg-12
           %div{id:"files"}
             = render 'files'
-
 
 
 

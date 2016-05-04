@@ -7,25 +7,23 @@ class Archive < ActiveRecord::Base
   has_many :archive_tags, class_name: 'ArchiveTag'
   has_many :tags, through: :archive_tags, class_name: 'Tag'
 
-
-
-  def get_file_type file_type
-    if file_type== 'jpg' || file_type =='jpeg'  || file_type =='png' || file_type =='jpeg' ||
-        file_type =='bmp' || file_type =='gif' || file_type =='tif'
+  def get_file_type
+    if self.archive_extension== '.jpg' || self.archive_extension =='.jpeg'  || self.archive_extension =='.png' || self.archive_extension =='.jpeg' ||
+        self.archive_extension =='.bmp' || self.archive_extension =='.gif' || self.archive_extension =='.tif'
       return Archive.type_of_files[:image]
-    elsif file_type == 'pdf'
+    elsif self.archive_extension == '.pdf'
       return Archive.type_of_files[:pdf]
-    elsif file_type == 'doc' || file_type == 'docx'
+    elsif self.archive_extension == '.doc' || self.archive_extension == '.docx'
       return Archive.type_of_files[:word]
-    elsif file_type == 'ppt' || file_type == 'pptx' || file_type == 'pptm'
+    elsif self.archive_extension == '.ppt' || self.archive_extension == '.pptx' || self.archive_extension == '.pptm'
       return Archive.type_of_files[:ppt]
-    elsif file_type == 'xls' || file_type == 'xlsx' || file_type == 'xlsm'
+    elsif self.archive_extension == '.xls' || self.archive_extension == '.xlsx' || self.archive_extension == '.xlsm'
       return Archive.type_of_files[:excel]
-    elsif file_type == 'mp3' || file_type == 'wav' || file_type == '3gp' || file_type == 'wma'||
-       file_type == 'm4a'||file_type == 'flac'
+    elsif self.archive_extension == '.mp3' || self.archive_extension == '.wav' || self.archive_extension == '.3gp' || self.archive_extension == '.wma'||
+       self.archive_extension == '.m4a'||self.archive_extension == '.flac'
       return Archive.type_of_files[:music]
-    elsif file_type == 'mp4' || file_type == 'avi' || file_type == 'wmv' || file_type == 'mpg'||
-        file_type == 'mpeg'||file_type == 'flv' ||file_type == 'mkv'
+    elsif self.archive_extension == '.mp4' || self.archive_extension == '.avi' || self.archive_extension == '.wmv' || self.archive_extension == '.mpg'||
+        self.archive_extension == '.mpeg'||self.archive_extension == '.flv' ||self.archive_extension == '.mkv'
       return Archive.type_of_files[:video]
     end
     return Archive.type_of_files[:other]
