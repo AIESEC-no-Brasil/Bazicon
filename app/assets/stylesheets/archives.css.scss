@@ -36,3 +36,15 @@
   position: absolute;
   z-index: 0;
 }
+.icon-thumbnail {
+  display: inline-block;
+  font: normal normal normal 62px/1 FontAwesome;
+  font-size: 62;
+  text-rendering: auto;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -mos-osx-font-smoothing: grayscale;
+  width: 198px;
+  line-height: 1.6;
+}
