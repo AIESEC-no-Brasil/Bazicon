@@ -27,9 +27,9 @@
           %i.fa.fa-users
           %span.nav-label{"data-i18n" => "nav.tm"}
             Membresia
-      %li{"class" => "#{is_active_controller('hosts')}"}
-        = link_to '/hosts/index' do
-          %i.fa.fa-leaf
+      %li{"class" => "#{is_active_controller('/hosts/index')}"}
+        = link_to hosts_index_path do
+          %i.fa.fa-home
           %span.nav-label{"data-i18n" => "nav.host"}
             Host
       %li{"class" => "#{is_active_controller('archives')}"}

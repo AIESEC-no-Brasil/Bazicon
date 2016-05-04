@@ -1,0 +1,62 @@
+.modal-dialog
+  .modal-content.animated.bounceInRight
+    .modal-header
+      %button.close{"data-dismiss" => "modal", :type => "button"}
+        %a{href: archives_show_path,"aria-hidden" => "true"} ×
+        %span.sr-only Close
+      %h3= "Editando arquivo: #{@file.name}"
+    = form_tag({action: :update}, {multipart: true}) do
+      .modal-body
+        .ibox-content
+          .form-group
+            =hidden_field_tag :file_id, @file.id
+            -if @user.get_role != ExpaPerson.roles[:role_other]
+              %label Permissão do arquivo
+              %br
+              %label.control-label{:style => "width:100%;"}
+                -if !@file.is_private
+                  .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
+                    =radio_button_tag "is_private",false,{:checked =>"checked"}
+                    =label_tag "Público"
+                  .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
+                    =radio_button_tag  "is_private",true
+                    =label_tag "Privado"
+                -else
+                  .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
+                    =radio_button_tag "is_private",false
+                    =label_tag "Público"
+                  .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
+                    =radio_button_tag  "is_private",true,{:checked =>"checked"}
+                    =label_tag "Privado"
+            %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
+            .input-group{:style => "width:100%;"}
+              %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
+                - Tag.all.each do |tag|
+                  -if @tags.include? tag.id
+                    %option{:value => tag.id,:selected => "selected"}=tag.name
+                  -else
+                    %option{:value => tag.id}=tag.name
+      .modal-footer
+        =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
+:javascript
+    $(function() {
+
+      $('.i-checks').iCheck({
+          checkboxClass: 'icheckbox_square-green',
+          radioClass: 'iradio_square-green',
+      });
+
+    });
+
+    $(function() {
+      var config = {
+          '.chosen-select': {},
+          '.chosen-select-deselect': { allow_single_deselect: true },
+          '.chosen-select-no-single': { disable_search_threshold: 10 },
+          '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+          '.chosen-select-width': { width: "95%" }
+      }
+      for (var selector in config) {
+          $(selector).chosen(config[selector]);
+      }
+  });
