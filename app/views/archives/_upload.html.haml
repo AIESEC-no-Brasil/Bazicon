@@ -7,8 +7,8 @@
           %span.sr-only Close
         %i.fa.fa-cloud-upload.modal-icon
         %h4.modal-title Upload de arquivo
-      .modal-body
-        = form_tag({action: :upload}, {multipart: true}) do
+      = form_tag({action: :upload}, {multipart: true}) do
+        .modal-body
           .ibox-content
             .form-group
               =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn"
@@ -28,7 +28,28 @@
               %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
                 - Tag.all.each do |tag|
                   %option{:value => tag.id}=tag.name
-          =submit_tag "Enviar arquivo", :class =>"btn btn-success", :style => "margin-top:5%;float:right;", :onclick => "closeModal()"
-      .modal-footer
+        .modal-footer
+          =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
+:javascript
+    $(function() {
 
+      $('.i-checks').iCheck({
+          checkboxClass: 'icheckbox_square-green',
+          radioClass: 'iradio_square-green',
+      });
+
+    });
+
+    $(function() {
+      var config = {
+          '.chosen-select': {},
+          '.chosen-select-deselect': { allow_single_deselect: true },
+          '.chosen-select-no-single': { disable_search_threshold: 10 },
+          '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+          '.chosen-select-width': { width: "95%" }
+      }
+      for (var selector in config) {
+          $(selector).chosen(config[selector]);
+      }
+  });
 
