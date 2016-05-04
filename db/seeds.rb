@@ -36,7 +36,7 @@ end
 
 (7..9).each do |i|
   host = HostPerson.new
-  host.full_name = "Free #{i}"
+  host.full_name = "Allocated #{i}"
   host.phone = 91239
   host.email = "mail.@mail.com"
   host.address = "12 stree, 180"
