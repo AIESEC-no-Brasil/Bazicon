@@ -81,8 +81,8 @@ class ExpaRdSync
     time = Time.now - 10*60 # 10 minutes windows
     people = EXPA::People.list_everyone_created_after(time)
     people.each do |xp_person|
-      person = ExpaPerson.find_by_xp_id(xp_person.id)
-      if ExpaPerson.exists?(person)
+      if ExpaPerson.exists?(ExpaPerson.find_by_xp_id(xp_person.id)) ||
+         ExpaPerson.exists?(ExpaPerson.find_by_xp_email(xp_person.email))
         update_db_peoples(xp_person)
       else
         person = update_db_peoples(xp_person)
@@ -229,7 +229,8 @@ class ExpaRdSync
   def update_db_peoples(xp_person)
     person = ExpaPerson.find_by_xp_id(xp_person.id)
 
-    if person.nil? && !ExpaPerson.exists?(person)
+    if !ExpaPerson.exists?(ExpaPerson.find_by_xp_id(xp_person.id)) ||
+       !ExpaPerson.exists?(ExpaPerson.find_by_xp_email(xp_person.email))
       person = ExpaPerson.new
       person.update_from_expa(xp_person)
       person.save

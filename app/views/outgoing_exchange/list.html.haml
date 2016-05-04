@@ -7,7 +7,11 @@
       %li.active
         %a{href: outgoing_exchange_dash_url} Análise
       %li
-        %strong Gestão
+        %strong
+          Gestão
+          %span
+          = '(atualizado em ' + Time.new.beginning_of_week(:sunday).strftime('%d/%m/%Y') + ') - Leitura de IP, MA e RE só funcionam de 2016 para cá. Leads é OK em qualquer época do ano.'
+
   .col-lg-3
     %ul.nav.navbar-top-links.navbar-right
       %li
@@ -132,11 +136,11 @@
     .row
       .col-sm-6.text-center.b-r
         %h1.m-b-xs
+          .fa.fa-child
           %span
-          = @info['ip_ogcdp']
+          = @info['ip_ogcdp_this_month']
           %small
             IP
-          .fa.fa-child
           = @info['ma_ogcdp_this_month'].to_i
           %small
             MA
@@ -149,18 +153,34 @@
         = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
 
         .row
-          .col-xs-6.text-center
+          .col-xs-4.text-center
             #sparkline4.m-b-sm
             %h2.stats-label
-              MA
-          .col-xs-6.text-center
+              IP
+          .col-xs-4.text-center
             #sparkline5.m-b-sm
+            %h2.stats-label
+              MA
+          .col-xs-4.text-center
+            #sparkline6.m-b-sm
             %h2.stats-label
               RE
         .row
           %p.text-center
             = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
-          .col-xs-6.text-center
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogcdp_past_month'].to_i
+              - if @info['ip_ogcdp_this_month'] > @info['ip_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['ma_ogcdp_past_month'].to_i
@@ -172,7 +192,7 @@
                 %span{style:"color: #D32F2F"}
                   = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
                   .fa.fa-level-down
-          .col-xs-6.text-center
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['ma_ogcdp_past_month'].to_i
@@ -187,7 +207,19 @@
         .row
           %p.text-center
             = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
-          .col-xs-6.text-center
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogcdp_past_year'].to_i
+              - if @info['ip_ogcdp_this_month'] > @info['ip_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['ma_ogcdp_past_year'].to_i
@@ -199,7 +231,7 @@
                 %span{style:"color: #D32F2F"}
                   = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_year']-1)*100).round(2).to_s + '%'
                   .fa.fa-level-down
-          .col-xs-6.text-center
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['re_ogcdp_past_year'].to_i
@@ -213,11 +245,11 @@
                   .fa.fa-level-down
       .col-sm-6.text-center
         %h1.m-b-xs
+          .fa.fa-briefcase
           %span
-          = @info['ip_ogip']
+          = @info['ip_ogip_this_month']
           %small
             IP
-          .fa.fa-briefcase
           = @info['ma_ogip_this_month'].to_i
           %small
             MA
@@ -229,18 +261,34 @@
         %br
         = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
         .row
-          .col-xs-6.text-center
-            #sparkline6.m-b-sm
+          .col-xs-4.text-center
+            #sparkline7.m-b-sm
+            %h2.stats-label
+              IP
+          .col-xs-4.text-center
+            #sparkline8.m-b-sm
             %h2.stats-label
               MA
-          .col-xs-6.text-center
-            #sparkline7.m-b-sm
+          .col-xs-4.text-center
+            #sparkline9.m-b-sm
             %h2.stats-label
               RE
         .row
           %p.text-center
             = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
-          .col-xs-6.text-center
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogip_past_month'].to_i
+              - if @info['ip_ogip_this_month'] > @info['ip_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['ma_ogip_past_month'].to_i
@@ -252,7 +300,7 @@
                 %span{style:"color: #D32F2F"}
                   = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_month']-1)*100).round(2).to_s + '%'
                   .fa.fa-level-down
-          .col-xs-6.text-centerE
+          .col-xs-4.text-centerE
             %h4
               %span{style: "color: #607D8B"}
               = @info['re_ogip_past_month'].to_i
@@ -267,7 +315,19 @@
         .row
           %p.text-center
             = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
-          .col-xs-6.text-center
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogip_past_year'].to_i
+              - if @info['ip_ogip_this_month'] > @info['ip_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['ma_ogip_past_year'].to_i
@@ -279,7 +339,7 @@
                 %span{style:"color: #D32F2F"}
                   = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_year']-1)*100).round(2).to_s + '%'
                   .fa.fa-level-down
-          .col-xs-6.text-center
+          .col-xs-4.text-center
             %h4
               %span{style: "color: #607D8B"}
               = @info['re_ogip_past_year'].to_i
@@ -526,7 +586,7 @@
                 %button.btn.btn-default{type: 'button', "aria-pressed" => false}
                   %i.fa.fa-child.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "GCDP"}
                 %button.btn.btn-primary{type: 'button', "aria-pressed" => false}
-                  %i.fa.fa-globe.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "Todos!!! (Incluindo pessoas antes do BAZICON está no ar"}
+                  %i.fa.fa-globe.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "Todos!!! (Incluindo pessoas antes do BAZICON está no ar)"}
                 %button.btn.btn-default{type: 'button', "aria-pressed" => false}
                   %i.fa.fa-briefcase.fa-2x{"data-toggle" => "tooltip", "data-placement" => "top", title: "GIP"}
 
@@ -623,17 +683,21 @@
         var data_semana_1 = #{@info['leads_this_month_per_week']}
         var data_semana_2 = #{@info['ma_this_month_per_week']}
         var data_semana_3 = #{@info['re_this_month_per_week']}
-        var data_semana_4 = #{@info['ma_ogcdp_this_month_per_week']}
-        var data_semana_5 = #{@info['re_ogcdp_this_month_per_week']}
-        var data_semana_6 = #{@info['ma_ogip_this_month_per_week']}
-        var data_semana_7 = #{@info['re_ogip_this_month_per_week']}
+        var data_semana_4 = #{@info['ip_ogcdp_this_month_per_week']}
+        var data_semana_5 = #{@info['ma_ogcdp_this_month_per_week']}
+        var data_semana_6 = #{@info['re_ogcdp_this_month_per_week']}
+        var data_semana_7 = #{@info['ip_ogip_this_month_per_week']}
+        var data_semana_8 = #{@info['ma_ogip_this_month_per_week']}
+        var data_semana_9 = #{@info['re_ogip_this_month_per_week']}
         var data_dia_1 = #{@info['leads_this_month_per_day']}
         var data_dia_2 = #{@info['ma_this_month_per_day']}
         var data_dia_3 = #{@info['re_this_month_per_day']}
-        var data_dia_4 = #{@info['ma_ogcdp_this_month_per_day']}
-        var data_dia_5 = #{@info['re_ogcdp_this_month_per_day']}
-        var data_dia_6 = #{@info['ma_ogip_this_month_per_day']}
-        var data_dia_7 = #{@info['re_ogip_this_month_per_day']}
+        var data_dia_4 = #{@info['ip_ogcdp_this_month_per_day']}
+        var data_dia_5 = #{@info['ma_ogcdp_this_month_per_day']}
+        var data_dia_6 = #{@info['re_ogcdp_this_month_per_day']}
+        var data_dia_7 = #{@info['ip_ogip_this_month_per_day']}
+        var data_dia_8 = #{@info['ma_ogip_this_month_per_day']}
+        var data_dia_9 = #{@info['re_ogip_this_month_per_day']}
         $(document).ready(function () {
             $('#sparkline1').sparkline(data_semana_1, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
             $('#sparkline1').attr('name', 'sparkline1-semanas');
@@ -649,19 +713,99 @@
             $('#sparkline6').attr('name', 'sparkline6-semanas');
             $('#sparkline7').sparkline(data_semana_7, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
             $('#sparkline7').attr('name', 'sparkline7-semanas');
-          for (var i = 1; i <= 7; i++) {
-            var selector = 'sparkline' + i;
-            $('#' + selector).on('click', function (i) {
-              return function(){
-                if ($('#' + selector).attr('name')== selector + '-semanas' ) {
-                  $('#' + selector).sparkline($('data_dia_' + i), {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
-                  $('#' + selector).attr('name', selector + '-dias');
-                } else if ($('#' + selector).attr('name')== selector + '-dias' ) {
-                  $('#' + selector).sparkline($('data_semana_' + i), {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
-                  $('#' + selector).attr('name', selector + '-semanas');
-                }
-              }
-            }(i));
+            $('#sparkline8').sparkline(data_semana_8, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline8-semanas');
+            $('#sparkline9').sparkline(data_semana_9, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-semanas');
+        });
+
+        $('#sparkline1').on('click', function () {
+          if ($('#sparkline1').attr('name')== 'sparkline1-semanas' ) {
+            $('#sparkline1').sparkline(data_dia_1, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline1').attr('name', 'sparkline1-dias');
+          } else if ($('#sparkline1').attr('name')== 'sparkline1-dias' ) {
+            $('#sparkline1').sparkline(data_semana_1, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline1').attr('name', 'sparkline1-semanas');
+          }
+        });
+
+        $('#sparkline2').on('click', function () {
+          if ($('#sparkline2').attr('name')== 'sparkline2-semanas' ) {
+            $('#sparkline2').sparkline(data_dia_2, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline2').attr('name', 'sparkline2-dias');
+          } else if ($('#sparkline2').attr('name')== 'sparkline2-dias' ) {
+            $('#sparkline2').sparkline(data_semana_2, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline2').attr('name', 'sparkline2-semanas');
+          }
+        });
+
+        $('#sparkline3').on('click', function () {
+          if ($('#sparkline3').attr('name')== 'sparkline3-semanas' ) {
+            $('#sparkline3').sparkline(data_dia_3, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline3').attr('name', 'sparkline3-dias');
+          } else if ($('#sparkline3').attr('name')== 'sparkline3-dias' ) {
+            $('#sparkline3').sparkline(data_semana_3, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline3').attr('name', 'sparkline3-semanas');
+          }
+        });
+
+        $('#sparkline4').on('click', function () {
+          if ($('#sparkline4').attr('name')== 'sparkline4-semanas' ) {
+            $('#sparkline4').sparkline(data_dia_4, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline4').attr('name', 'sparkline4-dias');
+          } else if ($('#sparkline4').attr('name')== 'sparkline4-dias' ) {
+            $('#sparkline4').sparkline(data_semana_4, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline4').attr('name', 'sparkline4-semanas');
+          }
+        });
+
+        $('#sparkline5').on('click', function () {
+          if ($('#sparkline5').attr('name')== 'sparkline5-semanas' ) {
+            $('#sparkline5').sparkline(data_dia_5, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline5').attr('name', 'sparkline5-dias');
+          } else if ($('#sparkline5').attr('name')== 'sparkline5-dias' ) {
+            $('#sparkline5').sparkline(data_semana_5, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline5').attr('name', 'sparkline5-semanas');
+          }
+        });
+
+        $('#sparkline6').on('click', function () {
+          if ($('#sparkline6').attr('name')== 'sparkline6-semanas' ) {
+            $('#sparkline6').sparkline(data_dia_6, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline6').attr('name', 'sparkline6-dias');
+          } else if ($('#sparkline6').attr('name')== 'sparkline6-dias' ) {
+            $('#sparkline6').sparkline(data_semana_6, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline6').attr('name', 'sparkline6-semanas');
+          }
+        });
+
+        $('#sparkline7').on('click', function () {
+          if ($('#sparkline7').attr('name')== 'sparkline7-semanas' ) {
+            $('#sparkline7').sparkline(data_dia_7, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline7').attr('name', 'sparkline7-dias');
+          } else if ($('#sparkline7').attr('name')== 'sparkline7-dias' ) {
+            $('#sparkline7').sparkline(data_semana_7, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline7').attr('name', 'sparkline7-semanas');
+          }
+        });
+
+        $('#sparkline8').on('click', function () {
+          if ($('#sparkline8').attr('name')== 'sparkline8-semanas' ) {
+            $('#sparkline8').sparkline(data_dia_8, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline8-dias');
+          } else if ($('#sparkline8').attr('name')== 'sparkline8-dias' ) {
+            $('#sparkline8').sparkline(data_semana_8, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline7-semanas');
+          }
+        });
+
+        $('#sparkline9').on('click', function () {
+          if ($('#sparkline9').attr('name')== 'sparkline9-semanas' ) {
+            $('#sparkline9').sparkline(data_dia_9, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-dias');
+          } else if ($('#sparkline9').attr('name')== 'sparkline9-dias' ) {
+            $('#sparkline9').sparkline(data_semana_9, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-semanas');
           }
         });
 
