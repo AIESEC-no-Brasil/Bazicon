@@ -24,6 +24,56 @@ class ExpaRdSync
     }
   end
 
+  # This method will get everyone in the world (besides brazilians) in order to we make direct facebook ads or others
+  # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
+  def list_foreign_people(programme)
+    limit = 500
+    # Get the last brazilian people EXPA_ID to start find foreign starting from it descending
+    params = {'per_page' => 1}
+    xp_person = EXPA::People.list_by_param(params).first
+    id = xp_person.id - 1
+
+    # Populate Database
+    while limit > 0 do
+      xp_person = EXPA::People.find_by_id(id)
+
+      if xp_person.home_mc.id != 1606 && !ExpaPerson.find_by_xp_id(xp_person.id)
+        if !xp_person.profile.nil? &&
+            xp_person.profile.include?('selected_programmes_info')
+          xp_person.profile['selected_programmes_info'].each do |program|
+            if programme.nil?
+              person = ExpaPerson.new
+              person.update_from_expa(xp_person)
+              person.save
+              limit -= 1
+            elsif  program['short_name'] = programme
+              person = ExpaPerson.new
+              person.update_from_expa(xp_person)
+              person.save
+              limit -= 1
+            end
+          end
+        end
+      elsif xp_person.home_mc.id != 1606 && ExpaPerson.find_by_xp_id(xp_person.id)
+        id = ExpaPerson.where.not(xp_home_mc_id: 1606).order(xp_created_at: :asc).first.xp_id
+      end
+
+      id -= 1
+    end
+  end
+
+  # This method will get everyone in the world (besides brazilians) that are interested in GCDP
+  # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
+  def list_igcdp_people
+    list_foreign_people('GCDP')
+  end
+
+  # This method will get everyone in the world (besides brazilians) that are interested in GIP
+  # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
+  def list_igip_people
+    list_foreign_people('GIP')
+  end
+
   def list_people
     setup_expa_api
     params = {'per_page' => 100}
@@ -81,11 +131,11 @@ class ExpaRdSync
     time = Time.now - 10*60 # 10 minutes windows
     people = EXPA::People.list_everyone_created_after(time)
     people.each do |xp_person|
-      person = ExpaPerson.find_by_xp_id(xp_person.id)
-      if ExpaPerson.exists?(person)
+      if ExpaPerson.find_by_xp_id(xp_person.id) || ExpaPerson.find_by_xp_email(xp_person.email.downcase)
         update_db_peoples(xp_person)
       else
-        person = update_db_peoples(xp_person)
+        person = ExpaPerson.new
+        person.update_from_expa(xp_person)
         person.save
         send_to_rd(person, nil, self.rd_identifiers[:open], nil)
       end
@@ -97,7 +147,7 @@ class ExpaRdSync
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-    people = ExpaPerson.order(xp_created_at: :desc)
+    people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).order(xp_created_at: :desc)
     i = 0
     people.each do |person|
       if i < 50
@@ -228,8 +278,9 @@ class ExpaRdSync
 
   def update_db_peoples(xp_person)
     person = ExpaPerson.find_by_xp_id(xp_person.id)
+    person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
 
-    if person.nil? && !ExpaPerson.exists?(person)
+    unless ExpaPerson.find_by_xp_id(xp_person.id) || ExpaPerson.find_by_xp_email(xp_person.email.downcase)
       person = ExpaPerson.new
       person.update_from_expa(xp_person)
       person.save
@@ -247,7 +298,7 @@ class ExpaRdSync
     end
 
     setup_expa_api
-    applications = EXPA::People.get_applications(person.xp_id)
+    applications = EXPA::People.get_applications(person.xp_id) unless xp_person.home_mc.id == 1606
     unless applications.blank?
       applications.each do |xp_application|
         update_db_applications(xp_application)

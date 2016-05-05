@@ -12,7 +12,7 @@
 }
 
 .btn-primary.btn-outline {
-  color: #007ff1;
+  color: $blue;
 }
 
 .btn-success.btn-outline {
@@ -40,14 +40,14 @@
 }
 
 .btn-primary {
-  background-color: #007ff1;
-  border-color: #007ff1;
+  background-color: $blue;
+  border-color: $blue;
   color: #FFFFFF;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:hover, .btn-primary.active:focus {
-  background-color: darken(#007ff1, 6%);
-  border-color: darken(#007ff1, 6%);
+  background-color: darken($blue, 6%);
+  border-color: darken($blue, 6%);
   color: #FFFFFF;
 }
 
@@ -56,8 +56,8 @@
 }
 
 .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled]:active, .btn-primary.active[disabled], fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-  background-color: lighten(#007ff1, 4%);
-  border-color: lighten(#007ff1, 4%);
+  background-color: lighten($blue, 4%);
+  border-color: lighten($blue, 4%);
 }
 
 .btn-success {
@@ -168,7 +168,7 @@
 }
 
 .btn-link:hover, .btn-link:focus, .btn-link:active, .btn-link.active, .open .dropdown-toggle.btn-link {
-  color: #007ff1;
+  color: $blue;
   text-decoration: none;
 }
 

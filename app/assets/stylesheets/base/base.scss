@@ -135,6 +135,7 @@ video {
 
 .modal-body {
   padding: 20px 30px 30px 30px;
+  background: #f8fafb;
 }
 
 .inmodal .modal-body {
@@ -534,8 +535,8 @@ code {
 
   border-color: $border-color;
   border-image: none;
-  border-style: solid solid none;
-  border-width: 1px 0;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .ibox-footer {

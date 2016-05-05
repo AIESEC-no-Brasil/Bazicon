@@ -48,7 +48,7 @@ module DigitalTransformation
        'ITAJUBA' => {'ids' => [479,306822498], 'programs' => ['oGCDP']},
        'JOAO PESSOA' => {'ids' => [1666,306824849], 'programs' => ['oGCDP']},
        'JOINVILLE' => {'ids' => [232,306818877], 'programs' => ['oGCDP']},
-       'LIMEIRA' => {'ids' => [564,335437867], 'programs' => ['oGCDP']},
+       'LIMEIRA' => {'ids' => [1003,335437867], 'programs' => ['oGCDP']},
        'LONDRINA' => {'ids' => [437,306817769], 'programs' => ['oGCDP']},
        'MACEIO' => {'ids' => [286,362629308], 'programs' => ['oGCDP']},
        'MANAUS' => {'ids' => [231,306817297], 'programs' => ['oGCDP']},
@@ -82,11 +82,11 @@ module DigitalTransformation
        'UBERABA' => {'ids' => [287,362630742], 'programs' => ['oGCDP']},
        'UBERLANDIA' => {'ids' => [287,306813291], 'programs' => ['oGCDP','oGIP']},
        'VALE DO PARAIBA' => {'ids' => [1368,306817098], 'programs' => ['oGCDP']},
-       'VALE DO SAO FRANCISCO' => {'ids' => [1649,362630905], 'programs' => ['oGCDP']},
+       'VALE DO SAO FRANCISCO' => {'ids' => [1121,362630905], 'programs' => ['oGCDP']},
        'VARGINHA' => {'ids' => [479,362630969], 'programs' => ['oGCDP']},
        'VICOSA' => {'ids' => [1248,362631010], 'programs' => ['oGCDP']},
        'VITORIA' => {'ids' => [909,306810868], 'programs' => ['oGCDP','oGIP']},
-       'VOLTA REDONDA' => {'ids' => [289,335438552], 'programs' => ['oGCDP']}}
+       'VOLTA REDONDA' => {'ids' => [777,335438552], 'programs' => ['oGCDP']}}
     end
 
 
