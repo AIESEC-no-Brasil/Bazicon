@@ -42,6 +42,11 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    angular-rails-templates (1.0.0)
+      railties (>= 4.2, < 6)
+      sprockets (~> 3.0)
+      tilt
+    angularjs-rails (1.5.0)
     arel (6.0.3)
     autoprefixer-rails (6.3.6)
       execjs
@@ -51,6 +56,7 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bower-rails (0.10.0)
     builder (3.2.2)
     byebug (8.2.4)
     capistrano (3.4.1)
@@ -130,6 +136,9 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.1.1)
+    ngannotate-rails (1.2.1)
+      execjs
+      rails (>= 3.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
@@ -233,8 +242,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  angular-rails-templates
+  angularjs-rails
   bcrypt
   bootstrap-sass
+  bower-rails
   byebug
   capistrano-rails
   clockwork
@@ -250,6 +262,7 @@ DEPENDENCIES
   json
   mechanize
   minitest
+  ngannotate-rails
   oauth2
   pg
   podio

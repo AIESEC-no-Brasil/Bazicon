@@ -8,7 +8,10 @@ Myapp::Application.routes.draw do
   post '/login' => 'sessions#login',  as: 'login'
 
   # Archives
-  get '/main'          => 'main#index',    as: 'main'
+  get '/main/ogx/list'  => 'ogx#list',    as: 'list_ogx'
+  get '/main/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
+  get '/main/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
+  get '/main/(*path)'  => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
 
   # Digital Transformation
@@ -21,7 +24,7 @@ Myapp::Application.routes.draw do
 
   # Outgoing Exchange
   get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'
-  get '/ogx/list'   => 'outgoing_exchange#list',   as: 'outgoing_exchange_list'
+  get '/ogx/list'   => 'outgoing_exchange#list2',   as: 'outgoing_exchange_list'
   get '/ogx/detail' => 'outgoing_exchange#detail', as: 'outgoing_exchange_detail'
 
 
