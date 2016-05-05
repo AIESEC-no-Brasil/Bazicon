@@ -17,12 +17,12 @@
 					%li.active
 						%strong EPs GCDP
 			.col-lg-3
-				.ibox-content{:'ng-init' => 'get_lcs()'}
+				.ibox-content{:'ng-init' => 'get_lcs()',:style => 'border:no;'}
 					%h3
 						Comitê
 					%select.form-control.m-b.required{:'ng-model' => 'selected_lc', :'ng-change' => 'list();load_analysis();', :'ng-options' => 'commettee.xp_name for commettee in commettees'}
 		%br/
-		.row{:'ng-init' => 'load_analysis()'}
+		.row
 			.col-lg-2
 				.ibox.float-e-margins
 					.ibox-title
@@ -150,7 +150,7 @@
 									.row.m-b-l
 										%center
 											%h3 Quede EP?
-							.tab-content.animated.bounceInRight{:'ng-show' => '!loading_detail && person != null'}
+							.tab-content.animated.bounceInRight
 								#contact.tab-pane.active
 									.row.m-b-lg
 										.col-lg-4.text-center
@@ -169,7 +169,7 @@
 											.btn-group
 												%a.btn.btn-primary{:type => "button", :'tooltip-placement' => "bottom", :'uib-tooltip' => 'Go to EXPA',:href => 'https://experience.aiesec.org/#/people/{{person.xp_id}}', :target => '_blank'}
 													%i.fa.fa-plane
-												%button.btn.btn-primary{:type => "button", :'tooltip-placement' => "bottom", :'uib-tooltip' => 'Editar EP'}
+												%button.btn.btn-primary{:type => "button", :'tooltip-placement' => "bottom", :'uib-tooltip' => 'Editar EP', :'ng-click' => 'open_edit_modal()'}
 													%i.fa.fa-edit
 												%button.btn.btn-primary.disabled{:type => "button", :'tooltip-placement' => "bottom", :'uib-tooltip' => 'Facebook do EP'}
 													%i.fa.fa-facebook

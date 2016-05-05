@@ -12,6 +12,8 @@ Myapp::Application.routes.draw do
   get '/main/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
   get '/main/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
   get '/main/(*path)'  => 'main#index',    as: 'main'
+
+  
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
   get '/main/archives/download/:id' => 'archives#download', as: 'archives_download'

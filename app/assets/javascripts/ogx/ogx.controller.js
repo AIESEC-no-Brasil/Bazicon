@@ -5,7 +5,7 @@ angular.module('ogx.controller', [])
             return (input != null) ? input.split(splitChar)[splitIndex] : '';
         }
     })
-  	.controller('oGCDPController', ['$scope','$http','$timeout', function ($scope,$http,$timeout) {
+  	.controller('oGCDPController', ['$scope','$http','$uibModal','$timeout', function ($scope,$http,$uibModal,$timeout) {
 
   		$scope.error_msg = false;
 	    $scope.busy_scroll = false;
@@ -81,7 +81,6 @@ angular.module('ogx.controller', [])
 		    params = { lc: $scope.selected_lc.xp_id };
 		    $http.get('/main/ogx/kpis', {params: params}).then(
 		    	function successCallback(response) {
-		    		console.log(response.data);
 			    	$scope.analysis = {
 			    		total_open : response.data['open'],
 			    		month_open : 'later',
@@ -109,6 +108,12 @@ angular.module('ogx.controller', [])
 			    $scope.loading_detail = false;
 				console.log($scope.person);
 			}, 500);
+	    };
+
+	    $scope.open_edit_modal = function () {
+	        var modalInstance = $uibModal.open({
+	            templateUrl: 'ogx/_edit_modal.html'
+	        });
 	    };
 
 
