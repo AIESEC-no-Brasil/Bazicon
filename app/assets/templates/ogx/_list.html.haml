@@ -150,7 +150,7 @@
 									.row.m-b-l
 										%center
 											%h3 Quede EP?
-							.tab-content.animated.bounceInRight
+							.tab-content.animated.bounceInRight{:'ng-show' => '!loading_detail && person != null'}
 								#contact.tab-pane.active
 									.row.m-b-lg
 										.col-lg-4.text-center
