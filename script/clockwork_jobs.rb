@@ -15,18 +15,21 @@ handler do |job|
   elsif job.eql?('Update Podio')
     ExpaRdSync.new.update_podio
   elsif job.eql?('Update all People')
-    Thread.new{ ExpaRdSync.new.list_people }
+    ExpaRdSync.new.list_people
   elsif job.eql?('Update all approved and realized Applications')
-    Thread.new{ ExpaRdSync.new.list_approved_realized_applications }
+    ExpaRdSync.new.list_approved_realized_applications
   elsif job.eql?('Update all applications')
-    Thread.new{ ExpaRdSync.new.list_applications }
+    ExpaRdSync.new.list_applications
+  elsif job.eql?('Get all GCDP interested people')
+    ExpaRdSync.new.list_igcdp_people
   end
 end
 
 # Define the schedule
-every(10.minutes, 'list all open people')
+every(8.minutes, 'list all open people')
 every(10.minutes, 'Get offline lead from Podio and send them to RD')
 every(30.minutes, 'Update Podio')
-every(2.days, 'Update all People', :at => '01:00')
+every(2.days, 'Update all People', :at => '21:00')
 every(3.days, 'Update all approved and realized Applications', :at => '21:00')
 every(1.week, 'Update all applications', :at => 'Saturday 21:00')
+every(1.day, 'Get all GCDP interested people', :at => '21:00')

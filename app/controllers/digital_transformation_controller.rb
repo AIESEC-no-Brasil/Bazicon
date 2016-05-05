@@ -163,7 +163,7 @@ class DigitalTransformationController < ApplicationController
       puts exception.to_s
     ensure
       person = ExpaPerson.new
-      person.xp_email = email
+      person.xp_email = email.downcase
 
       office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
       if office.nil?
