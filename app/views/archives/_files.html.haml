@@ -30,7 +30,7 @@
               %a{href: ($client.media path)['url'], style: "color:fff;"}
                 %i.fa.fa-eye
             .btn.btn-success
-              %a{href:download(path), style: "color:fff;"}
+              %a{href:archives_download_path(file.id), style: "color:fff;"}
                 %i.fa.fa-download
             = form_tag({action: :restore_archive}, style: "display:inline;") do
               = hidden_field_tag(:id, file.id)
@@ -82,7 +82,7 @@
                 %a{href: url, target:'_blank',  style: "color:fff;"}
                   %i.fa.fa-eye
             .btn.btn-success
-              %a{href:download(path), style: "color:fff;"}
+              %a{href:archives_download_path(file.id), style: "color:fff;"}
                 %i.fa.fa-download
             -if (file.is_private==true && (@user.get_role ==ExpaPerson.roles[:role_mc]|| @user.get_role ==ExpaPerson.roles[:role_eb]))|| !file.is_private
               %button.btn.btn-primary{"data-target" => "#editModal", "data-toggle" => "modal", :type => "button"}

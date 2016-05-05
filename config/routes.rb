@@ -11,12 +11,15 @@ Myapp::Application.routes.draw do
   get '/main'          => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
+  get '/main/archives/download/:id' => 'archives#download', as: 'archives_download'
   post 'restore_archive' => 'archives#restore_archive', as: 'restore_archive'
   post 'upload'        => 'archives#upload', as: 'upload'
   post  '/main/archives/remove' =>'archives#remove', as: 'remove'
   post  'update' =>'archives#update', as: 'update'
   post  '/archives/retrieve_selected_tags' =>'archives#retrieve_selected_tags'
   post '/main/archives' => 'archives#show', as: 'post_archives_show'
+
+
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
