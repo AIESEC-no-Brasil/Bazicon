@@ -1,4 +1,5 @@
 require 'dropbox_sdk'
+require 'tempfile'
 class ArchivesController < ApplicationController
 
   FILES_PER_PAGE = 3
@@ -22,6 +23,19 @@ class ArchivesController < ApplicationController
       @archives = get_files(file_permission).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
     end
   end
+
+
+  def download(file_id = params[:id])
+
+    file = Archive.find_by(id: file_id)
+    downloaded_file= $client.get_file("/#{file.id}#{file.archive_extension}")
+    temp_file = Tempfile.new('tmp_file')
+    open(temp_file,"wb") {|f| f.puts downloaded_file}
+    temp_file.close
+    send_file temp_file.path, :filename =>  "#{file.name}#{file.archive_extension}"
+
+  end
+
 
   def restore_archive
     file_id = params[:id]
