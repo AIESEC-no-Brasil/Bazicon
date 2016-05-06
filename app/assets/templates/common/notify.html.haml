@@ -1,0 +1,8 @@
+.cg-notify-message.inspinia-notify{"ng-class" => "$classes"}
+  .p-lg
+    %div{"ng-show" => "!$messageTemplate"}
+      {{$message}}
+    .cg-notify-message-template{"ng-show" => "$messageTemplate"}
+    %button.cg-notify-close{"ng-click" => "$close()", :type => "button"}
+      %span{"aria-hidden" => "true"} &times;
+      %span.cg-notify-sr-only Close

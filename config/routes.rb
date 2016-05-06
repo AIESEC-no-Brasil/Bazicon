@@ -8,15 +8,23 @@ Myapp::Application.routes.draw do
   post '/login' => 'sessions#login',  as: 'login'
 
   # Archives
-  get '/main'          => 'main#index',    as: 'main'
+  get '/main/ogx/list'  => 'ogx#list',    as: 'list_ogx'
+  get '/main/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
+  get '/main/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
+  get '/main/(*path)'  => 'main#index',    as: 'main'
+
+  
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
+  get '/main/archives/download/:id' => 'archives#download', as: 'archives_download'
   post 'restore_archive' => 'archives#restore_archive', as: 'restore_archive'
   post 'upload'        => 'archives#upload', as: 'upload'
   post  '/main/archives/remove' =>'archives#remove', as: 'remove'
   post  'update' =>'archives#update', as: 'update'
   post  '/archives/retrieve_selected_tags' =>'archives#retrieve_selected_tags'
   post '/main/archives' => 'archives#show', as: 'post_archives_show'
+
+
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
@@ -28,7 +36,7 @@ Myapp::Application.routes.draw do
 
   # Outgoing Exchange
   get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'
-  get '/ogx/list'   => 'outgoing_exchange#list',   as: 'outgoing_exchange_list'
+  get '/ogx/list'   => 'outgoing_exchange#list2',   as: 'outgoing_exchange_list'
   get '/ogx/detail' => 'outgoing_exchange#detail', as: 'outgoing_exchange_detail'
 
 

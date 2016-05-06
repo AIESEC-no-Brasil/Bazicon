@@ -109,6 +109,7 @@ class DigitalTransformationController < ApplicationController
   def expa_sign_up_success
     name = params['name']
     lastname = params['lastname']
+    phone = params['phone']
     email = params['email']
     password = params['password']
     interested_program = params['programa']
@@ -158,102 +159,95 @@ class DigitalTransformationController < ApplicationController
     begin
       page = agent.submit(auth_form, auth_form.buttons.first)
     rescue => exception
+      #TODO insert sign up error screen. This will be useful when EXPA/OP get offline
       puts exception.to_s
     ensure
-      EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      person = ExpaPerson.new
+      person.xp_email = email.downcase
 
-      sleep(2)
-      time = Time.now - 60 * 2# 2 minute windows
-      people = EXPA::People.list_everyone_created_after(time)
-      people.each do |xp_person|
-        if xp_person.email == email
-          person = ExpaPerson.new
-          person.update_from_expa(xp_person)
+      office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
+      if office.nil?
+        office = ExpaOffice.new
 
-          office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
-          if office.nil?
-            office = ExpaOffice.new
-
-            DigitalTransformation.hash_entities_podio_expa.each do |entity|
-              if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
-                office.xp_id = entity[1]['ids'][0]
-                office.xp_full_name = entity[0]
-                office.xp_name = entity[0]
-                office.save
-                break
-              end
-            end
+        DigitalTransformation.hash_entities_podio_expa.each do |entity|
+          if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
+            office.xp_id = entity[1]['ids'][0]
+            office.xp_full_name = entity[0]
+            office.xp_name = entity[0]
+            office.save
+            break
           end
-
-          #Entidade mais próxima != Entidade EXPA
-          person.entity_exchange_lc = office
-
-          #Programa de interesse e sub-produto
-          case interested_program
-            when 'GCDP'
-              person.interested_program = 'global_volunteer'
-              case sub_product.to_i
-                when 1 then person.interested_sub_product = 'global_volunteer_arab'
-                when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
-                when 3 then person.interested_sub_product = 'global_volunteer_africa'
-                when 4 then person.interested_sub_product = 'global_volunteer_asia'
-                when 5 then person.interested_sub_product = 'global_volunteer_latam'
-              end
-            when 'GIP'
-              person.interested_program = 'global_talents'
-              case sub_product.to_i
-                when 1 then person.interested_sub_product = 'global_talents_start_up'
-                when 2 then person.interested_sub_product = 'global_talents_educacional'
-                when 3 then person.interested_sub_product = 'global_talents_IT'
-                when 4 then person.interested_sub_product = 'global_talents_management'
-              end
-          end
-
-          #TODO Tirar control_podio quando BAZICON lançar para OGX
-          json = if person.control_podio.nil?
-                   person.control_podio = {}
-                 else
-                   JSON.parse(person.control_podio)
-                 end
-
-          json['escolaridade'] = DigitalTransformation.study_level[study_level.to_i]
-
-          case study_level.to_i
-            when 4,5,6
-              json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university.to_i],
-                                      value: DigitalTransformation.hash_universities_podio.keys[university.to_i]}
-              json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course.to_i],
-                                      value: DigitalTransformation.hash_courses_podio.keys[course.to_i]}
-          end
-
-          json['podio_status'] = 'lead_decidido'
-          person.control_podio = json.to_json.to_s
-
-          # escolaridade, universidade e curso
-          json = if person.customized_fields.nil?
-                   person.customized_fields = {}
-                 else
-                   JSON.parse(person.customized_fields)
-                 end
-
-          json['escolaridade'] = study_level
-
-          case study_level
-            when '4', '5', '6'
-              json['universidade'] = university
-              json['curso'] = course
-          end
-          person.customized_fields = json.to_json.to_s
-
-          #como conheceu a AIESEC
-          person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
-
-          person.save
-          xp_sync = ExpaRdSync.new
-          xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
-          break
         end
       end
+
+      #Entidade mais próxima != Entidade EXPA
+      person.entity_exchange_lc = office
+
+      #Programa de interesse e sub-produto
+      case interested_program
+        when 'GCDP'
+          person.interested_program = 'global_volunteer'
+          case sub_product.to_i
+            when 1 then person.interested_sub_product = 'global_volunteer_arab'
+            when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
+            when 3 then person.interested_sub_product = 'global_volunteer_africa'
+            when 4 then person.interested_sub_product = 'global_volunteer_asia'
+            when 5 then person.interested_sub_product = 'global_volunteer_latam'
+          end
+        when 'GIP'
+          person.interested_program = 'global_talents'
+          case sub_product.to_i
+            when 1 then person.interested_sub_product = 'global_talents_start_up'
+            when 2 then person.interested_sub_product = 'global_talents_educacional'
+            when 3 then person.interested_sub_product = 'global_talents_IT'
+            when 4 then person.interested_sub_product = 'global_talents_management'
+          end
+      end
+
+      #TODO Tirar control_podio quando BAZICON lançar para OGX
+      json = if person.control_podio.nil?
+               person.control_podio = {}
+             else
+               JSON.parse(person.control_podio)
+             end
+
+      json['escolaridade'] = DigitalTransformation.study_level[study_level.to_i]
+
+      case study_level.to_i
+        when 4,5,6
+          json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university.to_i],
+                                  value: DigitalTransformation.hash_universities_podio.keys[university.to_i]}
+          json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course.to_i],
+                           value: DigitalTransformation.hash_courses_podio.keys[course.to_i]}
+      end
+
+      json['podio_status'] = 'lead_decidido'
+      person.control_podio = json.to_json.to_s
+
+      # escolaridade, universidade e curso
+      json = if person.customized_fields.nil?
+               person.customized_fields = {}
+             else
+               JSON.parse(person.customized_fields)
+             end
+
+      json['telefone'] = phone
+
+      json['escolaridade'] = study_level
+
+      case study_level
+        when '4', '5', '6'
+          json['universidade'] = university
+          json['curso'] = course
+      end
+      person.customized_fields = json.to_json.to_s
+
+      #como conheceu a AIESEC
+      person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
+
+      person.save(validate: false)
+      xp_sync = ExpaRdSync.new
+      xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
     end
     redirect_to 'https://auth.aiesec.org/users/sign_in'
   end
