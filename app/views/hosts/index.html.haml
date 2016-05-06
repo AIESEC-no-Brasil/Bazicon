@@ -35,6 +35,18 @@
             .tab-content
               #tab-1.tab-pane.active
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_leads.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_leads.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_leads.non_grata.count}"
+                  %br
+
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -71,6 +83,17 @@
 
               #tab-2.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_free.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_free.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_free.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -101,6 +124,17 @@
 
               #tab-3.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_leads.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_allocated.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_allocated.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -131,6 +165,17 @@
 
               #tab-4.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_realized.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_realized.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_realized.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -180,31 +225,31 @@
                     %strong Dados Pessoais
                     %ul.list-group.clear-list
                       %li.list-group-item.fist-item
-                        %span.pull-right 09:00 pm
+                        %span.pull-right= h.phone
                         Telefone
                       %li.list-group-item
-                        %span.pull-right 10:16 am
+                        %span.pull-right= h.email
                         Email
                       %li.list-group-item
-                        %span.pull-right 08:22 pm
+                        %span.pull-right= h.address
                         Endereço
                       %li.list-group-item
-                        %span.pull-right 11:06 pm
+                        %span.pull-right= h.postal_code
                         CEP
                       %li.list-group-item
-                        %span.pull-right 12:00 am
+                        %span.pull-right= h.state
                         Estado
                       %li.list-group-item
-                        %span.pull-right 12:00 am
+                        %span.pull-right= h.city
                         Cidade
                       %li.list-group-item
-                        %span.pull-right 12:00 am
+                        %span.pull-right= h.house_type
                         Tipo de Casa
                       %li.list-group-item
-                        %span.pull-right 12:00 am
+                        %span.pull-right= h.trainees_vacancy
                         Vagas para EPs
                       %li.list-group-item
-                        %span.pull-right 12:00 am
+                        %span.pull-right= h.weeks_vacancy
                         Tempo disponível
                     %strong Como conheceu a AIESEC
                     %p

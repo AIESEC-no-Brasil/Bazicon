@@ -1,6 +1,19 @@
 class HostPerson < ActiveRecord::Base
 	has_many :trainee_to_hosts
 	has_many :trainee_people, through: :trainee_to_hosts
+
+	def self.favourites
+		favourites = HostPerson.where({is_favourite: true})
+	end
+
+	def self.problematics
+		problematics = HostPerson.where({is_problematic: true})
+	end
+
+	def self.non_grata
+		non_grata = HostPerson.where({is_non_grata: true})
+	end
+
 	def self.list_leads
 		host = HostPerson.arel_table
 		leads = HostPerson.where(host[:tmp_responsable_id].eq(nil).
