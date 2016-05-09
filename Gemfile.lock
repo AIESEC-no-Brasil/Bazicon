@@ -64,11 +64,10 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-harrow (0.4.0)
+    capistrano-harrow (0.5.1)
     capistrano-rails (1.1.6)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
-    chronic (0.10.2)
     clockwork (2.0.0)
       activesupport
       tzinfo
@@ -91,7 +90,7 @@ GEM
     execjs (2.6.0)
     faraday (0.8.11)
       multipart-post (~> 1.2.0)
-    font-awesome-rails (4.6.1.0)
+    font-awesome-rails (4.6.2.0)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -231,8 +230,6 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     webrobots (0.1.2)
-    whenever (0.9.4)
-      chronic (>= 0.6.3)
     will_paginate (3.1.0)
 
 PLATFORMS
@@ -270,7 +267,6 @@ DEPENDENCIES
   turbolinks
   uglifier
   web-console (~> 2.0)
-  whenever
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
