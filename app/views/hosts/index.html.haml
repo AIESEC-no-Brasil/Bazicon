@@ -35,15 +35,28 @@
             .tab-content
               #tab-1.tab-pane.active
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_leads.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_leads.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_leads.non_grata.count}"
+                  %br
+
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
                         -HostPerson.list_leads.each do |l|
                           %tr
                             %td.client-avatar
-                              %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg"}
+                              %a{:href => ""}
+                                %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg"}
                             %td
-                              %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
+                              %a.client-link{"data-toggle" => "tab", :href => "#"+l.id.to_s} 
                                 =l.full_name
                             %td 
                               =l.city
@@ -70,6 +83,17 @@
 
               #tab-2.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_free.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_free.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_free.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -100,6 +124,17 @@
 
               #tab-3.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_leads.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_allocated.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_allocated.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -130,6 +165,17 @@
 
               #tab-4.tab-pane
                 .full-height-scroll
+                  %br
+                  %span
+                    .btn.btn-primary 
+                      %i.fa.fa-star= " #{HostPerson.list_realized.favourites.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-exclamation-triangle= " #{HostPerson.list_realized.problematics.count}"
+                  %span 
+                    .btn.btn-primary
+                      %i.fa.fa-times-circle= " #{HostPerson.list_realized.non_grata.count}"
+                  %br
                   .table-responsive
                     %table.table.table-striped.table-hover
                       %tbody
@@ -163,53 +209,54 @@
       .ibox
         .ibox-content
           .tab-content
-            #contact-1.tab-pane.active
-              .row.m-b-lg
-                .col-lg-8.text-center
-                  %h2 Nicki Smith
-                  .m-b-sm
-                    %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg", :style => "width: 100px"}
-                .col-lg-3.widget.style1
-                  .col-xs-5.text-center
-                    %h2 10
+            -HostPerson.list_leads.each do |h|
+              %div{id: h.id, class: "tab-pane"}
+                .row.m-b-lg
+                  .col-lg-8.text-center
+                    %h2= h.full_name
+                    .m-b-sm
+                      %img.img-circle{:alt => "image", :src => "https://lh3.googleusercontent.com/-cqsPoAKgMmo/AAAAAAAAAAI/AAAAAAAAAEQ/VN9Z4ka80xg/photo.jpg", :style => "width: 100px"}
+                  .col-lg-3.widget.style1
+                    .col-xs-5.text-center
+                      %h2 10
 
-              .client-detail
-                .full-height-scroll
-                  %strong Dados Pessoais
-                  %ul.list-group.clear-list
-                    %li.list-group-item.fist-item
-                      %span.pull-right 09:00 pm
-                      Telefone
-                    %li.list-group-item
-                      %span.pull-right 10:16 am
-                      Email
-                    %li.list-group-item
-                      %span.pull-right 08:22 pm
-                      Endereço
-                    %li.list-group-item
-                      %span.pull-right 11:06 pm
-                      CEP
-                    %li.list-group-item
-                      %span.pull-right 12:00 am
-                      Estado
-                    %li.list-group-item
-                      %span.pull-right 12:00 am
-                      Cidade
-                    %li.list-group-item
-                      %span.pull-right 12:00 am
-                      Tipo de Casa
-                    %li.list-group-item
-                      %span.pull-right 12:00 am
-                      Vagas para EPs
-                    %li.list-group-item
-                      %span.pull-right 12:00 am
-                      Tempo disponível
-                  %strong Como conheceu a AIESEC
-                  %p
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
-                  %hr/
-                  %button.btn.btn-w-m.btn-danger Problemas
+                .client-detail
+                  .full-height-scroll
+                    %strong Dados Pessoais
+                    %ul.list-group.clear-list
+                      %li.list-group-item.fist-item
+                        %span.pull-right= h.phone
+                        Telefone
+                      %li.list-group-item
+                        %span.pull-right= h.email
+                        Email
+                      %li.list-group-item
+                        %span.pull-right= h.address
+                        Endereço
+                      %li.list-group-item
+                        %span.pull-right= h.postal_code
+                        CEP
+                      %li.list-group-item
+                        %span.pull-right= h.state
+                        Estado
+                      %li.list-group-item
+                        %span.pull-right= h.city
+                        Cidade
+                      %li.list-group-item
+                        %span.pull-right= h.house_type
+                        Tipo de Casa
+                      %li.list-group-item
+                        %span.pull-right= h.trainees_vacancy
+                        Vagas para EPs
+                      %li.list-group-item
+                        %span.pull-right= h.weeks_vacancy
+                        Tempo disponível
+                    %strong Como conheceu a AIESEC
+                    %p
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore magna aliqua.
+                    %hr/
+                    %button.btn.btn-w-m.btn-danger Problemas
 
             #contact-2.tab-pane
               .row.m-b-lg

@@ -1,0 +1,16 @@
+#wrapper
+  / Navigation
+  %div{"ng-include" => "'common/navigation.html'"}
+  / Page wraper
+  / ng-class with current state name give you the ability to extended customization your view
+  #page-wrapper.gray-bg{:class => "{{$state.current.name}}"}
+    / Page wrapper
+    %div{"ng-include" => "'common/topnavbar.html'"}
+    / Main view
+    %div{"ui-view" => ""}
+    / Footer
+    %div{"ng-include" =>  "'common/footer.html'"}
+  / End page wrapper
+  / Right Sidebar
+  %div{"ng-include" => "'common/right_sidebar.html'"}
+/ End wrapper
