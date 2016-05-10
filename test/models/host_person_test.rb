@@ -95,4 +95,20 @@ class HostPersonTest < ActiveSupport::TestCase
 
   end
 
+  def test_list_free
+    HostPerson.all.each do |host|
+      host.destroy
+    end
+
+    hosts = HostPerson.list_free
+    assert(hosts.count == 0, "List Leads Assert 1) Wrong number of leads. It should take 0 but took #{hosts.count} instead!")
+
+    host = HostPerson.new 
+    host.tmp_responsable_id = 1
+    host.tmp_who_realized_meeting_id = 1
+    host.date_approach = Time.new(2016,2,5)
+    host.date_alignment_meeting = Time.new(2016, 2, 28)
+    host.save
+  end
+
 end
