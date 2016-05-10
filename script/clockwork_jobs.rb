@@ -8,7 +8,7 @@ include Clockwork
 
 # Define the jobs
 handler do |job|
-  if job.eql?('list all open people')
+  if job.eql?('list open people from until 10 minutes ago')
     ExpaRdSync.new.list_open
   elsif job.eql?('Get offline lead from Podio and send them to RD')
     ExpaRdSync.new.rd_from_podio_offline_lead
@@ -26,10 +26,10 @@ handler do |job|
 end
 
 # Define the schedule
-every(8.minutes, 'list all open people')
+every(8.minutes, 'list open people from until 10 minutes ago')
 every(10.minutes, 'Get offline lead from Podio and send them to RD')
 every(30.minutes, 'Update Podio')
-every(2.days, 'Update all People', :at => '21:00')
-every(3.days, 'Update all approved and realized Applications', :at => '21:00')
+every(2.days, 'Update all People', :at => '03:00')
+every(3.days, 'Update all approved and realized Applications', :at => '03:00')
 every(1.week, 'Update all applications', :at => 'Saturday 21:00')
-every(1.day, 'Get all GCDP interested people', :at => '21:00')
+every(1.day, 'Get all GCDP interested people', :at => '03:00')
