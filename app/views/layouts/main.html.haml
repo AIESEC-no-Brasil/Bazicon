@@ -1,38 +1,43 @@
-/!!
-%html{"ng-app" => "inspinia"}
-  - controller_app = controller.controller_name.camelize(:lower)
+%html
   %head
-    %meta{:charset => "utf-8"}
-      %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-        %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
-          / Page title set in pageTitle directive
-          %title{"page-title" => ""}
+    %meta{"charset"=> "utf-8"}
+    %meta{charset: "utf-8"}
+    %meta{"name" => "viewport", "content" => "width=device-width", "initial-scale" => "1.0"}
+    %meta{"http-equiv" => "X-UA-Compatible", "content" => "IE=edge"}
+    %title BAZICON | AIESEC no Brasil
 
-          / Include style per-controller - vendor plugins
-          = stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
 
-          / Main css styles
-          = stylesheet_link_tag 'application', media: 'all'
+    / Include style per-controller - vendor plugins
+    = stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
 
-          = csrf_meta_tags
+    / Main css styles
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 
-  / ControllerAs syntax
-  / Main controller with serveral data used in Inspinia theme on diferent view
-  %body#page-top{:class => "{{$state.current.data.specialClass}}", "landing-scrollspy" => "", "ng-controller" => "MainCtrl as main"}
-    / Main view
-    %div{"ui-view" => ""}
-    
-    / Main Angular scripts
-    /
-      You need to include this script on any page that has a Google Map.
-      When using Google Maps on your own site you MUST signup for your own API key at:
-      https://developers.google.com/maps/documentation/javascript/tutorial#api_key
-      After your sign up replace the key in the URL below..
-    %script{:src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyDQTpXj82d8UpCi97wzo_nKXL7nYrd4G70", :type => "text/javascript"}
-    / Anglar App Script
-   
     / Main javascript files
-    = javascript_include_tag 'angular/app.js'
-    = javascript_include_tag 'angular/config.js'
-    = javascript_include_tag 'angular/directives.js'
-    = javascript_include_tag 'angular/controllers.js'
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  %body
+    / Wrapper
+    #wrapper{"class" => "#{params[:controller]}.#{params[:action]}"}
+
+      / Navigation
+      = render 'layouts/navigation'
+
+      / Page wrapper
+      #page-wrapper.gray-bg{"class" => "#{@extra_class}"}
+
+        / Page wrapper
+        = render 'layouts/topnavbar'
+
+        / Main view
+        = yield
+
+        / Footer
+        = render 'layouts/footer'
+
+    / Include javascript per-controller - vendor plugins
+    = javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")
+
+    / Include javascript per-view
+    = yield :javascript

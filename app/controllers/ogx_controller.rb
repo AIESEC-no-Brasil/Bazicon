@@ -1,8 +1,8 @@
 class OgxController < ApplicationController
 
-  # GET /ogx/dash
-  def dash
-
+  # GET /ogx/index
+  def index
+    render 'layouts/disrupt'
   end
 
   # GET /ogx/list
