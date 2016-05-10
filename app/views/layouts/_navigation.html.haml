@@ -28,7 +28,7 @@
           %span.nav-label{"data-i18n" => "nav.tm"}
             Membresia
       %li{"class" => "#{is_active_controller('/hosts/index')}"}
-        = link_to '/hosts/index' do
+        = link_to hosts_index_path do
           %i.fa.fa-home
           %span.nav-label{"data-i18n" => "nav.host"}
             Host

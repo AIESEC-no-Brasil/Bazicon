@@ -34,37 +34,6 @@ class ExpaPerson < ActiveRecord::Base
 
   after_validation :downcase_email
 
-  scope :listing, -> (lc,status) {
-    flow_step = translate_status(status);
-    if flow_step == -1
-      where(xp_home_lc: lc)
-    else
-      where(xp_home_lc: lc, xp_status: flow_step)
-    end
-  }
-  scope :to_timeline, -> (page) {order(xp_created_at: :desc).limit(30).offset(30*page)}
-  scope :epi, -> (with) {
-    if with == 'true'
-      where.not(epi_date: nil)
-    elsif with == 'false'
-      where(epi_date: nil)
-    else
-      return
-    end
-  }
-  scope :ops, -> (with) {
-    if with == 'true'
-      where.not(ops_date: nil)
-    elsif with == 'false'
-      where(ops_date: nil)
-    else
-      return
-    end
-  }
-  scope :this_year, -> {
-    where("created_at >= :start_date AND created_at <= :end_date",
-      {start_date: Date.today.beginning_of_year, end_date: Date.today})}
-
   def update_from_expa(data)
     unless data.home_lc.nil?
       home_lc = ExpaOffice.find_by_xp_id(data.home_lc.id)
@@ -147,7 +116,7 @@ class ExpaPerson < ActiveRecord::Base
   def get_role
     if self.xp_current_office == self.xp_home_mc
       ExpaPerson.roles[:role_mc]
-    elsif !self.xp_current_position.nil? && self.xp_current_position.xp_team.xp_team_type == 'eb'
+    elsif self.xp_current_position.xp_team.xp_team_type == 'eb'
       ExpaPerson.roles[:role_eb]
     else
       ExpaPerson.roles[:role_other]
@@ -215,24 +184,15 @@ class ExpaPerson < ActiveRecord::Base
     end
   end
 
-  def self.translate_status(status)
-    case status
-      when 'all'
-        -1
-      when 'open'
-        0
-      when 'applied'
-        1
-      when 'accepted'
-        2
-      when 'realizing'
-        3
-      when 'completed'
-        4
-      else
-        5
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |product|
+        csv << product.attributes.values_at(*column_names)
+      end
     end
   end
+
 
   private
 
