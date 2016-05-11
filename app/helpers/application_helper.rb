@@ -1,5 +1,3 @@
-require 'action_view/helpers/asset_url_helper'
-
 module ApplicationHelper
 
     def is_active_controller(controller_name)

@@ -26,8 +26,7 @@ class ExpaRdSync
 
   # This method will get everyone in the world (besides brazilians) in order to we make direct facebook ads or others
   # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
-  def list_foreign_people(programme)
-    limit = 500
+  def list_foreign_people(programme, limit)
     # Get the last brazilian people EXPA_ID to start find foreign starting from it descending
     params = {'per_page' => 1}
     xp_person = EXPA::People.list_by_param(params).first
@@ -44,11 +43,33 @@ class ExpaRdSync
             if programme.nil?
               person = ExpaPerson.new
               person.update_from_expa(xp_person)
+
+              json = if person.customized_fields.nil?
+                       person.customized_fields = {}
+                     else
+                       JSON.parse(person.customized_fields)
+                     end
+
+              json['foreign'] = nil
+
+              person.customized_fields = json.to_json.to_s
+
               person.save
               limit -= 1
             elsif  program['short_name'] = programme
               person = ExpaPerson.new
               person.update_from_expa(xp_person)
+
+              json = if person.customized_fields.nil?
+                       person.customized_fields = {}
+                     else
+                       JSON.parse(person.customized_fields)
+                     end
+
+              json['foreign'] = programme
+
+              person.customized_fields = json.to_json.to_s
+
               person.save
               limit -= 1
             end
@@ -64,14 +85,14 @@ class ExpaRdSync
 
   # This method will get everyone in the world (besides brazilians) that are interested in GCDP
   # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
-  def list_igcdp_people
-    list_foreign_people('GCDP')
+  def list_igcdp_people(limit = 500)
+    list_foreign_people('GCDP', limit)
   end
 
   # This method will get everyone in the world (besides brazilians) that are interested in GIP
   # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
-  def list_igip_people
-    list_foreign_people('GIP')
+  def list_igip_people(limit = 500)
+    list_foreign_people('GIP', limit)
   end
 
   def list_people

@@ -8,12 +8,7 @@ Myapp::Application.routes.draw do
   post '/login' => 'sessions#login',  as: 'login'
 
   # Archives
-  get '/main/ogx/list'  => 'ogx#list',    as: 'list_ogx'
-  get '/main/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
-  get '/main/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
-  get '/main/(*path)'  => 'main#index',    as: 'main'
-
-  
+  get '/main'          => 'main#index',    as: 'main'
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
   get '/main/archives/download/:id' => 'archives#download', as: 'archives_download'
@@ -29,6 +24,8 @@ Myapp::Application.routes.draw do
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
   get '/dt/prevents'              => 'digital_transformation#prevents',             as: 'digital_transformation_prevents'
+  get '/dt/igcdp_interested'      => 'digital_transformation#igcdp_interested',     as: 'digital_transformation_igcdp_interested'
+  get '/dt/igip_interested'      => 'digital_transformation#igip_interested',       as: 'digital_transformation_igip_interested'
   get '/expa/sign_up'             => 'digital_transformation#expa_sign_up',         as: 'expa_sign_up'
   post '/dt/difficulties_success' => 'digital_transformation#difficulties_success', as: 'digital_transformation_difficulties_success'
   post '/dt/prevents_success'     => 'digital_transformation#prevents_success',     as: 'digital_transformation_prevents_success'
@@ -36,7 +33,7 @@ Myapp::Application.routes.draw do
 
   # Outgoing Exchange
   get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'
-  get '/ogx/list'   => 'outgoing_exchange#list2',   as: 'outgoing_exchange_list'
+  get '/ogx/list'   => 'outgoing_exchange#list',   as: 'outgoing_exchange_list'
   get '/ogx/detail' => 'outgoing_exchange#detail', as: 'outgoing_exchange_detail'
 
 

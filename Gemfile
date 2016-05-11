@@ -4,8 +4,8 @@ gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 
 gem 'json'
 
+gem 'whenever', :require => false
 gem 'clockwork', :require => false
-
 gem 'expa', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'mechanize'
 
@@ -71,14 +71,5 @@ gem 'web-console', '~> 2.0', group: :development
 gem 'spring', group: [:development, :test]
 # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 gem 'byebug', group: [:development, :test]
-			
 #To use results pagination
 gem 'will_paginate', '~> 3.1.0'
-
-# AngularJS
-gem 'angularjs-rails'
-gem 'angular-rails-templates'
-gem 'ngannotate-rails'
-
-# Bower to control dependencies of the Frontend
-gem 'bower-rails'

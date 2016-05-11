@@ -94,6 +94,18 @@ class DigitalTransformationController < ApplicationController
     render layout: "empty"
   end
 
+  # GET /dt/igcdp_interested
+  def igcdp_interested
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GCDP"%').includes(:xp_home_mc).includes(:xp_home_lc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GCDP"%').includes(:xp_home_mc).includes(:xp_home_lc).limit(100)
+  end
+
+  # GET /dt/igcdp_interested
+  def igip_interested
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GIP"%').includes(:xp_home_mc).includes(:xp_home_lc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GIP"%').includes(:xp_home_mc).includes(:xp_home_lc).limit(100)
+  end
+
   # GET /expa/sign_up
   def expa_sign_up
     unless params.has_key?('programa') &&

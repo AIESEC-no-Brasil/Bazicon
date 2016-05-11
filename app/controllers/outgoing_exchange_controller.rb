@@ -5,21 +5,6 @@ class OutgoingExchangeController < ApplicationController
 
   end
 
-  def list2
-    render :json => {
-        :name => 'Luan Corumba',
-        :product => 'Teaching', 
-        :date => '2:10 pm - 12.06.2014', 
-        :status => 'open', 
-        :dob => '25 anos',
-        :email => 'luan.corumba@aiesec.net',
-        :phone => '79 99999-9999',
-        :city => 'Aracaju',
-        :img => 'https://scontent-grt2-1.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/11012975_10153239647564758_7293399361939455419_n.jpg?oh=03d2f8ff6033a11e43405d5c2bfb67c0&oe=57B7CC3B'
-      }
-      
-  end 
-
   # GET /ogx/list
   # GET /ogx/list?lc=INTEGER&page=INTEGER&date_start=STRING&date_end=STRING
   def list
@@ -235,9 +220,6 @@ class OutgoingExchangeController < ApplicationController
     @info['re_ogcdp_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gcdp + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 ASC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
     @info['re_ogip_last_year_per_month'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('month', (expa_people.xp_created_at::timestamp)), COUNT (expa_people.id) FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_year_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 ASC").values.map { |x,i| [i] }.each_with_index.map { |x,i| [i+1,x.first.to_i] }
 
-    @info.each do |k,v|
-      @info[k] = (v == 0) ? 1 : v
-    end
   end
 
   def prepare_expansor_expansions
