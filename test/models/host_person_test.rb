@@ -103,12 +103,23 @@ class HostPersonTest < ActiveSupport::TestCase
     hosts = HostPerson.list_free
     assert(hosts.count == 0, "List Leads Assert 1) Wrong number of leads. It should take 0 but took #{hosts.count} instead!")
 
-    host = HostPerson.new 
-    host.tmp_responsable_id = 1
-    host.tmp_who_realized_meeting_id = 1
-    host.date_approach = Time.new(2016,2,5)
-    host.date_alignment_meeting = Time.new(2016, 2, 28)
-    host.save
+    (1..3).each do |i|
+      host = HostPerson.new 
+      host.tmp_responsable_id = 1
+      host.tmp_who_realized_meeting_id = 1
+      host.date_approach = Time.new(2016,2,5)
+      host.date_alignment_meeting = Time.new(2016, 2, 28)
+      host.save
+
+      t2h = TraineeToHost.new
+      t2h.host_person_id = host.id
+      t2h.trainee_person_id = 542423
+      t2h.save
+    end
+
+    hosts = HostPerson.list_free
+    assert(hosts.count == 3, "List Leads Assert 2) Wrong number of leads. It should take 0 but took #{hosts.count} instead!")
+
   end
 
 end
