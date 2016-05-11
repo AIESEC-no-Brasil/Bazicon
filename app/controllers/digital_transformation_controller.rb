@@ -96,14 +96,14 @@ class DigitalTransformationController < ApplicationController
 
   # GET /dt/igcdp_interested
   def igcdp_interested
-    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GCDP"%').includes(:xp_home_mc).includes(:xp_home_lc)
-    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GCDP"%').includes(:xp_home_mc).includes(:xp_home_lc).limit(100)
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
   end
 
   # GET /dt/igcdp_interested
   def igip_interested
-    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GIP"%').includes(:xp_home_mc).includes(:xp_home_lc)
-    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign":"GIP"%').includes(:xp_home_mc).includes(:xp_home_lc).limit(100)
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
   end
 
   # GET /expa/sign_up

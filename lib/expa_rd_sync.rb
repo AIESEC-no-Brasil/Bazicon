@@ -36,7 +36,10 @@ class ExpaRdSync
     while limit > 0 do
       xp_person = EXPA::People.find_by_id(id)
 
-      if xp_person.home_mc.id != 1606 && !ExpaPerson.find_by_xp_id(xp_person.id)
+      if xp_person.home_mc.id != 1606 &&
+          (!ExpaPerson.find_by_xp_id(xp_person.id) ||
+              (JSON.parse(ExpaPerson.find_by_xp_id(xp_person.id).customized_fields).include?('foreign') &&
+                  !JSON.parse(ExpaPerson.find_by_xp_id(xp_person.id).customized_fields)['foreign'].include?(programme)))
         if !xp_person.profile.nil? &&
             xp_person.profile.include?('selected_programmes_info')
           xp_person.profile['selected_programmes_info'].each do |program|
@@ -50,7 +53,9 @@ class ExpaRdSync
                        JSON.parse(person.customized_fields)
                      end
 
-              json['foreign'] = nil
+              unless json.include?('foreign')
+                json['foreign'] = nil
+              end
 
               person.customized_fields = json.to_json.to_s
 
@@ -66,8 +71,6 @@ class ExpaRdSync
                        JSON.parse(person.customized_fields)
                      end
 
-              json['foreign'] = programme
-
               person.customized_fields = json.to_json.to_s
 
               person.save
@@ -76,7 +79,7 @@ class ExpaRdSync
           end
         end
       elsif xp_person.home_mc.id != 1606 && ExpaPerson.find_by_xp_id(xp_person.id)
-        id = ExpaPerson.where.not(xp_home_mc_id: 1606).order(xp_created_at: :asc).first.xp_id
+        id = ExpaPerson.where.not(xp_home_mc_id: 1606).where('xp_id < ?', id).order(xp_created_at: :desc).first.xp_id
       end
 
       id -= 1
