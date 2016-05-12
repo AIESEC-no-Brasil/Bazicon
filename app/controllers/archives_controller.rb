@@ -1,29 +1,31 @@
 require 'dropbox_sdk'
-require 'tempfile'
+
 class ArchivesController < ApplicationController
 
-  FILES_PER_PAGE = 3
+  FILES_PER_PAGE = 1
   $client = DropboxClient.new(ENV["DROPBOX_TOKEN"])
   helper_method :get_file
 
   # GET /main/archives
   def show
     selected_tags_ids = params[:tags]
-    file_permission = params[:permissao]
+    show_private = params[:show_private]
+    show_public = params[:show_public]
     search = params[:pesquisa]
-    if !file_permission
-      file_permission = "todos"
-    end
+    page = params[:page]
     if search
-      @archives = search_file_by_name(search).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+      @archives = search_file_by_name(search).paginate(page: params[:page], per_page: FILES_PER_PAGE)
     elsif selected_tags_ids
+      if selected_tags_ids.length == 0
+        selected_tags_ids = get_all_tags_ids
+      end
       archive_ids = find_files_by_tags(selected_tags_ids)
-      @archives = get_files_by_ids(file_permission, archive_ids).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+      @archives = get_files_by_ids(show_private,show_public,archive_ids).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
     else
-      @archives = get_files(file_permission).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
+      @archives = get_files(show_private,show_public).paginate(:page => params[:page], :per_page => FILES_PER_PAGE)
     end
-  end
 
+  end
 
   def download(file_id = params[:id])
 
@@ -138,56 +140,90 @@ class ArchivesController < ApplicationController
 
   end
 
-  def get_files_by_ids permissao, archives_ids
-    if permissao == "publico"
-      return Archive.where("is_private = false AND id IN (?)",archives_ids)
-    elsif permissao == "privado"
+  def get_files_by_ids show_private,show_public, archives_ids
+
+    if show_private && show_public
       if @user.get_role == ExpaPerson.roles[:role_mc]
-        return Archive.where("is_private = true AND id IN (?)",archives_ids)
-      elsif @user.get_role == ExpaPerson.roles[:role_eb]
-        return Archive.where("is_private = true AND office_id =  ? AND id IN (?)",@user.xp_current_office.id, archives_ids)
+        return Archive.where("id IN (?)", archives_ids)
       else
-        return  Archive.where("is_deleted= false AND is_private = true AND office_id =  ? AND id IN (?)",@user.xp_current_office.id, archives_ids)
+        return  Archive.where("(is_private = false OR(is_private=true AND office_id =  ?)) AND id IN (?) AND is_deleted=false",@user.xp_current_office.id, archives_ids)
+      end
+    elsif show_private
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where("is_private = true AND id IN (?)", archives_ids)
+      else
+        return Archive.where("(is_private=true  AND office_id =  ? AND is_deleted=false ) AND id IN (?)",@user.xp_current_office.id, archives_ids)
+      end
+    elsif show_public
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where("is_private = false AND id IN (?)", archives_ids)
+      else
+        return Archive.where("is_private = false AND is_deleted =false AND id IN (?)", archives_ids)
       end
     else
       if @user.get_role == ExpaPerson.roles[:role_mc]
-        return Archive.where("id IN (?)",archives_ids)
-        # or if someone is from a LC
-      elsif @user.get_role == ExpaPerson.roles[:role_eb]
-        return Archive.where("(is_private = true AND office_id =  ? AND id IN (?)) OR(is_private = false AND id IN (?)) ",@user.xp_current_office.id, archives_ids,archives_ids)
+        return Archive.where("id IN (?)", archives_ids)
       else
-        return Archive.where("(is_private = true AND is_deleted = false AND office_id =  ? AND id IN (?)) OR(is_private = false AND is_deleted = false AND id IN (?)) ",@user.xp_current_office.id, archives_ids,archives_ids)
+        return  Archive.where("(is_private = false OR(is_private=true AND office_id =  ?)) AND id IN (?) AND is_deleted=false",@user.xp_current_office.id, archives_ids)
       end
     end
   end
 
-  def get_files permissao
-    if permissao == "privado"
+
+
+  def get_files show_private,show_public
+
+    if show_private && show_public
       if @user.get_role == ExpaPerson.roles[:role_mc]
-        return Archive.where(is_private: true)
-        # or if someone is from a LC
-      elsif ExpaPerson.roles[:role_eb]
-        return Archive.where(is_private: true , office_id: @user.xp_current_office.id)
+        return Archive.all
       else
-        return Archive.where(is_private: true ,:is_deleted => false, office_id: @user.xp_current_office.id)
+        return Archive.where("(is_private = false OR(is_private=true  AND office_id =  ?)) AND is_deleted = false",@user.xp_current_office.id)
       end
-    elsif permissao == "publico"
-      if @user.get_role == ExpaPerson.roles[:other]
-        Archive.where(is_private: false, :is_deleted => false)
+    elsif show_private
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where(" is_private = true" )
       else
-        Archive.where(is_private: false)
+        return Archive.where(" (is_private=true  AND office_id =  ? AND is_deleted=false )",@user.xp_current_office.id)
       end
+    elsif show_public
+      if @user.get_role == ExpaPerson.roles[:role_mc]
+        return Archive.where(" is_private = false" )
+      else
+        return Archive.where(" is_private = false and is_deleted=false" )
+      end
+
     else
       if @user.get_role == ExpaPerson.roles[:role_mc]
         return Archive.all
-        # or if someone is from a LC
-      elsif ExpaPerson.roles[:role_eb]
-        return Archive.where("(is_private = true AND office_id =  ?) OR(is_private = false ) ",@user.xp_current_office.id)
       else
-        return Archive.where("(is_private = true AND is_deleted = false AND office_id =  ? ) OR(is_private = false AND is_deleted = false ) ",@user.xp_current_office.id)
+        return Archive.where("(is_private = false OR(is_private=true  AND office_id =  ?)) AND is_deleted = false",@user.xp_current_office.id)
       end
-
     end
+  end
+
+  def get_all_tags_ids
+    selected_tags_ids = ""
+    tags_ids_query = Tag.all
+    i = 0
+    for tag in tags_ids_query
+      i = i+1
+      if i == tags_ids_query.length
+        selected_tags_ids << "#{tag.id}"
+      else
+        selected_tags_ids << "#{tag.id},"
+      end
+    end
+    return selected_tags_ids
+  end
+
+  def get_all_tags_ids_array
+    tags_ids_query = Tag.all
+    selected_tags_ids = []
+    for tag in tags_ids_query
+      selected_tags_ids << tag.id
+    end
+    return selected_tags_ids
+
   end
 
   private :delete_archive_tags , :get_files , :get_files_by_ids, :find_files_by_tags
