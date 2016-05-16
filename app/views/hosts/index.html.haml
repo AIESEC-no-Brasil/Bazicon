@@ -166,13 +166,27 @@
             -HostPerson.all.each do |h|
               .tab-pane{id: h.full_name.gsub(" ","")}
                 .row.m-b-lg
-                  .col-lg-8.text-center
+                  .col-lg-5.text-center
                     %h2= h.full_name
                     .m-b-sm
                       %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg", :style => "width: 80px"}
                   .col-lg-3.widget.style1
                     .col-xs-5.text-center
                       %h2 0
+                  -if h.is_non_grata == true
+                    .col-lg-3.widget.style1
+                      .col-xs-5.text-center
+                        %span.badge Nongrata
+                  -if h.is_problematic == true
+                    .col-lg-3.widget.style1
+                      .col-xs-5.text-center
+                        %span.badge Problematic
+                  -if h.is_problematic == true
+                    .col-lg-3.widget.style1
+                      .col-xs-5.text-center
+                        %span.badge Favorito
+                        
+
 
                 .client-detail
                   .full-height-scroll
