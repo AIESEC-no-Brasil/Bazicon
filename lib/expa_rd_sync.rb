@@ -38,7 +38,10 @@ class ExpaRdSync
       begin
         id -= 1
         person = ExpaPerson.find_by_xp_id(id)
-      end while !person.nil? || person.xp_home_mc == brazil
+        unless person.nil?
+          person = nil if person.xp_home_mc == brazil
+        end
+      end while person
 
       xp_person = EXPA::People.find_by_id(id)
 
