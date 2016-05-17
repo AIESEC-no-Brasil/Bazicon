@@ -2,7 +2,7 @@ require 'dropbox_sdk'
 
 class ArchivesController < ApplicationController
 
-  FILES_PER_PAGE = 1
+  FILES_PER_PAGE = 5
   $client = DropboxClient.new(ENV["DROPBOX_TOKEN"])
   helper_method :get_file
 

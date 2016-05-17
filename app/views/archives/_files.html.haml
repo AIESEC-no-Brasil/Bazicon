@@ -90,7 +90,7 @@
                   %i.fa.fa-edit
               = form_tag({action: :remove}, style: "display:inline;") do
                 = hidden_field_tag(:id, file.id)
-                = button_tag(type: "submit", class: "btn btn-success") do
+                = button_tag(type: "submit", class: "btn btn-success remove-button") do
                   %i.fa.fa-trash
         .file-name
           = file.name
@@ -101,3 +101,18 @@
           %br
           %small Entidade: #{file.office.xp_name}
 #edit-modal.modal.fade
+:javascript
+  $('.remove-button').on('click',function(e){
+    e.preventDefault();
+    var form = $(this).parents('form');
+    swal({
+        title: "Você tem certeza?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Não quero saber, delete!",
+        closeOnConfirm: true
+    }, function(isConfirm){
+        if (isConfirm) form.submit();
+    });
+  });
