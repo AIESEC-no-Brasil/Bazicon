@@ -5,6 +5,833 @@
       %li
         %a{href: main_url} Home
       %li.active
-        %strong Análise
+        %strong
+          Análise
+          %span
+          = '(atualizado em ' + Time.new.beginning_of_week(:sunday).strftime('%d/%m/%Y') + ') - Leitura de IP, MA e RE só funcionam de 2016 para cá'
       %li
         %a{href: outgoing_exchange_list_url} Gestão
+
+  .col-lg-3
+    %ul.nav.navbar-top-links.navbar-right
+      %li
+        %label Expansor / Expansão
+        = form_tag(outgoing_exchange_dash_form_path, method: 'post', class: 'wizard-big', id: 'form') do
+          .input-group
+            %select.form-control.m-b.required{name: 'lc'}
+              - for i in 0...@expansor_expansions.count
+                %option{value: "#{i}"}
+                  = @expansor_expansions[i][0]
+            .input-group-btn
+              %button.btn.btn-success.btn-outline{type: 'submit', "aria-pressed" => false}
+                .fa.fa-search.fa-2x
+
+.wrapper.wrapper-content.animated.fadeIn
+  .p-w-md.m-t-sm
+    .row
+      .col-sm-12.text-center
+        %h1.m-b-xs
+          .fa.fa-globe
+          = @info['leads_this_month'].to_i
+          %small
+            Leads
+          %span
+          = @info['ma_this_month'].to_i
+          %small
+            MA
+          %span
+          = @info['re_this_month'].to_i
+          %small
+            RE
+        %small Total
+        %br
+        = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+        .row
+          .col-xs-4.text-center
+            #sparkline1.m-b-sm
+            %h2.stats-label
+              Leads
+          .col-xs-4.text-center
+            #sparkline2.m-b-sm
+            %h2.stats-label
+              MA
+          .col-xs-4.text-center
+            #sparkline3.m-b-sm
+            %h2.stats-label
+              RE
+        .row
+          %p.text-center
+            = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['leads_past_month'].to_i
+              - if @info['leads_this_month'] > @info['leads_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_this_month']/@info['leads_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_this_month']/@info['leads_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_past_month'].to_i
+              - if @info['ma_this_month'] > @info['ma_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_this_month']/@info['ma_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_this_month']/@info['ma_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['re_past_month'].to_i
+              - if @info['re_this_month'] > @info['re_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_this_month']/@info['re_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_this_month']/@info['re_past_month']-1)*100).round(2).to_s + '%'
+        .row
+          %p.text-center
+            = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['leads_past_year'].to_i
+              - if @info['leads_this_month'] > @info['leads_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['leads_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['leads_this_month']/@info['leads_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_past_year'].to_i
+              - if @info['ma_this_month'] > @info['ma_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_this_month']/@info['ma_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_this_month']/@info['ma_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['re_past_year'].to_i
+              - if @info['re_this_month'] > @info['re_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_this_month']/@info['re_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_this_month']/@info['re_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+    %hr
+
+    .row
+      .col-sm-6.text-center.b-r
+        %h1.m-b-xs
+          .fa.fa-child
+          %span
+          = @info['ip_ogcdp_this_month']
+          %small
+            IP
+          = @info['ma_ogcdp_this_month'].to_i
+          %small
+            MA
+          %span
+          = @info['re_ogcdp_this_month'].to_i
+          %small
+            RE
+        %small GCDP
+        %br
+        = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+
+        .row
+          .col-xs-4.text-center
+            #sparkline4.m-b-sm
+            %h2.stats-label
+              IP
+          .col-xs-4.text-center
+            #sparkline5.m-b-sm
+            %h2.stats-label
+              MA
+          .col-xs-4.text-center
+            #sparkline6.m-b-sm
+            %h2.stats-label
+              RE
+        .row
+          %p.text-center
+            = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogcdp_past_month'].to_i
+              - if @info['ip_ogcdp_this_month'] > @info['ip_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_month'].to_i
+              - if @info['ma_ogcdp_this_month'] > @info['ma_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_month'].to_i
+              - if @info['re_ogcdp_this_month'] > @info['re_ogcdp_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_month']-1)*100).round(2).round(2).to_s + '%'
+                  .fa.fa-level-down
+        .row
+          %p.text-center
+            = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogcdp_past_year'].to_i
+              - if @info['ip_ogcdp_this_month'] > @info['ip_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogcdp_this_month']/@info['ip_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogcdp_past_year'].to_i
+              - if @info['ma_ogcdp_this_month'] > @info['ma_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogcdp_this_month']/@info['ma_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['re_ogcdp_past_year'].to_i
+              - if @info['re_ogcdp_this_month'] > @info['re_ogcdp_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogcdp_this_month']/@info['re_ogcdp_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+      .col-sm-6.text-center
+        %h1.m-b-xs
+          .fa.fa-briefcase
+          %span
+          = @info['ip_ogip_this_month']
+          %small
+            IP
+          = @info['ma_ogip_this_month'].to_i
+          %small
+            MA
+          %span
+          = @info['re_ogip_this_month'].to_i
+          %small
+            RE
+        %small GIP
+        %br
+        = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+        .row
+          .col-xs-4.text-center
+            #sparkline7.m-b-sm
+            %h2.stats-label
+              IP
+          .col-xs-4.text-center
+            #sparkline8.m-b-sm
+            %h2.stats-label
+              MA
+          .col-xs-4.text-center
+            #sparkline9.m-b-sm
+            %h2.stats-label
+              RE
+        .row
+          %p.text-center
+            = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogip_past_month'].to_i
+              - if @info['ip_ogip_this_month'] > @info['ip_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogip_past_month'].to_i
+              - if @info['ma_ogip_this_month'] > @info['ma_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-centerE
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['re_ogip_past_month'].to_i
+              - if @info['re_ogip_this_month'] > @info['re_ogip_past_month']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_month']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+        .row
+          %p.text-center
+            = Time.new(Time.new.year - 1, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new(Time.new.year - 1, Time.new.month, 1).beginning_of_month - 1).strftime('%d/%m/%Y')
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ip_ogip_past_year'].to_i
+              - if @info['ip_ogip_this_month'] > @info['ip_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ip_ogip_this_month']/@info['ip_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['ma_ogip_past_year'].to_i
+              - if @info['ma_ogip_this_month'] > @info['ma_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['ma_ogip_this_month']/@info['ma_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+          .col-xs-4.text-center
+            %h4
+              %span{style: "color: #607D8B"}
+              = @info['re_ogip_past_year'].to_i
+              - if @info['re_ogip_this_month'] > @info['re_ogip_past_year']
+                %span{style:"color: #4CAF50"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-up
+              - else
+                %span{style:"color: #D32F2F"}
+                  = ((@info['re_ogip_this_month']/@info['re_ogip_past_year']-1)*100).round(2).to_s + '%'
+                  .fa.fa-level-down
+    %hr
+    .row.b-r
+      .col-sm-12
+        .row.m-t-xs
+          .col-xs-3.text-center
+            %h5.m-b-xs EPs prontos para viajar
+            %h1.no-margins
+              = @info['ma_ogcdp_total']
+              %i.fa.fa-child
+            .font-bold.text-navy
+              = (@info['ma_ogcdp_total']*100/@info['ma_total']).round(2).to_s + '% do total'
+          .col-xs-3.text-center
+            %h5.m-b-xs EPs viajando
+            %h1.no-margins
+              = @info['re_ogcdp_total']
+              %i.fa.fa-child
+            .font-bold.text-navy
+              = (@info['re_ogcdp_total']*100/@info['re_total']).round(2).to_s + '% do total'
+          .col-xs-3.text-center
+            %h5.m-b-xs EPs prontos para viajar
+            %h1.no-margins
+              = @info['ma_ogip_total']
+              %i.fa.fa-briefcase
+            .font-bold.text-navy
+              = (@info['ma_ogip_total']*100/@info['ma_total']).round(2).to_s + '% do total'
+          .col-xs-3.text-center
+            %h5.m-b-xs EPs viajando
+            %h1.no-margins
+              = @info['re_ogip_total']
+              %i.fa.fa-briefcase
+            .font-bold.text-navy
+              = (@info['re_ogip_total']*100/@info['re_total']).round(2).to_s + '% do total'
+    .row
+      .col-sm-6
+        %table.table.small.m-t-sm
+          %tbody
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_arab']
+                Mundo Árabe
+                %strong.text-success
+                  = (@info['ma_arab']*100/@info['ma_ogcdp_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_arab']
+                Mundo Árabe
+                %strong.text-success
+                  = (@info['re_arab']*100/@info['re_ogcdp_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_east_europe']
+                Leste Europeu
+                %strong.text-success
+                  = (@info['ma_east_europe']*100/@info['ma_ogcdp_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_east_europe']
+                Leste Europeu
+                %strong.text-success
+                  = (@info['re_east_europe']*100/@info['re_ogcdp_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_africa']
+                África
+                %strong.text-success
+                  = (@info['ma_africa']*100/@info['ma_ogcdp_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_africa']
+                África
+                %strong.text-success
+                  = (@info['re_africa']*100/@info['re_ogcdp_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_asia']
+                Ásia
+                %strong.text-success
+                  = (@info['ma_asia']*100/@info['ma_ogcdp_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_asia']
+                Ásia
+                %strong.text-success
+                  = (@info['re_asia']*100/@info['re_ogcdp_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_latam']
+                América Latina
+                %strong.text-success
+                  = (@info['ma_latam']*100/@info['ma_ogcdp_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_latam']
+                América Latina
+                %strong.text-success
+                  = (@info['re_latam']*100/@info['re_ogcdp_total']).round(2).to_s + '%'
+      .col-sm-6
+        %table.table.small.m-t-sm
+          %tbody
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_start_up']
+                Start Up
+                %strong.text-success
+                  = (@info['ma_start_up']*100/@info['ma_ogip_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_start_up']
+                Start Up
+                %strong.text-success
+                  = (@info['re_start_up']*100/@info['re_ogip_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_educacional']
+                Educacional
+                %strong.text-success
+                  = (@info['ma_educacional']*100/@info['ma_ogip_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_educacional']
+                Educacional
+                %strong.text-success
+                  = (@info['re_educacional']*100/@info['re_ogip_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_it']
+                Tecnologia da Informação
+                %strong.text-success
+                  = (@info['ma_it']*100/@info['ma_ogip_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_it']
+                Tecnologia da Informação
+                %strong.text-success
+                  = (@info['re_it']*100/@info['re_ogip_total']).round(2).to_s + '%'
+            %tr.text-center
+              %td
+                %strong
+                  = @info['ma_management']
+                Gestão
+                %strong.text-success
+                  = (@info['ma_management']*100/@info['ma_ogip_total']).round(2).to_s + '%'
+              %td
+                %strong
+                  = @info['re_management']
+                Gestão
+                %strong.text-success
+                  = (@info['re_management']*100/@info['re_ogip_total']).round(2).to_s + '%'
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-globe.fa-3x
+          %br
+          %strong{style: "color: #2196F3"}
+            = Time.new.year
+          %br
+          %strong{style: "color: #F44336"}
+            = Time.new.year - 1
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary#flot-dashboard1-chart-btn-leads{type: 'button', "aria-pressed" => false}
+              Leads
+            %button.btn.btn-default#flot-dashboard1-chart-btn-ma{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-default#flot-dashboard1-chart-btn-re{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard1-chart.flot-chart-content
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-child.fa-3x
+          %br
+          %strong{style: "color: #2196F3"}
+            = Time.new.year
+          %br
+          %strong{style: "color: #F44336"}
+            = Time.new.year - 1
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary#flot-dashboard2-chart-btn-ma{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-default#flot-dashboard2-chart-btn-re{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard2-chart.flot-chart-content
+    .row
+      .col-lg-12
+        .small.pull-left.col-md-3.m-l-lg.m-t-md
+          %span.fa.fa-briefcase.fa-3x
+          %br
+          %strong{style: "color: #2196F3"}
+            = Time.new.year
+          %br
+          %strong{style: "color: #F44336"}
+            = Time.new.year - 1
+        .small.pull-right.col-md-3.m-t-md.text-right
+          .btn-group{"data-toggle" => "buttons-checkbox"}
+            %button.btn.btn-primary#flot-dashboard3-chart-btn-ma{type: 'button', "aria-pressed" => false}
+              MA
+            %button.btn.btn-default#flot-dashboard3-chart-btn-re{type: 'button', "aria-pressed" => false}
+              RE
+        .flot-chart.m-b-xl
+          #flot-dashboard3-chart.flot-chart-content
+
+- content_for :javascript do
+  :javascript
+    $(function() {
+
+        var data_semana_1 = #{@info['leads_this_month_per_week']}
+        var data_semana_2 = #{@info['ma_this_month_per_week']}
+        var data_semana_3 = #{@info['re_this_month_per_week']}
+        var data_semana_4 = #{@info['ip_ogcdp_this_month_per_week']}
+        var data_semana_5 = #{@info['ma_ogcdp_this_month_per_week']}
+        var data_semana_6 = #{@info['re_ogcdp_this_month_per_week']}
+        var data_semana_7 = #{@info['ip_ogip_this_month_per_week']}
+        var data_semana_8 = #{@info['ma_ogip_this_month_per_week']}
+        var data_semana_9 = #{@info['re_ogip_this_month_per_week']}
+        var data_dia_1 = #{@info['leads_this_month_per_day']}
+        var data_dia_2 = #{@info['ma_this_month_per_day']}
+        var data_dia_3 = #{@info['re_this_month_per_day']}
+        var data_dia_4 = #{@info['ip_ogcdp_this_month_per_day']}
+        var data_dia_5 = #{@info['ma_ogcdp_this_month_per_day']}
+        var data_dia_6 = #{@info['re_ogcdp_this_month_per_day']}
+        var data_dia_7 = #{@info['ip_ogip_this_month_per_day']}
+        var data_dia_8 = #{@info['ma_ogip_this_month_per_day']}
+        var data_dia_9 = #{@info['re_ogip_this_month_per_day']}
+        $(document).ready(function () {
+            $('#sparkline1').sparkline(data_semana_1, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline1').attr('name', 'sparkline1-semanas');
+            $('#sparkline2').sparkline(data_semana_2, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline2').attr('name', 'sparkline2-semanas');
+            $('#sparkline3').sparkline(data_semana_3, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline3').attr('name', 'sparkline3-semanas');
+            $('#sparkline4').sparkline(data_semana_4, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline4').attr('name', 'sparkline4-semanas');
+            $('#sparkline5').sparkline(data_semana_5, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline5').attr('name', 'sparkline5-semanas');
+            $('#sparkline6').sparkline(data_semana_6, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline6').attr('name', 'sparkline6-semanas');
+            $('#sparkline7').sparkline(data_semana_7, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline7').attr('name', 'sparkline7-semanas');
+            $('#sparkline8').sparkline(data_semana_8, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline8-semanas');
+            $('#sparkline9').sparkline(data_semana_9, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-semanas');
+        });
+
+        $('#sparkline1').on('click', function () {
+          if ($('#sparkline1').attr('name')== 'sparkline1-semanas' ) {
+            $('#sparkline1').sparkline(data_dia_1, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline1').attr('name', 'sparkline1-dias');
+          } else if ($('#sparkline1').attr('name')== 'sparkline1-dias' ) {
+            $('#sparkline1').sparkline(data_semana_1, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline1').attr('name', 'sparkline1-semanas');
+          }
+        });
+
+        $('#sparkline2').on('click', function () {
+          if ($('#sparkline2').attr('name')== 'sparkline2-semanas' ) {
+            $('#sparkline2').sparkline(data_dia_2, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline2').attr('name', 'sparkline2-dias');
+          } else if ($('#sparkline2').attr('name')== 'sparkline2-dias' ) {
+            $('#sparkline2').sparkline(data_semana_2, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline2').attr('name', 'sparkline2-semanas');
+          }
+        });
+
+        $('#sparkline3').on('click', function () {
+          if ($('#sparkline3').attr('name')== 'sparkline3-semanas' ) {
+            $('#sparkline3').sparkline(data_dia_3, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline3').attr('name', 'sparkline3-dias');
+          } else if ($('#sparkline3').attr('name')== 'sparkline3-dias' ) {
+            $('#sparkline3').sparkline(data_semana_3, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline3').attr('name', 'sparkline3-semanas');
+          }
+        });
+
+        $('#sparkline4').on('click', function () {
+          if ($('#sparkline4').attr('name')== 'sparkline4-semanas' ) {
+            $('#sparkline4').sparkline(data_dia_4, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline4').attr('name', 'sparkline4-dias');
+          } else if ($('#sparkline4').attr('name')== 'sparkline4-dias' ) {
+            $('#sparkline4').sparkline(data_semana_4, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline4').attr('name', 'sparkline4-semanas');
+          }
+        });
+
+        $('#sparkline5').on('click', function () {
+          if ($('#sparkline5').attr('name')== 'sparkline5-semanas' ) {
+            $('#sparkline5').sparkline(data_dia_5, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline5').attr('name', 'sparkline5-dias');
+          } else if ($('#sparkline5').attr('name')== 'sparkline5-dias' ) {
+            $('#sparkline5').sparkline(data_semana_5, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline5').attr('name', 'sparkline5-semanas');
+          }
+        });
+
+        $('#sparkline6').on('click', function () {
+          if ($('#sparkline6').attr('name')== 'sparkline6-semanas' ) {
+            $('#sparkline6').sparkline(data_dia_6, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline6').attr('name', 'sparkline6-dias');
+          } else if ($('#sparkline6').attr('name')== 'sparkline6-dias' ) {
+            $('#sparkline6').sparkline(data_semana_6, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline6').attr('name', 'sparkline6-semanas');
+          }
+        });
+
+        $('#sparkline7').on('click', function () {
+          if ($('#sparkline7').attr('name')== 'sparkline7-semanas' ) {
+            $('#sparkline7').sparkline(data_dia_7, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline7').attr('name', 'sparkline7-dias');
+          } else if ($('#sparkline7').attr('name')== 'sparkline7-dias' ) {
+            $('#sparkline7').sparkline(data_semana_7, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline7').attr('name', 'sparkline7-semanas');
+          }
+        });
+
+        $('#sparkline8').on('click', function () {
+          if ($('#sparkline8').attr('name')== 'sparkline8-semanas' ) {
+            $('#sparkline8').sparkline(data_dia_8, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline8-dias');
+          } else if ($('#sparkline8').attr('name')== 'sparkline8-dias' ) {
+            $('#sparkline8').sparkline(data_semana_8, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline8').attr('name', 'sparkline7-semanas');
+          }
+        });
+
+        $('#sparkline9').on('click', function () {
+          if ($('#sparkline9').attr('name')== 'sparkline9-semanas' ) {
+            $('#sparkline9').sparkline(data_dia_9, {type: 'line', width: '100%', height: '50', lineColor: '#2196f3', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-dias');
+          } else if ($('#sparkline9').attr('name')== 'sparkline9-dias' ) {
+            $('#sparkline9').sparkline(data_semana_9, {type: 'line', width: '100%', height: '50', lineColor: '#1ab394', fillColor: "transparent" });
+            $('#sparkline9').attr('name', 'sparkline9-semanas');
+          }
+        });
+
+        var data1_dash1 = #{@info['leads_last_year_per_month']}
+        var data2_dash1 = #{@info['leads_this_year_per_month']}
+        var data3_dash1 = #{@info['ma_last_year_per_month']}
+        var data4_dash1 = #{@info['ma_this_year_per_month']}
+        var data5_dash1 = #{@info['re_last_year_per_month']}
+        var data6_dash1 = #{@info['re_this_year_per_month']}
+        var data1_dash2 = #{@info['ma_ogcdp_last_year_per_month']}
+        var data2_dash2 = #{@info['ma_ogcdp_this_year_per_month']}
+        var data3_dash2 = #{@info['ma_ogip_last_year_per_month']}
+        var data4_dash2 = #{@info['ma_ogip_this_year_per_month']}
+        var data1_dash3 = #{@info['re_ogcdp_last_year_per_month']}
+        var data2_dash3 = #{@info['re_ogcdp_this_year_per_month']}
+        var data3_dash3 = #{@info['re_ogip_last_year_per_month']}
+        var data4_dash3 = #{@info['re_ogip_this_year_per_month']}
+
+        var settings_plot = {
+            series: {
+                lines: { show: false, fill: true },
+                splines: { show: true, tension: 0, lineWidth: 1, fill: 0.4 },
+                points: { radius: 3.5, show: true },
+                shadowSize: 2 },
+            grid: { clickable: false, hoverable: true, borderWidth: 0, color: 'transparent' },
+            colors: ["#F44336", "#2196F3"],
+            tooltip: false,
+            legend: {
+              show: true,
+              labelFormatter: 'string',
+              labelBoxBorderColor: 'black',
+              backgroundOpacity: 0.5,
+              container: null
+            }
+          }
+
+        function showTooltip(event, pos, item) {
+          if (item) {
+            if (previousPoint != item.datapoint) {
+                previousPoint = item.datapoint;
+
+                $("#tooltip").remove();
+                y = item.datapoint[1].toFixed(0);
+
+                $('<div id="tooltip">' + item.datapoint[1].toFixed(0) + '</div>').css( {
+                  position: 'absolute',
+                  display: 'none',
+                  top: item.pageY - 20,
+                  left: item.pageX + 10,
+                  border: '1px solid #fdd',
+                  padding: '2px',
+                  'background-color': '#fee',
+                  opacity: 1
+              }).appendTo("body").fadeIn(0);
+            }
+          }
+          else {
+            $("#tooltip").remove();
+            clicksYet = false;
+            previousPoint = null;
+          }
+        }
+
+        $("#flot-dashboard1-chart").length && $.plot($("#flot-dashboard1-chart"),[data1_dash1,data2_dash1],settings_plot);
+        $("#flot-dashboard2-chart").length && $.plot($("#flot-dashboard2-chart"),[data1_dash2,data2_dash2],settings_plot);
+        $("#flot-dashboard3-chart").length && $.plot($("#flot-dashboard3-chart"),[data1_dash3,data2_dash3],settings_plot);
+
+        var previousPoint = null;
+        $("#flot-dashboard1-chart").bind("plothover", function (event, pos, item) {showTooltip(event, pos, item)});
+        $("#flot-dashboard2-chart").bind("plothover", function (event, pos, item) {showTooltip(event, pos, item)});
+        $("#flot-dashboard3-chart").bind("plothover", function (event, pos, item) {showTooltip(event, pos, item)});
+
+        $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); });
+
+        $('#flot-dashboard1-chart').click(function() {
+          if ($('#flot-dashboard1-chart-btn-leads').hasClass('btn-primary')) {
+            $('#flot-dashboard1-chart-btn-leads').removeClass('btn-primary');
+            $('#flot-dashboard1-chart-btn-ma').removeClass('btn-default');
+            $('#flot-dashboard1-chart-btn-leads').addClass('btn-default');
+            $('#flot-dashboard1-chart-btn-ma').addClass('btn-primary');
+            $("#flot-dashboard1-chart").length && $.plot($("#flot-dashboard1-chart"),[data3_dash1,data4_dash1],settings_plot);
+          } else if ($('#flot-dashboard1-chart-btn-ma').hasClass('btn-primary')) {
+            $('#flot-dashboard1-chart-btn-ma').removeClass('btn-primary');
+            $('#flot-dashboard1-chart-btn-re').removeClass('btn-default');
+            $('#flot-dashboard1-chart-btn-ma').addClass('btn-default');
+            $('#flot-dashboard1-chart-btn-re').addClass('btn-primary');
+            $("#flot-dashboard1-chart").length && $.plot($("#flot-dashboard1-chart"),[data5_dash1,data6_dash1],settings_plot);
+          } else if ($('#flot-dashboard1-chart-btn-re').hasClass('btn-primary')) {
+            $('#flot-dashboard1-chart-btn-re').removeClass('btn-default');
+            $('#flot-dashboard1-chart-btn-leads').removeClass('btn-default');
+            $('#flot-dashboard1-chart-btn-re').addClass('btn-default');
+            $('#flot-dashboard1-chart-btn-leads').addClass('btn-primary');
+            $("#flot-dashboard1-chart").length && $.plot($("#flot-dashboard1-chart"),[data1_dash1,data2_dash1],settings_plot);
+          }
+        });
+
+        $('#flot-dashboard2-chart').click(function() {
+          if ($('#flot-dashboard2-chart-btn-ma').hasClass('btn-primary')) {
+            $('#flot-dashboard2-chart-btn-ma').removeClass('btn-primary');
+            $('#flot-dashboard2-chart-btn-re').removeClass('btn-default');
+            $('#flot-dashboard2-chart-btn-ma').addClass('btn-default');
+            $('#flot-dashboard2-chart-btn-re').addClass('btn-primary');
+            $("#flot-dashboard2-chart").length && $.plot($("#flot-dashboard2-chart"),[data3_dash2,data4_dash2],settings_plot);
+          } else if ($('#flot-dashboard2-chart-btn-re').hasClass('btn-primary')) {
+            $('#flot-dashboard2-chart-btn-re').removeClass('btn-primary');
+            $('#flot-dashboard2-chart-btn-ma').removeClass('btn-default');
+            $('#flot-dashboard2-chart-btn-re').addClass('btn-default');
+            $('#flot-dashboard2-chart-btn-ma').addClass('btn-primary');
+            $("#flot-dashboard2-chart").length && $.plot($("#flot-dashboard2-chart"),[data1_dash2,data2_dash2],settings_plot);
+          }
+        });
+
+        $('#flot-dashboard3-chart').click(function() {
+          if ($('#flot-dashboard3-chart-btn-ma').hasClass('btn-primary')) {
+            $('#flot-dashboard3-chart-btn-ma').removeClass('btn-primary');
+            $('#flot-dashboard3-chart-btn-re').removeClass('btn-default');
+            $('#flot-dashboard3-chart-btn-ma').addClass('btn-default');
+            $('#flot-dashboard3-chart-btn-re').addClass('btn-primary');
+            $("#flot-dashboard3-chart").length && $.plot($("#flot-dashboard3-chart"),[data3_dash3,data4_dash3],settings_plot);
+          } else if ($('#flot-dashboard3-chart-btn-re').hasClass('btn-primary')) {
+            $('#flot-dashboard3-chart-btn-re').removeClass('btn-primary');
+            $('#flot-dashboard3-chart-btn-ma').removeClass('btn-default');
+            $('#flot-dashboard3-chart-btn-re').addClass('btn-default');
+            $('#flot-dashboard3-chart-btn-ma').addClass('btn-primary');
+            $("#flot-dashboard3-chart").length && $.plot($("#flot-dashboard3-chart"),[data1_dash3,data2_dash3],settings_plot);
+          }
+        });
+
+    });
+
+    $.getScript('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js',function(){
+
+    $('#main .img-responsive').lazyload({});
+
+
+    });

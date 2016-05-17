@@ -8,13 +8,10 @@ production:
   port: <%= ENV["PRODUCTION_POST"] %>
 
 development:
-  adapter: postgresql
-  encoding: <%= ENV["DEVELOPMENT_UNICODE"] %>
-  database: <%= ENV["DEVELOPMENT_DATABASE"] %>
-  username: <%= ENV["DEVELOPMENT_USERNAME"] %>
-  password: <%= ENV["DEVELOPMENT_PASSWORD"] %>
-  host: <%= ENV["DEVELOPMENT_HOST"] %>
-  port: <%= ENV["DEVELOPMENT_POST"] %>
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  database: db/test.sqlite3
 
 test:
   adapter: sqlite3

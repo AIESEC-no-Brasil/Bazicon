@@ -30,52 +30,48 @@ class ExpaRdSync
     # Get the last brazilian people EXPA_ID to start find foreign starting from it descending
     params = {'per_page' => 1}
     xp_person = EXPA::People.list_by_param(params).first
-    id = xp_person.id - 1
+    id = xp_person.id
+    brazil = ExpaOffice.find_by_xp_full_name('AIESEC in BRAZIL')
 
     # Populate Database
-    while limit > 0 do
+    while limit > 0 && id > 0 do
+      begin
+        id -= 1
+        person = ExpaPerson.find_by_xp_id(id)
+        unless person.nil?
+          person = nil if person.xp_home_mc == brazil
+        end
+      end while person
+
       xp_person = EXPA::People.find_by_id(id)
 
       if xp_person.home_mc.id != 1606 &&
           (!ExpaPerson.find_by_xp_id(xp_person.id) ||
               (JSON.parse(ExpaPerson.find_by_xp_id(xp_person.id).customized_fields).include?('foreign') &&
                   !JSON.parse(ExpaPerson.find_by_xp_id(xp_person.id).customized_fields)['foreign'].include?(programme)))
-        if !xp_person.profile.nil? &&
-            xp_person.profile.include?('selected_programmes_info')
+        if !xp_person.profile.nil? && xp_person.profile.include?('selected_programmes_info')
           xp_person.profile['selected_programmes_info'].each do |program|
-            if programme.nil?
-              person = ExpaPerson.new
-              person.update_from_expa(xp_person)
+            person = ExpaPerson.new
+            person.update_from_expa(xp_person)
 
-              json = if person.customized_fields.nil?
-                       person.customized_fields = {}
-                     else
-                       JSON.parse(person.customized_fields)
-                     end
+            json = if person.customized_fields.nil?
+                     person.customized_fields = {}
+                   else
+                     JSON.parse(person.customized_fields)
+                   end
 
-              unless json.include?('foreign')
-                json['foreign'] = nil
+            if !programme.nil? && program['short_name'] = programme
+              if json.include?('foreign')
+                json['foreign'] = json['foreign'] + ' ' + programme unless json['foreign'].include?(programme)
+              else
+                json['foreign'] = programme
               end
-
-              person.customized_fields = json.to_json.to_s
-
-              person.save
-              limit -= 1
-            elsif  program['short_name'] = programme
-              person = ExpaPerson.new
-              person.update_from_expa(xp_person)
-
-              json = if person.customized_fields.nil?
-                       person.customized_fields = {}
-                     else
-                       JSON.parse(person.customized_fields)
-                     end
-
-              person.customized_fields = json.to_json.to_s
-
-              person.save
-              limit -= 1
             end
+
+            person.customized_fields = json.to_json.to_s
+
+            person.save
+            limit -= 1
           end
         end
       elsif xp_person.home_mc.id != 1606 && ExpaPerson.find_by_xp_id(xp_person.id)

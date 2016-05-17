@@ -2,6 +2,8 @@ Myapp::Application.routes.draw do
 
   # You can have the root of your site routed with 'root'
   root 'sessions#index'
+
+  get '/admin/force_update' => 'main#force_update', as: 'force_update'
   # All routes
   get '/'       => 'sessions#index',  as: 'index'
   get '/logout' => 'sessions#logout', as: 'logout'
@@ -35,7 +37,8 @@ Myapp::Application.routes.draw do
   get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'
   get '/ogx/list'   => 'outgoing_exchange#list',   as: 'outgoing_exchange_list'
   get '/ogx/detail' => 'outgoing_exchange#detail', as: 'outgoing_exchange_detail'
-
+  post '/ogx/dash'  => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash_form'
+  post '/ogx/list'  => 'outgoing_exchange#list',   as: 'outgoing_exchange_list_form'
 
   get 'lc/dash'
   get 'lc/host'
