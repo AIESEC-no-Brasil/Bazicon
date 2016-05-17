@@ -1,20 +1,29 @@
+#center{style: "margin-left:auto;margin-right:auto;display:block;"}
+  -if flash[:notice]
+    - if flash[:color]=="invalid"
+      %span{class: "alert alert-danger alert-dismissable", style:"margin-left: 20%;margin-right: 20%;display: block;margin-top: 5%;margin-bottom:0;"}
+        = flash[:notice]
+    - else
+      %span{style:"margin-left: 20%;margin-right: 20%;display: block;margin-top: 5%;"}
+        = flash[:notice]
+    .row
 .loginColumns.animated.fadeInDown
-  .row
-    .col-md-6
-      %h2.font-bold Bem vindo ao BAZICON
-      %p O time de IM é muito legal.
-    .col-md-6
-      .ibox-content
-        =form_tag login_path, class: 'm-t' do
-          .form-group
-            =email_field_tag'email','', class: 'form-control', placeholder: 'Email'
-          .form-group
-            =password_field_tag 'password', '', class: 'form-control', placeholder: 'Senha'
-          .form-group
-            =button_tag("Entrar", type: 'submit', class: 'btn btn-primary block full-width m-b')
+  .col-md-6
+    %h2.font-bold Bem vindo ao BAZICON
+    %p O time de IM é muito legal.
+  .col-md-6
+    .ibox-content
+      =form_tag login_path, class: 'm-t', id:"form" do
+        .form-group
+          =email_field_tag'email','', class: 'form-control', placeholder: 'Email'
+        .form-group
+          =password_field_tag 'password', '', class: 'form-control', placeholder: 'Senha'
+        .form-group
+          =button_tag("Entrar",id:"submitButton", type: 'submit', class: 'btn btn-primary block full-width m-b')
   %hr
   .row
     .col-md-6
       %strong AIESEC no Brasil
     .col-md-6.text-right
       %small &copy; 1970-#{Time.new.year}
+
