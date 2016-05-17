@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
   # GET /
   def index
     if session[:expa_id]
-
       EXPAHelper.auth(session[:mail],session[:pass])
       return redirect_to main_path
     end
@@ -36,7 +35,7 @@ class SessionsController < ApplicationController
         session[:expa_id] = user.xp_id
         session[:mail] = mail
         session[:password] = pass
-        ession[:user_home_lc] = user.xp_home_lc.xp_id
+        session[:user_home_lc] = user.xp_home_lc.xp_id
         redirect_to main_path
       else
         flash[:notice] = "BAZICON is only available for AIESEC In Brazil members."
