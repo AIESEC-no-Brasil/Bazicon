@@ -568,6 +568,237 @@
               RE
         .flot-chart.m-b-xl
           #flot-dashboard3-chart.flot-chart-content
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Como conheceu a AIESEC?
+          .ibox-content
+            #how_got_to_know_aiesec_pie
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_this_month
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_past_month
+
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Como conheceu a AIESEC?
+          .ibox-content
+            #how_got_to_know_aiesec_pie_gcdp
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_gcdp_this_month
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_gcdp_past_month
+
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Como conheceu a AIESEC?
+          .ibox-content
+            #how_got_to_know_aiesec_pie_gip
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month, 1).strftime('%d/%m/%Y') + ' - ' + Time.new.strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_gip_this_month
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Como conheceu a AIESEC?
+          .ibox-content
+            %small
+              = Time.new(Time.new.year, Time.new.month - 1, 1).strftime('%d/%m/%Y') + ' - ' + (Time.new.beginning_of_month - 1).strftime('%d/%m/%Y')
+            #how_got_to_know_aiesec_pie_gip_past_month
+
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Média de aplicações por pessoa
+          .ibox-content
+            Overall:
+            = @info['average_number_of_applications_total'].round(2)
+            %br
+            Esse mês:
+            = @info['average_number_of_applications_this_month'].round(2)
+            %br
+            Mês passado:
+            = @info['average_number_of_applications_past_month'].round(2)
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Conversão MA
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_ma_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_ma_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_ma_past_month']
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-globe
+              Conversão RE
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_re_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_re_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_re_past_month']
+
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Média de aplicações por pessoa
+          .ibox-content
+            Overall:
+            = @info['average_number_of_applications_gcdp_total'].round(2)
+            %br
+            Esse mês:
+            = @info['average_number_of_applications_gcdp_this_month'].round(2)
+            %br
+            Mês passado:
+            = @info['average_number_of_applications_gcdp_past_month'].round(2)
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Conversão MA
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_ma_gcdp_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_ma_gcdp_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_ma_gcdp_past_month']
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-child
+              Conversão RE
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_re_gcdp_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_re_gcdp_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_re_gcdp_past_month']
+
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Média de aplicações por pessoa
+          .ibox-content
+            Overall:
+            = @info['average_number_of_applications_gip_total'].round(2)
+            %br
+            Esse mês:
+            = @info['average_number_of_applications_gip_this_month'].round(2)
+            %br
+            Mês passado:
+            = @info['average_number_of_applications_gip_past_month'].round(2)
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Conversão MA
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_ma_gip_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_ma_gip_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_ma_gip_past_month']
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %h5
+              .fa.fa-briefcase
+              Conversão RE
+          .ibox-content
+            Overall:
+            = @info['average_conversion_time_re_gip_total']
+            %br
+            Esse mês:
+            = @info['average_conversion_time_re_gip_this_month']
+            %br
+            Mês passado:
+            = @info['average_conversion_time_re_gip_past_month']
+
 
 - content_for :javascript do
   :javascript
@@ -832,6 +1063,60 @@
     $.getScript('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js',function(){
 
     $('#main .img-responsive').lazyload({});
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie',
+        data:{ columns: #{@info['get_to_know_aiesec_total']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_this_month',
+        data:{ columns: #{@info['get_to_know_aiesec_this_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_past_month',
+        data:{ columns: #{@info['get_to_know_aiesec_past_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gcdp',
+        data:{ columns: #{@info['get_to_know_aiesec_gcdp_total']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gcdp_this_month',
+        data:{ columns: #{@info['get_to_know_aiesec_gcdp_this_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gcdp_past_month',
+        data:{ columns: #{@info['get_to_know_aiesec_gcdp_past_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gip',
+        data:{ columns: #{@info['get_to_know_aiesec_gip_total']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gip_this_month',
+        data:{ columns: #{@info['get_to_know_aiesec_gip_this_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
+
+    c3.generate({
+        bindto: '#how_got_to_know_aiesec_pie_gip_past_month',
+        data:{ columns: #{@info['get_to_know_aiesec_gip_past_month']}, type : 'pie' },
+        pie: { label: { format: function (value, ratio, id) { return d3.format('')(value); } } }
+    });
 
 
     });
