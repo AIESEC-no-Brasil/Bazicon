@@ -3,7 +3,6 @@ Myapp::Application.routes.draw do
   # You can have the root of your site routed with 'root'
   root 'sessions#index'
 
-  get '/admin/force_update' => 'main#force_update', as: 'force_update'
   # All routes
   get '/'       => 'sessions#index',  as: 'index'
   get '/logout' => 'sessions#logout', as: 'logout'

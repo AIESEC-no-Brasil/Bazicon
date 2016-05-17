@@ -4,3 +4,4 @@ config/local_env.yml
 tmp/
 log/
 .idea/
+config/database.yml
