@@ -48,5 +48,6 @@ Myapp::Application.routes.draw do
   get '/hosts/index'
   get 'files/index'
 
+  post '/hosts/add_tmp_responsable'
 
 end

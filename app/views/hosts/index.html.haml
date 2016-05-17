@@ -47,7 +47,7 @@
                         -HostPerson.list_leads.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
                           %tr
                             %td.client-avatar
-                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                              %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg"}
                             %td
                               %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
                                 =l.full_name
@@ -76,7 +76,7 @@
                         -HostPerson.list_free.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
                           %tr
                             %td.client-avatar
-                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                              %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg"}
                             %td
                               %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
                                 =l.full_name
@@ -104,7 +104,7 @@
                         -HostPerson.list_allocated.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
                           %tr
                             %td.client-avatar
-                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                              %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg"}
                             %td
                               %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
                                 =l.full_name
@@ -134,7 +134,7 @@
                         -HostPerson.list_realized.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
                           %tr
                             %td.client-avatar
-                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                              %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg"}
                             %td
                               %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
                                 =l.full_name
@@ -148,7 +148,6 @@
                               -if l.is_favourite == true
                                 %span.label.label-primary Favorito
 
-                        
     .col-sm-4
       .ibox
         .ibox-content
@@ -156,27 +155,37 @@
             -HostPerson.all.each do |h|
               .tab-pane{id: h.full_name.gsub(" ","")}
                 .row.m-b-lg
-                  .col-lg-5.text-center
-                    %h2= h.full_name
+                  .col-lg-4.text-center
                     .m-b-sm
-                      %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg", :style => "width: 80px"}
-                  .col-lg-2.widget.style1
+                      %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg", :style => "width: 80px"}
+                    %h3= h.full_name
+                  .col-lg-1.widget.style1
                     .col-xs-5.text-center
                       %h2 0
-                  -if h.is_non_grata == true
-                    .col-lg-3.widget.style1
-                      .col-xs-5.text-center
+                      .m-b-sm
+                      -if h.is_non_grata == true
                         %span.badge.badge-danger Nongrata
-                  -if h.is_problematic == true
-                    .col-lg-3.widget.style1
-                      .col-xs-5.text-center
+                      -if h.is_problematic == true
                         %span.badge.badge-warning Problemático
-                  -if h.is_favourite == true
-                    .col-lg-3.widget.style1
-                      .col-xs-5.text-center
+                      -if h.is_favourite == true
                         %span.badge.badge-success Favorito
-                        
 
+                  .col-lg-6.widget.style1
+                    .col-xs-40.text-right
+                      -if h.tmp_responsable_id == nil 
+                        .m-b-sm
+                          %img.img-circle{:alt => "image", :src => "http://www.emersonswan.com/ckfinder/userfiles/images/box-clipart-box5.png", :style => "width: 50px"}
+                        .m-b-sm
+                          =form_tag action: "add_tmp_responsable" do
+                            =hidden_field_tag 'host_id', h.id
+                            =button_tag({type: "submit", class: "btn btn-link"}) do 
+                              %i.fa.fa-chain
+                      -else
+                        .m-b-sm
+                          %img.img-circle{:alt => "image", :src => "http://theawesomer.com/photos/2010/06/060410_Facebook_profile_pic_1.jpg", :style => "width: 50px"}
+                        -responsable = ExpaPerson.find(h.tmp_responsable_id)
+                        .m-b-sm
+                          %h3 responsable.full_name
 
                 .client-detail
                   .full-height-scroll
