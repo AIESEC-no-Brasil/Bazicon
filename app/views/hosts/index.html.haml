@@ -15,7 +15,7 @@
                   Search
           .clients-list
             %ul.nav.nav-tabs
-              %span.pull-right.small.text-muted 1406 Elements
+              %span.pull-right.small.text-muted= "#{HostPerson.count} Pessoas"
               %li.active
                 %a{"data-toggle" => "tab", :href => "#tab-1"}
                   %i.fa.fa-user
@@ -37,8 +37,14 @@
                 .full-height-scroll
                   .table-responsive
                     %table.table.table-striped.table-hover
+                      %br
+                      %span
+                        %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_leads.list_favourites.count}"
+                        %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_leads.list_problematics.count}"
+                        %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_leads.list_non_grata.count}"
+                      %br
                       %tbody
-                        -HostPerson.list_leads.each do |l|
+                        -HostPerson.list_leads.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
                           %tr
                             %td.client-avatar
                               %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
@@ -54,110 +60,94 @@
                             %td.client-status
                               -if l.is_favourite == true
                                 %span.label.label-primary Favorito
-                        %tr
-                          %td.client-avatar
-                            %a{:href => ""}
-                              %img{:alt => "image", :src => image_path('a6.jpg')}/
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
-                          %td Mone Industries
-                          %td.contact-type
-                            %i.fa.fa-phone                           
-                          %td +400 468 921
-                          %td.client-status
-                            %span.label.label-primary Favorito
-                        %tr
+
 
               #tab-2.tab-pane
                 .full-height-scroll
                   .table-responsive
+                    %br
+                    %span
+                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_free.list_favourites.count}"
+                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_free.list_problematics.count}"
+                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_free.list_non_grata.count}"
+                    %br
                     %table.table.table-striped.table-hover
                       %tbody
-                        %tr
-                          %td.client-avatar
-                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
-                              João Silva
-                          %td Tellus Institute
-                          %td.contact-type
-                            %i.fa.fa-envelope
-                          %td gravida@rbisit.com
-                          %td.client-status
-                            %span.label.label-primary Favorito
-                        %tr
-                          %td.client-avatar
-                            %a{:href => ""}
-                              %img{:alt => "image", :src => image_path('a6.jpg')}/
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
-                          %td Mone Industries
-                          %td.contact-type
-                            %i.fa.fa-phone                           
-                          %td +400 468 921
-                          %td.client-status
-                        %tr
+                        -HostPerson.list_free.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
+                          %tr
+                            %td.client-avatar
+                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                            %td
+                              %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
+                                =l.full_name
+                            %td 
+                              =l.city
+                            %td.contact-type
+                              %i.fa.fa-envelope
+                            %td 
+                              =l.email
+                            %td.client-status
+                              -if l.is_favourite == true
+                                %span.label.label-primary Favorito
 
               #tab-3.tab-pane
                 .full-height-scroll
                   .table-responsive
+                    %br
+                    %span
+                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_allocated.list_favourites.count}"
+                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_allocated.list_problematics.count}"
+                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_allocated.list_non_grata.count}"
+                    %br
                     %table.table.table-striped.table-hover
                       %tbody
-                        %tr
-                          %td.client-avatar
-                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
-                              João Américo
-                          %td Tellus Institute
-                          %td.contact-type
-                            %i.fa.fa-envelope
-                          %td gravida@rbisit.com
-                          %td.client-status
-                            %span.label.label-primary Favorito
-                        %tr
-                          %td.client-avatar
-                            %a{:href => ""}
-                              %img{:alt => "image", :src => image_path('a6.jpg')}/
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
-                          %td Mone Industries
-                          %td.contact-type
-                            %i.fa.fa-phone                           
-                          %td +400 468 921
-                          %td.client-status
-                        %tr
+                        -HostPerson.list_allocated.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
+                          %tr
+                            %td.client-avatar
+                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                            %td
+                              %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
+                                =l.full_name
+                            %td 
+                              =l.city
+                            %td.contact-type
+                              %i.fa.fa-envelope
+                            %td 
+                              =l.email
+                            %td.client-status
+                              -if l.is_favourite == true
+                                %span.label.label-primary Favorito
+
+
 
               #tab-4.tab-pane
                 .full-height-scroll
                   .table-responsive
+                    %br
+                    %span
+                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_realized.list_favourites.count}"
+                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_realized.list_problematics.count}"
+                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_realized.list_non_grata.count}"
+                    %br
                     %table.table.table-striped.table-hover
                       %tbody
-                        %tr
-                          %td.client-avatar
-                            %img.img-circle{:alt => "image", :src => "https://s-media-cache-ak0.pinimg.com/236x/18/45/66/18456632de3a8f75237c114ce7863a21.jpg"}
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-1"} 
-                              João Américo
-                          %td Tellus Institute
-                          %td.contact-type
-                            %i.fa.fa-envelope
-                          %td gravida@rbisit.com
-                          %td.client-status
-                            %span.label.label-primary Favorito
-                        %tr
-                          %td.client-avatar
-                            %a{:href => ""}
-                              %img{:alt => "image", :src => image_path('a6.jpg')}/
-                          %td
-                            %a.client-link{"data-toggle" => "tab", :href => "#contact-2"} Jasper Carson
-                          %td Mone Industries
-                          %td.contact-type
-                            %i.fa.fa-phone                           
-                          %td +400 468 921
-                          %td.client-status
-                            %span.label.label-primary Favorito
-                        %tr
+                        -HostPerson.list_realized.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
+                          %tr
+                            %td.client-avatar
+                              %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg"}
+                            %td
+                              %a.client-link{"data-toggle" => "tab", :href => "##{l.full_name.gsub(" ", "")}"} 
+                                =l.full_name
+                            %td 
+                              =l.city
+                            %td.contact-type
+                              %i.fa.fa-envelope
+                            %td 
+                              =l.email
+                            %td.client-status
+                              -if l.is_favourite == true
+                                %span.label.label-primary Favorito
+
                         
     .col-sm-4
       .ibox
@@ -170,21 +160,21 @@
                     %h2= h.full_name
                     .m-b-sm
                       %img.img-circle{:alt => "image", :src => "https://i.ytimg.com/vi/icqDxNab3Do/maxresdefault.jpg", :style => "width: 80px"}
-                  .col-lg-3.widget.style1
+                  .col-lg-2.widget.style1
                     .col-xs-5.text-center
                       %h2 0
                   -if h.is_non_grata == true
                     .col-lg-3.widget.style1
                       .col-xs-5.text-center
-                        %span.badge Nongrata
+                        %span.badge.badge-danger Nongrata
                   -if h.is_problematic == true
                     .col-lg-3.widget.style1
                       .col-xs-5.text-center
-                        %span.badge Problematic
-                  -if h.is_problematic == true
+                        %span.badge.badge-warning Problematico
+                  -if h.is_favourite == true
                     .col-lg-3.widget.style1
                       .col-xs-5.text-center
-                        %span.badge Favorito
+                        %span.badge.badge-success Favorito
                         
 
 
@@ -221,7 +211,7 @@
                         Tempo disponível
                     %strong Como conheceu a AIESEC
                     %p
-                      h.
+                      = h.how_got_to_know_aiesec
                     %hr/
                     %button.btn.btn-w-m.btn-danger Problemas
 

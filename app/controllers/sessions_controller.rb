@@ -33,6 +33,7 @@ class SessionsController < ApplicationController
       session[:expa_id] = user.xp_id
       session[:mail] = mail
       session[:password] = pass
+      session[:user_home_lc] = user.xp_home_lc.xp_id
       redirect_to main_path
     end
   end

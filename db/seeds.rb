@@ -30,9 +30,22 @@ end
   person.email = "mail.@mail.com"
   person.address = "12 stree, 180"
   person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day+2)
+  person.nearest_lc_id = 434
+  person.is_favourite = true
   person.save
 end
 
+(10..13).each do |i|
+  person = HostPerson.new
+  person.full_name = "Lead #{i}"
+  person.phone = 91239
+  person.email = "mail.@mail.com"
+  person.address = "12 stree, 180"
+  person.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day+2)
+  person.nearest_lc_id = 434
+  person.is_problematic = true
+  person.save
+end
 
 (7..9).each do |i|
   host = HostPerson.new

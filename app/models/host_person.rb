@@ -1,6 +1,8 @@
 class HostPerson < ActiveRecord::Base
 	has_many :trainee_to_hosts
 	has_many :trainee_people, through: :trainee_to_hosts
+
+
 	def self.list_leads
 		host = HostPerson.arel_table
 		leads = HostPerson.where(host[:tmp_responsable_id].eq(nil).
@@ -38,6 +40,18 @@ class HostPerson < ActiveRecord::Base
 															and(host[:date_alignment_meeting].lt(Time.now)).
 															and(t2host[:entry_date].gteq(Time.now)).
 															and(t2host[:leaving_date].lt(Time.now)))
+	end
+
+	def self.list_favourites
+		favourites = HostPerson.where({is_favourite: true})
+	end
+
+	def self.list_problematics
+		problematics = HostPerson.where({is_problematic: true})
+	end
+
+	def self.list_non_grata
+		non_grati = HostPerson.where({is_non_grata: true})
 	end
 end
 
