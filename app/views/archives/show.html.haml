@@ -39,12 +39,17 @@
             %h5 Filtros
             = form_tag({action: :show},{onsubmit: "checkSelectedTag()",method: "get", id: "filter"}) do
               .checkbox.checkbox-primary
-                %input{type: "checkbox",name: "show_private", id: "showPrivate", value:true}
-                %label{for:"showPrivate"}
-                  Documentos privados
-                %input{type: "checkbox",name: "show_public", id: "showPublic", value:true}
-                %label{for: "showPublic"}
-                  Documentos públicos
+                %table
+                  %tr
+                    %td
+                      %input{type: "checkbox",name: "show_private", id: "showPrivate", value:true}
+                      %label{for:"showPrivate"}
+                        Documentos privados
+                  %tr
+                    %td
+                      %input{type: "checkbox",name: "show_public", id: "showPublic", value:true}
+                      %label{for: "showPublic"}
+                        Documentos públicos
               %h5.tag-title Tags
               %input{type: "hidden", name: "tags", id: "tags"}
               -hidden_field(:permissao,"todos")
