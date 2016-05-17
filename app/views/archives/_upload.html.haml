@@ -11,14 +11,14 @@
         .modal-body
           .ibox-content
             .form-group
-              =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn"
+              =file_field_tag 'file',:style => "width:100%",:class =>"btn-file btn-success btn", :required => "true"
               -if @user.get_role != ExpaPerson.roles[:role_other]
                 %br
                 %label Permissão do arquivo
                 %br
                 %label.control-label{:style => "width:100%;"}
                   .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
-                    =radio_button_tag "is_private",false
+                    =radio_button_tag "is_private",false, true
                     =label_tag "Público"
                   .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
                     =radio_button_tag  "is_private",true
@@ -28,14 +28,34 @@
               %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
                 - Tag.all.each do |tag|
                   %option{:value => tag.id}=tag.name
-        .modal-footer
-          =submit_tag "Enviar arquivo", :class =>"btn btn-primary", :onclick => "closeModal()"
+        .modal-footer.progress-demo
+          //=submit_tag "Enviar arquivo", :id => "submit_button", :class =>"ladda-button btn btn-primary", "data-style"=> "contract", :onclick => ""
+          %button{:type => "submit", :class => "btn btn-primary ladda-button", "data-style" => "contract"}
+            %span.ladda-label Enviar
 :javascript
     $(function() {
 
       $('.i-checks').iCheck({
           checkboxClass: 'icheckbox_square-green',
           radioClass: 'iradio_square-green',
+      });
+
+      $('.ladda-button').ladda('bind', {timeout: 18000});
+      Ladda.bind('.progress-demo .ladda-button', {
+        callback: function( instance ) {
+          // HIDE CLOSE MODAL BUTTON WHILST LOADING
+          document.getElementsByClassName('close')[0].hidden = true;
+          var progress = 0;
+          var interval = setInterval( function(){
+            progress = Math.min( progress + Math.random() * 0.1, 1 );
+            instance.setProgress( progress );
+
+            if( progress === 1 ){
+              instance.stop();
+              clearInterval( interval );
+            }
+          }, 18000 );
+        }
       });
 
     });
@@ -51,5 +71,8 @@
       for (var selector in config) {
           $(selector).chosen(config[selector]);
       }
-  });
+    });
+
+
+
 
