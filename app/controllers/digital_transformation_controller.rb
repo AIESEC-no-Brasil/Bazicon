@@ -94,6 +94,20 @@ class DigitalTransformationController < ApplicationController
     render layout: "empty"
   end
 
+  # GET /dt/igcdp_interested
+  def igcdp_interested
+    reset_session; return redirect_to index_path if @user.nil?
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
+  end
+
+  # GET /dt/igcdp_interested
+  def igip_interested
+    reset_session; return redirect_to index_path if @user.nil?
+    @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
+    @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
+  end
+
   # GET /expa/sign_up
   def expa_sign_up
     unless params.has_key?('programa') &&
@@ -139,6 +153,9 @@ class DigitalTransformationController < ApplicationController
     elsif lc == ''
       flash['text-danger'] = "É necessário escolher o comitê mais perto de você para cadastrar uma nova conta"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
+    elsif password.length < 8
+      flash['text-danger'] = "Senha precisa ter no mínimo 8 caracteres"
+      return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
 
     url = 'https://opportunities.aiesec.org/auth'
@@ -163,7 +180,8 @@ class DigitalTransformationController < ApplicationController
       puts exception.to_s
     ensure
       person = ExpaPerson.new
-      person.xp_email = email
+      person.xp_email = email.downcase
+      person.xp_full_name = name
 
       office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
       if office.nil?

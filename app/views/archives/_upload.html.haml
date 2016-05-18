@@ -15,6 +15,8 @@
               -if @user.get_role != ExpaPerson.roles[:role_other]
                 %br
                 %label Permissão do arquivo
+                %button.btn-help{"data-toggle" => "tooltip", "data-placement" => "top", :title => "Arquivos privados são referentes aos arquivos do seu comitê local, enquanto arquivos públicos podem ser vistos por todos os membros da @BAZI",:disabled => true}
+                  %i.fa.fa-question
                 %br
                 %label.control-label{:style => "width:100%;"}
                   .i-checks{:style => "width:50%;float:left;margin-left:auto;margin-right:auto;" }
@@ -23,7 +25,7 @@
                   .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
                     =radio_button_tag  "is_private",true
                     =label_tag "Privado"
-              %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
+              %label Tags relacionadas ao arquivo
               .input-group{:style => "width:100%;"}
               %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
                 - Tag.all.each do |tag|
@@ -40,7 +42,7 @@
           radioClass: 'iradio_square-green',
       });
 
-      $('.ladda-button').ladda('bind', {timeout: 18000});
+      $('.ladda-button').ladda('bind');
       Ladda.bind('.progress-demo .ladda-button', {
         callback: function( instance ) {
           // HIDE CLOSE MODAL BUTTON WHILST LOADING

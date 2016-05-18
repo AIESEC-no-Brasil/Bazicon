@@ -1,12 +1,20 @@
 class OutgoingExchangeController < ApplicationController
 
   # GET /ogx/dash
+  # POST /ogx/dash?lc=INTEGER
   def dash
+    prepare_expansor_expansions
+    if params.include?('lc')
+      lc_info_query = @expansor_expansions[params['lc'].to_i][1]
+    else
+      lc_info_query = @expansor_expansions[0][1]
+    end
 
+    prepare_information_list(lc_info_query)
   end
 
   # GET /ogx/list
-  # GET /ogx/list?lc=INTEGER&page=INTEGER&date_start=STRING&date_end=STRING
+  # POST /ogx/list?lc=INTEGER&page=INTEGER&date_start=STRING&date_end=STRING
   def list
     prepare_expansor_expansions
     if params.include?('lc')
@@ -35,7 +43,6 @@ class OutgoingExchangeController < ApplicationController
       date_end = Time.new
     end
 
-    prepare_information_list(lc_info_query)
     @people = filter_list_leads(lc_list_query,page, date_start, date_end)
   end
 
@@ -250,7 +257,7 @@ class OutgoingExchangeController < ApplicationController
 
 
     expansor_expansions.each do |entity|
-      @expansor_expansions << [entity, entity_exchange_lc: DigitalTransformation.hash_entities_expa[entity]]
+      @expansor_expansions << [entity, entity_exchange_lc: ExpaOffice.find_by_xp_id(DigitalTransformation.hash_entities_expa[entity])]
     end
 
     @expansor_expansions << ['--', xp_home_lc: @user.xp_home_lc]
@@ -274,7 +281,7 @@ class OutgoingExchangeController < ApplicationController
               end
             end
           end
-          entities << [text, xp_home_lc_id: expa_id]
+          entities << [text, xp_home_lc: ExpaOffice.find_by_xp_id(expa_id)]
         end
       end
     end
