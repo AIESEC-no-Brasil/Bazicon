@@ -1,5 +1,3 @@
-require 'dropbox_sdk'
-
 class ArchivesController < ApplicationController
 
   FILES_PER_PAGE = 5

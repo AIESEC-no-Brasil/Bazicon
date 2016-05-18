@@ -96,6 +96,7 @@ class DigitalTransformationController < ApplicationController
 
   # GET /dt/igcdp_interested
   def igcdp_interested
+    @user = ExpaPerson.find_by_xp_id(session[:expa_id])
     reset_session; return redirect_to index_path if @user.nil?
     @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
     @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GCDP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
@@ -103,6 +104,7 @@ class DigitalTransformationController < ApplicationController
 
   # GET /dt/igcdp_interested
   def igip_interested
+    @user = ExpaPerson.find_by_xp_id(session[:expa_id])
     reset_session; return redirect_to index_path if @user.nil?
     @people = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc)
     @people_to_show = ExpaPerson.where.not(xp_home_mc_id: ExpaOffice.find_by_xp_id(1606)).where("customized_fields LIKE ?", '%"foreign"%').where("customized_fields LIKE ?", '%GIP%').includes(:xp_home_mc).includes(:xp_home_lc).order(xp_id: :desc).limit(100)
