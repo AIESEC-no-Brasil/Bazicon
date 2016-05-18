@@ -128,9 +128,10 @@ class ExpaPerson < ActiveRecord::Base
     if self.xp_status == 'open'
       return nil
     else
+
       applications = ExpaApplication.find_by_xp_person_id(self.xp_id)
       if applications.blank?
-        applications = EXPA::Peoples.get_applications(self.xp_id)
+        applications = EXPA::People.get_applications(self.xp_id)
         xp_sync = ExpaRdSync.new
         applications.each do |xp_application|
           xp_sync.update_db_applications(xp_application)

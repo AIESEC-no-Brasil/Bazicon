@@ -3,14 +3,12 @@ class OutgoingExchangeController < ApplicationController
   # GET /ogx/dash
   # POST /ogx/dash?lc=INTEGER
   def dash
-    prepare_expansor_expansions
+    @committes = ExpaOfficeDAO.list_lcs_by_user_xp_id(session[:expa_id])
     if params.include?('lc')
-      lc_info_query = @expansor_expansions[params['lc'].to_i][1]
+      prepare_information_list(params['lc'].to_i)
     else
-      lc_info_query = @expansor_expansions[0][1]
+      prepare_information_list(@committes.first.xp_id)
     end
-
-    prepare_information_list(lc_info_query)
   end
 
   # GET /ogx/list
@@ -97,16 +95,13 @@ class OutgoingExchangeController < ApplicationController
     end
   end
 
-  def prepare_information_list(search_lc_query)
+  def prepare_information_list(lc)
     @info = {}
 
-    sql_lc_query =
-    if search_lc_query.keys.first == :xp_home_mc
-      sql_lc_query = 'expa_people.xp_home_mc_id = ' + search_lc_query.values[0].id.to_s
-    elsif search_lc_query.keys.first == :xp_home_lc
-      sql_lc_query = 'expa_people.xp_home_lc_id = ' + search_lc_query.values[0].id.to_s
-    elsif search_lc_query.keys.first == :entity_exchange_lc
-      sql_lc_query = 'expa_people.entity_exchange_lc_id = ' + search_lc_query.values[0].id.to_s
+    if lc == 1606
+      sql_lc_query = 'expa_people.xp_home_mc_id = ' + ExpaOffice.find_by_xp_id(lc).id.to_s
+    else
+      sql_lc_query = 'expa_people.entity_exchange_lc_id = ' + ExpaOffice.find_by_xp_id(lc).id.to_s
     end
 
     this_year_string = "'#{Time.new(Time.new.year, 1, 1).strftime('%Y-%m-%d')}' AND '#{Time.now.strftime('%Y-%m-%d')}')"
@@ -275,66 +270,6 @@ class OutgoingExchangeController < ApplicationController
     @info['average_conversion_time_re_gip_this_month'] = ActiveRecord::Base.connection.execute("SELECT AVG(expa_applications.xp_date_matched-expa_people.xp_created_at) FROM expa_applications INNER JOIN expa_people on expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND " + sql_gip + " AND " + sql_re + " AND (expa_people.xp_created_at BETWEEN " + this_month_string).to_a.first['avg']
     @info['average_conversion_time_re_gip_past_month'] = ActiveRecord::Base.connection.execute("SELECT AVG(expa_applications.xp_date_matched-expa_people.xp_created_at) FROM expa_applications INNER JOIN expa_people on expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND " + sql_gip + " AND " + sql_re + " AND (expa_people.xp_created_at BETWEEN " + past_month_string).to_a.first['avg']
 
-  end
-
-  def prepare_expansor_expansions
-    @expansor_expansions = []
-
-    expansor_expansions = []
-    offices = ExpaOffice.where(xp_id: @user.xp_home_lc.xp_id)
-    offices.each do |office|
-      expansor_expansions << office.xp_name
-    end
-
-    text = ''
-    expansor_expansions.each do |entity|
-      if text == ''
-        text = entity
-      else
-        text = text + ' + ' + entity
-      end
-    end
-
-    if @user.get_role == ExpaPerson.roles[:role_mc]
-      @expansor_expansions << ['MC', xp_home_mc: @user.xp_home_mc]
-      @expansor_expansions << ['--', xp_home_mc: @user.xp_home_mc]
-    else
-      @expansor_expansions << [text, xp_home_lc: @user.xp_home_lc]
-    end
-
-
-
-    expansor_expansions.each do |entity|
-      @expansor_expansions << [entity, entity_exchange_lc: ExpaOffice.find_by_xp_id(DigitalTransformation.hash_entities_expa[entity])]
-    end
-
-    @expansor_expansions << ['--', xp_home_lc: @user.xp_home_lc]
-
-
-    hash_entities_expa = DigitalTransformation.hash_entities_expa
-    hash_entities_expa.delete('nil')
-    hash_entities_expa.delete('Comitê Local')
-    entities = []
-    hash_entities_expa.keys.each do |entity|
-      unless expansor_expansions.include?(entity)
-        expa_id = hash_entities_expa[entity]
-        unless expa_id.nil?
-          text = ''
-          hash_entities_expa.keys.each do |temp|
-            if expa_id == hash_entities_expa[temp]
-              if text == ''
-                text = temp
-              else
-                text = text + ' + ' + temp
-              end
-            end
-          end
-          entities << [text, xp_home_lc: ExpaOffice.find_by_xp_id(expa_id)]
-        end
-      end
-    end
-
-    @expansor_expansions += entities
   end
 
   def filter_list_leads(search_lc_query, page, date_start, date_end)
