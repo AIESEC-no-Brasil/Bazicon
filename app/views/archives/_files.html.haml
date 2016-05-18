@@ -1,9 +1,9 @@
 - @archives.each do |file|
   -if file.is_deleted
-    .file-box{ style: "opacity:0.3;"}
+    .file-box
       .file
         %span.corner
-        .image
+        .image{ style: "opacity:0.3;"}
           -if file.get_file_type == Archive.type_of_files[:pdf]
             %i.icon-thumbnail.fa-file-pdf-o
           -elsif file.get_file_type == Archive.type_of_files[:word]
@@ -26,9 +26,10 @@
         -path =  "/"+file.id.to_s+file.archive_extension
         .button-section
           .buttons
-            .btn.btn-success
-              %a{href: ($client.media path)['url'], style: "color:fff;"}
-                %i.fa.fa-eye
+            -if file.get_file_type == Archive.type_of_files[:image]
+              .btn.btn-success
+                %a{href: ($client.media path)['url'], style: "color:fff;"}
+                  %i.fa.fa-eye
             .btn.btn-success
               %a{href:archives_download_path(file.id), style: "color:fff;"}
                 %i.fa.fa-download
@@ -36,9 +37,9 @@
               = hidden_field_tag(:id, file.id)
               %button.btn.btn-primary{ :type => "submit"}
                 %i.fa.fa-recycle
-        .file-name
-          = file.name
-          %br
+        .file-name{ style: "opacity:0.3;"}
+          %div{:style => "width:100%; height: 15.56px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;", "data-toggle"=>"tooltip", :title => "#{file.name}"}
+            = file.name
           %small Adicionado em: #{file.created_at.strftime('%d %b %Y')}
           %br
           %small Adicionado por: #{file.person.xp_full_name.split(' ').first}
@@ -56,7 +57,6 @@
             -url = url+"docs.google.com/gview?url=#{($client.media path)['url']}&embedded=true"
           -elsif file.get_file_type == Archive.type_of_files[:word]
             %i.icon-thumbnail.fa-file-word-o
-            -url = url+"docs.google.com/gview?url=#{($client.media path)['url']}&embedded=true"
           -elsif file.get_file_type == Archive.type_of_files[:excel]
             %i.icon-thumbnail.fa-file-excel-o
           -elsif file.get_file_type == Archive.type_of_files[:ppt]
@@ -93,8 +93,8 @@
                 = button_tag(type: "submit", class: "btn btn-success remove-button") do
                   %i.fa.fa-trash
         .file-name
-          = file.name
-          %br
+          %div{:style => "width:100%; height: 15.56px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;", "data-toggle"=>"tooltip", :title => "#{file.name}"}
+            = file.name
           %small Adicionado em: #{file.created_at.strftime('%d %b %Y')}
           %br
           %small Adicionado por: #{file.person.xp_full_name.split(' ').first}

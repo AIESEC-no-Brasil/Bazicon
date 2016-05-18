@@ -28,7 +28,7 @@
                   .i-checks{:style => "width:50%;float:right;margin-left:auto;margin-right:auto;" }
                     =radio_button_tag  "is_private",true,{:checked =>"checked"}
                     =label_tag "Privado"
-            %label.font-noraml{:style => "width:100%;"} Tags relacionadas ao arquivo
+            %label Tags relacionadas ao arquivo
             .input-group{:style => "width:100%;"}
               %select.chosen-select{ "name" =>"tags[]", "data-placeholder" => "Escolha uma tag para o arquivo", :multiple => "multiple", :style => "width:'100%';", :tabindex => "4"}
                 - Tag.all.each do |tag|

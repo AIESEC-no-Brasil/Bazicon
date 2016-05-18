@@ -1,6 +1,6 @@
 class ArchivesController < ApplicationController
 
-  FILES_PER_PAGE = 5
+  FILES_PER_PAGE = 12
   $client = DropboxClient.new(ENV["DROPBOX_TOKEN"])
   helper_method :get_file
 
@@ -95,14 +95,18 @@ class ArchivesController < ApplicationController
       end
     end
     response = $client.put_file("/#{record.id}#{record.archive_extension}", file)
-    redirect_to 'archives_show'
+    if response['thumb_exists'] == true
+      thumbnail = $client.thumbnail("/#{record.id}#{record.archive_extension}", 'l')
+      open("app/assets/images/thumbnails/thumb_#{record.id.to_s}.jpg","wb") {|f| f.puts thumbnail}
+    end
+    redirect_to archives_show_path
   end
   #POST 'remove'
   def remove (file_id = params[:id] )
     file = Archive.find_by_id(file_id)
     file.is_deleted= true
     file.save
-    redirect_to 'archives_show'
+    redirect_to archives_show_path
   end
 
   def delete_archive_tags(file_id)
