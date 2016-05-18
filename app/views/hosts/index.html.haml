@@ -181,11 +181,13 @@
                             =button_tag({type: "submit", class: "btn btn-link"}) do 
                               %i.fa.fa-chain
                       -else
+                        - responsable = ExpaPerson.find_by xp_id: h.tmp_responsable_id
                         .m-b-sm
-                          %img.img-circle{:alt => "image", :src => "http://theawesomer.com/photos/2010/06/060410_Facebook_profile_pic_1.jpg", :style => "width: 50px"}
-                        -responsable = ExpaPerson.find(h.tmp_responsable_id)
+                          -if responsable
+                            %img.img-circle{:alt => "image", :src => responsable.xp_profile_photo_url, :style => "width: 50px"}
                         .m-b-sm
-                          %h3 responsable.full_name
+                          
+                          %h3= responsable.xp_full_name.split(" ").first if responsable
 
                 .client-detail
                   .full-height-scroll
