@@ -1,9 +1,9 @@
 - @archives.each do |file|
   -if file.is_deleted
-    .file-box{ style: "opacity:0.3;"}
+    .file-box
       .file
         %span.corner
-        .image
+        .image{ style: "opacity:0.3;"}
           -if file.get_file_type == Archive.type_of_files[:pdf]
             %i.icon-thumbnail.fa-file-pdf-o
           -elsif file.get_file_type == Archive.type_of_files[:word]
@@ -37,10 +37,9 @@
               = hidden_field_tag(:id, file.id)
               %button.btn.btn-primary{ :type => "submit"}
                 %i.fa.fa-recycle
-        .file-name
+        .file-name{ style: "opacity:0.3;"}
           %div{:style => "width:100%; height: 15.56px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;", "data-toggle"=>"tooltip", :title => "#{file.name}"}
             = file.name
-          %br
           %small Adicionado em: #{file.created_at.strftime('%d %b %Y')}
           %br
           %small Adicionado por: #{file.person.xp_full_name.split(' ').first}

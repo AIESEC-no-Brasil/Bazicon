@@ -108,7 +108,7 @@ class ArchivesController < ApplicationController
     file = Archive.find_by_id(file_id)
     file.is_deleted= true
     file.save
-    redirect_to 'archives_show'
+    redirect_to archives_show_path
   end
 
   def delete_archive_tags(file_id)
