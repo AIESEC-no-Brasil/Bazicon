@@ -1,11 +1,11 @@
 class ExpaOffice < ActiveRecord::Base
 
-  has_many :people_on_home_lc, class_name: 'ExpaPerson', foreign_key:'xp_home_lc'
-  has_many :people_on_home_mc, class_name: 'ExpaPerson', foreign_key:'xp_home_mc'
-  has_many :people_on_current_office, class_name: 'ExpaPerson', foreign_key:'xp_current_office'
-  has_many :people_on_entity_exchange_lc, class_name: 'ExpaPerson', foreign_key:'entity_exchange_lc'
-  has_many :archives_at_this_office, class_name: 'Archive', foreign_key: 'office'
-  has_many :host_at_office, class_name: 'Host', foreign_key: 'nearest_lc'
+  has_many :people_on_home_lc, class_name: 'ExpaPerson', foreign_key:'xp_home_lc_id'
+  has_many :people_on_home_mc, class_name: 'ExpaPerson', foreign_key:'xp_home_mc_id'
+  has_many :people_on_current_office, class_name: 'ExpaPerson', foreign_key:'xp_current_office_id'
+  has_many :people_on_entity_exchange_lc, class_name: 'ExpaPerson', foreign_key:'entity_exchange_lc_id'
+  has_many :archives_at_this_office, class_name: 'Archive', foreign_key: 'office_id'
+  has_many :host_at_office, class_name: 'Host', foreign_key: 'nearest_lc_id'
 
   validates :xp_id,
             presence: false
