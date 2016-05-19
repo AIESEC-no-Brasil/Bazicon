@@ -52,5 +52,9 @@ Myapp::Application.routes.draw do
   get 'files/index'
 
   post '/hosts/add_tmp_responsable'
+  post '/hosts/edit_host_phone'
+  post '/hosts/edit_host_email'
+  post '/hosts/edit_host_address'
+  post '/hosts/edit_host_postalcode'
 
 end

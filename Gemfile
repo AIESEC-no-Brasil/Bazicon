@@ -81,3 +81,4 @@ gem 'ngannotate-rails'
 
 # Bower to control dependencies of the Frontend
 gem 'bower-rails'
+gem 'responders', '~> 2.0'

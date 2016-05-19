@@ -9,12 +9,12 @@ production:
 
 development:
   adapter: postgresql
-  encoding: <%= ENV["DEVELOPMENT_UNICODE"] %>
-  database: <%= ENV["DEVELOPMENT_DATABASE"] %>
-  username: <%= ENV["DEVELOPMENT_USERNAME"] %>
-  password: <%= ENV["DEVELOPMENT_PASSWORD"] %>
-  host: <%= ENV["DEVELOPMENT_HOST"] %>
-  port: <%= ENV["DEVELOPMENT_POST"] %>
+  encoding: 'unicode'
+  database: 'bazicon_development'
+  username: 'postgres'
+  password: '1'
+  host: 'localhost'
+  port: '5432'
 
 test:
   adapter: sqlite3
