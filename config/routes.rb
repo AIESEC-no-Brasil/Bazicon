@@ -20,7 +20,11 @@ Myapp::Application.routes.draw do
   post  '/archives/retrieve_selected_tags' =>'archives#retrieve_selected_tags'
   post '/main/archives' => 'archives#show', as: 'post_archives_show'
 
-
+  # Luan
+  get '/disrupt/ogx/list'  => 'ogx#list',    as: 'list_ogx'
+  get '/disrupt/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
+  get '/disrupt/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
+  get '/disrupt/(*path)'  => 'ogx#index',    as: 'index_ogx'
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'

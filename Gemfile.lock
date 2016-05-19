@@ -42,10 +42,15 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    airbrussh (1.0.1)
+    airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
+    angular-rails-templates (1.0.0)
+      railties (>= 4.2, < 6)
+      sprockets (~> 3.0)
+      tilt
+    angularjs-rails (1.5.5)
     arel (6.0.3)
-    autoprefixer-rails (6.3.6)
+    autoprefixer-rails (6.3.6.1)
       execjs
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
@@ -53,8 +58,9 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bower-rails (0.10.0)
     builder (3.2.2)
-    byebug (8.2.5)
+    byebug (9.0.3)
     capistrano (3.5.0)
       airbrussh (>= 1.0.0)
       capistrano-harrow
@@ -91,7 +97,7 @@ GEM
     execjs (2.6.0)
     faraday (0.8.11)
       multipart-post (~> 1.2.0)
-    font-awesome-rails (4.6.2.0)
+    font-awesome-rails (4.6.3.0)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -126,7 +132,7 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     mime-types (2.99.1)
     mini_portile2 (2.0.0)
-    minitest (5.8.4)
+    minitest (5.9.0)
     multi_json (1.12.0)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -135,6 +141,9 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.1.1)
+    ngannotate-rails (1.2.2)
+      execjs
+      rails (>= 3.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
@@ -215,7 +224,7 @@ GEM
       rack (~> 1.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.2)
+    tilt (2.0.4)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -239,8 +248,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  angular-rails-templates
+  angularjs-rails
   bcrypt
   bootstrap-sass
+  bower-rails
   byebug
   capistrano-rails
   clockwork
@@ -256,6 +268,7 @@ DEPENDENCIES
   json
   mechanize
   minitest
+  ngannotate-rails
   oauth2
   pg
   podio
