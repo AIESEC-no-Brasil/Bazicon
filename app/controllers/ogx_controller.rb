@@ -19,7 +19,7 @@ class OgxController < ApplicationController
     elsif params[:status] == 'completed'
       render :json => ExpaPerson.list_completed(params[:lc].to_i).epi(params[:epi]).ops(params[:ops]).to_timeline(params[:page].to_i)
     else
-      render :json => ExpaPerson.listing(params[:lc].to_i, params[:status]).epi(params[:epi]).ops(params[:ops]).to_timeline(params[:page].to_i)
+      render :json => ExpaPerson.listing(params[:lc].to_i).epi(params[:epi]).ops(params[:ops]).to_timeline(params[:page].to_i)
     end
   end
 

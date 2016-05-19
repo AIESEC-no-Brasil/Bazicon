@@ -34,16 +34,27 @@ class ExpaPerson < ActiveRecord::Base
 
   after_validation :downcase_email
 
-  scope :listing, -> (lc,status) {
-    flow_step = translate_status(status);
-    if flow_step == -1
+  scope :listing, -> (lc) {
+    unless lc == 2
       where(xp_home_lc: lc)
     else
-      where(xp_home_lc: lc, xp_status: flow_step)
+      all
     end
   }
-  scope :list_open, -> (lc) { where(xp_home_lc: lc).where('id NOT IN (SELECT DISTINCT(id) FROM expa_applications)') }
-  scope :list_applied, -> (lc) { joins(:xp_applications => [:xp_opportunity]).where(xp_home_lc: lc).where("xp_programmes LIKE '%GCDP%'") }
+  scope :list_open, -> (lc) {
+    unless lc == 2
+      where(xp_home_lc: lc).where('id NOT IN (SELECT DISTINCT(id) FROM expa_applications)')
+    else
+      where('id NOT IN (SELECT DISTINCT(id) FROM expa_applications)')
+    end
+  }
+  scope :list_applied, -> (lc) {
+    unless lc == 2
+      where(xp_home_lc: lc).joins(:xp_applications => [:xp_opportunity]).where("xp_programmes LIKE '%GCDP%'")
+    else
+      joins(:xp_applications => [:xp_opportunity]).where("xp_programmes LIKE '%GCDP%'")
+    end
+  }
   scope :list_approved, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 3 or "expa_applications"."xp_status" = 1') }
   scope :list_realized, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 4') }
   scope :list_completed, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 5') }
