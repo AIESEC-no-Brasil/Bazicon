@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     controllers_to_ignore = ['sessions', 'digital_transformation']
     if @user.nil? && !controllers_to_ignore.include?(params['controller'])
       reset_session
-      return redirect_to index_path
+      return redirect_to main_path
     end
   end
 end

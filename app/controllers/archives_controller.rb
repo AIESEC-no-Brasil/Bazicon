@@ -2,7 +2,7 @@ require 'dropbox_sdk'
 
 class ArchivesController < ApplicationController
 
-  FILES_PER_PAGE = 5
+  FILES_PER_PAGE = 3
   $client = DropboxClient.new(ENV["DROPBOX_TOKEN"])
   helper_method :get_file
 
@@ -133,7 +133,7 @@ class ArchivesController < ApplicationController
       return Archive.where("name ILIKE ?","%#{search}%")
       # or if someone is from a LC
     elsif @user.get_role == ExpaPerson.roles[:role_eb]
-      return Archive.where("(is_private = true AND office_id =  ? AND name ILIKE ?) OR (is_private = false  AND name ILIKE ? )",@user.xp_current_office.id, "%#{search}%", "%#{search}%")
+      return Archive.where("(is_private = true AND office_id =  ? AND name ILIKE ? AND is_deleted=false) OR (is_private = false  AND name ILIKE ? AND is_deleted=false)",@user.xp_current_office.id, "%#{search}%", "%#{search}%")
     else
       return Archive.where("(is_deleted = false is_private = true AND office_id =  ? AND name ILIKE ?) OR (is_deleted = false AND is_private = false  AND name ILIKE ?)",@user.xp_current_office.id, "%#{search}%", "%#{search}%")
     end

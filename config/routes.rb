@@ -22,6 +22,10 @@ Myapp::Application.routes.draw do
   post '/main/archives' => 'archives#show', as: 'post_archives_show'
 
 
+  #Forms
+  get '/forms/feedback' => 'forms#show_feedback_form', as: 'feedback_form'
+  post '/forms/feedback/send' => 'forms#send_feedback', as: 'send_feedback'
+
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'

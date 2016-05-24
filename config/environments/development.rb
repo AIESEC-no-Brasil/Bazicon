@@ -8,13 +8,13 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-
+  config.action_mailer.perform_deliveries = true
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -35,7 +35,18 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-
+  config.action_mailer.default_url_options = 'localhost:3000'
+  config.action_mailer.delivery_method = :smtp
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+      :address              => "smtp.gmail.com",
+      :domain               => 'gmail.com',
+      :port                 => 587,
+      :user_name            => ENV['gmail_username'],
+      :password             => ENV['gmail_password'],
+      :authentication       => "plain",
+      :enable_starttls_auto => true
+  }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

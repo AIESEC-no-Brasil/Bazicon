@@ -58,7 +58,7 @@
                   %li
                   %button.btn.btn-default.select-button{onclick:"buttonSelected(event)", value: tag.id, :type => "button"}= tag.name
               .clearfix
-              %button.btn.btn-default.btn-block{type: "submit()"} Filtrar
+              %button.btn.btn-default.btn-block{type: "submit()", id: "filterSubmit"} Filtrar
 
     .col-lg-9.animated.fadeInRight
 
@@ -66,9 +66,8 @@
         .col-lg-12
           %div{id:"files"}
             = render 'files'
-    %div{style:"float:right;"}
-      = will_paginate @archives
 
+= render 'upload'
 
 :javascript
 
@@ -90,15 +89,16 @@
     function closeModal(){
         $('#myModal').modal('hide');
       }
+    $(function() {
+        $("#filter filterSubmit").click(function() {
+          $.get($("#filter").attr("show"), $("#filter").serialize(), null, "script");
+          return false;
+        });
+       });
 
     $(function() {
       $("#search_form input").keyup(function() {
         $.get($("#search_form").attr("show"), $("#search_form").serialize(), null, "script");
         return false;
       });
-
-      $("#button-right").onclick(function() {
-        $.get($("#button-right").attr("show"), $("#button-right").serialize(), null, "script");
-        return false;
-      });
-    });
+  });
