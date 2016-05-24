@@ -27,6 +27,11 @@ Myapp::Application.routes.draw do
   post '/forms/feedback/send' => 'forms#send_feedback', as: 'send_feedback'
 
 
+  get '/disrupt/ogx/list'  => 'ogx#list',    as: 'list_ogx'
+  get '/disrupt/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
+  get '/disrupt/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
+  get '/disrupt/(*path)'  => 'ogx#index',    as: 'index_ogx'
+
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',         as: 'digital_transformation_difficulties'
   get '/dt/prevents'              => 'digital_transformation#prevents',             as: 'digital_transformation_prevents'

@@ -24,6 +24,22 @@ class ExpaRdSync
     }
   end
 
+  def asdasdasd
+    applications = ExpaApplication.all
+    applications.each do |application|
+      unless application.xp_person.nil?
+        person = ExpaPerson.find_by_xp_id(application.xp_person_id)
+        if person.nil?
+          person = ExpaPerson.new
+          person.update_from_expa(EXPA::People.find_by_idapplication.xp_person_id)
+          person.save
+        end
+        application.xp_person_id = person.id
+        application.save
+      end
+    end
+  end
+
   # This method will get everyone in the world (besides brazilians) in order to we make direct facebook ads or others
   # Each time this method run, it will download 500 people and populate the database. If the database is full, it will update the profile of the existed registers, ordered by created_at date
   def list_foreign_people(programme, limit)
