@@ -21,4 +21,12 @@ class ExpaOffice < ActiveRecord::Base
                      entity_name
                    end
   end
+
+  def is_mc?
+    ExpaPerson.where(:xp_home_mc_id => self.id).count > 0
+  end
+
+  def is_lc?
+    ExpaPerson.where(:xp_home_lc_id => self.id).count > 0
+  end
 end
