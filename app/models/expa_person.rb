@@ -34,6 +34,45 @@ class ExpaPerson < ActiveRecord::Base
 
   after_validation :downcase_email
 
+  scope :listing, -> (lc,status) {
+    flow_step = translate_status(status);
+    if flow_step == -1
+      where(xp_home_lc: lc)
+    else
+      where(xp_home_lc: lc, xp_status: flow_step)
+    end
+  }
+  scope :list_open, -> (lc) { where(xp_home_lc: lc).where('id NOT IN (SELECT DISTINCT(id) FROM expa_applications)') }
+  scope :list_applied, -> (lc) { joins(:xp_applications => [:xp_opportunity]).where(xp_home_lc: lc).where("xp_programmes LIKE '%GCDP%'") }
+  scope :list_approved, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 3 or "expa_applications"."xp_status" = 1') }
+  scope :list_realized, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 4') }
+  scope :list_completed, -> (lc) { list_applied(lc).where('"expa_applications"."xp_status" = 5') }
+  scope :to_timeline, -> (page) {order(xp_created_at: :desc).limit(30).offset(30*page)}
+  scope :epi, -> (with) {
+    if with == 'true'
+      where.not(epi_date: nil)
+    elsif with == 'false'
+      where(epi_date: nil)
+    else
+      return
+    end
+  }
+  scope :ops, -> (with) {
+    if with == 'true'
+      where.not(ops_date: nil)
+    elsif with == 'false'
+      where(ops_date: nil)
+    else
+      return
+    end
+  }
+  scope :this_year, -> {
+    where("created_at >= :start_date AND created_at <= :end_date",
+      {start_date: Date.today.beginning_of_year, end_date: Date.today})}
+  scope :this_year2, -> {
+    where('"expa_people"."created_at" >= :start_date AND "expa_people"."created_at" <= :end_date',
+      {start_date: Date.today.beginning_of_year, end_date: Date.today})}
+    
   def update_from_expa(data)
     unless data.home_lc.nil?
       home_lc = ExpaOffice.find_by_xp_id(data.home_lc.id)
@@ -194,6 +233,24 @@ class ExpaPerson < ActiveRecord::Base
     end
   end
 
+  def self.translate_status(status)
+    case status
+      when 'all'
+        -1
+      when 'open'
+        0
+      when 'applied'
+        1
+      when 'accepted'
+        2
+      when 'realizing'
+        3
+      when 'completed'
+        4
+      else
+        5
+    end
+  end
 
   private
 

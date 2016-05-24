@@ -8,13 +8,17 @@ production:
   port: <%= ENV["PRODUCTION_POST"] %>
 
 development:
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoding: 'unicode'
+  database: 'bazicon_development'
+  username: 'postgres'
+  password: '1'
+  host: 'localhost'
+  port: '5432'
 
 test:
   adapter: sqlite3
   pool: 5
   timeout: 5000
   database: db/test.sqlite3
+

@@ -22,6 +22,11 @@
           %i.fa.fa-paper-plane
           %span.nav-label{"data-i18n" => "nav.outgoing_exchange"}
             OGX
+      %li{"class" => "#{is_active_controller('ogx')}"}
+        = link_to 'disrupt/' do
+          %i.fa.fa-paper-plane
+          %span.nav-label{"data-i18n" => "nav.ogx"}
+            OGX Manager
       %li{"class" => "#{is_active_controller('lc_tm')}"}
         = link_to lc_tm_path do
           %i.fa.fa-users

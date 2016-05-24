@@ -73,3 +73,12 @@ gem 'spring', group: [:development, :test]
 gem 'byebug', group: [:development, :test]
 #To use results pagination
 gem 'will_paginate', '~> 3.1.0'
+
+# AngularJS
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
+gem 'ngannotate-rails'
+
+# Bower to control dependencies of the Frontend
+gem 'bower-rails'
+gem 'responders', '~> 2.0'
