@@ -1,7 +1,7 @@
 require 'dropbox_sdk'
 class ArchivesController < ApplicationController
 
-  FILES_PER_PAGE = 5
+  FILES_PER_PAGE = 12
   $client = DropboxClient.new(ENV["DROPBOX_TOKEN"])
   helper_method :get_file
 
@@ -25,10 +25,11 @@ class ArchivesController < ApplicationController
     end
 
   end
-
+  # GET /main/archives/download/:id
   def download(file_id = params[:id])
 
     file = Archive.find_by(id: file_id)
+    #creates temporary file to change filename
     downloaded_file= $client.get_file("/#{file.id}#{file.archive_extension}")
     temp_file = Tempfile.new('tmp_file')
     open(temp_file,"wb") {|f| f.puts downloaded_file}
@@ -36,8 +37,8 @@ class ArchivesController < ApplicationController
     send_file temp_file.path, :filename =>  "#{file.name}#{file.archive_extension}"
 
   end
-
-
+  #POST /main/archives/restore_archive
+  #mark file as not deleted
   def restore_archive
     file_id = params[:id]
     file = Archive.find_by(id:file_id)
@@ -73,7 +74,7 @@ class ArchivesController < ApplicationController
     @file = Archive.find_by_id(file_id)
   end
 
-  #POST 'upload'
+  #POST /main/archives/upload
   def upload(upload=params[:file], is_private = params[:is_private],tags = params[:tags] )
     file = open(upload.path())
     #Save a record with the data about who uploaded the file
@@ -98,12 +99,12 @@ class ArchivesController < ApplicationController
     response = $client.put_file("/#{record.id}#{record.archive_extension}", file)
     redirect_to archives_show_path
   end
-  #POST 'remove'
+  #POST /main/archives/remove
   def remove (file_id = params[:id] )
     file = Archive.find_by_id(file_id)
     file.is_deleted= true
     file.save
-    redirect_to 'archives_show'
+    redirect_to archives_show_path
   end
 
   def delete_archive_tags(file_id)
@@ -225,5 +226,5 @@ class ArchivesController < ApplicationController
 
   end
 
-  private :delete_archive_tags , :get_files , :get_files_by_ids, :find_files_by_tags
+  private :delete_archive_tags , :get_files , :get_files_by_ids, :find_files_by_tags, :get_all_tags_ids_array, :search_file_by_name
 end

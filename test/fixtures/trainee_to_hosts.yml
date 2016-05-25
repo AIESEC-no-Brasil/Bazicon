@@ -1,20 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  host_id: 1
-  trainee_id: 1
+  host_person_id: 1
+  trainee_person_id: 1
   entry_date: 2016-04-22 13:54:29
-  leave_date: 2016-04-22 13:54:29
+  leaving_date: 2016-04-22 13:54:29
   host_nps: 1
   host_nps_commentary: MyText
   trainee_nps: 1
   trainee_nps_commentary: MyText
 
 two:
-  host_id: 1
-  trainee_id: 1
+  host_person_id: 1
+  trainee_person_id: 1
   entry_date: 2016-04-22 13:54:29
-  leave_date: 2016-04-22 13:54:29
+  leaving_date: 2016-04-22 13:54:29
   host_nps: 1
   host_nps_commentary: MyText
   trainee_nps: 1
