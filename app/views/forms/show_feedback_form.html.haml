@@ -1,3 +1,11 @@
+-if flash[:notice]
+  - if flash[:color]=="invalid"
+    %span{class: "alert alert-danger alert-dismissable", style:"display: block;"}
+      = flash[:notice]
+  - elsif flash[:color]=="success"
+    %span{class: "alert alert-success alert-dismissable",style:"display: block;"}
+      %i{ class:"fa fa-check" }
+      = flash[:notice]
 .ibox-content
   %h1 Envie um Feedback sobre o BAZICON para o time de IM!
   %br

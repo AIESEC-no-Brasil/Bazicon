@@ -96,7 +96,7 @@ class ArchivesController < ApplicationController
       end
     end
     response = $client.put_file("/#{record.id}#{record.archive_extension}", file)
-    redirect_to 'archives_show'
+    redirect_to archives_show_path
   end
   #POST 'remove'
   def remove (file_id = params[:id] )

@@ -1,4 +1,5 @@
 class FeedbackForm < ApplicationMailer
+  DEFAULT_TO_EMAIL = 'vivianecosta2794@gmail.com'
 
   def send_feedback(email,name,topic, description)
 
@@ -6,7 +7,7 @@ class FeedbackForm < ApplicationMailer
     @name = name
     @topic = topic
     @description = description
-    mail(to: @email, subject: "Feedback relacionado ao tópico #{@topic}")
+    mail(to: DEFAULT_TO_EMAIL, subject: "Feedback relacionado ao tópico #{@topic}")
 
   end
 
