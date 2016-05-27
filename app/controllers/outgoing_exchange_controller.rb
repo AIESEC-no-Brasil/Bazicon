@@ -49,7 +49,7 @@ class OutgoingExchangeController < ApplicationController
     return redirect_to main_path unless params.include?('id')
 
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
-    @person = ExpaPerson.find_by_xp_id(params['id'])
+    @person = ExpaPerson.find_by_xp_id(params['id'].to_i)
     if @person.nil?
       return redirect_to main_path
     else
@@ -98,6 +98,8 @@ class OutgoingExchangeController < ApplicationController
   def prepare_information_list(lc)
     @info = {}
 
+    office = ExpaOffice.find_by_xp_id(lc)
+
     if lc == 1606
       sql_lc_query = 'expa_people.xp_home_mc_id = ' + ExpaOffice.find_by_xp_id(lc).id.to_s
     else
@@ -118,9 +120,9 @@ class OutgoingExchangeController < ApplicationController
     sql_re = "(expa_applications.xp_current_status = 4 OR expa_applications.xp_status = 4)"
     sql_ma = "(expa_applications.xp_current_status = 3 OR expa_applications.xp_status = 3)"
 
-    @info['leads_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_month_string).count.to_f
-    @info['leads_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + past_month_string).count.to_f
-    @info['leads_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people WHERE " + sql_lc_query + " AND (expa_people.xp_created_at BETWEEN " + this_month_past_year_string).count.to_f
+    @info['leads_this_month'] = ExpaPersonDAO.number_of_leads(office, Time.new(Time.new.year, Time.new.month, 1)..Time.now)
+    @info['leads_past_month'] = ExpaPersonDAO.number_of_leads(office, Time.new(Time.new.year, Time.new.month-1, 1)..Time.new(Time.new.year, Time.new.month, 1) - 1)
+    @info['leads_past_year'] = ExpaPersonDAO.number_of_leads(office, Time.new(Time.new.year - 1, Time.new.month, 1)..Time.new(Time.new.year - 1, Time.new.month + 1, 1) -1)
 
     @info['ip_ogcdp_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + "AND (expa_people.xp_created_at BETWEEN " + this_month_string + " AND expa_people.xp_status = 1 AND " + sql_gcdp).count
     @info['ip_ogcdp_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + "AND (expa_people.xp_created_at BETWEEN " + past_month_string + " AND expa_people.xp_status = 1 AND " + sql_gcdp).count.to_f
@@ -130,13 +132,13 @@ class OutgoingExchangeController < ApplicationController
     @info['ip_ogip_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + "AND (expa_people.xp_created_at BETWEEN " + past_month_string + " AND expa_people.xp_status = 1 AND " + sql_gip).count.to_f
     @info['ip_ogip_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + "AND (expa_people.xp_created_at BETWEEN " + this_month_past_year_string + " AND expa_people.xp_status = 1 AND " + sql_gip).count.to_f
 
-    @info['ma_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
-    @info['ma_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
-    @info['ma_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_ma + " AND " + sql_ogx).count.to_f
+    @info['ma_this_month'] = ExpaApplicationDAO.number_of_ma(office, Time.new(Time.new.year, Time.new.month, 1)..Time.now)
+    @info['ma_past_month'] = ExpaApplicationDAO.number_of_ma(office, Time.new(Time.new.year, Time.new.month-1, 1)..Time.new(Time.new.year, Time.new.month, 1) - 1)
+    @info['ma_past_year'] = ExpaApplicationDAO.number_of_ma(office, Time.new(Time.new.year - 1, Time.new.month, 1)..Time.new(Time.new.year - 1, Time.new.month + 1, 1) -1)
 
-    @info['re_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
-    @info['re_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
-    @info['re_past_year'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_past_year_string + " AND " + sql_re + " AND " + sql_ogx).count.to_f
+    @info['re_this_month'] = ExpaApplicationDAO.number_of_re(office, Time.new(Time.new.year, Time.new.month)..Time.now)
+    @info['re_past_month'] = ExpaApplicationDAO.number_of_re(office, Time.new(Time.new.year, Time.new.month-1, 1)..Time.new(Time.new.year, Time.new.month, 1) - 1)
+    @info['re_past_year'] = ExpaApplicationDAO.number_of_re(office, Time.new(Time.new.year - 1, Time.new.month, 1)..Time.new(Time.new.year - 1, Time.new.month + 1, 1) -1)
 
     @info['ma_ogcdp_this_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_ma + " AND " + sql_gcdp).count.to_f
     @info['ma_ogcdp_past_month'] = ActiveRecord::Base.connection.execute("SELECT expa_applications.* FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + past_month_string + " AND " + sql_ma + " AND " + sql_gcdp).count.to_f
@@ -176,8 +178,8 @@ class OutgoingExchangeController < ApplicationController
     @info['re_ogip_this_month_per_week'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('week', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 ASC").values.map { |x,i| i.to_i }
     @info['re_ogip_this_month_per_day'] = ActiveRecord::Base.connection.execute("SELECT DATE_TRUNC('day', (expa_applications.xp_updated_at::timestamp)), COUNT (expa_applications.id) FROM expa_applications INNER JOIN expa_people ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE " + sql_lc_query + " AND (expa_applications.xp_updated_at BETWEEN " + this_month_string + " AND " + sql_gip + " AND " + sql_re + " GROUP BY 1 ORDER BY 1 ASC").values.map { |x,i| i.to_i }
 
-    @info['ma_total'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE expa_people.xp_status = 2 AND " + sql_ogx).count
-    @info['re_total'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE expa_people.xp_status = 3 AND " + sql_ogx).count
+    @info['ma_total'] = ExpaApplicationDAO.number_of_ma(office, Time.new(1970, 1, 1)..Time.now)
+    @info['re_total'] = ExpaApplicationDAO.number_of_re(office, Time.new(1970, 1, 1)..Time.now)
 
     @info['ma_ogcdp_total'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE expa_people.xp_status = 2 AND " + sql_gcdp).count
     @info['re_ogcdp_total'] = ActiveRecord::Base.connection.execute("SELECT expa_people.* FROM expa_people INNER JOIN expa_applications ON expa_applications.xp_person_id = expa_people.xp_id INNER JOIN expa_opportunities ON expa_applications.xp_opportunity_id = expa_opportunities.id WHERE expa_people.xp_status = 3 AND " + sql_gcdp).count
