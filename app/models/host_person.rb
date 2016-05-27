@@ -1,6 +1,9 @@
+#THe business logic is uncomplete after list_leads, almost averything. 
+
 class HostPerson < ActiveRecord::Base
 	has_many :trainee_to_hosts
 	has_many :trainee_people, through: :trainee_to_hosts
+
 
 
 	def self.list_leads
@@ -10,7 +13,7 @@ class HostPerson < ActiveRecord::Base
 															or(host[:date_approach].eq(nil)).
 															or(host[:date_alignment_meeting].gteq(Time.now)))
 	end
-
+#FIXME
 	def self.list_free
 		host = HostPerson.arel_table
 		t2host = TraineeToHost.arel_table
@@ -18,9 +21,9 @@ class HostPerson < ActiveRecord::Base
 															and(host[:tmp_who_realized_meeting_id].not_eq(nil)).
 															and(host[:date_approach].not_eq(nil)).
 															and(host[:date_alignment_meeting].lt(Time.now)).
-															and(host[:trainees_vacancy].gt(HostPerson.joins(:trainee_to_hosts).count)))
-	end
-
+															and(host[:trainees_vacancy].gt(HostPerson.joins(:trainee_to_hosts).count())) #Trainees vacancy must be greater than the number of trainees associated to the host
+		end
+#FIXME
 	def self.list_allocated
 		host = HostPerson.arel_table
 		t2host = TraineeToHost.arel_table
@@ -30,7 +33,7 @@ class HostPerson < ActiveRecord::Base
 															and(host[:date_alignment_meeting].lt(Time.now)).
 															and(t2host[:entry_date].lt(Time.now)))
 	end
-
+#FIXME
 	def self.list_realized
 		host = HostPerson.arel_table
 		t2host = TraineeToHost.arel_table

@@ -30,5 +30,36 @@ class HostsController < ApplicationController
     host.save
     redirect_to '/hosts/index'
   end
-  
+
+  def set_favourite(host_person_id = params[:host_id])
+    host = HostPerson.find(host_person_id)
+    host.is_favourite = true
+    host.is_problematic = false
+    host.is_non_grata = false
+    host.save
+    redirect_to '/hosts/index'
+  end
+
+  def set_problematic(host_person_id = params[:host_id])
+    host = HostPerson.find(host_person_id)
+    host.is_problematic = true
+    host.is_favourite = false
+    host.is_non_grata = false
+    host.save
+    redirect_to '/hosts/index'
+  end
+
+
+  def set_non_grata(host_person_id = params[:host_id])
+    host = HostPerson.find(host_person_id)
+    host.is_non_grata = true
+    host.is_favourite = false
+    host.is_favourite = false
+    host.save
+    redirect_to '/hosts/index'
+  end
+  #TODO
+  def set_date_approach(host_person_id = params[:host_id], host_date_approach = params[:host_approach])
+    redirect_to '/hosts/index'
+  end
 end

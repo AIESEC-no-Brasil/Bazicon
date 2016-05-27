@@ -57,4 +57,9 @@ Myapp::Application.routes.draw do
   post '/hosts/edit_host_address'
   post '/hosts/edit_host_postalcode'
 
+  post '/hosts/set_favourite'
+  post '/hosts/set_problematic'
+  post '/hosts/set_non_grata'
+  post '/hosts/set_date_approach'
+
 end
