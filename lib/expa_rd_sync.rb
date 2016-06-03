@@ -24,7 +24,7 @@ class ExpaRdSync
     }
   end
 
-  def asdasdasd
+  def delete_after_use
     applications = ExpaApplication.all
     applications.each do |application|
       unless application.xp_person.nil?
