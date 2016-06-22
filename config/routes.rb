@@ -3,6 +3,7 @@ Myapp::Application.routes.draw do
   # You can have the root of your site routed with 'root'
   root 'sessions#index'
 
+  get '/admin/force_update' => 'main#force_update', as: 'force_update'
   # All routes
   get '/'       => 'sessions#index',  as: 'index'
   get '/logout' => 'sessions#logout', as: 'logout'
@@ -13,14 +14,19 @@ Myapp::Application.routes.draw do
   get '/main/archives' => 'archives#show', as: 'archives_show'
   get '/main/archives/edit/:id' => 'archives#edit', as: 'archives_edit'
   get '/main/archives/download/:id' => 'archives#download', as: 'archives_download'
-  post 'restore_archive' => 'archives#restore_archive', as: 'restore_archive'
-  post 'upload'        => 'archives#upload', as: 'upload'
+  post '/main/archives/restore_archive' => 'archives#restore_archive', as: 'restore_archive'
+  post '/main/archives/upload'        => 'archives#upload', as: 'upload'
   post  '/main/archives/remove' =>'archives#remove', as: 'remove'
-  post  'update' =>'archives#update', as: 'update'
-  post  '/archives/retrieve_selected_tags' =>'archives#retrieve_selected_tags'
+  post  '/main/archives/update' =>'archives#update', as: 'update'
+  post  'main/archives/retrieve_selected_tags' =>'archives#retrieve_selected_tags'
   post '/main/archives' => 'archives#show', as: 'post_archives_show'
 
-  # Luan
+
+  #Forms
+  get '/forms/feedback' => 'forms#show_feedback_form', as: 'feedback_form'
+  post '/forms/feedback/send' => 'forms#send_feedback', as: 'send_feedback'
+
+
   get '/disrupt/ogx/list'  => 'ogx#list',    as: 'list_ogx'
   get '/disrupt/ogx/my_lcs'  => 'ogx#my_lcs',    as: 'lcs_ogx'
   get '/disrupt/ogx/kpis'  => 'ogx#kpis',    as: 'kpis_ogx'
@@ -51,6 +57,10 @@ Myapp::Application.routes.draw do
   get '/hosts/index'
   get 'files/index'
 
-  post '/hosts/add_tmp_responsable'
+
+  post '/hosts/set_favourite'
+  post '/hosts/set_problematic'
+  post '/hosts/set_non_grata'
+  post '/hosts/set_date_approach'
 
 end

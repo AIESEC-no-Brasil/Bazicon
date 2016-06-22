@@ -1,13 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<<<<<<< HEAD
+=======
 
 one:
   full_name: MyString
-  arrival_date: 2016-04-22 14:03:25
+  entry_date: 2016-04-22 14:03:25
   leaving_date: 2016-04-22 14:03:25
   local_committee: 1
 
 two:
   full_name: MyString
-  arrival_date: 2016-04-22 14:03:25
+  entry_date: 2016-04-22 14:03:25
   leaving_date: 2016-04-22 14:03:25
   local_committee: 1
+>>>>>>> 91164fdbc7fa174d219d35a8156d3ed36f2d6066

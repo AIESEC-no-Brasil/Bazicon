@@ -47,7 +47,7 @@ end
   person.save
 end
 
-(7..9).each do |i|
+(30..50).each do |i|
   host = HostPerson.new
   host.full_name = "Allocated #{i}"
   host.phone = 91239
@@ -57,6 +57,8 @@ end
   host.tmp_who_realized_meeting_id = 79887
   host.date_approach = Time.new(2016,4,10)
   host.date_alignment_meeting = Time.new(Time.now.year,Time.now.month, Time.now.day-2)
+  host.nearest_lc_id = 434
+  host.trainees_vacancy = 2
   host.save
   trainee = TraineePerson.new
   trainee.full_name = "Trainee #{i}"

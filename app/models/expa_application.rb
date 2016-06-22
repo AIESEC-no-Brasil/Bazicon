@@ -1,6 +1,6 @@
 class ExpaApplication < ActiveRecord::Base
-  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager, :current_approved_tn_manager] #TODO: Use prefix when they launch outside edge
-  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager, :approved_tn_manager] #TODO: Use prefix when they launch outside edge
+  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager, :current_approved_tn_manager, :current_acceptance_broken] #TODO: Use prefix when they launch outside edge
+  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager, :approved_tn_manager, :acceptance_broken] #TODO: Use prefix when they launch outside edge
 
   belongs_to :xp_person, class_name: 'ExpaPerson'
   belongs_to :xp_opportunity, class_name: 'ExpaOpportunity'
@@ -18,6 +18,14 @@ class ExpaApplication < ActiveRecord::Base
         opportunity.save
       end
     end
+    unless data.person.nil?
+      person = ExpaPerson.find_by_xp_id(data.person.id)
+      if person.nil?
+        person = ExpaPerson.new
+        person.update_from_expa(data.person)
+        person.save
+      end
+    end
 
     self.xp_id = data.id unless data.id.nil?
     self.xp_url = data.url unless data.url.nil?
@@ -30,7 +38,7 @@ class ExpaApplication < ActiveRecord::Base
     self.xp_updated_at = data.updated_at unless data.updated_at.nil?
     self.xp_opportunity = opportunity unless opportunity.nil?
     self.xp_interviewed = data.interviewed unless data.interviewed.nil?
-    self.xp_person_id = data.person.id unless data.person.nil?
+    self.xp_person = person unless person.nil?
     self.xp_an_signed_at = data.an_signed_at unless data.an_signed_at.nil?
     self.xp_experience_start_date = data.experience_start_date unless data.experience_start_date.nil?
     self.xp_experience_end_date = data.experience_end_date unless data.experience_end_date.nil?

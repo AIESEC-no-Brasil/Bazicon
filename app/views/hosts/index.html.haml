@@ -15,7 +15,7 @@
                   Search
           .clients-list
             %ul.nav.nav-tabs
-              %span.pull-right.small.text-muted= "#{HostPerson.count} Pessoas"
+              %span.pull-right.small.text-muted= "#{HostPerson.where({nearest_lc_id: session[:user_home_lc]}).count} Pessoas"
               %li.active
                 %a{"data-toggle" => "tab", :href => "#tab-1"}
                   %i.fa.fa-user
@@ -39,9 +39,9 @@
                     %table.table.table-striped.table-hover
                       %br
                       %span
-                        %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_leads.list_favourites.count}"
-                        %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_leads.list_problematics.count}"
-                        %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_leads.list_non_grata.count}"
+                        %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_leads.list_favourites.where({nearest_lc_id: session[:user_home_lc]}).count}"
+                        %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_leads.list_problematics.where({nearest_lc_id: session[:user_home_lc]}).count}"
+                        %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_leads.list_non_grata.where({nearest_lc_id: session[:user_home_lc]}).count}"
                       %br
                       %tbody
                         -HostPerson.list_leads.where({nearest_lc_id: session[:user_home_lc]}).each do |l|
@@ -67,9 +67,9 @@
                   .table-responsive
                     %br
                     %span
-                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_free.list_favourites.count}"
-                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_free.list_problematics.count}"
-                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_free.list_non_grata.count}"
+                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_free.where({nearest_lc_id: session[:user_home_lc]}).list_favourites.count}"
+                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_free.where({nearest_lc_id: session[:user_home_lc]}).list_problematics.count}"
+                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_free.list_non_grata.where({nearest_lc_id: session[:user_home_lc]}).count}"
                     %br
                     %table.table.table-striped.table-hover
                       %tbody
@@ -125,9 +125,9 @@
                   .table-responsive
                     %br
                     %span
-                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_realized.list_favourites.count}"
-                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_realized.list_problematics.count}"
-                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_realized.list_non_grata.count}"
+                      %button.btn.btn-success.fa.fa-star-o= " #{HostPerson.list_realized.list_favourites.where({nearest_lc_id: session[:user_home_lc]}).count}"
+                      %button.btn.btn-warning.fa.fa-warning= " #{HostPerson.list_realized.list_problematics.where({nearest_lc_id: session[:user_home_lc]}).count}"
+                      %button.btn.btn-danger.fa.fa-ban= " #{HostPerson.list_realized.list_non_grata.where({nearest_lc_id: session[:user_home_lc]}).count}"
                     %br
                     %table.table.table-striped.table-hover
                       %tbody
@@ -152,23 +152,60 @@
       .ibox
         .ibox-content
           .tab-content
-            -HostPerson.all.each do |h|
+            -HostPerson.where({nearest_lc_id: session[:user_home_lc]}).order(created_at: :desc).each do |h|
               .tab-pane{id: h.full_name.gsub(" ","")}
                 .row.m-b-lg
                   .col-lg-4.text-center
                     .m-b-sm
                       %img.img-circle{:alt => "image", :src => "http://3.bp.blogspot.com/-1p6nKAW6NlU/VD7kP9ILp4I/AAAAAAAAAOk/4m8ol2oPEgc/s1600/Whatsapp%2BFunny%2BProfile%2BPictures.jpg", :style => "width: 80px"}
                     %h3= h.full_name
+                    %span= h.date_approach
+                    Data de Abordagem: 
+                    /This functionality must be finished, the controller is not configured
+                    =form_tag action: "set_date_approach", remote: true do 
+                      =hidden_field_tag 'host_id', h.id
+                      %span{id: "h-date-approach-#{h.id}"}
+                        =date_field_tag 'host_approach'
+                    %button.btn.btn-link.btn-xs{id: "edit-h-date-approach-#{h.id}"} 
+                      %i.fa.fa-pencil
                   .col-lg-1.widget.style1
                     .col-xs-5.text-center
                       %h2 0
                       .m-b-sm
                       -if h.is_non_grata == true
-                        %span.badge.badge-danger Nongrata
-                      -if h.is_problematic == true
-                        %span.badge.badge-warning Problemático
-                      -if h.is_favourite == true
-                        %span.badge.badge-success Favorito
+                        %button.btn.btn-danger.btn-rounded.btn-xs Nongrata
+                        =form_tag action: "set_problematic", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Problemático
+                        =form_tag action: "set_favourite", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Favorito
+                      -elsif h.is_problematic == true
+                        =form_tag action: "set_non_grata", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Nongrata
+                        %button.btn.btn-warning.btn-rounded.btn-xs Problemático
+                        =form_tag action: "set_favourite", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Favorito
+                      -elsif h.is_favourite == true
+                        =form_tag action: "set_problematic", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Problemático
+                        =form_tag action: "set_non_grata", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Nongrata
+                        %button.btn.btn-success.btn-rounded.btn-xs Favorito
+                      -else 
+                        =form_tag action: "set_problematic", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Problemático
+                        =form_tag action: "set_non_grata", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Nongrata
+                        =form_tag action: "set_favourite", remote: true do 
+                          =hidden_field_tag 'host_id', h.id
+                          %button.btn.btn-rounded.btn-xs{type: "submit"} Favorito
 
                   .col-lg-6.widget.style1
                     .col-xs-40.text-right
@@ -194,16 +231,44 @@
                     %strong Dados Pessoais
                     %ul.list-group.clear-list
                       %li.list-group-item.fist-item
-                        %span.pull-right= h.phone
+                        %span.pull-right{id: "edit-h-phone-btn-#{h.id}"} 
+                          %button.btn.btn-link{type: "submit"}
+                            %i.fa.fa-pencil
+                        %span.pull-right{id: "h-phone-#{h.id}"}= h.phone
+                        =form_tag(action: "edit_host_phone", remote: true) do 
+                          =hidden_field_tag 'host_id', h.id
+                          %span.pull-right{id: "edit-h-phone-field-#{h.id}"}
+                            = phone_field_tag 'host_phone' 
                         Telefone
                       %li.list-group-item
-                        %span.pull-right= h.email
+                        %span.pull-right{id: "edit-h-email-btn-#{h.id}"} 
+                          %button.btn.btn-link
+                            %i.fa.fa-pencil
+                        %span.pull-right{id: "h-email-#{h.id}"}= h.email
+                        =form_tag(action: "edit_host_email", remote: true) do 
+                          =hidden_field_tag 'host_id', h.id
+                          %span.pull-right{id: "edit-h-email-field-#{h.id}"}
+                            = phone_field_tag 'host_email'
                         Email
                       %li.list-group-item
-                        %span.pull-right= h.address
+                        %span.pull-right{id: "edit-h-address-btn-#{h.id}"}
+                          %button.btn.btn-link
+                            %i.fa.fa-pencil
+                        %span.pull-right{id: "h-address-#{h.id}"}= h.address
+                        =form_tag(action: "edit_host_address", remote: true) do 
+                          =hidden_field_tag 'host_id', h.id
+                          %span.pull-right{id: "edit-h-address-field-#{h.id}"}
+                            = phone_field_tag 'host_address'
                         Endereço
                       %li.list-group-item
-                        %span.pull-right= h.postal_code
+                        %span.pull-right{id: "edit-h-postalcode-btn-#{h.id}"}
+                          %button.btn.btn-link
+                            %i.fa.fa-pencil
+                        %span.pull-right{id: "h-postalcode-#{h.id}"}= h.postal_code
+                        =form_tag(action: "edit_host_postalcode", remote: true) do 
+                          =hidden_field_tag 'host_id', h.id
+                          %span.pull-right{id: "edit-h-postalcode-field-#{h.id}"}
+                            = phone_field_tag 'host_postalcode'
                         CEP
                       %li.list-group-item
                         %span.pull-right= h.state
@@ -226,4 +291,41 @@
                     %hr/
                     %button.btn.btn-w-m.btn-danger Problemas
 
-           
+-HostPerson.where({nearest_lc_id: session[:user_home_lc]}).each do |h|
+  :javascript
+    $("#edit-h-phone-field-#{h.id}").hide();
+    $("#edit-h-email-field-#{h.id}").hide();
+    $("#edit-h-address-field-#{h.id}").hide();
+    $("#edit-h-postalcode-field-#{h.id}").hide();
+    $("#host_phone").hide();
+    $("#h-date-approach-#{h.id}").hide();
+
+    $("#edit-h-phone-btn-#{h.id}").click(function(){
+      $("#h-phone-#{h.id}").toggle();
+      $("#edit-h-phone-field-#{h.id}").toggle();
+      $("#host_phone").fadeToggle(300);
+    });
+
+    $("#edit-h-email-btn-#{h.id}").click(function(){
+      $("#h-email-#{h.id}").toggle();
+      $("#edit-h-email-field-#{h.id}").toggle();
+      $("#host_email").fadeToggle(200);
+    });
+
+    $("#edit-h-address-btn-#{h.id}").click(function(){
+      $("#h-address-#{h.id}").toggle();
+      $("#edit-h-address-field-#{h.id}").toggle();
+      $("#host_address").fadeToggle(200);
+    });
+
+    $("#edit-h-postalcode-btn-#{h.id}").click(function(){
+      $("#h-postalcode-#{h.id}").toggle();
+      $("#edit-h-postalcode-field-#{h.id}").toggle();
+      $("#host_postalcode").fadeToggle(200);
+    });
+
+    $("#edit-h-date-approach-#{h.id}").click(function(){
+      $("#h-date-approach-#{h.id}").toggle(200);
+    });
+
+
