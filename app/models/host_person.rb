@@ -21,7 +21,7 @@ class HostPerson < ActiveRecord::Base
 															and(host[:tmp_who_realized_meeting_id].not_eq(nil)).
 															and(host[:date_approach].not_eq(nil)).
 															and(host[:date_alignment_meeting].lt(Time.now)).
-															and(host[:trainees_vacancy].gt(HostPerson.joins(:trainee_to_hosts).count())) #Trainees vacancy must be greater than the number of trainees associated to the host
+															and(host[:trainees_vacancy].gt(HostPerson.joins(:trainee_to_hosts).count()))) #Trainees vacancy must be greater than the number of trainees associated to the host
 		end
 #FIXME
 	def self.list_allocated
