@@ -21,7 +21,7 @@ handler do |job|
   elsif job.eql?('Get all GIP interested people')
     ExpaRdSync.new.list_igip_people(50)
   end
-  logger.info "Running EXPA #{job} starting #{Time.now}"
+  puts "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
