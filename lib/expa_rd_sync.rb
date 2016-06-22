@@ -226,19 +226,18 @@ class ExpaRdSync
         end
 
         Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+        if person.control_podio.nil?
+          json = {}
+        else
+          json = JSON.parse(person.control_podio)
+        end
+
+        unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
+          json['podio_status'] = 'baziconX'
+          person.control_podio = json.to_json.to_s
+          person.save
+        end
       end
-    end
-
-    if person.control_podio.nil?
-      json = {}
-    else
-      json = JSON.parse(person.control_podio)
-    end
-
-    unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
-      json['podio_status'] = 'baziconX'
-      person.control_podio = json.to_json.to_s
-      person.save
     end
   end
 
