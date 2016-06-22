@@ -117,6 +117,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.1)
+    log4r (1.1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -266,6 +267,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails (~> 4.0, >= 4.0.5)
   json
+  log4r
   mechanize
   minitest
   ngannotate-rails
@@ -287,4 +289,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

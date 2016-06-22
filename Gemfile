@@ -23,6 +23,7 @@ gem 'groupdate'
 gem 'rails'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
+gem 'log4r'
 
 # Usage of databases for Active Record
 gem 'sqlite3', group: :test

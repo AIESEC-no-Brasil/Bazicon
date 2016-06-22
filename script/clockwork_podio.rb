@@ -15,6 +15,7 @@ handler do |job|
   elsif job.eql?('Update Podio')
     ExpaRdSync.new.update_podio
   end
+  logger.info "Running Podio #{job}" + Time.now.to_s
 end
 
 # Define the schedule

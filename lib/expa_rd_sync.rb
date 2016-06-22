@@ -108,6 +108,7 @@ class ExpaRdSync
         update_db_peoples(xp_person)
       end
     end
+    logger.info "Updated #{total_items} people finishing #{Time.now}"
   end
 
   def list_applications
@@ -124,6 +125,7 @@ class ExpaRdSync
         update_db_applications(xp_application)
       end
     end
+    logger.info "Updated #{total_items} applications finishing #{Time.now}"
   end
 
   def list_approved_realized_applications
@@ -148,7 +150,9 @@ class ExpaRdSync
 
   def list_open
     setup_expa_api
-    time = Time.now - 10*60 # 10 minutes windows
+    time = ExpaPerson.get_last_xp_created_at - 60
+    time = Time.now - 10*60 if time.nil? # 10 minutes windows
+
     people = EXPA::People.list_everyone_created_after(time)
     people.each do |xp_person|
       if ExpaPerson.find_by_xp_id(xp_person.id) || ExpaPerson.find_by_xp_email(xp_person.email.downcase)
@@ -160,6 +164,7 @@ class ExpaRdSync
         send_to_rd(person, nil, self.rd_identifiers[:open], nil)
       end
     end
+    logger.info "Listed #{people.length} people finishing #{Time.now}"
   end
 
   def update_podio

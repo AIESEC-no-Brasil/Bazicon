@@ -1,6 +1,14 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'log4r'
+outputter = Log4r::FileOutputter.new('log4r', :filename => "foobar.log")
+outputter.formatter = Log4r::PatternFormatter.new(
+  :date_pattern => "%FT%T.000Z", 
+  :pattern      => "%d [%l] %m"
+)
+logger = Log4r::Logger.new('log4r')
+logger.outputters = [outputter]
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

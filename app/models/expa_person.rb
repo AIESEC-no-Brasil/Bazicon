@@ -263,6 +263,10 @@ class ExpaPerson < ActiveRecord::Base
     end
   end
 
+  def self.get_last_xp_created_at
+    ExpaPerson.pluck(:xp_created_at).order(xp_created_at: :desc).limit(1).first
+  end
+
   private
 
   def downcase_email

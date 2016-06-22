@@ -21,12 +21,13 @@ handler do |job|
   elsif job.eql?('Get all GIP interested people')
     ExpaRdSync.new.list_igip_people(50)
   end
+  logger.info "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
 every(8.minutes, 'list all open people')
-every(30.minutes, 'Get all GCDP interested people')
-every(30.minutes, 'Get all GIP interested people')
+#every(30.minutes, 'Get all GCDP interested people')
+#every(30.minutes, 'Get all GIP interested people')
 every(2.days, 'Update all People', :at => '21:00')
-every(3.days, 'Update all approved and realized Applications', :at => '21:00')
+#every(3.days, 'Update all approved and realized Applications', :at => '21:00')
 every(1.week, 'Update all applications', :at => 'Saturday 21:00')
