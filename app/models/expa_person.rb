@@ -264,7 +264,7 @@ class ExpaPerson < ActiveRecord::Base
   end
 
   def self.get_last_xp_created_at
-    ExpaPerson.pluck(:xp_created_at).order(xp_created_at: :desc).limit(1).first
+    ExpaPerson.order(xp_created_at: :desc).limit(1).first.created_at
   end
 
   private

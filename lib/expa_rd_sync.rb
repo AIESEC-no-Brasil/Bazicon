@@ -124,7 +124,7 @@ class ExpaRdSync
         update_db_peoples(xp_person)
       end
     end
-    logger.info "Updated #{total_items} people finishing #{Time.now}"
+    puts "Updated #{total_items} people finishing #{Time.now}"
   end
 
   def list_applications
@@ -141,7 +141,7 @@ class ExpaRdSync
         update_db_applications(xp_application)
       end
     end
-    logger.info "Updated #{total_items} applications finishing #{Time.now}"
+    puts "Updated #{total_items} applications finishing #{Time.now}"
   end
 
   def list_approved_realized_applications
@@ -180,7 +180,7 @@ class ExpaRdSync
         send_to_rd(person, nil, self.rd_identifiers[:open], nil)
       end
     end
-    logger.info "Listed #{people.length} people finishing #{Time.now}"
+    puts "Listed #{people.length} people finishing #{Time.now}"
   end
 
   def update_podio
@@ -188,65 +188,57 @@ class ExpaRdSync
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
     EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-    people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).order(xp_created_at: :desc)
-    i = 0
+    people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).where("control_podio NOT LIKE '%baziconX%'").order(created_at: :desc)
     people.each do |person|
-      if i < 50
-        if person.control_podio.nil? || JSON.parse(person.control_podio).key?('podio_status')
-          if (person.control_podio.nil? || JSON.parse(person.control_podio)['podio_status'] != 'baziconX') && !person.entity_exchange_lc.nil?
-            if person.interested_program == 'global_volunteer'
-              podio_app_decided_leads = 15290822
-              sub_product = nil
-              sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] + 1 unless person.interested_sub_product.nil?
-            elsif person.interested_program == 'global_talents'
-              podio_app_decided_leads = 15291951
-              sub_product = nil
-              sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] - 4 unless person.interested_sub_product.nil?
-            else
-              podio_app_decided_leads = 15290822 #GCDP
-              sub_product = nil
-            end
-
-            fields = {}
-            fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
-            fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
-            fields['expa-id'] = person.xp_id unless person.xp_id.nil?
-            fields['email'] = [{'type' => 'home', 'value' => person.xp_email}] unless person.xp_email.nil?
-
-            if !person.customized_fields.nil? && JSON.parse(person.customized_fields).key?('telefone')
-              fields['telefone'] = [{'type' => 'home', 'value' => JSON.parse(person.customized_fields)['telefone']}]
-            elsif !person.xp_phone.nil?
-              fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
-            end
-
-            fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1] unless person.entity_exchange_lc.nil?
-            fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
-            fields['sub-produto'] = sub_product unless sub_product.nil?
-
-            unless person.control_podio.nil?
-              fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
-              fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
-            end
-
-            Podio::Item.create(podio_app_decided_leads, {:fields => fields})
-            i = i + 1
-          end
+      if !person.entity_exchange_lc.nil?
+        if person.interested_program == 'global_volunteer'
+          podio_app_decided_leads = 15290822
+          sub_product = nil
+          sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] + 1 unless person.interested_sub_product.nil?
+        elsif person.interested_program == 'global_talents'
+          podio_app_decided_leads = 15291951
+          sub_product = nil
+          sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] - 4 unless person.interested_sub_product.nil?
+        else
+          podio_app_decided_leads = 15290822 #GCDP
+          sub_product = nil
         end
 
-        json = if person.control_podio.nil?
-                 {}
-               else
-                 JSON.parse(person.control_podio)
-               end
+        fields = {}
+        fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
+        fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
+        fields['expa-id'] = person.xp_id unless person.xp_id.nil?
+        fields['email'] = [{'type' => 'home', 'value' => person.xp_email}] unless person.xp_email.nil?
 
-        unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
-          json['podio_status'] = 'baziconX'
-          person.control_podio = json.to_json.to_s
-          person.save
+        if !person.customized_fields.nil? && JSON.parse(person.customized_fields).key?('telefone')
+          fields['telefone'] = [{'type' => 'home', 'value' => JSON.parse(person.customized_fields)['telefone']}]
+        elsif !person.xp_phone.nil?
+          fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
         end
-      else
-        break
+
+        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1] unless person.entity_exchange_lc.nil?
+        fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
+        fields['sub-produto'] = sub_product unless sub_product.nil?
+
+        unless person.control_podio.nil?
+          fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
+          fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
+        end
+
+        Podio::Item.create(podio_app_decided_leads, {:fields => fields})
       end
+    end
+
+    if person.control_podio.nil?
+      json = {}
+    else
+      json = JSON.parse(person.control_podio)
+    end
+
+    unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
+      json['podio_status'] = 'baziconX'
+      person.control_podio = json.to_json.to_s
+      person.save
     end
   end
 
