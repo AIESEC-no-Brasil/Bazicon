@@ -147,7 +147,8 @@ module DigitalTransformation
        'Instagram',
        'Campanha de indicacao',
        'Youth Speak',
-       'Outros']
+       'Outros',
+       'Youtube']
     end
 
     def study_level

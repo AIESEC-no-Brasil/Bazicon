@@ -1,145 +1,141 @@
 #wrapper.gray-bg
   .wrapper.wrapper-content.animated.fadeInRight.center-block
-    .col-xs-2
-    .col-xs-8
-      .col-xs-12
-        .ibox
-          .ibox-content
-            - if params['programa'] == 'GCDP'
-              %h2 Seja o líder que o mundo precisa!
-            - elsif params['programa'] == 'GIP'
-              %h2 Traga o mundo para o seu currículo!
-            = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
-              %input{name: 'programa', value: "#{params['programa']}", hidden: true}
-              %h1
-                .fa.fa-user
-                Informações pessoais
-              %fieldset{:style => "height: auto"}
-                - flash.each do |name, msg|
-                  %p
-                    = content_tag :div, msg.html_safe, class: name
-                .row
-                  .col-xs-6.b-r
-                    .form-group
-                      %label Nome *
-                      %input#name.form-control.required{:name => "name", :type => "text"}
-                    .form-group
-                      %label Sobrenome *
-                      %input#lastname.form-control.required{:name => "lastname", :type => "text"}
-                      .form-group
-                      %label Telefone *
-                      %input#phone.form-control.required{:name => "phone", :type => "text", "data-mask" => "+55 (99) 99999999?9"}
-                  .col-xs-6
-                    .form-group
-                      %label E-mail *
-                      %input#userName.form-control.required.email{:name => "email", :type => "text"}
-                    .form-group
-                      %label Senha *
-                      %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
-              %h1
-                .fa.fa-graduation-cap
-                Escolaridade
-              %fieldset{:style => "height: auto"}
-                .row
+    .col-xs-12
+      .ibox
+        .ibox-content
+          - if params['programa'] == 'GCDP'
+            %h2 Seja o líder que o mundo precisa!
+          - elsif params['programa'] == 'GIP'
+            %h2 Traga o mundo para o seu currículo!
+          = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
+            %input{name: 'programa', value: "#{params['programa']}", hidden: true}
+            %h1
+              .fa.fa-user
+              Pessoal
+            %fieldset{:style => "height: auto"}
+              - flash.each do |name, msg|
+                %p
+                  = content_tag :div, msg.html_safe, class: name
+              .row
+                .col-xs-12.b-r
                   .form-group
-                    .col-xs-6.b-r
-                      #study-level
-                        %label Escolaridade *
-                        %select.form-control.m-b.required#study-level-form{name: 'study-level'}
-                          - for i in 0...DigitalTransformation.study_level.size
-                            - if i == 0
-                              %option{value: ""}
-                                = DigitalTransformation.study_level[i]
-                            -else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.study_level[i]
-                      #university{hidden: true}
-                        %label Universidade *
-                        %select.form-control.m-b#university-form{name: 'university'}
-                          - for i in 0...DigitalTransformation.universities.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.universities[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.universities[i]
-                      #course{hidden: true}
-                        %label Curso *
-                        %select.form-control.m-b#course-form{name: 'course'}
-                          - for i in 0...DigitalTransformation.courses.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.courses[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.courses[i]
-                    .col-xs-6.text-center
+                    %label Nome *
+                    %input#name.form-control.required{:name => "name", :type => "text"}
+                  .form-group
+                    %label Sobrenome *
+                    %input#lastname.form-control.required{:name => "lastname", :type => "text"}
+                    .form-group
+                    %label Telefone *
+                    %input#phone.form-control.required{:name => "phone", :type => "text", "data-mask" => "+55 (99) 99999999?9"}
+                  .form-group
+                    %label E-mail *
+                    %input#userName.form-control.required.email{:name => "email", :type => "text"}
+                  .form-group
+                    %label Senha *
+                    %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
+            %h1
+              .fa.fa-graduation-cap
+              Estudo
+            %fieldset{:style => "height: auto"}
+              .row
+                .form-group
+                  .col-xs-12.b-r
+                    #study-level
+                      %label Escolaridade *
+                      %select.form-control.m-b.required#study-level-form{name: 'study-level'}
+                        - for i in 0...DigitalTransformation.study_level.size
+                          - if i == 0
+                            %option{value: ""}
+                              = DigitalTransformation.study_level[i]
+                          -else
+                            %option{value: "#{i}"}
+                              = DigitalTransformation.study_level[i]
+                    #university{hidden: true}
+                      %label Universidade *
+                      %select.form-control.m-b#university-form{name: 'university'}
+                        - for i in 0...DigitalTransformation.universities.size
+                          - if i == 0
+                            %option{value: ''}
+                              = DigitalTransformation.universities[i]
+                          - else
+                            %option{value: "#{i}"}
+                              = DigitalTransformation.universities[i]
+                    #course{hidden: true}
+                      %label Curso *
+                      %select.form-control.m-b#course-form{name: 'course'}
+                        - for i in 0...DigitalTransformation.courses.size
+                          - if i == 0
+                            %option{value: ''}
+                              = DigitalTransformation.courses[i]
+                          - else
+                            %option{value: "#{i}"}
+                              = DigitalTransformation.courses[i]
+                    %center
                       .fa.big-icon.fa-graduation-cap{style: 'color: gray'}
-              %h1
-                .fa.fa-plane
-                AIESEC
-              %fieldset{:style => "height: auto"}
-                .row
-                  .form-group
-                    .col-xs-6.b-r
-                      #sub-productrm-control.m-b.required{name: 'sub-product'}
-                        - if params['programa'] == 'GCDP'
-                          %label Região de interesse *
-                          %select.form-control.m-b.required{name: 'sub-product'}
-                            - for i in 0...DigitalTransformation.sub_product_global_citizen.size
-                              - if i == 0
-                                %option{value: ''}
-                                  = DigitalTransformation.sub_product_global_citizen[i]
-                              - else
-                                %option{value: "#{i}"}
-                                  = DigitalTransformation.sub_product_global_citizen[i]
-                        - elsif params['programa'] == 'GIP'
-                          %label Sub-produto de interesse *
-                          %select.form-control.m-b.required{name: 'sub-product'}
-                            - for i in 0...DigitalTransformation.sub_product_global_talent.size
-                              - if i == 0
-                                %option{value: ''}
-                                  = DigitalTransformation.sub_product_global_citizen[i]
-                              - else
-                                %option{value: "#{i}"}
-                                  = DigitalTransformation.sub_product_global_citizen[i]
-                      #how-get-to-know-aiesec
-                        %label Como conheceu a AIESEC? *
-                        %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
-                          - for i in 0...DigitalTransformation.how_got_to_know_aiesec.size
+            %h1
+              .fa.fa-plane
+              Social
+            %fieldset{:style => "height: auto"}
+              .row
+                .form-group
+                  .col-xs-12.b-r
+                    #sub-productrm-control.m-b.required{name: 'sub-product'}
+                      - if params['programa'] == 'GCDP'
+                        %label Região de interesse *
+                        %select.form-control.m-b.required{name: 'sub-product'}
+                          - for i in 0...DigitalTransformation.sub_product_global_citizen.size
                             - if i == 0
                               %option{value: ''}
-                                = DigitalTransformation.how_got_to_know_aiesec[i]
+                                = DigitalTransformation.sub_product_global_citizen[i]
                             - else
                               %option{value: "#{i}"}
-                                = DigitalTransformation.how_got_to_know_aiesec[i]
-                        %label AIESEC mais próxima *
-                        %select.form-control.m-b.required{name: 'nearest_lc'}
-                          - if params['programa'] == 'GCDP'
-                            - for i in 0...DigitalTransformation.entities_ogcdp.size
-                              - if i == 0
-                                %option{value: ''}
-                                  = DigitalTransformation.entities_ogcdp[i]
-                              - else
-                                %option{value: "#{i}"}
-                                  = DigitalTransformation.entities_ogcdp[i]
-                          - elsif params['programa'] == 'GIP'
-                            - for i in 0...DigitalTransformation.entities_ogip.size
-                              - if i == 0
-                                %option{value: ''}
-                                  = DigitalTransformation.entities_ogip[i]
-                              - else
-                                %option{value: "#{i}"}
-                                  = DigitalTransformation.entities_ogip[i]
-                      %input#accepTerms.required{name: 'acceptTerms', type: 'checkbox', 'aria-required' => true}
-                      %label{for: 'acceptTerms'}
-                        Eu concordo com os
-                        %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
+                                = DigitalTransformation.sub_product_global_citizen[i]
+                      - elsif params['programa'] == 'GIP'
+                        %label Sub-produto de interesse *
+                        %select.form-control.m-b.required{name: 'sub-product'}
+                          - for i in 0...DigitalTransformation.sub_product_global_talent.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.sub_product_global_citizen[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.sub_product_global_citizen[i]
+                    #how-get-to-know-aiesec
+                      %label Como conheceu a AIESEC? *
+                      %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
+                        - for i in 0...DigitalTransformation.how_got_to_know_aiesec.size
+                          - if i == 0
+                            %option{value: ''}
+                              = DigitalTransformation.how_got_to_know_aiesec[i]
+                          - else
+                            %option{value: "#{i}"}
+                              = DigitalTransformation.how_got_to_know_aiesec[i]
+                      %label AIESEC mais próxima *
+                      %select.form-control.m-b.required{name: 'nearest_lc'}
+                        - if params['programa'] == 'GCDP'
+                          - for i in 0...DigitalTransformation.entities_ogcdp.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.entities_ogcdp[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.entities_ogcdp[i]
+                        - elsif params['programa'] == 'GIP'
+                          - for i in 0...DigitalTransformation.entities_ogip.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.entities_ogip[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.entities_ogip[i]
+                    %input#accepTerms.required{name: 'acceptTerms', type: 'checkbox', 'aria-required' => true}
+                    %label{for: 'acceptTerms'}
+                      Eu concordo com os
+                      %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
 
-                    .col-xs-6.text-center
+                    %center
                       .fa.big-icon.fa-plane{style: 'color: gray'}
 
-    .col-xs-2
 - content_for :javascript do
   :javascript
     $(function() {
