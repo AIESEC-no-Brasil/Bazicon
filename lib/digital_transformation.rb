@@ -148,7 +148,8 @@ module DigitalTransformation
        'Campanha de indicacao',
        'Youth Speak',
        'Outros',
-       'Youtube']
+       'Youtube',
+       'Blog']
     end
 
     def study_level

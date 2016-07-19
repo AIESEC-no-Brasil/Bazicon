@@ -3,7 +3,7 @@ class ExpaPerson < ActiveRecord::Base
   enum xp_gender: [:male, :female, :prefer_not_to_answer]
   enum interested_program: [:global_volunteer, :global_talents]
   enum interested_sub_product: [:global_volunteer_arab, :global_volunteer_east_europe, :global_volunteer_africa, :global_volunteer_asia, :global_volunteer_latam, :global_talents_start_up, :global_talents_educacional, :global_talents_IT, :global_talents_management]
-  enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :how_got_to_know_aiesec_other, :youtube]
+  enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :how_got_to_know_aiesec_other, :youtube, :blog]
   enum role: [:role_mc, :role_eb, :role_other]
 
   belongs_to :xp_home_lc, class_name: 'ExpaOffice'
