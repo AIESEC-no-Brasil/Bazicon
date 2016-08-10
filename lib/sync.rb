@@ -79,7 +79,7 @@ class Sync
       time = SyncControl.get_last('applied_people').strftime('%F')
       time = Date.today.to_s if time.nil?
 
-      params = {'per_page' => 1000}
+      params = {'per_page' => 500}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
@@ -99,13 +99,14 @@ class Sync
             application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
             application.save
 
-            send_to_rd(application.xp_person, nil, status, nil) if xp_person.status != person.xp_status
+            person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
+            send_to_rd(application.xp_person, nil, status, nil) if !person.nil? && application.xp_person.xp_status != person.xp_status
           end
         end
       end
 
       sync.get_error = false
-      sync.count_itens = total_items
+      sync.count_itens = total_items.length
       sync.end_sync = DateTime.now
       sync.save
     end
@@ -285,5 +286,46 @@ class Sync
       xp = EXPA.setup()
       xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
     end
+  end
+
+  def big_sync(from,to)
+    puts 'STARTING BIG SYNC' 
+    SyncControl.new do |sync|
+      sync.start_sync = DateTime.now
+      sync.sync_type = 'big_sync'
+
+      setup_expa_api
+
+      params = {'per_page' => 1000}
+      params['filters[created_at][from]'] = from.to_s
+      params['filters[created_at][to]'] = to.to_s
+      params['filters[person_home_mc][]'] = 1606 #from MC Brazil
+      params['filters[opportunity_programme][]'] = [1] #GCDP
+      total_items = EXPA::Applications.list_by_param(params)
+
+      if !total_items.nil? && total_items.length > 0
+        total_pages = (total_items.length / params['per_page']) + 1
+
+        for i in total_pages.downto(1)
+          params['page'] = i
+          applications = EXPA::Applications.list_by_param(params)
+          applications.each do |xp_application|
+            application = ExpaApplication.find_by_xp_id(xp_application.id)
+            application = ExpaApplication.new if application.nil?
+
+            application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
+            application.save
+
+            person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
+          end
+        end
+      end
+
+      sync.get_error = false
+      sync.count_itens = total_items.length
+      sync.end_sync = DateTime.now
+      sync.save
+    end
+    puts 'FINISHING BIG SYNC' 
   end
 end

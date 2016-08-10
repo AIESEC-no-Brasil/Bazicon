@@ -269,7 +269,7 @@ class DigitalTransformationController < ApplicationController
       xp_sync = ExpaRdSync.new
       xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
     end
-    redirect_to 'https://auth.aiesec.org/users/sign_in'
+    redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
   end
 
   private
