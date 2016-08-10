@@ -11,17 +11,17 @@ handler do |job|
   if job.eql?('list new open people')
     Sync.new.get_new_people_from_expa
   elsif job.eql?('list new open applications and update people')
-    Sync.new.update_status('created_at',[1])
+    Sync.new.update_status('open',[1])
   elsif job.eql?('list new accepted applications and update people')
-    Sync.new.update_status('date_matched',[1])
+    Sync.new.update_status('accepted',[1])
   elsif job.eql?('list new in progress applications and update people')
-    Sync.new.update_status('date_an_signed',[1])
+    Sync.new.update_status('in_progress',[1])
   elsif job.eql?('list new approved applications and update people')
-    Sync.new.update_status('date_approved',[1])
+    Sync.new.update_status('approved',[1])
   elsif job.eql?('list new realized applications and update people')
-    Sync.new.update_status('experience_start_date',[1])
+    Sync.new.update_status('realized',[1])
   elsif job.eql?('list new completed applications and update people')
-    Sync.new.update_status('experience_end_date',[1])
+    Sync.new.update_status('completed',[1])
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
