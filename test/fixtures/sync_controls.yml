@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 2016-07-21 11:45:34
+  end: 2016-07-21 11:45:34
+  type: MyText
+  count_teins: 1
+  get_error: false
+
+two:
+  start: 2016-07-21 11:45:34
+  end: 2016-07-21 11:45:34
+  type: MyText
+  count_teins: 1
+  get_error: false

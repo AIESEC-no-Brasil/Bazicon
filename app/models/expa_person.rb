@@ -123,6 +123,7 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_email = data.email unless data.email.nil?
     self.xp_url = data.url.to_s unless data.url.nil?
     self.xp_birthday_date = data.birthday_date unless data.birthday_date.nil?
+    self.xp_first_name = data.first_name unless data.first_name.nil?
     self.xp_full_name = data.full_name unless data.full_name.nil?
     self.xp_last_name = data.last_name unless data.last_name.nil?
     self.xp_profile_photo_url = data.profile_photo_url.to_s unless data.profile_photo_url.nil?
@@ -138,29 +139,29 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_introduction = data.introduction unless data.introduction.nil?
     self.xp_aiesec_email = data.aiesec_email unless data.aiesec_email.nil?
     self.xp_payment = data.payment unless data.payment.nil?
-    #self.xp_programmes = data.programmes #TODO: struct
     self.xp_views = data.views unless data.views.nil?
     self.xp_favourites_count = data.favourites_count.to_i unless data.favourites_count.nil?
     self.xp_contacted_at = data.contacted_at unless data.contacted_at.nil?
     self.xp_contacted_by = data.contacted_by unless data.contacted_by.nil?
     self.xp_gender = data.gender.downcase.gsub(' ','_') unless data.gender.nil?
-    self.xp_address_info = data.address_info unless data.address_info.nil?
-    self.xp_contact_info = data.contact_info unless data.contact_info.nil?
+    self.xp_address = data.address_info unless data.address_info.nil?
+    self.xp_contact = data.contact_info unless data.contact_info.nil?
     self.xp_current_office = current_office unless current_office.nil?
     self.xp_cv_info = data.cv_info unless data.cv_info.nil?
     self.xp_profile_photos_urls = data.profile_photos_urls unless data.profile_photos_urls.nil?
     self.xp_cover_photo_urls = data.cover_photo_urls unless data.cover_photo_urls.nil?
-    #self.xp_teams = data.teams #TODO: struct
-    #self.xp_positions = data.positions #TODO: struct
-    self.xp_profile = data.profile unless data.profile.nil?
-    #self.xp_academic_experience = data.academic_experience #TODO: struct
-    #self.xp_professional_experience = data.professional_experience #TODO: struct
-    #self.xp_managers = data.managers #TODO: struct
+    self.xp_costumer_profile = data.profile unless data.profile.nil?
+    self.xp_academic_xps = data.academic_experience
+    self.xp_professional_xps = data.professional_experience
     self.xp_missing_profile_fields = data.missing_profile_fields unless data.missing_profile_fields.nil?
     self.xp_nps_score = data.nps_score.to_i unless data.nps_score.nil?
-    #self.xp_current_experience = data.current_experience #TODO: struct
     self.xp_permissions = data.permissions unless data.permissions.nil?
     self.xp_current_position = current_position unless current_position.nil?
+    self.xp_programmes = data.programmes
+    #self.xp_teams = data.teams #TODO: struct
+    #self.xp_positions = data.positions #TODO: struct
+    #self.xp_current_experience = data.current_experience #TODO: struct
+    #self.xp_managers = data.managers #TODO: struct
   end
 
   def get_role
@@ -265,6 +266,12 @@ class ExpaPerson < ActiveRecord::Base
 
   def self.get_last_xp_created_at
     ExpaPerson.order(xp_created_at: :desc).limit(1).first.created_at
+  end
+
+  #param a Hash from EXPA API
+  #reuturn boolean if the person is on the database
+  def self.exist?(person)
+    (!person.id.nil? && ExpaPerson.find_by_xp_id(person.id)) || (!person.email.nil? && ExpaPerson.find_by_xp_email(person.email.downcase))
   end
 
   private

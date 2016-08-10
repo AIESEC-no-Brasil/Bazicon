@@ -8,26 +8,29 @@ include Clockwork
 
 # Define the jobs
 handler do |job|
-  if job.eql?('list all open people')
-    ExpaRdSync.new.list_open
-  elsif job.eql?('Update all People')
-    ExpaRdSync.new.list_people
-  elsif job.eql?('Update all approved and realized Applications')
-    ExpaRdSync.new.list_approved_realized_applications
-  elsif job.eql?('Update all applications')
-    ExpaRdSync.new.list_applications
-  elsif job.eql?('Get all GCDP interested people')
-    ExpaRdSync.new.list_igcdp_people(50)
-  elsif job.eql?('Get all GIP interested people')
-    ExpaRdSync.new.list_igip_people(50)
+  if job.eql?('list new open people')
+    Sync.new.get_new_people_from_expa
+  elsif job.eql?('list new open applications and update people')
+    Sync.new.update_status('created_at',[1])
+  elsif job.eql?('list new accepted applications and update people')
+    Sync.new.update_status('date_matched',[1])
+  elsif job.eql?('list new in progress applications and update people')
+    Sync.new.update_status('date_an_signed',[1])
+  elsif job.eql?('list new approved applications and update people')
+    Sync.new.update_status('date_approved',[1])
+  elsif job.eql?('list new realized applications and update people')
+    Sync.new.update_status('experience_start_date',[1])
+  elsif job.eql?('list new completed applications and update people')
+    Sync.new.update_status('experience_end_date',[1])
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
-every(8.minutes, 'list all open people')
-#every(30.minutes, 'Get all GCDP interested people')
-#every(30.minutes, 'Get all GIP interested people')
-every(2.days, 'Update all People', :at => '21:00')
-#every(3.days, 'Update all approved and realized Applications', :at => '21:00')
-every(1.week, 'Update all applications', :at => 'Saturday 21:00')
+every(20.minutes, 'list new open people')
+every(4.hours, 'list new open applications and update people')
+every(3.hours, 'list new accepted applications and update people')
+every(3.hours, 'list new in progress applications and update people')
+every(3.hours, 'list new approved applications and update people')
+every(3.hours, 'list new realized applications and update people')
+every(3.hours, 'list new completed applications and update people')
