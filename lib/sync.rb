@@ -36,6 +36,7 @@ class Sync
       people = EXPA::People.list_everyone_created_after(time)
       people.each do |xp_person|
         if ExpaPerson.exist?(xp_person)
+          xp_person = EXPA::People.find_by_id(xp_person.id)
           person = ExpaPerson.find_by_xp_id(xp_person.id)
           person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
           person.update_from_expa(xp_person)
@@ -93,6 +94,9 @@ class Sync
           params['page'] = i
           applications = EXPA::Applications.list_by_param(params)
           applications.each do |xp_application|
+            xp_application = EXPA::Applications.find_by_id(xp_application.id)
+            xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+            xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
             application = ExpaApplication.find_by_xp_id(xp_application.id)
             application = ExpaApplication.new if application.nil?
 
@@ -310,6 +314,9 @@ class Sync
           params['page'] = i
           applications = EXPA::Applications.list_by_param(params)
           applications.each do |xp_application|
+            xp_application = EXPA::Applications.find_by_id(xp_application.id)
+            xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+            xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
             application = ExpaApplication.find_by_xp_id(xp_application.id)
             application = ExpaApplication.new if application.nil?
 
