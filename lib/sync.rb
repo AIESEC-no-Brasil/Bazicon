@@ -80,7 +80,7 @@ class Sync
       time = SyncControl.get_last('applied_people').strftime('%F')
       time = Date.today.to_s if time.nil?
 
-      params = {'per_page' => 500}
+      params = {'per_page' => 100}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
@@ -293,7 +293,7 @@ class Sync
   end
 
   def big_sync(from,to)
-    puts 'STARTING BIG SYNC' 
+    puts 'STARTING BIG SYNC'
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now
       sync.sync_type = 'big_sync'
@@ -320,10 +320,8 @@ class Sync
             application = ExpaApplication.find_by_xp_id(xp_application.id)
             application = ExpaApplication.new if application.nil?
 
-            application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
+            application.update_from_expa(xp_application)
             application.save
-
-            person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
           end
         end
       end
