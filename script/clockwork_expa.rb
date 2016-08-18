@@ -23,7 +23,7 @@ handler do |job|
   elsif job.eql?('list new completed applications and update people')
     Sync.new.update_status('completed',[1])
   elsif job.eql?('list all applications and update people')
-    Sync.new.big_sync(Date.new(2015,01,01),Date.new(2016,08,10))
+    Sync.new.big_sync(Date.new(2016,6,1),Date.new(2016,6,30))
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
@@ -36,4 +36,4 @@ every(3.hours, 'list new in progress applications and update people')
 every(3.hours, 'list new approved applications and update people')
 every(3.hours, 'list new realized applications and update people')
 every(3.hours, 'list new completed applications and update people')
-every(1.day, 'list all applications and update people', :at => '23:50')
+#every(1.day, 'list all applications and update people', :at => '11:47')

@@ -3,8 +3,9 @@ class ExpaPerson < ActiveRecord::Base
   enum xp_gender: [:male, :female, :prefer_not_to_answer]
   enum interested_program: [:global_volunteer, :global_talents]
   enum interested_sub_product: [:global_volunteer_arab, :global_volunteer_east_europe, :global_volunteer_africa, :global_volunteer_asia, :global_volunteer_latam, :global_talents_start_up, :global_talents_educacional, :global_talents_IT, :global_talents_management]
-  enum how_got_to_know_aiesec: [:facebook, :friends_family, :google, :posters, :tv, :twitter, :academic_center, :junior_company, :flyer, :disclouse_in_classroom, :global_village, :stand, :instagram, :indication_campaign, :youth_speak, :how_got_to_know_aiesec_other, :youtube, :blog]
+  enum how_got_to_know_aiesec: {facebook: 1, friends_family: 2, google: 3, posters: 4, tv: 5, twitter: 6, academic_center: 7, junior_company: 8, flyer: 9, disclouse_in_classroom: 10, global_village: 11, stand: 12, instagram:13, indication_campaign: 14, youth_speak: 15, how_got_to_know_aiesec_other: 16, youtube: 17, blog: 18}
   enum role: [:role_mc, :role_eb, :role_other]
+  enum travel_interest: {six_months: 1, one_year: 2, just_curious: 3}
 
   belongs_to :xp_home_lc, class_name: 'ExpaOffice'
   belongs_to :xp_home_mc, class_name: 'ExpaOffice'
@@ -144,20 +145,20 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_contacted_at = data.contacted_at unless data.contacted_at.nil?
     self.xp_contacted_by = data.contacted_by unless data.contacted_by.nil?
     self.xp_gender = data.gender.downcase.gsub(' ','_') unless data.gender.nil?
-    self.xp_address = data.address_info unless data.address_info.nil?
-    self.xp_contact = data.contact_info unless data.contact_info.nil?
+    self.xp_address = (data.address_info.nil?) ? {} : data.address_info 
+    self.xp_contact = (data.contact_info.nil?) ? {} : data.contact_info
     self.xp_current_office = current_office unless current_office.nil?
     self.xp_cv_info = data.cv_info unless data.cv_info.nil?
     self.xp_profile_photos_urls = data.profile_photos_urls unless data.profile_photos_urls.nil?
     self.xp_cover_photo_urls = data.cover_photo_urls unless data.cover_photo_urls.nil?
-    self.xp_costumer_profile = data.profile unless data.profile.nil?
-    self.xp_academic_xps = data.academic_experience
-    self.xp_professional_xps = data.professional_experience
-    self.xp_missing_profile_fields = data.missing_profile_fields unless data.missing_profile_fields.nil?
+    self.xp_costumer_profile = (data.profile.nil?) ? {} : data.profile
+    self.xp_academic_xps = (data.academic_experience.nil?) ? {} : data.academic_experience
+    self.xp_professional_xps = (data.professional_experience.nil?) ? {} : data.professional_experience
+    self.xp_missing_profile_fields = (data.missing_profile_fields.nil?) ? {} : data.missing_profile_fields
     self.xp_nps_score = data.nps_score.to_i unless data.nps_score.nil?
     self.xp_permissions = data.permissions unless data.permissions.nil?
     self.xp_current_position = current_position unless current_position.nil?
-    self.xp_programmes = data.programmes
+    self.xp_programmes = (data.programmes.nil?) ? {} : data.programmes
     #self.xp_teams = data.teams #TODO: struct
     #self.xp_positions = data.positions #TODO: struct
     #self.xp_current_experience = data.current_experience #TODO: struct

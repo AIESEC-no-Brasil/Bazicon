@@ -60,7 +60,6 @@ class SyncTest < Minitest::Test
     puts res
     #total_items = EXPA::Applications.list_by_param(params)
   end
-=end
   def test_list_opens
     assert(ExpaPerson.all.count == 0, 'DB have registers. Make sure to clean DB before run tests, and it has ' + ExpaPerson.all.count.to_s)
     Sync.new.get_new_people_from_expa
@@ -101,6 +100,15 @@ class SyncTest < Minitest::Test
     assert(ExpaApplication.all.count == 0, 'DB have registers. Make sure to clean DB before run tests, and it has ' + ExpaApplication.all.count.to_s)
     Sync.new.update_status('completed', [1])
     assert(ExpaApplication.all.count > 1, 'DB should have more than 1 register, but it has ' + ExpaApplication.all.count.to_s)
+  end
+=end
+  def test_update_podio_with_new_fields
+    assert(ExpaApplication.all.count == 0, 'DB have registers. Make sure to clean DB before run tests, and it has ' + ExpaApplication.all.count.to_s)
+    ExpaOffice.new(id:20,xp_full_name:'AIESEC in Aracaju',xp_id:100,xp_name:'ARACAJU').save
+    ExpaPerson.new(xp_id:299099230,xp_full_name: 'Robozinho dos testes',xp_email: 'robozobo@hahahah',how_got_to_know_aiesec:18,
+      want_contact_by_email: true,want_contact_by_phone: false, want_contact_by_whatsapp: true,travel_interest:3,
+      control_podio:'{}',entity_exchange_lc_id:20).save
+    Sync.new.update_podio
   end
 end
 

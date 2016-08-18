@@ -18,12 +18,12 @@ development:
 
 test:
     adapter: postgresql
-    encoding: <%= ENV["DEVELOPMENT_UNICODE"] %>
-    database: <%= ENV["DEVELOPMENT_DATABASE"] %>
-    username: <%= ENV["DEVELOPMENT_USERNAME"] %>
-    password: <%= ENV["DEVELOPMENT_PASSWORD"] %>
-    host: <%= ENV["DEVELOPMENT_HOST"] %>
-    port: <%= ENV["DEVELOPMENT_POST"] %>
+    encoding: <%= ENV["TEST_UNICODE"] %>
+    database: <%= ENV["TEST_DATABASE"] %>
+    username: <%= ENV["TEST_USERNAME"] %>
+    password: <%= ENV["TEST_PASSWORD"] %>
+    host: <%= ENV["TEST_HOST"] %>
+    port: <%= ENV["TEST_POST"] %>
 #  adapter: sqlite3
 #  pool: 5
 #  timeout: 5000

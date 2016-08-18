@@ -23,6 +23,14 @@ module DigitalTransformation
        'Gestão']
     end
 
+    def travel_interest
+      [ 'Preferência de viagem',
+       'Viajar em até 6 meses',
+       'Viajar em até 1 ano',
+       'Sem previsão de viagem, mas quero conhecer mais',
+      ]
+    end
+
     def hash_entities_podio_expa
       {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
        'ALFENAS' => {'ids' => [479,362627844], 'programs' => ['oGCDP']},

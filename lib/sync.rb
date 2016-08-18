@@ -159,11 +159,20 @@ class Sync
         end
 
         unless person.how_got_to_know_aiesec.nil?
-          fields['como-conheceu-a-aiesec'] = person.how_got_to_know_aiesec.to_i
+          fields['como-conheceu-a-aiesec'] = ExpaPerson.how_got_to_know_aiesecs[person.how_got_to_know_aiesec]
         end
-        puts 'Como como-conheceu-a-aiesec: ' + person.how_got_to_know_aiesec.to_i.to_s
 
-        Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+        unless person.travel_interest.nil?
+          fields['prioridade-de-contato'] = ExpaPerson.travel_interests[person.travel_interest]
+        end
+
+        contato = []
+        contato << 1 if person.want_contact_by_email
+        contato << 2 if person.want_contact_by_phone
+        contato << 3 if person.want_contact_by_whatsapp
+        fields['preferencia-de-contato'] = contato
+
+        puts Podio::Item.create(podio_app_decided_leads, {:fields => fields})
         if person.control_podio.nil?
           json = {}
         else
@@ -211,7 +220,6 @@ class Sync
           return
         end
       end
-      puts item
     end
   end
 
@@ -300,12 +308,13 @@ class Sync
 
       setup_expa_api
 
-      params = {'per_page' => 1000}
+      params = {'per_page' => 500}
       params['filters[created_at][from]'] = from.to_s
       params['filters[created_at][to]'] = to.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
       params['filters[opportunity_programme][]'] = [1] #GCDP
       total_items = EXPA::Applications.list_by_param(params)
+      puts 'Esses negos tudo: ' + total_items.length.to_s
 
       if !total_items.nil? && total_items.length > 0
         total_pages = (total_items.length / params['per_page']) + 1
@@ -314,14 +323,21 @@ class Sync
           params['page'] = i
           applications = EXPA::Applications.list_by_param(params)
           applications.each do |xp_application|
-            xp_application = EXPA::Applications.find_by_id(xp_application.id)
-            xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
-            xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-            application = ExpaApplication.find_by_xp_id(xp_application.id)
-            application = ExpaApplication.new if application.nil?
+            begin
+              xp_application = EXPA::Applications.find_by_id(xp_application.id)
+              xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+              xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
+              application = ExpaApplication.find_by_xp_id(xp_application.id)
+              application = ExpaApplication.new if application.nil?
 
-            application.update_from_expa(xp_application)
-            application.save
+              application.update_from_expa(xp_application)
+              application.save
+            rescue => exception
+              puts 'ACHAR O BUG'
+              puts xp_application.id unless xp_application.id.nil?
+              puts exception.to_s
+              puts exception.backtrace
+            end
           end
         end
       end

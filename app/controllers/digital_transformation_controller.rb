@@ -135,6 +135,12 @@ class DigitalTransformationController < ApplicationController
     course = params['course']
     study_level = params['study-level']
     lc = params['nearest_lc']
+    travel_interest = params['travel_interest']
+    want_contact_by_email = params['want_contact_by_email']
+    want_contact_by_phone = params['want_contact_by_phone']
+    want_contact_by_whatsapp = params['want_contact_by_whatsapp']
+    puts want_contact_by_email
+    puts want_contact_by_phone
 
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
@@ -264,9 +270,13 @@ class DigitalTransformationController < ApplicationController
 
       #como conheceu a AIESEC
       person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
+      person.travel_interest = travel_interest.to_i
+      person.want_contact_by_email = (want_contact_by_email == 'on') ? true : false
+      person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
+      person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
 
       person.save(validate: false)
-      xp_sync = ExpaRdSync.new
+      xp_sync = Sync.new
       xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
     end
     redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
