@@ -287,7 +287,7 @@ class Sync
     req.body = json_to_rd.to_json
     begin
       response = https.request(req)
-      puts 'RD Message: '+response.message
+      #puts 'RD Message: '+response.message
     rescue => exception
       puts exception.to_s
     end
@@ -308,7 +308,7 @@ class Sync
 
       setup_expa_api
 
-      params = {'per_page' => 500}
+      params = {'per_page' => 200}
       params['filters[created_at][from]'] = from.to_s
       params['filters[created_at][to]'] = to.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
@@ -348,5 +348,28 @@ class Sync
       sync.save
     end
     puts 'FINISHING BIG SYNC' 
+  end
+
+  def upload_applications_with_error(applications)
+    setup_expa_api
+    applications.each do |app_id|
+      puts 'loop'
+      begin
+        xp_application = EXPA::Applications.find_by_id(app_id)
+        xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+        xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
+        application = ExpaApplication.find_by_xp_id(xp_application.id)
+        application = ExpaApplication.new if application.nil?
+
+        application.update_from_expa(xp_application)
+        application.save
+      rescue => exception
+        puts 'ACHAR O BUG'
+        puts xp_application.id unless xp_application.id.nil?
+        puts exception.to_s
+        puts exception.backtrace
+      end
+    end
+    puts 'end loop'
   end
 end

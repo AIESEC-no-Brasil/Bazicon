@@ -101,7 +101,6 @@ class SyncTest < Minitest::Test
     Sync.new.update_status('completed', [1])
     assert(ExpaApplication.all.count > 1, 'DB should have more than 1 register, but it has ' + ExpaApplication.all.count.to_s)
   end
-=end
   def test_update_podio_with_new_fields
     assert(ExpaApplication.all.count == 0, 'DB have registers. Make sure to clean DB before run tests, and it has ' + ExpaApplication.all.count.to_s)
     ExpaOffice.new(id:20,xp_full_name:'AIESEC in Aracaju',xp_id:100,xp_name:'ARACAJU').save
@@ -109,6 +108,10 @@ class SyncTest < Minitest::Test
       want_contact_by_email: true,want_contact_by_phone: false, want_contact_by_whatsapp: true,travel_interest:3,
       control_podio:'{}',entity_exchange_lc_id:20).save
     Sync.new.update_podio
+  end
+=end
+  def test_upload_applications_with_error
+    Sync.new.upload_applications_with_error([1893278,1895086,1895304,1891660,1891689,1891729,1891731,1891738])
   end
 end
 

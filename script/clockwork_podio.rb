@@ -19,6 +19,5 @@ handler do |job|
 end
 
 # Define the schedule
-#every(8.minutes, 'list all open people')
-every(10.minutes, 'Get offline lead from Podio and send them to RD')
+every(3.hours, 'Get offline lead from Podio and send them to RD')
 every(30.minutes, 'Update Podio')

@@ -20,7 +20,7 @@ class ExpaOpportunity < ActiveRecord::Base
     end
     unless data.host_lc.nil?
       host_lc = ExpaOffice.find_by_xp_id(data.host_lc.id)
-      if office.nil?
+      if host_lc.nil?
         host_lc = ExpaOffice.new
         host_lc.update_from_expa(data.host_lc)
         host_lc.save
@@ -28,7 +28,7 @@ class ExpaOpportunity < ActiveRecord::Base
     end
     unless data.home_lc.nil?
       home_lc = ExpaOffice.find_by_xp_id(data.home_lc.id)
-      if office.nil?
+      if home_lc.nil?
         home_lc = ExpaOffice.new
         home_lc.update_from_expa(data.home_lc)
         home_lc.save

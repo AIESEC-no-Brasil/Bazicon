@@ -139,8 +139,6 @@ class DigitalTransformationController < ApplicationController
     want_contact_by_email = params['want_contact_by_email']
     want_contact_by_phone = params['want_contact_by_phone']
     want_contact_by_whatsapp = params['want_contact_by_whatsapp']
-    puts want_contact_by_email
-    puts want_contact_by_phone
 
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
@@ -186,6 +184,7 @@ class DigitalTransformationController < ApplicationController
     rescue => exception
       #TODO insert sign up error screen. This will be useful when EXPA/OP get offline
       puts exception.to_s
+      puts email + ' ' + name + ' ' + lastname + ' ' + password + ' ' + DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0].to_s + ' ' + DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i].to_s
     ensure
       person = ExpaPerson.new
       person.xp_email = email.downcase

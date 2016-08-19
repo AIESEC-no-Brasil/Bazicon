@@ -1,0 +1,5 @@
+WARN: Unresolved specs during Gem::Specification.reset:
+      minitest (~> 5.1)
+WARN: Clearing out unresolved specs.
+Please report a bug if this causes problems.
+I, [2016-08-19T13:49:04.729530 #14752]  INFO -- : Starting clock for 0 events: [  ]

@@ -1,0 +1,10 @@
+WARN: Unresolved specs during Gem::Specification.reset:
+      minitest (~> 5.1)
+WARN: Clearing out unresolved specs.
+Please report a bug if this causes problems.
+I, [2016-08-19T13:49:04.714401 #14751]  INFO -- : Starting clock for 1 events: [ list all applications and update people ]
+I, [2016-08-19T13:50:00.001174 #14751]  INFO -- : Triggering 'list all applications and update people'
+STARTING BIG SYNC
+Esses negos tudo: 200
+FINISHING BIG SYNC
+Running EXPA list all applications and update people starting 2016-08-19 14:46:14 -0300

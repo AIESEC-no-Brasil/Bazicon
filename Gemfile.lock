@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: cf860e565ee1be562597a71a3f57c4ff72da4683
+  revision: 279ce565d794977ca42455802cb45487955912f3
   specs:
     expa (0.1.2.5)
 
@@ -46,7 +46,7 @@ GEM
       tzinfo (~> 1.1)
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    angular-rails-templates (1.0.1)
+    angular-rails-templates (1.0.2)
       railties (>= 4.2, < 6)
       sprockets (>= 3.0, < 5)
       tilt
