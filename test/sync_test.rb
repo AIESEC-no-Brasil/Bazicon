@@ -5,9 +5,9 @@ class SyncTest < Minitest::Test
   def setup
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
     end
-
+=begin
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now - 0.2
       sync.sync_type = 'open_people'
@@ -16,8 +16,10 @@ class SyncTest < Minitest::Test
       sync.count_itens = 10
       sync.save
     end
+=end
   end
 
+=begin
   def teardown
     Archive.all.each do |archive|
       archive.destroy
@@ -45,7 +47,6 @@ class SyncTest < Minitest::Test
     end
   end
 
-=begin
   def test_api_call
     params = {'per_page' => 500}
     params['filters['+'experience_end_date'+'][from]'] = Date.today.to_s

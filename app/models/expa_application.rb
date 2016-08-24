@@ -12,11 +12,9 @@ class ExpaApplication < ActiveRecord::Base
   def update_from_expa(data)
     unless data.opportunity.nil?
       opportunity = ExpaOpportunity.find_by_xp_id(data.opportunity.id)
-      if opportunity.nil?
-        opportunity = ExpaOpportunity.new
-        opportunity.update_from_expa(data.opportunity)
-        opportunity.save
-      end
+      opportunity = ExpaOpportunity.new if opportunity.nil?
+      opportunity.update_from_expa(data.opportunity)
+      opportunity.save
     end
     unless data.person.nil?
       person = ExpaPerson.find_by_xp_id(data.person.id)
@@ -42,8 +40,9 @@ class ExpaApplication < ActiveRecord::Base
     self.xp_experience_start_date = data.experience_start_date unless data.experience_start_date.nil?
     self.xp_experience_end_date = data.experience_end_date unless data.experience_end_date.nil?
     self.xp_matched_or_rejected_at = data.matched_or_rejected_at unless data.matched_or_rejected_at.nil?
-    self.xp_meta = (data.meta.nil?) ? {} : data.meta
+    self.xp_meta = (data.meta.nil? || data.meta.to_s.length < 2) ? {} : data.meta
     self.xp_date_matched = data.date_matched unless data.date_matched.nil?
+    self.xp_date_approved = data.date_approved unless data.date_approved.nil?
     self.xp_date_realized = data.date_realized unless data.date_realized.nil?
     self.xp_date_completed = data.date_completed unless data.date_completed.nil?
     self.xp_date_ldm_completed = data.date_ldm_completed unless data.date_ldm_completed.nil?

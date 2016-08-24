@@ -85,26 +85,35 @@ class Sync
       params['filters['+filter+'][to]'] = Date.today.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
       params['filters[opportunity_programme][]'] = programs #GCDP
-      total_items = EXPA::Applications.list_by_param(params)
+      paging = EXPA::Applications.paging(params)
+      total_items = paging[:total_items]
+      puts 'Esses negos tudo: ' + total_items.to_s
 
-      if !total_items.nil? && total_items.length > 0
-        total_pages = (total_items.length / params['per_page']) + 1
+      if !total_items.nil? && total_items > 0
+        total_pages = paging[:total_pages]
 
         for i in total_pages.downto(1)
           params['page'] = i
           applications = EXPA::Applications.list_by_param(params)
           applications.each do |xp_application|
-            xp_application = EXPA::Applications.find_by_id(xp_application.id)
-            xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
-            xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-            application = ExpaApplication.find_by_xp_id(xp_application.id)
-            application = ExpaApplication.new if application.nil?
+            begin
+              xp_application = EXPA::Applications.find_by_id(xp_application.id)
+              xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+              xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
+              application = ExpaApplication.find_by_xp_id(xp_application.id)
+              application = ExpaApplication.new if application.nil?
 
-            application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
-            application.save
+              application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
+              application.save
 
-            person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
-            send_to_rd(application.xp_person, nil, status, nil) if !person.nil? && application.xp_person.xp_status != person.xp_status
+              person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
+              send_to_rd(application.xp_person, nil, status, nil) if !person.nil? && application.xp_person.xp_status != person.xp_status
+            rescue => exception
+              puts 'ACHAR O BUG'
+              puts xp_application.id unless xp_application.id.nil?
+              puts exception.to_s
+              puts exception.backtrace
+            end
           end
         end
       end
@@ -181,8 +190,7 @@ class Sync
 
         unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
           json['podio_status'] = 'baziconX'
-          person.control_podio = json.to_json.to_s
-          person.save
+          person.update_attribute(:control_podio, json.to_json.to_s)
         end
       end
     end
@@ -296,7 +304,7 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      xp.auth(ENV['MEGAZORD_EMAIL'],ENV['MEGAZORD_PASSWORD'])
     end
   end
 
@@ -313,11 +321,12 @@ class Sync
       params['filters[created_at][to]'] = to.to_s
       params['filters[person_home_mc][]'] = 1606 #from MC Brazil
       params['filters[opportunity_programme][]'] = [1] #GCDP
-      total_items = EXPA::Applications.list_by_param(params)
-      puts 'Esses negos tudo: ' + total_items.length.to_s
+      paging = EXPA::Applications.paging(params)
+      total_items = paging[:total_items]
+      puts 'Esses negos tudo: ' + total_items.to_s
 
-      if !total_items.nil? && total_items.length > 0
-        total_pages = (total_items.length / params['per_page']) + 1
+      if !total_items.nil? && total_items > 0
+        total_pages = paging[:total_pages]
 
         for i in total_pages.downto(1)
           params['page'] = i
@@ -343,7 +352,7 @@ class Sync
       end
 
       sync.get_error = false
-      sync.count_itens = total_items.length
+      sync.count_itens = total_items
       sync.end_sync = DateTime.now
       sync.save
     end
@@ -357,12 +366,14 @@ class Sync
       begin
         xp_application = EXPA::Applications.find_by_id(app_id)
         xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+        puts xp_application.opportunity.to_json.to_s
         xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
         application = ExpaApplication.find_by_xp_id(xp_application.id)
         application = ExpaApplication.new if application.nil?
 
         application.update_from_expa(xp_application)
         application.save
+        puts application.xp_opportunity.to_json.to_s
       rescue => exception
         puts 'ACHAR O BUG'
         puts xp_application.id unless xp_application.id.nil?
