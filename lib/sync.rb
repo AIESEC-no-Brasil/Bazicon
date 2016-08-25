@@ -377,7 +377,7 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
+      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
       #xp.auth('contato@aiesec.org.br','@aiesec2020')
       #xp.auth('amanda.savia@aiesec.net','24091994As')
     end
