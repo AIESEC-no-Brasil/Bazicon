@@ -119,7 +119,7 @@ class Sync
       end
 
       sync.get_error = false
-      sync.count_itens = total_items.length
+      sync.count_itens = total_items
       sync.end_sync = DateTime.now
       sync.save
     end
@@ -128,7 +128,7 @@ class Sync
   def update_podio
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-    EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    #EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
     people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).where("control_podio NOT LIKE '%baziconX%'").order(created_at: :desc)
     people.each do |person|
@@ -181,7 +181,80 @@ class Sync
         contato << 3 if person.want_contact_by_whatsapp
         fields['preferencia-de-contato'] = contato
 
-        puts Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+        Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+        if person.control_podio.nil?
+          json = {}
+        else
+          json = JSON.parse(person.control_podio)
+        end
+
+        unless json.include?('podio_status') && json['podio_status'] == 'baziconX'
+          json['podio_status'] = 'baziconX'
+          person.update_attribute(:control_podio, json.to_json.to_s)
+        end
+      end
+    end
+  end
+
+  #Leads that subscribed during a moment that OP was not working
+  def almost_leads_to_podio
+    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
+    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
+
+    people = ExpaPerson.where.not(xp_email: nil).where("created_at <= :limit", {limit: Date.today - 3}).where("control_podio NOT LIKE '%baziconX%'").order(created_at: :desc)
+    people.each do |person|
+      if !person.entity_exchange_lc.nil?
+        if person.interested_program == 'global_volunteer'
+          podio_app_decided_leads = 15290822
+          sub_product = nil
+          sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] + 1 unless person.interested_sub_product.nil?
+        elsif person.interested_program == 'global_talents'
+          podio_app_decided_leads = 15291951
+          sub_product = nil
+          sub_product = ExpaPerson.interested_sub_products[person.interested_sub_product] - 4 unless person.interested_sub_product.nil?
+        else
+          podio_app_decided_leads = 15290822 #GCDP
+          sub_product = nil
+        end
+
+        fields = {}
+        fields['data-inscricao'] = {'start' => person.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless person.xp_created_at.nil?
+        fields['title'] = person.xp_full_name unless person.xp_full_name.nil?
+        fields['expa-id'] = person.xp_id unless person.xp_id.nil?
+        fields['email'] = [{'type' => 'home', 'value' => person.xp_email}] unless person.xp_email.nil?
+
+        if !person.customized_fields.nil? && JSON.parse(person.customized_fields).key?('telefone')
+          fields['telefone'] = [{'type' => 'home', 'value' => JSON.parse(person.customized_fields)['telefone']}]
+        elsif !person.xp_phone.nil?
+          fields['telefone'] = [{'type' => 'home', 'value' => person.xp_phone.to_s}]
+        end
+
+        fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.hash_entities_podio_expa[person.entity_exchange_lc.xp_name]['ids'][1] unless person.entity_exchange_lc.nil?
+        fields['location-inscrito-escreve-isso-opcionalmente-no-expa'] = person.xp_location unless person.xp_location.blank?
+        fields['sub-produto'] = sub_product unless sub_product.nil?
+
+        unless person.control_podio.nil?
+          fields['universidade'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['universidade']['item_id'], 'universidade')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('universidade')
+          fields['curso'] = podio_helper_find_item_by_unique_id(JSON.parse(person.control_podio)['curso']['item_id'], 'curso')[0]['item_id'].to_i if JSON.parse(person.control_podio).key?('curso')
+        end
+
+        unless person.how_got_to_know_aiesec.nil?
+          fields['como-conheceu-a-aiesec'] = ExpaPerson.how_got_to_know_aiesecs[person.how_got_to_know_aiesec]
+        end
+
+        unless person.travel_interest.nil?
+          fields['prioridade-de-contato'] = ExpaPerson.travel_interests[person.travel_interest]
+        end
+
+        contato = []
+        contato << 1 if person.want_contact_by_email
+        contato << 2 if person.want_contact_by_phone
+        contato << 3 if person.want_contact_by_whatsapp
+        fields['preferencia-de-contato'] = contato
+
+        fields['cadastrado-no-op'] = 2
+
+        Podio::Item.create(podio_app_decided_leads, {:fields => fields})
         if person.control_podio.nil?
           json = {}
         else
@@ -304,7 +377,9 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['MEGAZORD_EMAIL'],ENV['MEGAZORD_PASSWORD'])
+      xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
+      #xp.auth('contato@aiesec.org.br','@aiesec2020')
+      #xp.auth('amanda.savia@aiesec.net','24091994As')
     end
   end
 
@@ -314,38 +389,42 @@ class Sync
       sync.start_sync = DateTime.now
       sync.sync_type = 'big_sync'
 
-      setup_expa_api
+      between = (to - from).to_i
+      between.downto(0).each do |day|
+        puts (to - day).to_s
+        setup_expa_api
 
-      params = {'per_page' => 200}
-      params['filters[created_at][from]'] = from.to_s
-      params['filters[created_at][to]'] = to.to_s
-      params['filters[person_home_mc][]'] = 1606 #from MC Brazil
-      params['filters[opportunity_programme][]'] = [1] #GCDP
-      paging = EXPA::Applications.paging(params)
-      total_items = paging[:total_items]
-      puts 'Esses negos tudo: ' + total_items.to_s
+        params = {'per_page' => 100}
+        params['filters[created_at][from]'] = (to - day).to_s
+        params['filters[created_at][to]'] = (to - day).to_s
+        params['filters[person_home_mc][]'] = 1606 #from MC Brazil
+        params['filters[opportunity_programme][]'] = [1] #GCDP
+        paging = EXPA::Applications.paging(params)
+        total_items = paging[:total_items]
+        puts 'Esses negos tudo: ' + total_items.to_s
 
-      if !total_items.nil? && total_items > 0
-        total_pages = paging[:total_pages]
+        if !total_items.nil? && total_items > 0
+          total_pages = paging[:total_pages]
 
-        for i in total_pages.downto(1)
-          params['page'] = i
-          applications = EXPA::Applications.list_by_param(params)
-          applications.each do |xp_application|
-            begin
-              xp_application = EXPA::Applications.find_by_id(xp_application.id)
-              xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
-              xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-              application = ExpaApplication.find_by_xp_id(xp_application.id)
-              application = ExpaApplication.new if application.nil?
+          for i in total_pages.downto(1)
+            params['page'] = i
+            applications = EXPA::Applications.list_by_param(params)
+            applications.each do |xp_application|
+              begin
+                xp_application = EXPA::Applications.find_by_id(xp_application.id)
+                xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+                xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
+                application = ExpaApplication.find_by_xp_id(xp_application.id)
+                application = ExpaApplication.new if application.nil?
 
-              application.update_from_expa(xp_application)
-              application.save
-            rescue => exception
-              puts 'ACHAR O BUG'
-              puts xp_application.id unless xp_application.id.nil?
-              puts exception.to_s
-              puts exception.backtrace
+                application.update_from_expa(xp_application)
+                application.save
+              rescue => exception
+                puts 'ACHAR O BUG'
+                puts xp_application.id unless xp_application.id.nil?
+                puts exception.to_s
+                puts exception.backtrace
+              end
             end
           end
         end

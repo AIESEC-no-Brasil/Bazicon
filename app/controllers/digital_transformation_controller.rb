@@ -181,10 +181,13 @@ class DigitalTransformationController < ApplicationController
 
     begin
       page = agent.submit(auth_form, auth_form.buttons.first)
+      puts email +' is on EXPA' if page.code.to_i == 200
+      puts email +' is not on EXPA' if page.code.to_i != 200
     rescue => exception
       #TODO insert sign up error screen. This will be useful when EXPA/OP get offline
       puts exception.to_s
       puts email + ' ' + name + ' ' + lastname + ' ' + password + ' ' + DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0].to_s + ' ' + DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i].to_s
+      puts exception.backtrace
     ensure
       person = ExpaPerson.new
       person.xp_email = email.downcase

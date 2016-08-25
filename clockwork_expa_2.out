@@ -2,11 +2,19 @@ WARN: Unresolved specs during Gem::Specification.reset:
       minitest (~> 5.1)
 WARN: Clearing out unresolved specs.
 Please report a bug if this causes problems.
-I, [2016-08-25T16:43:18.021686 #22906]  INFO -- : Starting clock for 1 events: [ list all applications and update people ]
-I, [2016-08-25T16:44:00.001239 #22906]  INFO -- : Triggering 'list all applications and update people'
+I, [2016-08-25T16:42:25.415186 #22792]  INFO -- : Starting clock for 1 events: [ list all applications and update people ]
+I, [2016-08-25T16:43:00.001151 #22792]  INFO -- : Triggering 'list all applications and update people'
 STARTING BIG SYNC
-2016-08-01
-Esses negos tudo: 175
+2016-07-01
+Esses negos tudo: 225
+784: unexpected token at '<html>
+<head><title>404 Not Found</title></head>
+<body bgcolor="white">
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.8.0</center>
+</body>
+</html>
+'
 A JSON text must at least contain two octets!
 A JSON text must at least contain two octets!
 A JSON text must at least contain two octets!
@@ -277,11 +285,31 @@ A JSON text must at least contain two octets!
 A JSON text must at least contain two octets!
 A JSON text must at least contain two octets!
 A JSON text must at least contain two octets!
-2016-08-02
-Esses negos tudo: 256
-2016-08-03
-Esses negos tudo: 328
-2016-08-04
-Esses negos tudo: 197
-2016-08-05
-Esses negos tudo: 191
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+A JSON text must at least contain two octets!
+2016-07-02
+Esses negos tudo: 128
+2016-07-03
+Esses negos tudo: 70
+2016-07-04
+Esses negos tudo: 273
+2016-07-05
+Esses negos tudo: 266
+2016-07-06
+Esses negos tudo: 317

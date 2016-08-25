@@ -40,7 +40,7 @@ class ExpaOpportunity < ActiveRecord::Base
     self.xp_status = data.status unless data.status.nil?
     self.xp_current_status = data.current_status unless data.current_status.nil?
     self.xp_location = data.location unless data.location.nil?
-    self.xp_programmes = (data.programmes.nil? || data.programmes.to_s.length < 2) ? {} : data.programmes
+    self.xp_programmes = (data.programmes.nil? || data.programmes.to_s.length <= 2) ? {} : data.programmes
     self.xp_application_count = data.application_count unless data.application_count.nil?
     self.xp_views = data.views unless data.views.nil?
     self.xp_duration_min = data.duration_min unless data.duration_min.nil?
@@ -62,19 +62,19 @@ class ExpaOpportunity < ActiveRecord::Base
     self.xp_project = data.project unless data.project.nil?
     self.xp_openings = data.openings unless data.openings.nil?
     self.xp_available_openings = data.available_openings unless data.available_openings.nil?
-    self.xp_skills = (data.skills.nil? || data.skills.to_s.length < 2) ? {} : data.skills
-    self.xp_backgrounds = (data.backgrounds.nil? || data.backgrounds.to_s.length < 2) ? {} : data.backgrounds
-    self.xp_languages = (data.languages.nil? || data.languages.to_s.length < 2) ? {} : data.languages
-    self.xp_issues = (data.issues.nil? || data.issues.to_s.length < 2) ? {} : data.issues
-    self.xp_work_fields = (data.work_fields.nil? || data.work_fields.to_s.length < 2) ? {} : data.work_fields
-    self.xp_study_levels = (data.study_levels.nil? || data.study_levels.to_s.length < 2) ? {} : data.study_levels
-    self.xp_prefered_locations = (data.prefered_locations.nil? || data..to_s.length < 2) ? {} : data.prefered_locations
-    self.xp_role_info = (data.role_info.nil? || data.role_info.to_s.length < 2) ? {} : data.role_info
-    self.xp_logistic_info = (data.logistic_info.nil? || data.logistic_info.to_s.length < 2) ? {} : data.logistic_info
-    self.xp_legal_info = (data.legal_info.nil? || data.legal_info.to_s.length < 2) ? {} : data.legal_info
-    self.xp_specifics_info = (data.specifics_info.nil? || data.specifics_info.to_s.length < 2) ? {} : data.specifics_info
+    self.xp_skills = (data.skills.nil? || data.skills.to_s.length <= 2) ? {} : data.skills
+    self.xp_backgrounds = (data.backgrounds.nil? || data.backgrounds.to_s.length <= 2) ? {} : data.backgrounds
+    self.xp_languages = (data.languages.nil? || data.languages.to_s.length <= 2) ? {} : data.languages
+    self.xp_issues = (data.issues.nil? || data.issues.to_s.length <= 2) ? {} : data.issues
+    self.xp_work_fields = (data.work_fields.nil? || data.work_fields.to_s.length <= 2) ? {} : data.work_fields
+    self.xp_study_levels = (data.study_levels.nil? || data.study_levels.to_s.length <= 2) ? {} : data.study_levels
+    self.xp_prefered_locations = (data.prefered_locations.nil? || data..to_s.length <= 2) ? {} : data.prefered_locations
+    self.xp_role_info = (data.role_info.nil? || data.role_info.to_s.length <= 2) ? {} : data.role_info
+    self.xp_logistic_info = (data.logistic_info.nil? || data.logistic_info.to_s.length <= 2) ? {} : data.logistic_info
+    self.xp_legal_info = (data.legal_info.nil? || data.legal_info.to_s.length <= 2) ? {} : data.legal_info
+    self.xp_specifics_info = (data.specifics_info.nil? || data.specifics_info.to_s.length <= 2) ? {} : data.specifics_info
     self.xp_department = data.department unless data.department.nil?
-    self.xp_tm_details = (data.tm_details.nil? || data.tm_details.to_s.length < 2) ? {} : data.tm_details
+    self.xp_tm_details = (data.tm_details.nil? || data.tm_details.to_s.length <= 2) ? {} : data.tm_details
     self.xp_nps_score = data.nps_score unless data.nps_score.nil?
   end
 end

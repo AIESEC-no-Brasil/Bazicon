@@ -40,7 +40,7 @@ class ExpaApplication < ActiveRecord::Base
     self.xp_experience_start_date = data.experience_start_date unless data.experience_start_date.nil?
     self.xp_experience_end_date = data.experience_end_date unless data.experience_end_date.nil?
     self.xp_matched_or_rejected_at = data.matched_or_rejected_at unless data.matched_or_rejected_at.nil?
-    self.xp_meta = (data.meta.nil? || data.meta.to_s.length < 2) ? {} : data.meta
+    self.xp_meta = (data.meta.nil? || data.meta.to_s.length <= 2) ? {} : data.meta
     self.xp_date_matched = data.date_matched unless data.date_matched.nil?
     self.xp_date_approved = data.date_approved unless data.date_approved.nil?
     self.xp_date_realized = data.date_realized unless data.date_realized.nil?
