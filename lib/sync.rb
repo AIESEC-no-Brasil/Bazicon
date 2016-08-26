@@ -378,8 +378,6 @@ class Sync
     if EXPA.client.nil?
       xp = EXPA.setup()
       xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
-      #xp.auth('contato@aiesec.org.br','@aiesec2020')
-      #xp.auth('amanda.savia@aiesec.net','24091994As')
     end
   end
 
@@ -389,6 +387,7 @@ class Sync
       sync.start_sync = DateTime.now
       sync.sync_type = 'big_sync'
 
+      total_items = 0
       between = (to - from).to_i
       between.downto(0).each do |day|
         puts (to - day).to_s

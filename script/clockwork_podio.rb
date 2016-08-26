@@ -21,4 +21,4 @@ end
 # Define the schedule
 every(3.hours, 'Get offline lead from Podio and send them to RD')
 every(30.minutes, 'Update Podio')
-every(1.day, 'OP not working', :at => '01:00')
+#every(1.day, 'OP not working', :at => '01:00')
