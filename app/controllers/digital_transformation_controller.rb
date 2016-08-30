@@ -282,9 +282,9 @@ class DigitalTransformationController < ApplicationController
   end
 
   def send_to_expa(email, name, lastname, password, lc)
-    background do
+    #background do
       a = true
-      while true
+      #while true
         begin
           url = 'https://opportunities.aiesec.org/auth'
 
@@ -311,7 +311,7 @@ class DigitalTransformationController < ApplicationController
           puts exception.backtrace
           sleep(2.minutes)
         end
-      end
-    end
+      #end
+    #end
   end
 end

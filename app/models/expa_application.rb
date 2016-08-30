@@ -1,6 +1,6 @@
 class ExpaApplication < ActiveRecord::Base
-  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager, :current_approved_tn_manager, :current_acceptance_broken] #TODO: Use prefix when they launch outside edge
-  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager, :approved_tn_manager, :acceptance_broken] #TODO: Use prefix when they launch outside edge
+  enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager, :current_approved_tn_manager, :current_acceptance_broken, :current_realization_broken] #TODO: Use prefix when they launch outside edge
+  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager, :approved_tn_manager, :acceptance_broken, :realization_broken] #TODO: Use prefix when they launch outside edge
 
   belongs_to :xp_person, class_name: 'ExpaPerson'
   belongs_to :xp_opportunity, class_name: 'ExpaOpportunity'
@@ -8,6 +8,35 @@ class ExpaApplication < ActiveRecord::Base
   validates :xp_id,
             uniqueness: true,
             presence: false
+
+  scope :get_open_in, -> (from,to) {
+    where("expa_applications.xp_created_at >= :start_date AND expa_applications.xp_created_at <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :get_accepteds_in, -> (from,to) {
+    where("expa_applications.xp_date_matched >= :start_date AND expa_applications.xp_date_matched <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :get_approveds_in, -> (from,to) {
+    where("expa_applications.xp_date_approved >= :start_date AND expa_applications.xp_date_approved <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :get_realized_in, -> (from,to) {
+    where("expa_applications.xp_date_realized >= :start_date AND expa_applications.xp_date_realized <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :get_completed_in, -> (from,to) {
+    where("expa_applications.xp_date_completed >= :start_date AND expa_applications.xp_date_completed <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :gv, -> { joins(:xp_opportunity).where("expa_opportunities.xp_programmes->>'id' = '1'") }
+
+  scope :gt, -> { joins(:xp_opportunity).where("expa_opportunities.xp_programmes->>'id' = '2'") }
 
   def update_from_expa(data)
     unless data.opportunity.nil?

@@ -83,8 +83,9 @@ class Sync
       params = {'per_page' => 100}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
-      params['filters[person_home_mc][]'] = 1606 #from MC Brazil
-      params['filters[opportunity_programme][]'] = programs #GCDP
+      params['filters[person_committee]'] = 1606 #from MC Brazil
+      params['filters[programmes][]'] = [1] #GCDP
+      params['filters[for]'] = 'people' #GCDP
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
       puts 'Esses negos tudo: ' + total_items.to_s
@@ -396,8 +397,9 @@ class Sync
         params = {'per_page' => 100}
         params['filters[created_at][from]'] = (to - day).to_s
         params['filters[created_at][to]'] = (to - day).to_s
-        params['filters[person_home_mc][]'] = 1606 #from MC Brazil
-        params['filters[opportunity_programme][]'] = [1] #GCDP
+        params['filters[person_committee]'] = 1606 #from MC Brazil
+        params['filters[programmes][]'] = [1] #GCDP
+        params['filters[for]'] = 'people' #GCDP
         paging = EXPA::Applications.paging(params)
         total_items = paging[:total_items]
         puts 'Esses negos tudo: ' + total_items.to_s
@@ -437,28 +439,92 @@ class Sync
     puts 'FINISHING BIG SYNC' 
   end
 
-  def upload_applications_with_error(applications)
+  #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
+  def check_problematic_applications(from,to)
+    total_items = 0
+    between = (to - from).to_i
     setup_expa_api
-    applications.each do |app_id|
-      puts 'loop'
-      begin
-        xp_application = EXPA::Applications.find_by_id(app_id)
-        xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
-        puts xp_application.opportunity.to_json.to_s
-        xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-        application = ExpaApplication.find_by_xp_id(xp_application.id)
-        application = ExpaApplication.new if application.nil?
+    between.downto(0).each do |day|
+      params = {'per_page' => 100}
+      date = (to - day)
+      params['filters[date_realized][from]'] = date.to_s
+      params['filters[date_realized][to]'] = date.to_s
+      params['filters[person_committee]'] = 1606 #from MC Brazil
+      params['filters[programmes][]'] = [1] #GCDP
+      params['filters[for]'] = 'people' #OGX
+      paging = EXPA::Applications.paging(params)
+      total_items = paging[:total_items]
+      total_bazicon = ExpaApplication.gv.get_realized_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      puts date.to_s
+      puts 'No EXPA: ' + total_items.to_s
+      puts 'No Bazicon: ' + total_bazicon.to_s
+      if total_bazicon != total_items
+        xp_applications = EXPA::Applications.list_by_param(params)
+        b_applications = ExpaApplication.gv.get_realized_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        xp_applications.each do |xp_application|
+          #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
+            begin
+              #puts 'Application: '+ xp_app.id.to_s
+              #puts 'Opportunity: '+ xp_app.opportunity.id.to_s + ' and programme ' + xp_app.opportunity.programmes.to_s
+              xp_application = EXPA::Applications.find_by_id(xp_application.id)
+              xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+              xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
+              application = ExpaApplication.find_by_xp_id(xp_application.id)
+              application = ExpaApplication.new if application.nil?
 
-        application.update_from_expa(xp_application)
-        application.save
-        puts application.xp_opportunity.to_json.to_s
-      rescue => exception
-        puts 'ACHAR O BUG'
-        puts xp_application.id unless xp_application.id.nil?
-        puts exception.to_s
-        puts exception.backtrace
+              application.update_from_expa(xp_application)
+              application.save
+            rescue => exception
+              puts 'ACHAR O BUG'
+              puts xp_application.id unless xp_application.id.nil?
+              puts exception.to_s
+              puts exception.backtrace
+            end
+          #end
+        end
       end
     end
-    puts 'end loop'
+  end
+
+  #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
+  def check_problematic_people(from,to)
+    puts 'Check People'
+    total_items = 0
+    between = (to - from).to_i
+    setup_expa_api
+    between.downto(0).each do |day|
+      params = {'per_page' => 100}
+      date = (to - day)
+      params['filters[registered][from]'] = date.to_s
+      params['filters[registered][to]'] = date.to_s
+      params['filters[home_committee]'] = 1606 #from MC Brazil
+      paging = EXPA::People.paging(params)
+      total_items = paging[:total_items]
+      total_bazicon = ExpaPerson.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      puts date.to_s
+      puts 'No EXPA: ' + total_items.to_s
+      puts 'No Bazicon: ' + total_bazicon.to_s
+      if total_bazicon != total_items
+        xp_people = EXPA::People.list_by_param(params)
+        b_people = ExpaPerson.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        xp_people.each do |xp_person|
+          if !b_people.has_key?(xp_person.id)
+            begin
+              xp_person = EXPA::People.find_by_id(xp_person.id)
+              person = ExpaPerson.find_by_xp_id(xp_person.id)
+              person = ExpaPerson.new if person.nil?
+
+              person.update_from_expa(xp_person)
+              person.save
+            rescue => exception
+              puts 'ACHAR O BUG'
+              puts xp_person.id unless xp_person.id.nil?
+              puts exception.to_s
+              puts exception.backtrace
+            end
+          end
+        end
+      end
+    end
   end
 end

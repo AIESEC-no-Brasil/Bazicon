@@ -40,7 +40,7 @@ class ExpaOpportunity < ActiveRecord::Base
     self.xp_status = data.status unless data.status.nil?
     self.xp_current_status = data.current_status unless data.current_status.nil?
     self.xp_location = data.location unless data.location.nil?
-    self.xp_programmes = (data.programmes.nil? || data.programmes.to_s.length <= 2) ? {} : data.programmes
+    self.xp_programmes = (data.programmes.nil? || data.programmes.to_s.length <= 2) ? {} : ((data.programmes.class == Array) ? data.programmes.first : data.programmes)
     self.xp_application_count = data.application_count unless data.application_count.nil?
     self.xp_views = data.views unless data.views.nil?
     self.xp_duration_min = data.duration_min unless data.duration_min.nil?

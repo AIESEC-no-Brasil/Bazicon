@@ -81,10 +81,16 @@ class ExpaPerson < ActiveRecord::Base
   scope :this_year, -> {
     where("created_at >= :start_date AND created_at <= :end_date",
       {start_date: Date.today.beginning_of_year, end_date: Date.today})}
+
   scope :this_year2, -> {
     where('"expa_people"."created_at" >= :start_date AND "expa_people"."created_at" <= :end_date',
       {start_date: Date.today.beginning_of_year, end_date: Date.today})}
-    
+
+  scope :get_open_in, -> (from,to) {
+    where("expa_people.xp_created_at >= :start_date AND expa_people.xp_created_at <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
   def update_from_expa(data)
     unless data.home_lc.nil?
       home_lc = ExpaOffice.find_by_xp_id(data.home_lc.id)

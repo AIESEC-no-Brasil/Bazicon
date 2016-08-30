@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: 90d5e866bfea0e1fd8da69448afd00cbe500830b
+  revision: f66968d62810437579c2cb7b04cec1a41d94f2d5
   specs:
     expa (0.1.2.5)
 
@@ -63,7 +63,7 @@ GEM
     bower-rails (0.10.0)
     builder (3.2.2)
     byebug (9.0.5)
-    capistrano (3.6.0)
+    capistrano (3.6.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
       i18n
