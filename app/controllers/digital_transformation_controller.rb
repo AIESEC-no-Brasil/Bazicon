@@ -1,4 +1,5 @@
 class DigitalTransformationController < ApplicationController
+
   # GET /dt/difficulties
   def difficulties
     render layout: "empty"
@@ -304,7 +305,7 @@ class DigitalTransformationController < ApplicationController
           page = agent.submit(auth_form, auth_form.buttons.first)
           puts email +' is on EXPA' if page.code.to_i == 200
           puts email +' is not on EXPA' if page.code.to_i != 200
-          break
+          #break
         rescue => exception
           puts exception.to_s
           puts email + ' ' + name + ' ' + lastname + ' ' + password + ' ' + DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0].to_s + ' ' + DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i].to_s

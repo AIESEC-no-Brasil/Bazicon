@@ -378,7 +378,10 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      #xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      #xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
+      xp.auth('contato@aiesec.org.br','@aiesec2020')
+      #xp.auth('amanda.savia@aiesec.net','24091994As')
     end
   end
 
@@ -447,20 +450,20 @@ class Sync
     between.downto(0).each do |day|
       params = {'per_page' => 100}
       date = (to - day)
-      params['filters[date_realized][from]'] = date.to_s
-      params['filters[date_realized][to]'] = date.to_s
+      params['filters[created_at][from]'] = date.to_s
+      params['filters[created_at][to]'] = date.to_s
       params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [1] #GCDP
+      params['filters[programmes][]'] = [2] #GCDP
       params['filters[for]'] = 'people' #OGX
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
-      total_bazicon = ExpaApplication.gv.get_realized_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      total_bazicon = ExpaApplication.gv.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
       puts date.to_s
       puts 'No EXPA: ' + total_items.to_s
       puts 'No Bazicon: ' + total_bazicon.to_s
       if total_bazicon != total_items
         xp_applications = EXPA::Applications.list_by_param(params)
-        b_applications = ExpaApplication.gv.get_realized_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        b_applications = ExpaApplication.gv.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
         xp_applications.each do |xp_application|
           #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
             begin
@@ -526,5 +529,101 @@ class Sync
         end
       end
     end
+  end
+
+  def send_to_od
+    day = Date.today - 1
+    analytics = EXPA::Applications.analisa({'start_date'=> day,'end_date'=> day})
+    
+    session = GoogleDrive::Session.from_config("client_secret.json")
+    ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
+
+    analytics.each_key do |key|
+      row = ws.num_rows+1
+      ws[row,1] = day.day
+      ws[row,2] = day.month
+      ws[row,3] = 'APD'
+      ws[row,4] = key
+      ws[row,5] = analytics[key][100][:apd]
+      ws[row,6] = analytics[key][1731][:apd]
+      ws[row,7] = analytics[key][32][:apd]
+      ws[row,8] = analytics[key][1248][:apd]
+      ws[row,9] = analytics[key][1300][:apd]
+      ws[row,10] = analytics[key][1766][:apd]
+      ws[row,11] = analytics[key][283][:apd]
+      ws[row,12] = analytics[key][1178][:apd]
+      ws[row,13] = analytics[key][436][:apd]
+      ws[row,14] = analytics[key][988][:apd]
+      ws[row,15] = analytics[key][286][:apd]
+      ws[row,16] = analytics[key][284][:apd]
+      ws[row,17] = analytics[key][943][:apd]
+      ws[row,18] = analytics[key][434][:apd]
+      ws[row,19] = analytics[key][233][:apd]
+      ws[row,20] = analytics[key][479][:apd]
+      ws[row,21] = analytics[key][1666][:apd]
+      ws[row,22] = analytics[key][232][:apd]
+      ws[row,23] = analytics[key][2061][:apd]
+      ws[row,24] = analytics[key][437][:apd]
+      ws[row,25] = analytics[key][231][:apd]
+      ws[row,26] = analytics[key][723][:apd]
+      ws[row,27] = analytics[key][148][:apd]
+      ws[row,28] = analytics[key][854][:apd]
+      ws[row,29] = analytics[key][288][:apd]
+      ws[row,30] = analytics[key][541][:apd]
+      ws[row,31] = analytics[key][467][:apd]
+      ws[row,32] = analytics[key][777][:apd]
+      ws[row,33] = analytics[key][1121][:apd]
+      ws[row,34] = analytics[key][958][:apd]
+      ws[row,35] = analytics[key][1816][:apd]
+      ws[row,36] = analytics[key][230][:apd]
+      ws[row,37] = analytics[key][435][:apd]
+      ws[row,38] = analytics[key][287][:apd]
+      ws[row,39] = analytics[key][1003][:apd]
+      ws[row,40] = analytics[key][1368][:apd]
+      ws[row,41] = analytics[key][909][:apd]
+      row = ws.num_rows+1
+      ws[row,1] = day.day
+      ws[row,2] = day.month
+      ws[row,3] = 'RE'
+      ws[row,4] = key
+      ws[row,5] = analytics[key][100][:re]
+      ws[row,6] = analytics[key][1731][:re]
+      ws[row,7] = analytics[key][32][:re]
+      ws[row,8] = analytics[key][1248][:re]
+      ws[row,9] = analytics[key][1300][:re]
+      ws[row,10] = analytics[key][1766][:re]
+      ws[row,11] = analytics[key][283][:re]
+      ws[row,12] = analytics[key][1178][:re]
+      ws[row,13] = analytics[key][436][:re]
+      ws[row,14] = analytics[key][988][:re]
+      ws[row,15] = analytics[key][286][:re]
+      ws[row,16] = analytics[key][284][:re]
+      ws[row,17] = analytics[key][943][:re]
+      ws[row,18] = analytics[key][434][:re]
+      ws[row,19] = analytics[key][233][:re]
+      ws[row,20] = analytics[key][479][:re]
+      ws[row,21] = analytics[key][1666][:re]
+      ws[row,22] = analytics[key][232][:re]
+      ws[row,23] = analytics[key][2061][:re]
+      ws[row,24] = analytics[key][437][:re]
+      ws[row,25] = analytics[key][231][:re]
+      ws[row,26] = analytics[key][723][:re]
+      ws[row,27] = analytics[key][148][:re]
+      ws[row,28] = analytics[key][854][:re]
+      ws[row,29] = analytics[key][288][:re]
+      ws[row,30] = analytics[key][541][:re]
+      ws[row,31] = analytics[key][467][:re]
+      ws[row,32] = analytics[key][777][:re]
+      ws[row,33] = analytics[key][1121][:re]
+      ws[row,34] = analytics[key][958][:re]
+      ws[row,35] = analytics[key][1816][:re]
+      ws[row,36] = analytics[key][230][:re]
+      ws[row,37] = analytics[key][435][:re]
+      ws[row,38] = analytics[key][287][:re]
+      ws[row,39] = analytics[key][1003][:re]
+      ws[row,40] = analytics[key][1368][:re]
+      ws[row,41] = analytics[key][909][:re]
+    end
+    ws.save
   end
 end

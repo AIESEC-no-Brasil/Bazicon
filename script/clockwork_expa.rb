@@ -22,6 +22,8 @@ handler do |job|
     Sync.new.update_status('realized',[1])
   elsif job.eql?('list new completed applications and update people')
     Sync.new.update_status('completed',[1])
+  elsif job.eql?('send data to OD')
+    Sync.new.send_to_od
   elsif job.eql?('list all applications and update people')
     Sync.new.search_problematic_applications(Date.new(2016,7,1),Date.new(2016,8,26))
   end
@@ -36,4 +38,5 @@ every(3.hours, 'list new in progress applications and update people')
 every(3.hours, 'list new approved applications and update people')
 every(3.hours, 'list new realized applications and update people')
 every(3.hours, 'list new completed applications and update people')
+every(1.day, 'send data to OD', :at => '03:00')
 #every(1.day, 'list all applications and update people', :at => '16:48')

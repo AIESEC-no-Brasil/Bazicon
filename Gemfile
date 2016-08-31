@@ -18,6 +18,9 @@ gem 'minitest'
 gem 'rack-cache'
 
 gem 'groupdate'
+gem 'better_errors'
+gem 'rubocop'
+gem 'google_drive', '>= 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -62,7 +65,7 @@ gem 'thin'
 #Para atualizar o Robozinho do Podio
 gem 'podio'
 gem 'oauth2'
-gem 'faraday', '~> 0.8.10'
+gem 'faraday', '>= 0.9'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development

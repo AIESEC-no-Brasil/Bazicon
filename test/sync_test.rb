@@ -3,11 +3,11 @@ require 'uri'
 
 class SyncTest < Minitest::Test
   def setup
-=begin
     if EXPA.client.nil?
       xp = EXPA.setup()
       xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
     end
+=begin
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now - 0.2
       sync.sync_type = 'open_people'
@@ -113,9 +113,13 @@ class SyncTest < Minitest::Test
   def test_upload_applications_with_error
     Sync.new.upload_applications_with_error([1893278,1895086,1895304,1891660,1891689,1891729,1891731,1891738])
   end
-=end
   def test_expa_comparisson
-    Sync.new.check_problematic_people(Date.new(2016,7,1),Date.new(2016,8,28))
+    Sync.new.check_problematic_applications(Date.new(2016,5,1),Date.new(2016,7,1))
+  end
+=end
+
+  def test_send_expa_data_to_OD
+    Sync.new.send_to_od
   end
 end
 

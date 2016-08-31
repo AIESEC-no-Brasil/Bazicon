@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: f66968d62810437579c2cb7b04cec1a41d94f2d5
+  revision: f173d25be568f4add02b97a81170a77d95bdb722
   specs:
     expa (0.1.2.5)
 
@@ -44,6 +44,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
     angular-rails-templates (1.0.2)
@@ -52,9 +53,14 @@ GEM
       tilt
     angularjs-rails (1.5.6)
     arel (7.1.1)
+    ast (2.3.0)
     autoprefixer-rails (6.4.0.3)
       execjs
     bcrypt (3.1.11)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.7)
@@ -80,6 +86,7 @@ GEM
     clockwork (2.0.0)
       activesupport
       tzinfo
+    coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.2.x)
@@ -97,18 +104,42 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.0.1)
     execjs (2.7.0)
-    faraday (0.8.11)
-      multipart-post (~> 1.2.0)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.6.3.1)
       railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    google-api-client (0.9.12)
+      addressable (~> 2.3)
+      googleauth (~> 0.5)
+      httpclient (~> 2.7)
+      hurley (~> 0.1)
+      memoist (~> 0.11)
+      mime-types (>= 1.6)
+      representable (~> 2.3.0)
+      retriable (~> 2.0)
+      thor (~> 0.19)
+    google_drive (2.1.1)
+      google-api-client (>= 0.9.0, < 1.0.0)
+      googleauth (>= 0.5.0, < 1.0.0)
+      nokogiri (>= 1.5.3, < 2.0.0)
+    googleauth (0.5.1)
+      faraday (~> 0.9)
+      jwt (~> 1.4)
+      logging (~> 2.0)
+      memoist (~> 0.12)
+      multi_json (~> 1.11)
+      os (~> 0.9)
+      signet (~> 0.7)
     groupdate (3.0.2)
       activesupport (>= 3)
     haml (4.0.7)
       tilt
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    httpclient (2.8.2.3)
+    hurley (0.2)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -119,7 +150,11 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.4)
+    little-plugger (1.1.4)
     log4r (1.1.10)
+    logging (2.1.0)
+      little-plugger (~> 1.1)
+      multi_json (~> 1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -133,6 +168,7 @@ GEM
       nokogiri (~> 1.6)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
+    memoist (0.15.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -141,7 +177,7 @@ GEM
     minitest (5.9.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
@@ -161,6 +197,9 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    os (0.9.6)
+    parser (2.3.1.2)
+      ast (~> 2.2)
     pg (0.18.4)
     pkg-config (1.1.7)
     podio (2.0.0)
@@ -168,6 +207,7 @@ GEM
       activesupport (>= 3.0)
       faraday (>= 0.8.0, < 0.10.0)
       multi_json
+    powerpack (0.1.1)
     rack (2.0.1)
     rack-cache (1.6.1)
       rack (>= 0.4)
@@ -201,11 +241,22 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (2.1.0)
     rake (11.2.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    representable (2.3.0)
+      uber (~> 0.0.7)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+    retriable (2.1.0)
+    rubocop (0.42.0)
+      parser (>= 2.3.1.1, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -216,6 +267,11 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    signet (0.7.3)
+      addressable (~> 2.3)
+      faraday (~> 0.9)
+      jwt (~> 1.5)
+      multi_json (~> 1.10)
     spring (1.7.2)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -240,11 +296,13 @@ GEM
     turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.15)
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    unicode-display_width (1.1.0)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -265,6 +323,7 @@ DEPENDENCIES
   angular-rails-templates
   angularjs-rails
   bcrypt
+  better_errors
   bootstrap-sass
   bower-rails
   byebug
@@ -273,8 +332,9 @@ DEPENDENCIES
   coffee-rails
   dropbox-sdk
   expa!
-  faraday (~> 0.8.10)
+  faraday (>= 0.9)
   font-awesome-rails
+  google_drive (>= 2.0)
   groupdate
   haml
   jbuilder
@@ -291,6 +351,7 @@ DEPENDENCIES
   rails
   rails_12factor
   responders (~> 2.0)
+  rubocop
   sass-rails
   sdoc (~> 0.4.0)
   spring
