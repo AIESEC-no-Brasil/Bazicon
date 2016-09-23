@@ -131,7 +131,7 @@ class Sync
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
     #EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-    people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).where("control_podio NOT LIKE '%baziconX%'").order(created_at: :desc)
+    people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).where("control_podio NOT LIKE '%baziconX%' or control_podio is null").order(created_at: :desc)
     people.each do |person|
       if !person.entity_exchange_lc.nil?
         if person.interested_program == 'global_volunteer'
@@ -181,6 +181,8 @@ class Sync
         contato << 2 if person.want_contact_by_phone
         contato << 3 if person.want_contact_by_whatsapp
         fields['preferencia-de-contato'] = contato
+
+        #fields['direto-do-expa'] = 2 if 
 
         Podio::Item.create(podio_app_decided_leads, {:fields => fields})
         if person.control_podio.nil?
@@ -378,10 +380,7 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      #xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
-      #xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
-      xp.auth('contato@aiesec.org.br','@aiesec2020')
-      #xp.auth('amanda.savia@aiesec.net','24091994As')
+      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
     end
   end
 
@@ -398,8 +397,8 @@ class Sync
         setup_expa_api
 
         params = {'per_page' => 100}
-        params['filters[created_at][from]'] = (to - day).to_s
-        params['filters[created_at][to]'] = (to - day).to_s
+        params['filters[date_an_signed][from]'] = (to - day).to_s
+        params['filters[date_an_signed][to]'] = (to - day).to_s
         params['filters[person_committee]'] = 1606 #from MC Brazil
         params['filters[programmes][]'] = [1] #GCDP
         params['filters[for]'] = 'people' #GCDP
@@ -442,7 +441,7 @@ class Sync
     puts 'FINISHING BIG SYNC' 
   end
 
-  #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
+  #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
   def check_problematic_applications(from,to)
     total_items = 0
     between = (to - from).to_i
@@ -450,20 +449,20 @@ class Sync
     between.downto(0).each do |day|
       params = {'per_page' => 100}
       date = (to - day)
-      params['filters[created_at][from]'] = date.to_s
-      params['filters[created_at][to]'] = date.to_s
+      params['filters[experience_end_date][from]'] = date.to_s
+      params['filters[experience_end_date][to]'] = date.to_s
       params['filters[person_committee]'] = 1606 #from MC Brazil
       params['filters[programmes][]'] = [2] #GCDP
       params['filters[for]'] = 'people' #OGX
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
-      total_bazicon = ExpaApplication.gv.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      total_bazicon = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
       puts date.to_s
       puts 'No EXPA: ' + total_items.to_s
       puts 'No Bazicon: ' + total_bazicon.to_s
       if total_bazicon != total_items
         xp_applications = EXPA::Applications.list_by_param(params)
-        b_applications = ExpaApplication.gv.get_open_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
         xp_applications.each do |xp_application|
           #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
             begin
@@ -533,6 +532,7 @@ class Sync
 
   def send_to_od
     day = Date.today - 1
+    setup_expa_api
     analytics = EXPA::Applications.analisa({'start_date'=> day,'end_date'=> day})
     
     session = GoogleDrive::Session.from_config("client_secret.json")
@@ -625,5 +625,103 @@ class Sync
       ws[row,41] = analytics[key][909][:re]
     end
     ws.save
+  end
+
+  def populate_od(from,to)
+    between = (to - from).to_i
+    between.downto(0).each do |day|
+      analytics = EXPA::Applications.analisa({'start_date'=> to - day,'end_date'=> to - day})
+      
+      session = GoogleDrive::Session.from_config("client_secret.json")
+      ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
+
+      analytics.each_key do |key|
+        row = ws.num_rows+1
+        ws[row,1] = (to - day).day
+        ws[row,2] = (to - day).month
+        ws[row,3] = 'APD'
+        ws[row,4] = key
+        ws[row,5] = analytics[key][100][:apd] unless analytics[key][100].nil?
+        ws[row,6] = analytics[key][1731][:apd] unless analytics[key][1731].nil?
+        ws[row,7] = analytics[key][32][:apd] unless analytics[key][32].nil?
+        ws[row,8] = analytics[key][1248][:apd] unless analytics[key][1248].nil?
+        ws[row,9] = analytics[key][1300][:apd] unless analytics[key][1300].nil?
+        ws[row,10] = analytics[key][1766][:apd] unless analytics[key][1766].nil?
+        ws[row,11] = analytics[key][283][:apd] unless analytics[key][283].nil?
+        ws[row,12] = analytics[key][1178][:apd] unless analytics[key][1178].nil?
+        ws[row,13] = analytics[key][436][:apd] unless analytics[key][436].nil?
+        ws[row,14] = analytics[key][988][:apd] unless analytics[key][988].nil?
+        ws[row,15] = analytics[key][286][:apd] unless analytics[key][286].nil?
+        ws[row,16] = analytics[key][284][:apd] unless analytics[key][284].nil?
+        ws[row,17] = analytics[key][943][:apd] unless analytics[key][943].nil?
+        ws[row,18] = analytics[key][434][:apd] unless analytics[key][434].nil?
+        ws[row,19] = analytics[key][233][:apd] unless analytics[key][233].nil?
+        ws[row,20] = analytics[key][479][:apd] unless analytics[key][479].nil?
+        ws[row,21] = analytics[key][1666][:apd] unless analytics[key][1666].nil?
+        ws[row,22] = analytics[key][232][:apd] unless analytics[key][232].nil?
+        ws[row,23] = analytics[key][2061][:apd] unless analytics[key][2061].nil?
+        ws[row,24] = analytics[key][437][:apd] unless analytics[key][437].nil?
+        ws[row,25] = analytics[key][231][:apd] unless analytics[key][231].nil?
+        ws[row,26] = analytics[key][723][:apd] unless analytics[key][723].nil?
+        ws[row,27] = analytics[key][148][:apd] unless analytics[key][148].nil?
+        ws[row,28] = analytics[key][854][:apd] unless analytics[key][854].nil?
+        ws[row,29] = analytics[key][288][:apd] unless analytics[key][288].nil?
+        ws[row,30] = analytics[key][541][:apd] unless analytics[key][541].nil?
+        ws[row,31] = analytics[key][467][:apd] unless analytics[key][467].nil?
+        ws[row,32] = analytics[key][777][:apd] unless analytics[key][777].nil?
+        ws[row,33] = analytics[key][1121][:apd] unless analytics[key][1121].nil?
+        ws[row,34] = analytics[key][958][:apd] unless analytics[key][958].nil?
+        ws[row,35] = analytics[key][1816][:apd] unless analytics[key][1816].nil?
+        ws[row,36] = analytics[key][230][:apd] unless analytics[key][230].nil?
+        ws[row,37] = analytics[key][435][:apd] unless analytics[key][435].nil?
+        ws[row,38] = analytics[key][287][:apd] unless analytics[key][287].nil?
+        ws[row,39] = analytics[key][1003][:apd] unless analytics[key][1003].nil?
+        ws[row,40] = analytics[key][1368][:apd] unless analytics[key][1368].nil?
+        ws[row,41] = analytics[key][909][:apd] unless analytics[key][909].nil?
+        row = ws.num_rows+1
+        ws[row,1] = (to - day).day
+        ws[row,2] = (to - day).month
+        ws[row,3] = 'RE'
+        ws[row,4] = key
+        ws[row,5] = analytics[key][100][:re] unless analytics[key][100].nil?
+        ws[row,6] = analytics[key][1731][:re] unless analytics[key][1731].nil?
+        ws[row,7] = analytics[key][32][:re] unless analytics[key][32].nil?
+        ws[row,8] = analytics[key][1248][:re] unless analytics[key][1248].nil?
+        ws[row,9] = analytics[key][1300][:re] unless analytics[key][1300].nil?
+        ws[row,10] = analytics[key][1766][:re] unless analytics[key][1766].nil?
+        ws[row,11] = analytics[key][283][:re] unless analytics[key][283].nil?
+        ws[row,12] = analytics[key][1178][:re] unless analytics[key][1178].nil?
+        ws[row,13] = analytics[key][436][:re] unless analytics[key][436].nil?
+        ws[row,14] = analytics[key][988][:re] unless analytics[key][988].nil?
+        ws[row,15] = analytics[key][286][:re] unless analytics[key][286].nil?
+        ws[row,16] = analytics[key][284][:re] unless analytics[key][284].nil?
+        ws[row,17] = analytics[key][943][:re] unless analytics[key][943].nil?
+        ws[row,18] = analytics[key][434][:re] unless analytics[key][434].nil?
+        ws[row,19] = analytics[key][233][:re] unless analytics[key][233].nil?
+        ws[row,20] = analytics[key][479][:re] unless analytics[key][479].nil?
+        ws[row,21] = analytics[key][1666][:re] unless analytics[key][1666].nil?
+        ws[row,22] = analytics[key][232][:re] unless analytics[key][232].nil?
+        ws[row,23] = analytics[key][2061][:re] unless analytics[key][2061].nil?
+        ws[row,24] = analytics[key][437][:re] unless analytics[key][437].nil?
+        ws[row,25] = analytics[key][231][:re] unless analytics[key][231].nil?
+        ws[row,26] = analytics[key][723][:re] unless analytics[key][723].nil?
+        ws[row,27] = analytics[key][148][:re] unless analytics[key][148].nil?
+        ws[row,28] = analytics[key][854][:re] unless analytics[key][854].nil?
+        ws[row,29] = analytics[key][288][:re] unless analytics[key][288].nil?
+        ws[row,30] = analytics[key][541][:re] unless analytics[key][541].nil?
+        ws[row,31] = analytics[key][467][:re] unless analytics[key][467].nil?
+        ws[row,32] = analytics[key][777][:re] unless analytics[key][777].nil?
+        ws[row,33] = analytics[key][1121][:re] unless analytics[key][1121].nil?
+        ws[row,34] = analytics[key][958][:re] unless analytics[key][958].nil?
+        ws[row,35] = analytics[key][1816][:re] unless analytics[key][1816].nil?
+        ws[row,36] = analytics[key][230][:re] unless analytics[key][230].nil?
+        ws[row,37] = analytics[key][435][:re] unless analytics[key][435].nil?
+        ws[row,38] = analytics[key][287][:re] unless analytics[key][287].nil?
+        ws[row,39] = analytics[key][1003][:re] unless analytics[key][1003].nil?
+        ws[row,40] = analytics[key][1368][:re] unless analytics[key][1368].nil?
+        ws[row,41] = analytics[key][909][:re] unless analytics[key][909].nil?
+      end
+      ws.save
+    end
   end
 end

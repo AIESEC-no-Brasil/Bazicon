@@ -29,6 +29,16 @@ class ExpaApplication < ActiveRecord::Base
       {start_date: from, end_date: to})
   }
 
+  scope :get_start_xp_in, -> (from,to) {
+    where("expa_applications.xp_experience_start_date >= :start_date AND expa_applications.xp_experience_start_date <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
+  scope :get_end_xp_in, -> (from,to) {
+    where("expa_applications.xp_experience_end_date >= :start_date AND expa_applications.xp_experience_end_date <= :end_date",
+      {start_date: from, end_date: to})
+  }
+
   scope :get_completed_in, -> (from,to) {
     where("expa_applications.xp_date_completed >= :start_date AND expa_applications.xp_date_completed <= :end_date",
       {start_date: from, end_date: to})

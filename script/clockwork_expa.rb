@@ -31,7 +31,7 @@ handler do |job|
 end
 
 # Define the schedule
-every(20.minutes, 'list new open people')
+every(30.minutes, 'list new open people')
 every(4.hours, 'list new open applications and update people')
 every(3.hours, 'list new accepted applications and update people')
 every(3.hours, 'list new in progress applications and update people')
