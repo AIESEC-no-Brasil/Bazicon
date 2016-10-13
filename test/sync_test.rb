@@ -122,10 +122,16 @@ class SyncTest < Minitest::Test
   def test_expa_comparisson
     Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,9,1))
   end
-=end
-
+  def test_joga_os_nego
+    Sync.new.resolvendo_tretas
+  end
   def test_analytics
-    Sync.new.populate_od(Date.new(2016,7,1),Date.new(2016,9,13))
+    Sync.new.populate_od(Date.new(2016,9,14),Date.new(2016,9,26))
+  end
+
+=end
+  def test_update_podio
+    Sync.new.expa_refresh
   end
 end
 

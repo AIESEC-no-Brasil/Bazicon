@@ -40,7 +40,7 @@ Myapp::Application.routes.draw do
   get '/expa/sign_up'             => 'digital_transformation#expa_sign_up',         as: 'expa_sign_up'
   post '/dt/difficulties_success' => 'digital_transformation#difficulties_success', as: 'digital_transformation_difficulties_success'
   post '/dt/prevents_success'     => 'digital_transformation#prevents_success',     as: 'digital_transformation_prevents_success'
-  post '/expa/sign_up'            => 'digital_transformation#expa_sign_up_success', as: 'expa_sign_up_success'
+  post '/expa/sign_up'            => 'digital_transformation#expa_sign_up_success2', as: 'expa_sign_up_success'
 
   # Outgoing Exchange
   get '/ogx/dash'   => 'outgoing_exchange#dash',   as: 'outgoing_exchange_dash'

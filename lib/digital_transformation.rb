@@ -31,6 +31,10 @@ module DigitalTransformation
       ]
     end
 
+    def get_entity_ids_by_order(i)
+      DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.hash_entities_podio_expa.keys[i]]['ids']
+    end
+
     def hash_entities_podio_expa
       {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
        'ALFENAS' => {'ids' => [479,362627844], 'programs' => ['oGCDP']},
