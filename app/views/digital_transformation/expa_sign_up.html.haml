@@ -3,9 +3,9 @@
     .col-xs-12
       .ibox
         .ibox-content
-          - if params['programa'] == 'GCDP'
+          - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
             %h2 Seja o líder que o mundo precisa!
-          - elsif params['programa'] == 'GIP'
+          - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
             %h2 Traga o mundo para o seu currículo!
           = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
             %input{name: 'programa', value: "#{params['programa']}", hidden: true}
@@ -80,7 +80,7 @@
                 .form-group
                   .col-xs-12.b-r
                     #sub-productrm-control.m-b.required{name: 'sub-product'}
-                      - if params['programa'] == 'GCDP'
+                      - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
                         %label Região de interesse *
                         %select.form-control.m-b.required{name: 'sub-product'}
                           - for i in 0...DigitalTransformation.sub_product_global_citizen.size
@@ -90,7 +90,7 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.sub_product_global_citizen[i]
-                      - elsif params['programa'] == 'GIP'
+                      - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
                         %label Sub-produto de interesse *
                         %select.form-control.m-b.required{name: 'sub-product'}
                           - for i in 0...DigitalTransformation.sub_product_global_talent.size
@@ -112,7 +112,7 @@
                               = DigitalTransformation.how_got_to_know_aiesec[i]
                       %label AIESEC mais próxima *
                       %select.form-control.m-b.required{name: 'nearest_lc'}
-                        - if params['programa'] == 'GCDP'
+                        - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
                           - for i in 0...DigitalTransformation.entities_ogcdp.size
                             - if i == 0
                               %option{value: ''}
@@ -120,7 +120,7 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.entities_ogcdp[i]
-                        - elsif params['programa'] == 'GIP'
+                        - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
                           - for i in 0...DigitalTransformation.entities_ogip.size
                             - if i == 0
                               %option{value: ''}

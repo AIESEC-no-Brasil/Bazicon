@@ -114,8 +114,8 @@ class DigitalTransformationController < ApplicationController
   # GET /expa/sign_up
   def expa_sign_up
     unless params.has_key?('programa') &&
-        (params['programa'] == 'GCDP' ||
-            params['programa'] == 'GIP')
+        (params['programa'] == 'GCDP' || params['programa'] == 'GV' || 
+          params['programa'] == 'GIP' || params['programa'] == 'GT')
       redirect_to 'http://aiesec.org.br'
       return
     end
@@ -191,8 +191,8 @@ class DigitalTransformationController < ApplicationController
 
     #Programa de interesse e sub-produto
     case interested_program
-      when 'GCDP'
-        person.interested_program = 'global_volunteer'
+      when 'GCDP', 'GV'
+        person.interested_program = :global_volunteer
         case sub_product.to_i
           when 1 then person.interested_sub_product = 'global_volunteer_arab'
           when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
@@ -200,8 +200,8 @@ class DigitalTransformationController < ApplicationController
           when 4 then person.interested_sub_product = 'global_volunteer_asia'
           when 5 then person.interested_sub_product = 'global_volunteer_latam'
         end
-      when 'GIP'
-        person.interested_program = 'global_talents'
+      when 'GIP', 'GT'
+        person.interested_program = :global_talents
         case sub_product.to_i
           when 1 then person.interested_sub_product = 'global_talents_start_up'
           when 2 then person.interested_sub_product = 'global_talents_educacional'
@@ -307,7 +307,7 @@ class DigitalTransformationController < ApplicationController
 
     send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
       course,lc,travel_interest,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp)
-    #send_to_expa(email,name,lastname,password,lc)
+    send_to_expa(email,name,lastname,password,lc)
 
     person = ExpaPerson.new
     person.xp_email = email.downcase
@@ -333,8 +333,8 @@ class DigitalTransformationController < ApplicationController
 
     #Programa de interesse e sub-produto
     case interested_program
-      when 'GCDP'
-        person.interested_program = 'global_volunteer'
+      when 'GCDP', 'GV'
+        person.interested_program = :global_volunteer
         case sub_product.to_i
           when 1 then person.interested_sub_product = 'global_volunteer_arab'
           when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
@@ -342,8 +342,8 @@ class DigitalTransformationController < ApplicationController
           when 4 then person.interested_sub_product = 'global_volunteer_asia'
           when 5 then person.interested_sub_product = 'global_volunteer_latam'
         end
-      when 'GIP'
-        person.interested_program = 'global_talents'
+      when 'GIP', 'GT'
+        person.interested_program = :global_talents
         case sub_product.to_i
           when 1 then person.interested_sub_product = 'global_talents_start_up'
           when 2 then person.interested_sub_product = 'global_talents_educacional'
@@ -464,15 +464,12 @@ class DigitalTransformationController < ApplicationController
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
 
-    if interested_program == 'global_volunteer'
+    if interested_program == 'GCDP' || interested_program == 'GV'
       podio_app_decided_leads = 15290822
-      sub_product = ExpaPerson.interested_sub_products[sub_product] + 1 unless sub_product.nil?
-    elsif interested_program == 'global_talents'
-      podio_app_decided_leads = 15290822 #15291951
-      sub_product = ExpaPerson.interested_sub_products[sub_product] - 4 unless sub_product.nil?
+    elsif interested_program == 'GIP' || interested_program == 'GT'
+      podio_app_decided_leads = 17056734 #15291951
     else
       podio_app_decided_leads = 15290822 #GCDP
-      sub_product = nil
     end
 
     sync = Sync.new
@@ -482,9 +479,9 @@ class DigitalTransformationController < ApplicationController
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i)[1] unless lc.nil?
-    fields['sub-produto'] = sub_product unless sub_product.nil?
-    fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.nil?
-    fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.nil?
+    fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
+    fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
+    fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
     fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
     fields['prioridade-de-contato'] = travel_interest.to_i
 

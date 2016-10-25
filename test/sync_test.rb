@@ -128,10 +128,33 @@ class SyncTest < Minitest::Test
   def test_analytics
     Sync.new.populate_od(Date.new(2016,9,14),Date.new(2016,9,26))
   end
-
-=end
   def test_update_podio
     Sync.new.expa_refresh
+  end
+
+=end
+
+  def test_send_to_rd
+    #TODO: colocar todos os campos do peoples e applications aqui no RD
+    #TODO: colocar breaks conferindo todos os campos
+    json_to_rd = {}
+    json_to_rd['token_rdstation'] = '41825a69a6fe5c2f1bae7452bfdd2b69'
+    json_to_rd['identificador'] = 'approved'
+    json_to_rd['email'] = 'luan@corumba.net'
+    #json_to_rd['status'] = 'in_progress'
+    json_to_rd['tags'] = "'GV','Teste','Apd'"
+    uri = URI(ENV['RD_STATION_URL'])
+    https = Net::HTTP.new(uri.host,uri.port)
+    https.use_ssl = true
+    req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' =>'application/json'})
+    req.body = json_to_rd.to_json
+    begin
+      response = https.request(req)
+      puts 'RD Message: '+response.message
+      puts 'RD Message: '+response.code
+    rescue => exception
+      puts exception.to_s
+    end
   end
 end
 

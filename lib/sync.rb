@@ -381,7 +381,10 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      #xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
+      #xp.auth('contato@aiesec.org.br','@aiesec2020')
+      #xp.auth('amanda.savia@aiesec.net','24091994As')
     end
   end
 
@@ -844,5 +847,15 @@ class Sync
     end
 
     puts "Listed #{people.length} people finishing #{Time.now}"
+  end
+
+  def limbo_operation
+    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
+    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
+
+    people = ExpaPerson.where.not(xp_email: nil).where("control_podio is null").order(created_at: :desc)
+    people.each do |person|
+      
+    end
   end
 end
