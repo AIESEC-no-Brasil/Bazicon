@@ -477,7 +477,7 @@ class DigitalTransformationController < ApplicationController
     elsif interested_program == 'GIP' || interested_program == 'GT'
       podio_app_decided_leads = 17057001
     elsif interested_program == 'GE'
-      podio_app_decided_leads = 17056734
+      podio_app_decided_leads = 17057629
     else
       podio_app_decided_leads = 15290822 #GCDP
     end
