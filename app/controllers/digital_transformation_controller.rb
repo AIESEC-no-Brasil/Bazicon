@@ -115,7 +115,7 @@ class DigitalTransformationController < ApplicationController
   def expa_sign_up
     unless params.has_key?('programa') &&
         (params['programa'] == 'GCDP' || params['programa'] == 'GV' || 
-          params['programa'] == 'GIP' || params['programa'] == 'GT')
+          params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE')
       redirect_to 'http://aiesec.org.br'
       return
     end
@@ -336,19 +336,27 @@ class DigitalTransformationController < ApplicationController
       when 'GCDP', 'GV'
         person.interested_program = :global_volunteer
         case sub_product.to_i
-          when 1 then person.interested_sub_product = 'global_volunteer_arab'
-          when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
-          when 3 then person.interested_sub_product = 'global_volunteer_africa'
-          when 4 then person.interested_sub_product = 'global_volunteer_asia'
-          when 5 then person.interested_sub_product = 'global_volunteer_latam'
+          when 1 then person.interested_sub_product = :global_volunteer_arab
+          when 2 then person.interested_sub_product = :global_volunteer_east_europe
+          when 3 then person.interested_sub_product = :global_volunteer_africa
+          when 4 then person.interested_sub_product = :global_volunteer_asia
+          when 5 then person.interested_sub_product = :global_volunteer_latam
         end
       when 'GIP', 'GT'
         person.interested_program = :global_talents
         case sub_product.to_i
-          when 1 then person.interested_sub_product = 'global_talents_start_up'
-          when 2 then person.interested_sub_product = 'global_talents_educacional'
-          when 3 then person.interested_sub_product = 'global_talents_IT'
-          when 4 then person.interested_sub_product = 'global_talents_management'
+          when 1 then person.interested_sub_product = :global_talents_educacional
+          when 2 then person.interested_sub_product = :global_talents_IT
+          when 3 then person.interested_sub_product = :global_talents_management
+          when 4 then person.interested_sub_product = :global_talents_marketing
+        end
+      when 'GE'
+        person.interested_program = :global_entrepreneur
+        case sub_product.to_i
+          when 1 then person.interested_sub_product = :global_entrepreneur_educacional
+          when 2 then person.interested_sub_product = :global_entrepreneur_IT
+          when 3 then person.interested_sub_product = :global_entrepreneur_management
+          when 4 then person.interested_sub_product = :global_entrepreneur_engineering
         end
     end
 
@@ -467,7 +475,9 @@ class DigitalTransformationController < ApplicationController
     if interested_program == 'GCDP' || interested_program == 'GV'
       podio_app_decided_leads = 15290822
     elsif interested_program == 'GIP' || interested_program == 'GT'
-      podio_app_decided_leads = 17056734 #15291951
+      podio_app_decided_leads = 17057001
+    elsif interested_program == 'GE'
+      podio_app_decided_leads = 17056734
     else
       podio_app_decided_leads = 15290822 #GCDP
     end

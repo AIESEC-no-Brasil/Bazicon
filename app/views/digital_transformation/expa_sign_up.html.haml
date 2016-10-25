@@ -5,7 +5,7 @@
         .ibox-content
           - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
             %h2 Seja o líder que o mundo precisa!
-          - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
+          - elsif params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE'
             %h2 Traga o mundo para o seu currículo!
           = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
             %input{name: 'programa', value: "#{params['programa']}", hidden: true}
@@ -91,7 +91,7 @@
                               %option{value: "#{i}"}
                                 = DigitalTransformation.sub_product_global_citizen[i]
                       - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
-                        %label Sub-produto de interesse *
+                        %label Meu interesse *
                         %select.form-control.m-b.required{name: 'sub-product'}
                           - for i in 0...DigitalTransformation.sub_product_global_talent.size
                             - if i == 0
@@ -100,6 +100,16 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.sub_product_global_talent[i]
+                      - elsif params['programa'] == 'GE'
+                        %label Meu interesse *
+                        %select.form-control.m-b.required{name: 'sub-product'}
+                          - for i in 0...DigitalTransformation.sub_product_global_entrepreneur.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.sub_product_global_entrepreneur[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.sub_product_global_entrepreneur[i]
                     #how-get-to-know-aiesec
                       %label Como conheceu a AIESEC? *
                       %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
@@ -120,7 +130,7 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.entities_ogcdp[i]
-                        - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
+                        - elsif params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE'
                           - for i in 0...DigitalTransformation.entities_ogip.size
                             - if i == 0
                               %option{value: ''}

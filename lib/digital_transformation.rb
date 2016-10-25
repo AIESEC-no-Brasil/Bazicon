@@ -7,7 +7,7 @@ module DigitalTransformation
     end
 
     def sub_product_global_citizen
-      ['Sub-Produtos Cidadão Global',
+      ['Interesses Global Volunteer',
        'Mundo Árabe',
        'Leste Europeu',
        'África',
@@ -16,11 +16,19 @@ module DigitalTransformation
     end
 
     def sub_product_global_talent
-      ['Sub-Produtos Talentos Globais',
-       'Start Up',
-       'Educacional',
+      ['Interesses Global Talents',
+       'Educação',
        'Tecnologia da Informação',
-       'Gestão']
+       'Adminstração',
+       'Marketing']
+    end
+
+    def sub_product_global_entrepreneur
+      ['Interesses Global Entrepreneur',
+       'Educação',
+       'Tecnologia da Informação',
+       'Adminstração',
+       'Engenharia']
     end
 
     def travel_interest
