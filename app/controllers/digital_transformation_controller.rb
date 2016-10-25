@@ -353,7 +353,7 @@ class DigitalTransformationController < ApplicationController
       when 'GE'
         person.interested_program = :global_entrepreneur
         case sub_product.to_i
-          when 1 then person.interested_sub_product = :global_entrepreneur_educacional
+          when 1 then person.interested_sub_product = :global_entrepreneur_marketing
           when 2 then person.interested_sub_product = :global_entrepreneur_IT
           when 3 then person.interested_sub_product = :global_entrepreneur_management
           when 4 then person.interested_sub_product = :global_entrepreneur_engineering
