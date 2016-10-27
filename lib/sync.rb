@@ -450,20 +450,20 @@ class Sync
     between.downto(0).each do |day|
       params = {'per_page' => 100}
       date = (to - day)
-      params['filters[experience_end_date][from]'] = date.to_s
-      params['filters[experience_end_date][to]'] = date.to_s
+      params['filters[created_at][from]'] = date.to_s
+      params['filters[created_at][to]'] = date.to_s
       params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [2] #GCDP
+      params['filters[programmes][]'] = [1] #GCDP
       params['filters[for]'] = 'people' #OGX
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
-      total_bazicon = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      total_bazicon = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
       puts date.to_s
       puts 'No EXPA: ' + total_items.to_s
       puts 'No Bazicon: ' + total_bazicon.to_s
       if total_bazicon != total_items
         xp_applications = EXPA::Applications.list_by_param(params)
-        b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        b_applications = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
         xp_applications.each do |xp_application|
           #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
             begin
@@ -731,7 +731,8 @@ class Sync
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
 
     #people = [1129766,1129325,1129322,1129284,1128989,1120528,1120084,1116027,1111994,1110372,1109600,1036707,1151860,1136439,1140984,1129934,1140720,1129589,1102917,1093719,1102420,1102419,1127305,1123621,1129550,1101554,1103742,1104876,1105601,1105645,1106421,1107100,1107463,1107537,1107881,1107882,1107883,1107949,1107962,1108272,1108292,1108796,1110327,1110411,1111927,1112589,1112697,1112818,1113577,1120200,1120238,1120383,1120682,1120766,1120871,1120987,1121052,1121152,1121461,1121841,1122101,1122105,1122360,1123609,1123850,1124444,1124738,1142741,1154189,1144156,1156228,1151372,1150800,1151407,1156784,1144708,1145450,1136379,1155994,1146984,1143157,1156493,1154459,1121068,1120212,1112982,1060591,1099973,1074560,1143201,1142305,1139906,1139771,1140468,1137962,1136966,1136774,1136406,1135504,1131746,1129857,1129400,1129133,1127860,1127440,1123730,1115894,1114515,1114428,1114061,1112841,1111351,1110791,1109208,1104171,1101620,1100642,1100407,1099787,1098733,1098130,1098108,1097605,1096105,1094564,1094537,1091433,1152945,1152919,1145334,1143055,1134347,1131875,1138365,1138060,1129526,1117839,1131531,1102389,1121856,1131345,1108377,1115644,1119078,1123106,1131383,1152945,1152919,1145334,1143055,1134347,1131875,1138365,1138060,1122973,1122383,1121579,1120747,1120223,1118694,1123226,1126924,1150307,1150240,1144620,1139506,1139371,1138320,952531,1111673,1139251,1146955,1013170,1133900,1140205,1123900,1123904,1094419,1129560,1131354,1130082,1129816,294500,1124257,1119010,1121068,1112982,1099973,1125404,1136933,1133260,1124591,1114889,1121533]
-    people = [1155083]
+    #people = [1155083]1163824,1164049,1165485,1167693,1077953,1079968,1080825,1081992,1082693,1090048,1091145,1074751,1096514,1079457,
+    people = [1146198,1146195]
     people.each do |person_id|
       person = ExpaPerson.find_by_xp_id(person_id)
       if !person.nil? and !DigitalTransformation.hash_entities_podio_expa[I18n.transliterate(person.xp_home_lc.xp_name).upcase].nil?
@@ -844,15 +845,5 @@ class Sync
     end
 
     puts "Listed #{people.length} people finishing #{Time.now}"
-  end
-
-  def limbo_operation
-    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
-    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-
-    people = ExpaPerson.where.not(xp_email: nil).where("control_podio is null").order(created_at: :desc)
-    people.each do |person|
-      
-    end
   end
 end

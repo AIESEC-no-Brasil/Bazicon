@@ -98,7 +98,7 @@ module DigitalTransformation
        'SAO PAULO - UNIDADE PUC' => {'ids' => [288,306817495], 'programs' => ['oGCDP','oGIP']},
        'SAO PAULO - UNIDADE USP' => {'ids' => [1003,306811162], 'programs' => ['oGCDP','oGIP']},
        'SOROCABA' => {'ids' => [230,306825137], 'programs' => ['oGCDP']},
-       'TERESINA' => {'ids' => [286,340037977], 'programs' => ['oGCDP']},
+       'TERESINA' => {'ids' => [2098,340037977], 'programs' => ['oGCDP']},
        'UBERABA' => {'ids' => [287,362630742], 'programs' => ['oGCDP']},
        'UBERLANDIA' => {'ids' => [287,306813291], 'programs' => ['oGCDP','oGIP']},
        'VALE DO PARAIBA' => {'ids' => [1368,306817098], 'programs' => ['oGCDP']},

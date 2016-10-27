@@ -280,6 +280,8 @@ class DigitalTransformationController < ApplicationController
     want_contact_by_email = params['want_contact_by_email']
     want_contact_by_phone = params['want_contact_by_phone']
     want_contact_by_whatsapp = params['want_contact_by_whatsapp']
+    campagin = params['campanha']
+    puts campagin
 
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
@@ -306,7 +308,7 @@ class DigitalTransformationController < ApplicationController
     end
 
     send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
-      course,lc,travel_interest,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp)
+      course,lc,travel_interest,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
     send_to_expa(email,name,lastname,password,lc)
 
     person = ExpaPerson.new
@@ -409,7 +411,17 @@ class DigitalTransformationController < ApplicationController
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
 
-    redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+    
+    case interested_program
+      when 'GCDP', 'GV'
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+      when 'GIP', 'GT'
+        redirect_to 'http://brasil.aiesec.org.br/global-talent-obrigado'
+      when 'GE'
+        redirect_to 'http://brasil.aiesec.org.br/global-entrepreneur-obrigado'
+      else
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+    end
   end
   private
 
@@ -467,7 +479,7 @@ class DigitalTransformationController < ApplicationController
 
   def send_to_podio(name,lastname,phone,email,interested_program,
       sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,
-      want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp)
+      want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
@@ -500,7 +512,9 @@ class DigitalTransformationController < ApplicationController
     contato << 2 if want_contact_by_phone
     contato << 3 if want_contact_by_whatsapp
     fields['preferencia-de-contato'] = contato
+    attibutes = {:fields => fields}
+    attibutes[:tags] = [campagin] unless campagin.nil? || campagin.empty?
 
-    Podio::Item.create(podio_app_decided_leads, {:fields => fields})
+    Podio::Item.create(podio_app_decided_leads, attibutes)
   end
 end

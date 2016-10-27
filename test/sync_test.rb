@@ -122,17 +122,12 @@ class SyncTest < Minitest::Test
   def test_expa_comparisson
     Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,9,1))
   end
-  def test_joga_os_nego
-    Sync.new.resolvendo_tretas
-  end
   def test_analytics
     Sync.new.populate_od(Date.new(2016,9,14),Date.new(2016,9,26))
   end
   def test_update_podio
     Sync.new.expa_refresh
   end
-
-=end
 
   def test_send_to_rd
     #TODO: colocar todos os campos do peoples e applications aqui no RD
@@ -155,6 +150,14 @@ class SyncTest < Minitest::Test
     rescue => exception
       puts exception.to_s
     end
+  end
+  def test_get_all_appllications
+    Sync.new.check_problematic_applications(Date.new(2016,10,1),Date.new(2016,10,25))
+  end
+=end
+
+  def test_joga_os_nego
+    Sync.new.resolvendo_tretas
   end
 end
 

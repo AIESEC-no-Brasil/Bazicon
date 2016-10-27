@@ -9,6 +9,7 @@
             %h2 Traga o mundo para o seu currículo!
           = form_tag(expa_sign_up_success_path, method: 'post', class: 'wizard-big', id: 'form') do
             %input{name: 'programa', value: "#{params['programa']}", hidden: true}
+            %input{name: 'campanha', value: "#{params['campanha']}", hidden: true}
             %h1
               .fa.fa-user
               Pessoal
