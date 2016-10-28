@@ -39,8 +39,14 @@ module DigitalTransformation
       ]
     end
 
-    def get_entity_ids_by_order(i)
-      DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.hash_entities_podio_expa.keys[i]]['ids']
+    def get_entity_ids_by_order(i,program)
+      case program
+        when 'GCDP', 'GV'
+          DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[i]]['ids']
+        when 'GIP', 'GT', 'GE'
+          DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogip[i]]['ids']
+        else
+      end
     end
 
     def hash_entities_podio_expa
