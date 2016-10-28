@@ -315,19 +315,13 @@ class DigitalTransformationController < ApplicationController
     person.xp_email = email.downcase
     person.xp_full_name = name
 
-    office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
-    if office.nil?
-      office = ExpaOffice.new
-
-      DigitalTransformation.hash_entities_podio_expa.each do |entity|
-        if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
-          office.xp_id = entity[1]['ids'][0]
-          office.xp_full_name = entity[0]
-          office.xp_name = entity[0]
-          office.save
-          break
-        end
-      end
+    case interested_program
+      when 'GCDP', 'GV'
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
+      when 'GIP', 'GT', 'GE'
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogip[lc.to_i])
+      else
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
     end
 
     #Entidade mais próxima != Entidade EXPA
@@ -407,10 +401,10 @@ class DigitalTransformationController < ApplicationController
     person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
     person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
 
+    tags = "'"+campagin.to_s+"','"+interested_program+"'"
     person.save(validate: false)
     xp_sync = Sync.new
-    xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
-
+    xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
     
     case interested_program
       when 'GCDP', 'GV'
