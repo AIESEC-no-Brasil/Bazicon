@@ -365,7 +365,8 @@ class Sync
     unless application.nil?
       json_to_rd['identificador'] = 'application_'+identifier.to_s
       json_to_rd['last_application_id'] = application.xp_id
-      json_to_rd['last_application_title'] = application.xp_title
+      json_to_rd['last_application_opportunity_id'] = application.xp_opportunity.xp_id
+      json_to_rd['last_application_opportunity_title'] = application.xp_opportunity.xp_title
     end
     uri = URI(ENV['RD_STATION_URL'])
     https = Net::HTTP.new(uri.host,uri.port)
