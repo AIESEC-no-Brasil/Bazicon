@@ -104,7 +104,7 @@ class Sync
               application = ExpaApplication.find_by_xp_id(xp_application.id)
               application = ExpaApplication.new if application.nil?
 
-              to_rd = xp_application.person.status.to_s != application.xp_person.xp_status.to_s
+              to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
               application.save
 
