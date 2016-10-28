@@ -109,7 +109,7 @@ class Sync
               application.save
 
               person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
-              send_to_rd(application.xp_person, nil, status, nil) if !person.nil? && to_rd?
+              send_to_rd(application.xp_person, application, status, nil) if !person.nil? && to_rd?
             rescue => exception
               puts 'ACHAR O BUG'
               puts xp_application.id unless xp_application.id.nil?
@@ -363,8 +363,9 @@ class Sync
     json_to_rd['sub_produto_interesse'] = person.interested_sub_product unless person.interested_sub_product.nil?
     json_to_rd['tag'] = tag unless tag.nil?
     unless application.nil?
-      json_to_rd.merge!{
-      }
+      json_to_rd['identificador'] = 'application_'+identifier.to_s
+      json_to_rd['last_application_id'] = application.xp_id
+      json_to_rd['last_application_title'] = application.xp_title
     end
     uri = URI(ENV['RD_STATION_URL'])
     https = Net::HTTP.new(uri.host,uri.port)
