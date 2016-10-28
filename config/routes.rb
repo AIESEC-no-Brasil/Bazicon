@@ -63,4 +63,6 @@ Myapp::Application.routes.draw do
   post '/hosts/set_non_grata'
   post '/hosts/set_date_approach'
 
+  get '/simple_token'  => 'token#get_analytics_token'
+
 end
