@@ -104,12 +104,12 @@ class Sync
               application = ExpaApplication.find_by_xp_id(xp_application.id)
               application = ExpaApplication.new if application.nil?
 
-              to_rd? = xp_application.person.status.to_s != application.xp_person.xp_status.to_s
+              to_rd = xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
               application.save
 
               person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
-              send_to_rd(application.xp_person, application, status, nil) if !person.nil? && to_rd?
+              send_to_rd(application.xp_person, application, status, nil) if !person.nil? && to_rd
             rescue => exception
               puts 'ACHAR O BUG'
               puts xp_application.id unless xp_application.id.nil?
