@@ -2802,7 +2802,8 @@ module DigitalTransformation
        'UVV VITORIA - FACULDADE DE VITORIA' => 'Universidade03872',
        'VERTICE - FACULDADE VERTICE' => 'Universidade04738',
        'VIZIVALI - FACULDADE VIZINHANCA VALE DO IGUACU' => 'Universidade04746',
-       'WLASAN - FACULDADE PROF. WLADEMIR DOS SANTOS' => 'Universidade04415'}
+       'WLASAN - FACULDADE PROF. WLADEMIR DOS SANTOS' => 'Universidade04415',
+       'UNIVIÇOSA - União de Ensino Superior de Viçosa' => 'Universidade05251'}
     end
 
     def courses
