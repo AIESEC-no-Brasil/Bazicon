@@ -7,13 +7,13 @@ class TokenController < ApplicationController
 			response.headers['Access-Control-Allow-Credentials'] = 'true'
 			response.headers['Access-Control-Allow-Origin'] = '*'
 			response.headers['Access-Control-Max-Age'] = '1728000'
-			puts EXPA.client.email
+			puts EXPA.client.get_email
 			render :json => {:token => xp.get_updated_token.to_s}
 		else
 			response.headers['Access-Control-Allow-Credentials'] = 'true'
 			response.headers['Access-Control-Allow-Origin'] = '*'
 			response.headers['Access-Control-Max-Age'] = '1728000'
-			puts EXPA.client.email
+			puts EXPA.client.get_email
 			render :json => {:token => EXPA.client.get_updated_token.to_s}
 		end
 	end
