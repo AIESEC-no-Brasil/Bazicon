@@ -180,12 +180,12 @@ module DigitalTransformation
 
     def study_level
       ['Escolaridade',
-       'Ensino Fundamental',
-       'Ensino Medio',
-       'Curso Tecnico',
-       'Ensino Superior',
-       'Mestrado',
-       'Doutorado']
+       'Ensino Fundamental Incompleto',
+       'Ensino Medio Incompleto',
+       'Curso Tecnico Incompleto',
+       'Ensino Superior - Cursando',
+       'Mestrado - Cursando',
+       'Doutorado - Cursando']
     end
 
     def universities

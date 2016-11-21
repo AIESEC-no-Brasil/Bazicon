@@ -130,7 +130,6 @@ class Sync
   def update_podio
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-    #EXPAHelper.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
     people = ExpaPerson.where.not(xp_id: nil).where.not(xp_email: nil).where.not(entity_exchange_lc: nil).where("control_podio NOT LIKE '%baziconX%' or control_podio is null").order(created_at: :desc)
     people.each do |person|
