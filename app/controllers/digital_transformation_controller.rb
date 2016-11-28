@@ -309,7 +309,7 @@ class DigitalTransformationController < ApplicationController
 
     send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
       course,lc,travel_interest,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
-    send_to_expa(email,name,lastname,password,lc)
+    send_to_expa(email,name,lastname,password,lc,interested_program)
 
     person = ExpaPerson.new
     person.xp_email = email.downcase
@@ -401,7 +401,8 @@ class DigitalTransformationController < ApplicationController
     person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
     person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
 
-    tags = "'"+campagin.to_s+"','"+interested_program+"'"
+    tags = interested_program
+    tags = "'"+campagin.to_s+"','"+interested_program+"'" unless campagin.nil? || campagin.empty?
     person.save(validate: false)
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
@@ -437,7 +438,7 @@ class DigitalTransformationController < ApplicationController
     end
   end
 
-  def send_to_expa(email, name, lastname, password, lc)
+  def send_to_expa(email, name, lastname, password, lc, interested_program)
     #background do
       a = true
       #while true
@@ -454,8 +455,17 @@ class DigitalTransformationController < ApplicationController
           auth_form.field_with(:name => 'user[password]').value = password
           auth_form.field_with(:name => 'user[country]').value = 'Brazil'
           auth_form.field_with(:name => 'user[mc]').value = '1606'
-          auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0]
-          auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
+          case interested_program
+            when 'GCDP', 'GV'
+              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[lc.to_i]]['ids'][0]
+              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[lc.to_i]
+            when 'GIP', 'GT', 'GE'
+              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogip[lc.to_i]]['ids'][0]
+              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogip[lc.to_i]
+            else
+              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[lc.to_i]]['ids'][0]
+              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[lc.to_i]
+          end
 
           page = agent.submit(auth_form, auth_form.buttons.first)
           puts email +' is on EXPA' if page.code.to_i == 200
