@@ -39,6 +39,15 @@ module DigitalTransformation
       ]
     end
 
+    def language_level
+      [ 'Selecione aqui!',
+        'Básico',
+        'Intermediário',
+        'Avançado',
+        'Fluente'
+      ]
+    end
+
     def get_entity_ids_by_order(i,program)
       case program
         when 'GCDP', 'GV'

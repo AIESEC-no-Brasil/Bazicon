@@ -277,11 +277,12 @@ class DigitalTransformationController < ApplicationController
     study_level = params['study-level']
     lc = params['nearest_lc']
     travel_interest = params['travel_interest']
+    english_level = params['english_level']
+    spanish_level = params['spanish_level']
     want_contact_by_email = params['want_contact_by_email']
     want_contact_by_phone = params['want_contact_by_phone']
     want_contact_by_whatsapp = params['want_contact_by_whatsapp']
     campagin = params['campanha']
-    puts campagin
 
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
@@ -308,7 +309,7 @@ class DigitalTransformationController < ApplicationController
     end
 
     send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
-      course,lc,travel_interest,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
+      course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
     send_to_expa(email,name,lastname,password,lc,interested_program)
 
     person = ExpaPerson.new
@@ -482,7 +483,7 @@ class DigitalTransformationController < ApplicationController
   end
 
   def send_to_podio(name,lastname,phone,email,interested_program,
-      sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,
+      sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,english_level,spanish_level,
       want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
@@ -509,7 +510,9 @@ class DigitalTransformationController < ApplicationController
     fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
     fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
     fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
-    fields['prioridade-de-contato'] = travel_interest.to_i
+    fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
+    fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
+    fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
 
     contato = []
     contato << 1 if want_contact_by_email

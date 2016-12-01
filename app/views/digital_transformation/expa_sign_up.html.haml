@@ -150,6 +150,29 @@
                             %option{value: "#{i}"}
                               = DigitalTransformation.travel_interest[i]
                               .form-group
+                    - if params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE'
+                      #english_level
+                        %label Nível de Inglês *
+                        %select.form-control.m-b.required{name: 'english_level'}
+                          - for i in 0...DigitalTransformation.language_level.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.language_level[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.language_level[i]
+                                .form-group
+                      #spanish_level
+                        %label Nível de Espanhol *
+                        %select.form-control.m-b.required{name: 'spanish_level'}
+                          - for i in 0...DigitalTransformation.language_level.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.language_level[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.language_level[i]
+                                .form-group
                     #contact_interest
                       .form-group
                         %label  Preferêcia de contato
