@@ -732,7 +732,7 @@ class Sync
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
     Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
 
-    people = []
+    people = [1197660]
     people.each do |person_id|
       person = ExpaPerson.find_by_xp_id(person_id)
       if !person.nil?# and !DigitalTransformation.hash_entities_podio_expa[I18n.transliterate(person.xp_home_lc.xp_name).upcase].nil?

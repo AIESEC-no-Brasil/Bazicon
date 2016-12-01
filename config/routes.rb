@@ -66,5 +66,7 @@ Myapp::Application.routes.draw do
   get '/simple_token'  => 'token#get_analytics_token'
   post '/login_expa' => 'token#auth'
   match '/login_expa' => "token#auth", via: :options
+  post '/login_opportunities' => 'token#auth_opportunities'
+  match '/login_opportunities' => "token#auth_opportunities", via: :options
 
 end

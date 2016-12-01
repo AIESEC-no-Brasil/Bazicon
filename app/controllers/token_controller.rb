@@ -32,6 +32,17 @@ class TokenController < ApplicationController
     	end
 	end
 
+	def auth_opportunities
+    	email = params['email']
+    	password = params['password']
+    	unless email.nil? or password.nil?
+		 	EXPA.setup() if EXPA.client.nil?
+			render :json => EXPA.client.login_opportunities(email,password)
+    	else
+    		render 403
+    	end
+	end
+
 	def cors_preflight_check
 	  if request.method == 'OPTIONS'
 	    headers['Access-Control-Allow-Origin'] = '*'
