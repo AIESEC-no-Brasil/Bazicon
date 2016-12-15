@@ -1,6 +1,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: vagrant
+  password: vagrant
   pool: 5
 
 development:
