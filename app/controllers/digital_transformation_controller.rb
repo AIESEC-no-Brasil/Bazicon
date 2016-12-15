@@ -266,7 +266,7 @@ class DigitalTransformationController < ApplicationController
   def expa_sign_up_success2
     name = params['name']
     lastname = params['lastname']
-    birthdate = params['birthdate']
+    birthdate = params['birthdate'].to_time.strftime('%Y-%m-%d %H:%M:%S')
     phone = params['phone']
     email = params['email']
     password = params['password']
@@ -506,7 +506,7 @@ class DigitalTransformationController < ApplicationController
     fields['data-inscricao'] = {'start' => Time.now.strftime('%Y-%m-%d %H:%M:%S')}
     fields['title'] = name + ' ' + lastname  unless name.nil? || lastname.nil?
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
-    fields['data-nascimento'] = birthdate
+    fields['data-de-nascimento'] = birthdate
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
     fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
