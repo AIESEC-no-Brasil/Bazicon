@@ -4,4 +4,5 @@ config/local_env.yml
 tmp/
 log/
 .idea/
+.vagrant/
 config/database.yml
