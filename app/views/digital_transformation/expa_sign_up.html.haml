@@ -25,7 +25,10 @@
                   .form-group
                     %label Sobrenome *
                     %input#lastname.form-control.required{:name => "lastname", :type => "text"}
-                    .form-group
+                  .form-group
+                    %label Data de Nascimento *
+                    %input#birthdate.form-control.required{:name => "birthdate", :type => "text", "data-mask" => "99/99/9999"}
+                  .form-group
                     %label Telefone *
                     %input#phone.form-control.required{:name => "phone", :type => "text", "data-mask" => "+55 (99) 99999999?9"}
                   .form-group

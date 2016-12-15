@@ -114,7 +114,7 @@ class DigitalTransformationController < ApplicationController
   # GET /expa/sign_up
   def expa_sign_up
     unless params.has_key?('programa') &&
-        (params['programa'] == 'GCDP' || params['programa'] == 'GV' || 
+        (params['programa'] == 'GCDP' || params['programa'] == 'GV' ||
           params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE')
       redirect_to 'http://aiesec.org.br'
       return
@@ -266,6 +266,7 @@ class DigitalTransformationController < ApplicationController
   def expa_sign_up_success2
     name = params['name']
     lastname = params['lastname']
+    birthdate = params['birthdate']
     phone = params['phone']
     email = params['email']
     password = params['password']
@@ -308,13 +309,14 @@ class DigitalTransformationController < ApplicationController
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
 
-    send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
+    send_to_podio(name,lastname, birthdate,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
       course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
     send_to_expa(email,name,lastname,password,lc,interested_program)
 
     person = ExpaPerson.new
     person.xp_email = email.downcase
     person.xp_full_name = name
+    person.xp_birthday_date = birthdate
 
     case interested_program
       when 'GCDP', 'GV'
@@ -407,7 +409,7 @@ class DigitalTransformationController < ApplicationController
     person.save(validate: false)
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
-    
+
     case interested_program
       when 'GCDP', 'GV'
         redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
@@ -482,7 +484,7 @@ class DigitalTransformationController < ApplicationController
     #end
   end
 
-  def send_to_podio(name,lastname,phone,email,interested_program,
+  def send_to_podio(name,lastname,birthdate,phone,email,interested_program,
       sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,english_level,spanish_level,
       want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
@@ -504,6 +506,7 @@ class DigitalTransformationController < ApplicationController
     fields['data-inscricao'] = {'start' => Time.now.strftime('%Y-%m-%d %H:%M:%S')}
     fields['title'] = name + ' ' + lastname  unless name.nil? || lastname.nil?
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
+    fields['data-nascimento'] = birthdate
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
     fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
