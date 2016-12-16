@@ -30,6 +30,12 @@
 
 `$ bundle install`
 
+#### Criar e migrar os bancos de dados
+
+`$ rails db:create db:migrate`
+
+> Para acessos posteriores, se houver alguma mudança no banco de dados apenas migrar para a versão nova: `rails db:migrate`
+
 #### Executar os Processos Rails Desejados:
 
 - `rails s -b 0.0.0.0`: Inicializa o webserver atrelado ao endereço `0.0.0.0` e porta `3000` (padrão) para servir a aplicação rails (http://localhost:3000)
