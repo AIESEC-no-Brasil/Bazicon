@@ -50,7 +50,7 @@ gem 'responders', '~> 2.0'
 
 # Gerenciamento AWS SQS
 gem 'aws-sdk', '~> 2'
-
+gem 'shoryuken'
 
 group :development do
   gem 'capistrano-rails'
