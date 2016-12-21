@@ -48,6 +48,10 @@ gem 'ngannotate-rails'
 gem 'bower-rails'
 gem 'responders', '~> 2.0'
 
+# Gerenciamento AWS SQS
+gem 'aws-sdk', '~> 2'
+gem 'shoryuken'
+
 group :development do
   gem 'capistrano-rails'
   gem 'web-console', '~> 2.0'
