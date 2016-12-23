@@ -3,14 +3,15 @@ class SendDataToSqs
     new(params).call
   end
 
-  attr_reader :params
+  attr_reader :params, :status
 
   def initialize(params)
     @params = params
+    @status = true
   end
 
   def call
-    perform_on_worker
+    @status = false unless perform_on_worker
   end
 
   private
