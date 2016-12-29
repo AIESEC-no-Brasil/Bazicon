@@ -28,6 +28,7 @@ gem 'google_drive', '>= 2.0'
 gem 'bcrypt'
 gem 'thin'
 gem 'will_paginate', '~> 3.1.0'
+gem 'slack-notifier'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', group: :doc
