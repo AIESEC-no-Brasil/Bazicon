@@ -12,6 +12,8 @@ class SendToExpa
 
   def call
     @status = send_data_to_expa(params)
+
+    @status
   end
 
   private
@@ -43,6 +45,10 @@ class SendToExpa
 
     page = agent.submit(auth_form, auth_form.buttons.first)
 
-    page.code.to_i == 200
+    check_page_for_errors(page)
+  end
+
+  def check_page_for_errors(page)
+    true unless page.search('#error_explanation').text.include?('error')
   end
 end
