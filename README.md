@@ -42,7 +42,7 @@
 
 - `rails c`: Inicializa o console rails com acesso ao banco de dados (por padrão no ambiente de desenvolvimento)
 
-- `bundle exec shoryuken -r worker.rb -C shoryuken.yml`: Executa o monitor da gem Shoryuken responsável por gerenciar o serviço SQS
+- `bundle exec shoryuken -R -C config/shoryuken.yml`: Executa o monitor da gem Shoryuken responsável por gerenciar o serviço SQS
 
 ## Variáveis de Ambiente
 
