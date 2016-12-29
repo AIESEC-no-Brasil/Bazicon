@@ -43,7 +43,7 @@ class SendToExpa
 
     page = agent.submit(auth_form, auth_form.buttons.first)
 
-    check_page_for_errors(page)
+    page.code.to_i == 200 && check_page_for_errors(page)
   end
 
   def check_page_for_errors(page)
