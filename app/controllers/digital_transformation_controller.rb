@@ -432,7 +432,7 @@ class DigitalTransformationController < ApplicationController
                interested_program: interested_program
              }
 
-    SendDataToSqs.new(params).call
+    SendDataToSqs.call(params)
   end
 
   def prevents_options

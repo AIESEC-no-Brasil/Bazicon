@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe SendToExpa do
-  let(:params) do
+  let(:invalid_params) do
     {
-      email: 'test@example.com',
-      name: 'John',
-      lastname: 'Doe',
-      password: '12345678',
-      lc: '1',
-      interested_program: '1'
+      "email"=>"test@example.com",
+      "name"=>"John",
+      "lastname"=>"Doe",
+      "password"=>"12345",
+      "lc"=>"1",
+      "interested_program"=>"1"
     }
   end
-  
+
   let(:service) { SendToExpa.new(params) }
 
   subject { service }
@@ -24,9 +24,7 @@ RSpec.describe SendToExpa do
 
   context 'failure' do
     it 'states as false when given method fails' do
-      allow_any_instance_of(SendToExpa).to receive(:call).and_return(false)
-
-      expect(service.call).to eq false
+      expect(SendToExpa.call(invalid_params)).to eq false
     end
   end
 end
