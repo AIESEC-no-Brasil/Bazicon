@@ -308,8 +308,8 @@ class DigitalTransformationController < ApplicationController
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
 
-    # send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
-      # course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
+    send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
+      course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
     # send_to_expa(email,name,lastname,password,lc,interested_program)
 
     send_data_to_sqs(email, name, lastname, password, lc, interested_program)
@@ -428,8 +428,8 @@ class DigitalTransformationController < ApplicationController
     params = { email: email,
                name: name,
                lastname: lastname,
-               password: password, 
-               lc: lc, 
+               password: password,
+               lc: lc,
                interested_program: interested_program
              }
 
