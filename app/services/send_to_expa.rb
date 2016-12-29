@@ -12,8 +12,6 @@ class SendToExpa
 
   def call
     @status = send_data_to_expa(params)
-
-    @status
   end
 
   private
