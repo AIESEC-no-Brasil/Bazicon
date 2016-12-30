@@ -41,3 +41,13 @@
 - `rails s -b 0.0.0.0`: Inicializa o webserver atrelado ao endereço `0.0.0.0` e porta `3000` (padrão) para servir a aplicação rails (http://localhost:3000)
 
 - `rails c`: Inicializa o console rails com acesso ao banco de dados (por padrão no ambiente de desenvolvimento)
+
+- `bundle exec shoryuken -R -C config/shoryuken.yml`: Executa o monitor da gem Shoryuken responsável por gerenciar o serviço SQS
+
+## Variáveis de Ambiente
+
+### Credenciais de Acesso AWS
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION

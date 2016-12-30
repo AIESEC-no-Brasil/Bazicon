@@ -12,6 +12,8 @@ class SendDataToSqs
 
   def call
     @status = false unless perform_on_worker
+
+    @status
   end
 
   private
