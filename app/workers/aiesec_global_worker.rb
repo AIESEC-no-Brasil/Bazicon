@@ -9,12 +9,10 @@ class AiesecGlobalWorker
 
   def perform(sqs_msg, body)
     notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
+
     Shoryuken.logger.info("Received message: '#{body}'")
 
-    if SendToExpa.call(body)
-      notify_and_delete_message
-      Shoryuken.logger.info("SendToExpa: '#{body}'")
-    end
+    notify_and_delete_message(sqs_msg, body) if SendToExpa.call(body)
   end
 
   private
