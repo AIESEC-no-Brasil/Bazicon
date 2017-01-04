@@ -11,4 +11,8 @@ sqs = Aws::SQS::Client.new(
   region:      AWS_REGION,
   credentials: Aws::Credentials.new(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 )
+
+# Sign Up Queue
 sqs.create_queue({queue_name: 'default'})
+
+sqs.create_queue({queue_name: 'jobs'})
