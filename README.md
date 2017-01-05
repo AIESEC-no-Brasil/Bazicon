@@ -6,7 +6,7 @@
 
 > Copy the file `local_env.yml` to the `config` directory within app
 
-#### Copiar o arquivo de configuração dos bancos de dados
+#### Copy the database configuration file
 
 `$ cp config/database.example.yml config/database.yml`
 
