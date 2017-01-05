@@ -1,0 +1,4 @@
+concurrency: 25
+delay: 0
+queues:
+  - default

@@ -114,7 +114,7 @@ class DigitalTransformationController < ApplicationController
   # GET /expa/sign_up
   def expa_sign_up
     unless params.has_key?('programa') &&
-        (params['programa'] == 'GCDP' || params['programa'] == 'GV' || 
+        (params['programa'] == 'GCDP' || params['programa'] == 'GV' ||
           params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE')
       redirect_to 'http://aiesec.org.br'
       return
@@ -310,7 +310,8 @@ class DigitalTransformationController < ApplicationController
 
     send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
       course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
-    send_to_expa(email,name,lastname,password,lc,interested_program)
+
+    send_data_to_sqs(email, name, lastname, password, lc, interested_program)
 
     person = ExpaPerson.new
     person.xp_email = email.downcase
@@ -407,7 +408,7 @@ class DigitalTransformationController < ApplicationController
     person.save(validate: false)
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
-    
+
     case interested_program
       when 'GCDP', 'GV'
         redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
@@ -419,7 +420,20 @@ class DigitalTransformationController < ApplicationController
         redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
     end
   end
+
   private
+
+  def send_data_to_sqs(email, name, lastname, password, lc, interested_program)
+    params = { email: email,
+               name: name,
+               lastname: lastname,
+               password: password,
+               lc: lc,
+               interested_program: interested_program
+             }
+
+    SendDataToSqs.call(params)
+  end
 
   def prevents_options
     @options = {}
@@ -437,49 +451,6 @@ class DigitalTransformationController < ApplicationController
       yield
       ActiveRecord::Base.connection.close
     end
-  end
-
-  def send_to_expa(email, name, lastname, password, lc, interested_program)
-    #background do
-      a = true
-      #while true
-        begin
-          url = 'https://opportunities.aiesec.org/auth'
-
-          agent = Mechanize.new {|a| a.ssl_version, a.verify_mode = 'TLSv1',OpenSSL::SSL::VERIFY_NONE}
-          page = agent.get(url)
-
-          auth_form = page.forms[1]
-          auth_form.field_with(:name => 'user[email]').value = email
-          auth_form.field_with(:name => 'user[first_name]').value = name
-          auth_form.field_with(:name => 'user[last_name]').value = lastname
-          auth_form.field_with(:name => 'user[password]').value = password
-          auth_form.field_with(:name => 'user[country]').value = 'Brazil'
-          auth_form.field_with(:name => 'user[mc]').value = '1606'
-          case interested_program
-            when 'GCDP', 'GV'
-              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[lc.to_i]]['ids'][0]
-              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[lc.to_i]
-            when 'GIP', 'GT', 'GE'
-              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogip[lc.to_i]]['ids'][0]
-              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogip[lc.to_i]
-            else
-              auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[lc.to_i]]['ids'][0]
-              auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[lc.to_i]
-          end
-
-          page = agent.submit(auth_form, auth_form.buttons.first)
-          puts email +' is on EXPA' if page.code.to_i == 200
-          puts email +' is not on EXPA' if page.code.to_i != 200
-          #break
-        rescue => exception
-          puts exception.to_s
-          puts email + ' ' + name + ' ' + lastname + ' ' + password + ' ' + DigitalTransformation.hash_entities_podio_expa.values[lc.to_i]['ids'][0].to_s + ' ' + DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i].to_s
-          puts exception.backtrace
-          sleep(2.minutes)
-        end
-      #end
-    #end
   end
 
   def send_to_podio(name,lastname,phone,email,interested_program,

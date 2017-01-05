@@ -57,6 +57,14 @@ GEM
     ast (2.3.0)
     autoprefixer-rails (6.5.3)
       execjs
+    aws-sdk (2.6.39)
+      aws-sdk-resources (= 2.6.39)
+    aws-sdk-core (2.6.39)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.6.39)
+      aws-sdk-core (= 2.6.39)
+    aws-sigv4 (1.0.0)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -83,6 +91,23 @@ GEM
     capistrano-rails (1.2.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    celluloid (0.17.3)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.6)
+      timers (>= 4.1.1)
     chronic (0.10.2)
     clockwork (2.0.0)
       activesupport
@@ -98,6 +123,7 @@ GEM
     concurrent-ruby (1.0.2)
     daemons (1.2.4)
     debug_inspector (0.0.2)
+    diff-lcs (1.2.5)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     dropbox-sdk (1.6.5)
@@ -105,10 +131,17 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.1)
     execjs (2.7.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
+      railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.14)
     font-awesome-rails (4.7.0.0)
       railties (>= 3.2, < 5.1)
+    formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     google-api-client (0.9.20)
@@ -134,8 +167,23 @@ GEM
       signet (~> 0.7)
     groupdate (3.1.1)
       activesupport (>= 3)
+    guard (2.14.0)
+      formatador (>= 0.2.4)
+      listen (>= 2.7, < 4.0)
+      lumberjack (~> 1.0)
+      nenv (~> 0.1)
+      notiffany (~> 0.0)
+      pry (>= 0.9.12)
+      shellany (~> 0.0)
+      thor (>= 0.18.1)
+    guard-compat (1.2.1)
+    guard-rspec (4.7.3)
+      guard (~> 2.1)
+      guard-compat (~> 1.1)
+      rspec (>= 2.99.0, < 4.0)
     haml (4.0.7)
       tilt
+    hitimes (1.2.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.2.4)
@@ -144,12 +192,17 @@ GEM
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jmespath (1.3.1)
     jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.6)
+    listen (3.1.5)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
     little-plugger (1.1.4)
     log4r (1.1.10)
     logging (2.1.0)
@@ -157,6 +210,7 @@ GEM
       multi_json (~> 1.10)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    lumberjack (1.0.10)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     mechanize (2.7.5)
@@ -178,6 +232,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    nenv (0.3.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
@@ -189,6 +244,9 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    notiffany (0.1.1)
+      nenv (~> 0.1)
+      shellany (~> 0.0)
     ntlm-http (0.1.1)
     oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
@@ -206,6 +264,10 @@ GEM
       faraday (>= 0.8.0, < 0.10.0)
       multi_json
     powerpack (0.1.1)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     public_suffix (2.0.4)
     rack (2.0.1)
     rack-cache (1.6.1)
@@ -242,12 +304,36 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     rake (11.3.0)
+    rb-fsevent (0.9.8)
+    rb-inotify (0.9.7)
+      ffi (>= 0.5.0)
     rdoc (4.3.0)
     representable (2.3.0)
       uber (~> 0.0.7)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     retriable (2.1.0)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-rails (3.5.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
     rubocop (0.45.0)
       parser (>= 2.3.1.1, < 3.0)
       powerpack (~> 0.1)
@@ -255,6 +341,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
+    ruby_dep (1.5.0)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -265,11 +352,18 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    shellany (0.0.1)
+    shoryuken (2.1.1)
+      aws-sdk-core (~> 2)
+      celluloid (~> 0.16)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     signet (0.7.3)
       addressable (~> 2.3)
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
     sprockets (3.7.0)
@@ -279,7 +373,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.12)
     sshkit (1.11.4)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -290,6 +383,8 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
+    timers (4.1.2)
+      hitimes
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -321,6 +416,7 @@ PLATFORMS
 DEPENDENCIES
   angular-rails-templates
   angularjs-rails
+  aws-sdk (~> 2)
   bcrypt
   better_errors
   bootstrap-sass
@@ -331,17 +427,18 @@ DEPENDENCIES
   coffee-rails
   dropbox-sdk
   expa!
+  factory_girl_rails
   faraday (>= 0.9)
   font-awesome-rails
   google_drive (>= 2.0)
   groupdate
+  guard-rspec
   haml
   jbuilder
   jquery-rails (~> 4.0, >= 4.0.5)
   json
   log4r
   mechanize
-  minitest
   ngannotate-rails
   oauth2
   pg
@@ -350,11 +447,13 @@ DEPENDENCIES
   rails
   rails_12factor
   responders (~> 2.0)
+  rspec-rails (~> 3.5)
   rubocop
   sass-rails
   sdoc (~> 0.4.0)
+  shoryuken
+  shoulda-matchers (~> 3.1)
   spring
-  sqlite3
   thin
   turbolinks
   uglifier
@@ -363,4 +462,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.12.5
+   1.13.6
