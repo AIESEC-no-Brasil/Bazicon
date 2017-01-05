@@ -1,52 +1,52 @@
 # Bazicon
 
-## Configurações do Projeto
+## Project Configurations
 
-### Configurações Iniciais & Vagrant
+### Initial Setup & Vagrant
 
-> Copiar o arquivo `local_env.yml` para o diretório `config` do projeto
+> Copy the file `local_env.yml` to the `config` directory within app
 
-#### Copiar o arquivo de configuração dos bancos de dados
+#### Copy the database configuration file
 
 `$ cp config/database.example.yml config/database.yml`
 
-#### Rodar o vagrantfile
+#### Run vagrantfile
 
 `$ vagrant up`
 
-> Este processo preparará o ambiente Ruby & Postgres pronto para rodar um projeto Rails
+> This proccess will setup your Ruby & Postgres environment all set to run a Rails project
 
-#### Acessar o vagrant via SSH
+#### Access Vagrant through SSH
 
 `$ vagrant ssh`
 
-### Uma Vez Dentro da Máquina Virtual:
+### Once within the Virtual Machine:
 
-#### Acessar o diretório compartilhado dentro da máquina virtual contendo os arquivos da aplicação
+#### Access the shared directory mirroring the application's files
 
 `$ cd /vagrant/`
 
-#### Instalar as gems e dependências contidas no Gemfile
+#### Install gems and dependencies from Gemfile
 
 `$ bundle install`
 
-#### Criar e migrar os bancos de dados
+#### Create and migrate the database
 
 `$ rails db:create db:migrate`
 
-> Para acessos posteriores, se houver alguma mudança no banco de dados apenas migrar para a versão nova: `rails db:migrate`
+> For further accesses, if any changes have been made in the database just migrate to the new version:  `rails db:migrate`
 
-#### Executar os Processos Rails Desejados:
+#### Execute the desired Rails' processes:
 
-- `rails s -b 0.0.0.0`: Inicializa o webserver atrelado ao endereço `0.0.0.0` e porta `3000` (padrão) para servir a aplicação rails (http://localhost:3000)
+- `rails s -b 0.0.0.0`: Initializes the webserver binding to the address `0.0.0.0` and port `3000` (default) serving the application (http://localhost:3000)
 
-- `rails c`: Inicializa o console rails com acesso ao banco de dados (por padrão no ambiente de desenvolvimento)
+- `rails c`: Initializes the rails console with database access (development environment by default)
 
-- `bundle exec shoryuken -R -C config/shoryuken.yml`: Executa o monitor da gem Shoryuken responsável por gerenciar o serviço SQS
+- `bundle exec shoryuken -R -C config/shoryuken.yml`: Executes the Shoryuken gem monitor that handles the SQS management
 
-## Variáveis de Ambiente
+## Environment Variables
 
-### Credenciais de Acesso AWS
+### AWS Access Credentials
 
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
