@@ -1,0 +1,49 @@
+# Rename this file to local_env.yml
+# Add account settings and API keys here.
+# This file should be listed in .gitignore to keep your settings secret!
+# Each entry gets set as a local environment variable.
+# This file overrides ENV variables in the Unix shell.
+# For example, setting:
+# GMAIL_USERNAME: 'Your_Gmail_Username'
+# makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
+RD_STATION_URL: 'https://www.rdstation.com.br/api/1.3/conversions'
+RD_STATION_TOKEN: '41825a69a6fe5c2f1bae7452bfdd2b69'
+RD_STATION_PRIVATE_TOKEN: 'b8c996e0ad392a312c1acc825512358d'
+
+DROPBOX_TOKEN: 'uz4xungh42a26np'
+DROPBOX_SECRET: 'f6j7w2kah1q8ue4'
+
+ROBOZINHO_EMAIL: 'robozinhomcbazi@gmail.com'
+ROBOZINHO_PASSWORD: 'mcmosaico4ever123'
+SIMPLE_TOKEN_EMAIL: 'aiesecbrasil@gmail.com'
+SIMPLE_TOKEN_PASSWORD: '@aiesec2020*'
+
+PRODUCTION_UNICODE: 'unicode'
+PRODUCTION_DATABASE: 'bazicon_db'
+PRODUCTION_USERNAME: 'bazicon_master'
+PRODUCTION_PASSWORD: 'email741258'
+PRODUCTION_HOST: 'bazicon-db.cpcjumtjwpk7.us-west-1.rds.amazonaws.com'
+PRODUCTION_POST: '5432'
+
+DEVELOPMENT_UNICODE: 'unicode'
+DEVELOPMENT_DATABASE: 'bazicon_db'
+DEVELOPMENT_USERNAME: 'bazicon_master'
+DEVELOPMENT_PASSWORD: 'email741258'
+DEVELOPMENT_HOST: 'bazicon-db.cpcjumtjwpk7.us-west-1.rds.amazonaws.com'
+DEVELOPMENT_POST: '5432'
+
+TEST_UNICODE: 'unicode'
+TEST_DATABASE: 'bazicon_db'
+TEST_USERNAME: 'bazicon_master'
+TEST_PASSWORD: 'email741258'
+TEST_HOST: 'bazicon-db.cpcjumtjwpk7.us-west-1.rds.amazonaws.com'
+TEST_POST: '5432'
+
+PODIO_USERNAME: 'b3009839@trbvn.com'
+PODIO_PASSWORD: 'mcmosaico4ever123'
+PODIO_2_USERNAME: 'b3012076@trbvn.com'
+PODIO_2_PASSWORD: 'mcmosaico4ever123'
+PODIO_API_KEY: 'podio-bazi'
+PODIO_API_SECRET: 'hMsrERSSvGkzSSJqZ4coEFAeu8ZEc9QvxvMXLxXXHUbEjrQPWox6OHkhJE4loE7M'
+
+SECRET_KEY_BASE: 45cf719b02939016a7e182540ac85adcd9c06ffe9fdef42cbc6c34214ec6d1f339f4e025e4c833f46391da1e90ae8ce44eefc4bfaadec9136e0d035d48b9cfb1
