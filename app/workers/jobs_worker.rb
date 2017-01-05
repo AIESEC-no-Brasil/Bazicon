@@ -7,5 +7,11 @@ class JobsWorker
 
   def perform(sqs_msg, body)
     Shoryuken.logger.info("Received message: '#{body}'")
+
+    begin
+      body["name"].constantize.call
+    rescue
+      raise NameError, "Not a defined job"
+    end
   end
 end
