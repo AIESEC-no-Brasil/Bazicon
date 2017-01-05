@@ -363,6 +363,7 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    slack-notifier (1.5.1)
     slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
@@ -453,6 +454,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   shoryuken
   shoulda-matchers (~> 3.1)
+  slack-notifier
   spring
   thin
   turbolinks
