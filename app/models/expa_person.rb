@@ -1,5 +1,5 @@
 class ExpaPerson < ActiveRecord::Base
-  enum xp_status: [:open, :in_progress, :matched, :realized, :completed, :other]
+  enum xp_status: [:open, :applied, :approved, :realized, :completed, :other]
   enum xp_gender: [:male, :female, :prefer_not_to_answer]
   enum interested_program: [:global_volunteer, :global_talents, :global_entrepreneur]
   enum interested_sub_product: [:global_volunteer_arab, :global_volunteer_east_europe, :global_volunteer_africa, :global_volunteer_asia, :global_volunteer_latam, :global_talents_start_up, :global_talents_educacional, :global_talents_IT, :global_talents_management, :global_talents_marketing, :global_entrepreneur_educacional, :global_entrepreneur_IT, :global_entrepreneur_management, :global_entrepreneur_engineering, :global_entrepreneur_marketing]
