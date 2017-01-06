@@ -29,9 +29,10 @@ class SendDataToSqs
   end
 
   def notify_on_slack
-    notifier = Slack::Notifier.new(SLACK_WEBHOOK_URL)
-    notifier.channel ='sqs-notifications'
-    notifier.username = 'Notifier'
+    notifier = Slack::Notifier.new SLACK_WEBHOOK_URL do
+      defaults channel: "sqs-notifications",
+        username: 'Notifier'
+    end
     notifier.ping(text: "Nova Mensagem enviada à fila :incoming_envelope:\n\n&gt; Parâmetros: #{params}",
                          icon_emoji: ':email:')
   end
