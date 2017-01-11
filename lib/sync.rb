@@ -8,6 +8,7 @@ class Sync
         :form_podio_offline => 'form-podio-offline',
         :expa => 'expa',
         :open => 'open',
+        :open_opportunity => 'open_opportunity',
         :landing_0 => 'completou-cadastro',
         :landing_1 => 'form-video-suporte-aiesec',
         :landing_2 => '15-dicas-para-planejar-sua-viagem-sem-imprevistos',
@@ -32,7 +33,7 @@ class Sync
 
       setup_expa_api
       time = SyncControl.get_last('open_people')
-      time = Time.now - 60*60 if time.nil? # 1 hour windows
+      time = Time.now - 12*60*60 if time.nil? # 12 hour windows
       people = EXPA::People.list_everyone_created_after(time)
       people.each do |xp_person|
         if ExpaPerson.exist?(xp_person)
@@ -58,10 +59,44 @@ class Sync
     puts "Listed #{people.length} people finishing #{Time.now}"
   end
 
+  #get all new people on EXPA since last sync, save on DB and sent to RD
+  def get_new_opportunities_from_expa
+    people = nil
+    SyncControl.new do |sync|
+      sync.start_sync = DateTime.now
+      sync.sync_type = 'open_opportunity'
+
+      setup_expa_api
+      time = SyncControl.get_last('open_opportunity')
+      time = Time.now - 24**60*60 if time.nil? # 1 day windows
+      opportunities = EXPA::Opportunities.list_everyone_created_after(time)
+      opportunities.each do |xp_opportunity|
+        if ExpaPerson.exist?(xp_opportunity)
+          xp_opportunity = EXPA::Opportunities.find_by_id(xp_opportunity.id)
+          opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
+          opportunity.update_from_expa(xp_opportunity)
+          opportunity.save
+        else
+          opportunity = ExpaOpportunity.new
+          opportunity.update_from_expa(xp_opportunity)
+          opportunity.save
+          send_to_rd(opportunity, nil, self.rd_identifiers[:open_opportunity], nil)
+        end
+      end
+
+      sync.get_error = false
+      sync.count_itens = opportunities.length
+      sync.end_sync = DateTime.now
+      sync.save
+    end
+
+    puts "Listed #{opportunities.length} opportunities finishing #{Time.now}"
+  end
+
   #params
   #status - a String with the application status
   #programs - a Array of the programs
-  def update_status(status, programs)
+  def update_status(status, programs, for_filter)
     filter = nil
     case status
       when 'open' then filter = 'created_at'
@@ -83,9 +118,10 @@ class Sync
       params = {'per_page' => 100}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
-      params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [1] #GCDP
-      params['filters[for]'] = 'people' #GCDP
+      params['filters[person_committee]'] = 1606 if for_filter == 'people' #from MC Brazil
+      params['filters[opportunity_committee]'] = 1606 if for_filter == 'opportunities' #from MC Brazil
+      params['filters[programmes][]'] = programs #GCDP
+      params['filters[for]'] = for_filter #people #opportunities
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
       puts 'Esses negos tudo: ' + total_items.to_s
