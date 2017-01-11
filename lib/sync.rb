@@ -481,7 +481,7 @@ class Sync
   end
 
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
-  def check_problematic_applications(from,to)
+  def check_problematic_applications(from,to,programs,for_filter)
     total_items = 0
     between = (to - from).to_i
     setup_expa_api
@@ -490,18 +490,18 @@ class Sync
       date = (to - day)
       params['filters[created_at][from]'] = date.to_s
       params['filters[created_at][to]'] = date.to_s
-      params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [2] #GCDP
-      params['filters[for]'] = 'people' #OGX
+      #params['filters[person_committee]'] = 1606 #from MC Brazil
+      params['filters[programmes][]'] = programs #GCDP
+      params['filters[for]'] = for_filter
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
-      total_bazicon = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
+      #total_bazicon = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
       puts date.to_s
       puts 'No EXPA: ' + total_items.to_s
-      puts 'No Bazicon: ' + total_bazicon.to_s
-      if total_bazicon != total_items
+      #puts 'No Bazicon: ' + total_bazicon.to_s
+      #if total_bazicon != total_items
         xp_applications = EXPA::Applications.list_by_param(params)
-        b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        #b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
         xp_applications.each do |xp_application|
           #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
             begin
@@ -523,7 +523,7 @@ class Sync
             end
           #end
         end
-      end
+      #end
     end
   end
 

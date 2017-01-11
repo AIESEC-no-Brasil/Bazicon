@@ -160,7 +160,7 @@ class SyncTest < Minitest::Test
 =end
 
   def test_expa_comparisson
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31))
+    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'people')
   end
 end
 
