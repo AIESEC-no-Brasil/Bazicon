@@ -115,11 +115,11 @@ class Sync
       time = SyncControl.get_last('applied_people').strftime('%F')
       time = Date.today.to_s if time.nil?
 
-      params = {'per_page' => 50}
+      params = {'per_page' => 25}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
-      params['filters[person_committee]'] = 1606 if for_filter == 'people' #from MC Brazil
-      params['filters[opportunity_committee]'] = 1606 if for_filter == 'opportunities' #from MC Brazil
+      #params['filters[person_committee]'] = 1606 if for_filter == 'people' #from MC Brazil
+      #params['filters[opportunity_committee]'] = 1606 if for_filter == 'opportunities' #from MC Brazil
       params['filters[programmes][]'] = programs #GCDP
       params['filters[for]'] = for_filter #people #opportunities
       paging = EXPA::Applications.paging(params)
@@ -486,12 +486,12 @@ class Sync
     between = (to - from).to_i
     setup_expa_api
     between.downto(0).each do |day|
-      params = {'per_page' => 100}
+      params = {'per_page' => 25}
       date = (to - day)
       params['filters[created_at][from]'] = date.to_s
       params['filters[created_at][to]'] = date.to_s
       params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [1,2,5] #GCDP
+      params['filters[programmes][]'] = [2] #GCDP
       params['filters[for]'] = 'people' #OGX
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
@@ -501,7 +501,7 @@ class Sync
       puts 'No Bazicon: ' + total_bazicon.to_s
       if total_bazicon != total_items
         xp_applications = EXPA::Applications.list_by_param(params)
-        b_applications = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
+        b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
         xp_applications.each do |xp_application|
           #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
             begin
