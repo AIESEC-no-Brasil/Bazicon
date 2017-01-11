@@ -5,7 +5,7 @@ class SyncTest < Minitest::Test
   def setup
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['MC_EMAIL'],ENV['MC_PASSWORD'])
+      xp.auth(ENV['MEGAZORD_EMAIL'],ENV['MEGAZORD_PASSWORD'])
     end
 =begin
     SyncControl.new do |sync|
@@ -128,6 +128,9 @@ class SyncTest < Minitest::Test
   def test_update_podio
     Sync.new.expa_refresh
   end
+  def test_joga_os_nego
+    Sync.new.resolvendo_tretas
+  end
 
   def test_send_to_rd
     #TODO: colocar todos os campos do peoples e applications aqui no RD
@@ -156,8 +159,8 @@ class SyncTest < Minitest::Test
   end
 =end
 
-  def test_joga_os_nego
-    Sync.new.resolvendo_tretas
+  def test_expa_comparisson
+    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31))
   end
 end
 

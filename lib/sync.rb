@@ -115,7 +115,7 @@ class Sync
       time = SyncControl.get_last('applied_people').strftime('%F')
       time = Date.today.to_s if time.nil?
 
-      params = {'per_page' => 100}
+      params = {'per_page' => 50}
       params['filters['+filter+'][from]'] = time
       params['filters['+filter+'][to]'] = Date.today.to_s
       params['filters[person_committee]'] = 1606 if for_filter == 'people' #from MC Brazil
@@ -491,7 +491,7 @@ class Sync
       params['filters[created_at][from]'] = date.to_s
       params['filters[created_at][to]'] = date.to_s
       params['filters[person_committee]'] = 1606 #from MC Brazil
-      params['filters[programmes][]'] = [1] #GCDP
+      params['filters[programmes][]'] = [1,2,5] #GCDP
       params['filters[for]'] = 'people' #OGX
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
