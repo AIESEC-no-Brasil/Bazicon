@@ -92,7 +92,6 @@ every(3.hours, 'list new in progress applications and update GE people')
 every(3.hours, 'list new approved applications and update GE people')
 every(8.hours, 'list new realized applications and update GE people')
 every(8.hours, 'list new completed applications and update GE people')
-every(4.hours, 'list new open applications and update GE people')
 
 every(4.hours, 'list new open applications and update opportunities')
 every(3.hours, 'list new accepted applications and update opportunities')
