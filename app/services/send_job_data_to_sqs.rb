@@ -6,7 +6,7 @@ class SendJobDataToSqs
   attr_reader :params, :status
 
   def initialize(params)
-    @params = { 'name' => params }
+    @params = params
     @status = true
   end
 

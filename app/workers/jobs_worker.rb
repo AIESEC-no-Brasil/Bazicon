@@ -9,7 +9,13 @@ class JobsWorker
     Shoryuken.logger.info("Received message: '#{body}'")
 
     begin
-      body["name"].constantize.call
+      klass = body["klass"].constantize.new
+
+      if body.has_key? "params"
+        klass.send body["method"], body["params"]
+      else
+        klass.send body["method"]
+      end
     rescue
       raise NameError, "Not a defined job"
     end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SendJobDataToSqs do
   let(:params) do
     {
-      'name' => 'TestJob'
+      'name' => 'test_method'
     }
   end
 

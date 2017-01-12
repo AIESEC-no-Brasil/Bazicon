@@ -9,9 +9,11 @@ include Clockwork
 # Define the jobs
 handler do |job|
   if job.eql?('list new open people')
-    Sync.new.get_new_people_from_expa
+    # Sync.new.get_new_people_from_expa
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "get_new_people_from_expa" })
   elsif job.eql?('list new open applications and update people')
-    Sync.new.update_status('open',[1],'people')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "open", "programs" => "1", "for_filter" => "people" } })
+    # Sync.new.update_status('open',[1],'people')
   elsif job.eql?('list new accepted applications and update people')
     Sync.new.update_status('accepted',[1],'people')
   elsif job.eql?('list new in progress applications and update people')
@@ -22,7 +24,7 @@ handler do |job|
     Sync.new.update_status('realized',[1],'people')
   elsif job.eql?('list new completed applications and update people')
     Sync.new.update_status('completed',[1],'people')
-    
+
   elsif job.eql?('list new open applications and update GT people')
     Sync.new.update_status('open',[2],'people')
   elsif job.eql?('list new accepted applications and update GT people')
@@ -35,7 +37,7 @@ handler do |job|
     Sync.new.update_status('realized',[2],'people')
   elsif job.eql?('list new completed applications and update GT people')
     Sync.new.update_status('completed',[2],'people')
-    
+
   elsif job.eql?('list new open applications and update GE people')
     Sync.new.update_status('open',[5],'people')
   elsif job.eql?('list new accepted applications and update GE people')
