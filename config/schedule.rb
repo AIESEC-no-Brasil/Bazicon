@@ -22,10 +22,6 @@
 set :output, 'log/cron.log'
 
 every 10.minutes do
-  runner "SendJobDataToSqs.call('ListOpen')"
-end
-
-every 10.minutes do
   runner 'ExpaRdSync.new.list_open'
 end
 
