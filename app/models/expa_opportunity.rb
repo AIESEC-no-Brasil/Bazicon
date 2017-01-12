@@ -77,4 +77,11 @@ class ExpaOpportunity < ActiveRecord::Base
     self.xp_tm_details = (data.tm_details.nil? || data.tm_details.to_s.length <= 2) ? {} : data.tm_details
     self.xp_nps_score = data.nps_score unless data.nps_score.nil?
   end
+
+
+  #param a Hash from EXPA API
+  #reuturn boolean if the person is on the database
+  def self.exist?(opportunity)
+    (!opportunity.id.nil? && ExpaOpportunity.find_by_xp_id(opportunity.id))
+  end
 end
