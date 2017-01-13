@@ -2,9 +2,9 @@
 
 ## Project Configurations
 
-### Initial Setup & Vagrant
+### Initial Setup & Vagrant (Development Environment)
 
-> Copy the file `local_env.yml` to the `config` directory within app
+> Copy the file `local_env.yml` or create your own to the `config` directory within app
 
 #### Copy the database configuration file
 
@@ -42,7 +42,7 @@
 
 - `rails c`: Initializes the rails console with database access (development environment by default)
 
-- `bundle exec shoryuken -R -C config/shoryuken.yml`: Executes the Shoryuken gem monitor that handles the SQS management
+- `bundle exec shoryuken -R -C config/shoryuken.yml -d -L /path/to/logfile`: Executes the Shoryuken gem monitor as a daemon that handles the SQS management
 
 ## Environment Variables
 
@@ -55,3 +55,57 @@
 ### Slack Notifications
 
 - SLACK_WEBHOOK_URL
+
+### RDStation
+
+- RD_STATION_URL: 'https://www.rdstation.com.br/api/1.3/conversions'
+- RD_STATION_TOKEN
+- RD_STATION_PRIVATE_TOKEN
+
+### DROPBOX
+
+- DROPBOX_TOKEN
+- DROPBOX_SECRET
+
+### ROBOZINHO
+
+- ROBOZINHO_EMAIL
+- ROBOZINHO_PASSWORD
+- SIMPLE_TOKEN_EMAIL
+- SIMPLE_TOKEN_PASSWORD
+
+### DATABASE
+
+- DEVELOPMENT_UNICODE
+- DEVELOPMENT_DATABASE
+- DEVELOPMENT_USERNAME
+- DEVELOPMENT_PASSWORD
+- DEVELOPMENT_HOST
+- DEVELOPMENT_POST
+
+- TEST_UNICODE
+- TEST_DATABASE
+- TEST_USERNAME
+- TEST_PASSWORD
+- TEST_HOST
+- TEST_POST
+
+- PRODUCTION_UNICODE
+- PRODUCTION_DATABASE
+- PRODUCTION_USERNAME
+- PRODUCTION_PASSWORD
+- PRODUCTION_HOST
+- PRODUCTION_POST
+
+### PODIO
+
+- PODIO_USERNAME
+- PODIO_PASSWORD
+- PODIO_2_USERNAME
+- PODIO_2_PASSWORD
+- PODIO_API_KEY
+- PODIO_API_SECRET
+
+### RAILS
+
+- SECRET_KEY_BASE

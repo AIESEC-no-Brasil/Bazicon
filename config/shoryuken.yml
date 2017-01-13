@@ -2,3 +2,4 @@ concurrency: 3
 delay: 0
 queues:
   - default
+  - jobs
