@@ -32,9 +32,10 @@ class Sync
       sync.sync_type = 'open_people'
 
       setup_expa_api
-      time = SyncControl.get_last('open_people')
-      time = Time.now - 12*60*60 if time.nil? # 12 hour windows
+      time = SyncControl.get_last('open_people') || Time.now - 12*60*60 if time.nil? # 12 hour windows
+
       people = EXPA::People.list_everyone_created_after(time)
+
       people.each do |xp_person|
         if ExpaPerson.exist?(xp_person)
           xp_person = EXPA::People.find_by_id(xp_person.id)
@@ -96,7 +97,11 @@ class Sync
   #params
   #status - a String with the application status
   #programs - a Array of the programs
-  def update_status(status, programs, for_filter)
+  def update_status(params) #status, programs, for_filter
+    status = params["status"]
+    programs = params["programs"].split(",").map { |s| s.to_i }
+    for_filter = params["for_filter"]
+
     filter = nil
     case status
       when 'open' then filter = 'created_at'
@@ -219,7 +224,7 @@ class Sync
         contato << 3 if person.want_contact_by_whatsapp
         fields['preferencia-de-contato'] = contato
 
-        #fields['direto-do-expa'] = 2 if 
+        #fields['direto-do-expa'] = 2 if
 
         Podio::Item.create(podio_app_decided_leads, {:fields => fields})
         if person.control_podio.nil?
@@ -477,7 +482,7 @@ class Sync
       sync.end_sync = DateTime.now
       sync.save
     end
-    puts 'FINISHING BIG SYNC' 
+    puts 'FINISHING BIG SYNC'
   end
 
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
@@ -573,7 +578,7 @@ class Sync
     day = Date.today - 1
     setup_expa_api
     analytics = EXPA::Applications.analisa({'start_date'=> day,'end_date'=> day})
-    
+
     session = GoogleDrive::Session.from_config("client_secret.json")
     ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
 
@@ -670,7 +675,7 @@ class Sync
     between = (to - from).to_i
     between.downto(0).each do |day|
       analytics = EXPA::Applications.analisa({'start_date'=> to - day,'end_date'=> to - day})
-      
+
       session = GoogleDrive::Session.from_config("client_secret.json")
       ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
 
