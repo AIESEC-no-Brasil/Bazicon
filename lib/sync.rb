@@ -26,6 +26,7 @@ class Sync
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
   def get_new_people_from_expa
+    job_status = true
     people = nil
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now
@@ -42,22 +43,24 @@ class Sync
           person = ExpaPerson.find_by_xp_id(xp_person.id)
           person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
           person.update_from_expa(xp_person)
-          person.save
+          job_status = false unless person.save
         else
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
-          person.save
-          send_to_rd(person, nil, self.rd_identifiers[:open], nil)
+          job_status = false unless person.save
+          job_status = false unless send_to_rd(person, nil, self.rd_identifiers[:open], nil)
         end
       end
 
       sync.get_error = false
       sync.count_itens = people.length
       sync.end_sync = DateTime.now
-      sync.save
+      job_status = false unless sync.save
     end
 
     puts "Listed #{people.length} people finishing #{Time.now}"
+
+    job_status
   end
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
@@ -98,6 +101,7 @@ class Sync
   #status - a String with the application status
   #programs - a Array of the programs
   def update_status(params) #status, programs, for_filter
+    job_status = true
     status = params["status"]
     programs = params["programs"].split(",").map { |s| s.to_i }
     for_filter = params["for_filter"]
@@ -164,8 +168,10 @@ class Sync
       sync.get_error = false
       sync.count_itens = total_items
       sync.end_sync = DateTime.now
-      sync.save
+      job_status = false unless sync.save
     end
+
+    job_status
   end
 
   def update_podio
@@ -575,6 +581,7 @@ class Sync
   end
 
   def send_to_od
+    job_status = true
     day = Date.today - 1
     setup_expa_api
     analytics = EXPA::Applications.analisa({'start_date'=> day,'end_date'=> day})
@@ -668,7 +675,8 @@ class Sync
       ws[row,40] = analytics[key][1368][:re] unless analytics[key][1368].nil?
       ws[row,41] = analytics[key][909][:re] unless analytics[key][909].nil?
     end
-    ws.save
+
+    job_status = false unless ws.save
   end
 
   def populate_od(from,to)
