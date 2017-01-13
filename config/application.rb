@@ -35,5 +35,9 @@ module Myapp
     #config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths << "#{Rails.root}/lib"
     config.eager_load_paths << "#{Rails.root}/lib"
+
+    Raven.configure do |config|
+      config.dsn = 'https://d72939ee3cde47b785515788d83ae269:bf9c299a1e8f416a938ee9402661f34b@sentry.io/129055'
+    end
   end
 end

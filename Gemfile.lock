@@ -352,6 +352,8 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (2.3.0)
+      faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
     shoryuken (2.1.1)
       aws-sdk-core (~> 2)
@@ -452,6 +454,7 @@ DEPENDENCIES
   rubocop
   sass-rails
   sdoc (~> 0.4.0)
+  sentry-raven
   shoryuken
   shoulda-matchers (~> 3.1)
   slack-notifier
