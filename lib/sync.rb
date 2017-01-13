@@ -26,37 +26,41 @@ class Sync
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
   def get_new_people_from_expa
+    job_status = true
     people = nil
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now
       sync.sync_type = 'open_people'
 
       setup_expa_api
-      time = SyncControl.get_last('open_people')
-      time = Time.now - 12*60*60 if time.nil? # 12 hour windows
+      time = SyncControl.get_last('open_people') || Time.now - 12*60*60 if time.nil? # 12 hour windows
+
       people = EXPA::People.list_everyone_created_after(time)
+
       people.each do |xp_person|
         if ExpaPerson.exist?(xp_person)
           xp_person = EXPA::People.find_by_id(xp_person.id)
           person = ExpaPerson.find_by_xp_id(xp_person.id)
           person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
           person.update_from_expa(xp_person)
-          person.save
+          job_status = false unless person.save
         else
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
-          person.save
-          send_to_rd(person, nil, self.rd_identifiers[:open], nil)
+          job_status = false unless person.save
+          job_status = false unless send_to_rd(person, nil, self.rd_identifiers[:open], nil)
         end
       end
 
       sync.get_error = false
       sync.count_itens = people.length
       sync.end_sync = DateTime.now
-      sync.save
+      job_status = false unless sync.save
     end
 
     puts "Listed #{people.length} people finishing #{Time.now}"
+
+    job_status
   end
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
@@ -96,7 +100,12 @@ class Sync
   #params
   #status - a String with the application status
   #programs - a Array of the programs
-  def update_status(status, programs, for_filter)
+  def update_status(params) #status, programs, for_filter
+    job_status = true
+    status = params["status"]
+    programs = params["programs"].split(",").map { |s| s.to_i }
+    for_filter = params["for_filter"]
+
     filter = nil
     case status
       when 'open' then filter = 'created_at'
@@ -159,8 +168,10 @@ class Sync
       sync.get_error = false
       sync.count_itens = total_items
       sync.end_sync = DateTime.now
-      sync.save
+      job_status = false unless sync.save
     end
+
+    job_status
   end
 
   def update_podio
@@ -219,7 +230,7 @@ class Sync
         contato << 3 if person.want_contact_by_whatsapp
         fields['preferencia-de-contato'] = contato
 
-        #fields['direto-do-expa'] = 2 if 
+        #fields['direto-do-expa'] = 2 if
 
         Podio::Item.create(podio_app_decided_leads, {:fields => fields})
         if person.control_podio.nil?
@@ -477,7 +488,7 @@ class Sync
       sync.end_sync = DateTime.now
       sync.save
     end
-    puts 'FINISHING BIG SYNC' 
+    puts 'FINISHING BIG SYNC'
   end
 
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
@@ -570,10 +581,11 @@ class Sync
   end
 
   def send_to_od
+    job_status = true
     day = Date.today - 1
     setup_expa_api
     analytics = EXPA::Applications.analisa({'start_date'=> day,'end_date'=> day})
-    
+
     session = GoogleDrive::Session.from_config("client_secret.json")
     ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
 
@@ -663,14 +675,15 @@ class Sync
       ws[row,40] = analytics[key][1368][:re] unless analytics[key][1368].nil?
       ws[row,41] = analytics[key][909][:re] unless analytics[key][909].nil?
     end
-    ws.save
+
+    job_status = false unless ws.save
   end
 
   def populate_od(from,to)
     between = (to - from).to_i
     between.downto(0).each do |day|
       analytics = EXPA::Applications.analisa({'start_date'=> to - day,'end_date'=> to - day})
-      
+
       session = GoogleDrive::Session.from_config("client_secret.json")
       ws = session.spreadsheet_by_key("1A1wwdYUwTnqYV1EDdxfAUbcQORaPwp4_TQ_6jTRjeFE").worksheet_by_gid 625192524
 
