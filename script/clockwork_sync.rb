@@ -23,14 +23,18 @@ handler do |job|
   elsif job.eql?('iGT')
     Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'opportunities')
   end
+  elsif job.eql?('opportunities')
+    Sync.new.check_problematic_opportunities(Date.new(2016,1,1),Date.new(2016,12,31))
+  end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
-every(1.day, 'oGE')
-every(1.day, 'oGT')
-every(1.day, 'iGV')
-every(1.day, 'iGE')
-every(1.day, 'iGT')
-every(1.day, 'oGV')
+#every(1.day, 'oGE')
+#every(1.day, 'oGT')
+#every(1.day, 'iGV')
+#every(1.day, 'iGE')
+#every(1.day, 'iGT')
+#every(1.day, 'oGV')
+every(1.day, 'opportunities')
 #every(1.day, 'list all applications and update people', :at => '16:48')

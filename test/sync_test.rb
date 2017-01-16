@@ -131,6 +131,9 @@ class SyncTest < Minitest::Test
   def test_joga_os_nego
     Sync.new.resolvendo_tretas
   end
+  def test_expa_comparisson
+    Sync.new.check_problematic_applications(Date.new(2016,3,21),Date.new(2016,3,21),[2],'people')
+  end
 
   def test_send_to_rd
     #TODO: colocar todos os campos do peoples e applications aqui no RD
@@ -159,8 +162,8 @@ class SyncTest < Minitest::Test
   end
 =end
 
-  def test_expa_comparisson
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'people')
+  def test_get_opportunities
+    Sync.new.check_problematic_opportunities(Date.new(2016,1,1),Date.new(2016,1,20))
   end
 end
 

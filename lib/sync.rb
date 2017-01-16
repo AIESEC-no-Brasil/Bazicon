@@ -65,17 +65,17 @@ class Sync
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
   def get_new_opportunities_from_expa
-    people = nil
+    opportunities = nil
     SyncControl.new do |sync|
       sync.start_sync = DateTime.now
       sync.sync_type = 'open_opportunity'
 
       setup_expa_api
-      time = SyncControl.get_last('open_opportunity')
-      time = Time.now - 24**60*60 if time.nil? # 1 day windows
-      opportunities = EXPA::Opportunities.list_everyone_created_after(time)
+      #time = SyncControl.get_last('open_opportunity')
+      time = Time.now - 30*24*60*60 #if time.nil? # 1 day windows
+      opportunities = EXPA::Opportunities.list_created_after(time)
       opportunities.each do |xp_opportunity|
-        if ExpaPerson.exist?(xp_opportunity)
+        if ExpaOpportunity.exist?(xp_opportunity)
           xp_opportunity = EXPA::Opportunities.find_by_id(xp_opportunity.id)
           opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
           opportunity.update_from_expa(xp_opportunity)
@@ -84,7 +84,6 @@ class Sync
           opportunity = ExpaOpportunity.new
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
-          send_to_rd(opportunity, nil, self.rd_identifiers[:open_opportunity], nil)
         end
       end
 
@@ -575,6 +574,41 @@ class Sync
               puts exception.backtrace
             end
           end
+        end
+      end
+    end
+  end
+
+  #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
+  def check_problematic_opportunities(from,to)
+    puts 'Check Opportunities'
+    total_items = 0
+    between = (to - from).to_i
+    setup_expa_api
+    between.downto(0).each do |day|
+      params = {'per_page' => 100}
+      date = (to - day)
+      params['filters[created][from]'] = date.to_s
+      params['filters[created][to]'] = date.to_s
+      params['filters[committee]'] = 1606 #from MC Brazil
+      paging = EXPA::Opportunities.paging(params)
+      total_items = paging[:total_items]
+      puts date.to_s
+      puts 'No EXPA: ' + total_items.to_s
+      xp_opportunities = EXPA::Opportunities.list_by_param(params)
+      xp_opportunities.each do |xp_opportunity|
+        begin
+          xp_opportunity = EXPA::Opportunities.find_by_id(xp_opportunity.id)
+          opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
+          opportunity = ExpaOpportunity.new if opportunity.nil?
+
+          opportunity.update_from_expa(xp_opportunity)
+          opportunity.save
+        rescue => exception
+          puts 'ACHAR O BUG'
+          puts xp_opportunity.id unless xp_opportunity.id.nil?
+          puts exception.to_s
+          puts exception.backtrace
         end
       end
     end
