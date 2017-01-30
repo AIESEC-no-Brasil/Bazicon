@@ -34,14 +34,8 @@ Vagrant.configure(2) do |config|
     sudo -u postgres psql -c"CREATE ROLE vagrant WITH LOGIN CREATEDB SUPERUSER PASSWORD 'vagrant'"
 
     sudo apt-get install -y curl
-
-    curl -sSL https://get.rvm.io | bash
-    source /etc/profile.d/rvm.sh
-
-    rvm requirements
-    rvm install 2.3
-    rvm use 2.3 --default
-
-    gem install bundler
   SHELL
+
+  config.vm.provision :shell, path: "install-rvm.sh", args: "stable", privileged: false
+  config.vm.provision :shell, path: "install-ruby.sh", args: "2.3.3", privileged: false
 end
