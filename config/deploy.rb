@@ -64,22 +64,26 @@ namespace :deploy do
     end
   end
 
-  desc 'Sign Up Shoryuken'
+  desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      before 'deploy:restart', 'puma:start'
       execute "bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
-  # desc 'Restart application'
-  # task :restart do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     invoke 'puma:restart'
-  #   end
-  # end
+  desc 'Clockwork'
+  task :clock do
+    on roles(:clock) do
+      execute 'clockwork script/clockwork_expa.rb'
+      execute 'clockwork script/clockwork_podio.rb'
+      execute 'clockwork script/clockwork_sync.rb'
+    end
+  end
 
-  # before :starting,     :check_revision
+
+  after "deploy:published", "deploy:workers"
+  after "deploy:published", "deploy:clock"
+
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
