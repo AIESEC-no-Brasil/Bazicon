@@ -1,6 +1,5 @@
 # Change these
 
-server 'ec2-52-53-234-244.us-west-1.compute.amazonaws.com', port: 22, roles: [:web, :app, :db], primary: true
 set :repo_url,        'git@github.com:AIESEC-no-Brasil/bazicon.git'
 set :application,     'bazicon'
 set :user,            'ubuntu'
@@ -25,7 +24,6 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 
 ## Defaults:
 # set :scm,           :git
-set :branch,        :test
 # set :format,        :pretty
 # set :log_level,     :debug
 # set :keep_releases, 5
@@ -47,16 +45,16 @@ namespace :puma do
 end
 
 namespace :deploy do
-  desc "Make sure local git is in sync with remote."
-  task :check_revision do
-    on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts "WARNING: HEAD is not the same as origin/master"
-        puts "Run `git push` to sync changes."
-        exit
-      end
-    end
-  end
+  # desc "Make sure local git is in sync with remote."
+  # task :check_revision do
+  #   on roles(:app) do
+  #     unless `git rev-parse HEAD` == `git rev-parse origin/master`
+  #       puts "WARNING: HEAD is not the same as origin/master"
+  #       puts "Run `git push` to sync changes."
+  #       exit
+  #     end
+  #   end
+  # end
 
   desc 'Initial Deploy'
   task :initial do
@@ -66,14 +64,22 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
+  desc 'Sign Up Shoryuken'
+  task :workers do
+    on roles(:workers) do
+      before 'deploy:restart', 'puma:start'
+      execute "bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
-  before :starting,     :check_revision
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     invoke 'puma:restart'
+  #   end
+  # end
+
+  # before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
