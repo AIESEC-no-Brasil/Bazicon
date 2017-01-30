@@ -16,6 +16,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
   config.vm.provision "shell", inline: <<-SHELL
+    echo "cd /vagrant/" >> /home/vagrant/.bashrc
     sudo apt-get update
 
     sudo dd if=/dev/zero of=/swap bs=1M count=1024
