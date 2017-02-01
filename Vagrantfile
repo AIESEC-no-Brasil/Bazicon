@@ -33,7 +33,5 @@ Vagrant.configure(2) do |config|
     rvm use 2.3 --default
 
     gem install bundler
-
-    sudo chmod 777 -R /usr/local/rvm/gems/ruby-2.3.3
   SHELL
 end
