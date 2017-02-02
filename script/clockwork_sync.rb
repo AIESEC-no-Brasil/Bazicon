@@ -22,7 +22,6 @@ handler do |job|
     Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[5],'opportunities')
   elsif job.eql?('iGT')
     Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'opportunities')
-  end
   elsif job.eql?('opportunities')
     Sync.new.check_problematic_opportunities(Date.new(2016,1,1),Date.new(2016,12,31))
   end
