@@ -27,6 +27,8 @@ set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.3.3'
 set :rvm_binary, '~/.rvm/bin/rvm'
 
+set :shoryuken_role,           :worker
+
 set :linked_files, %w{config/database.yml config/local_env.yml}
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -63,13 +65,12 @@ namespace :deploy do
     on roles(:clock) do
       execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_expa.rb"
       execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_podio.rb"
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_sync.rb"
     end
   end
 
 
-  after "deploy:published", "deploy:workers"
-  after "deploy:published", "deploy:clock"
+  # after "deploy:published", "deploy:workers"
+  # after "deploy:published", "deploy:clock"
 
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
