@@ -68,8 +68,8 @@ namespace :deploy do
   end
 
 
-  # after "deploy:published", "deploy:workers"
-  # after "deploy:published", "deploy:clock"
+  after "deploy:published", "deploy:workers"
+  after "deploy:published", "deploy:clock"
 
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
