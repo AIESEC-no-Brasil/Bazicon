@@ -29,6 +29,7 @@ gem 'bcrypt'
 gem 'thin'
 gem 'will_paginate', '~> 3.1.0'
 gem 'slack-notifier'
+gem "sentry-raven"
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', group: :doc
@@ -54,9 +55,15 @@ gem 'aws-sdk', '~> 2'
 gem 'shoryuken'
 
 group :development do
-  gem 'capistrano-rails'
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
   gem 'web-console', '~> 2.0'
 end
+
+gem 'puma'
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'

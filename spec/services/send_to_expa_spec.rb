@@ -12,7 +12,7 @@ RSpec.describe SendToExpa do
     }
   end
 
-  let(:service) { SendToExpa.new(params) }
+  let(:service) { SendToExpa.new(invalid_params) }
 
   subject { service }
 
