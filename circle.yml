@@ -14,4 +14,4 @@ deployment:
   dev:
     branch: dev
     commands:
-      - cap staging deploy
+      - bundle exec cap staging deploy
