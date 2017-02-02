@@ -53,7 +53,7 @@ namespace :deploy do
       within release_path do
         execute "bash --login -c rvm use 2.3.3"
         execute "cd #{deploy_to}/current"
-        execute "RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+        execute "RAILS_ENV=production shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
       end
     end
   end
