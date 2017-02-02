@@ -22,10 +22,6 @@
 
 ### Once within the Virtual Machine:
 
-#### Access the shared directory mirroring the application's files
-
-`$ cd /vagrant/`
-
 #### Install gems and dependencies from Gemfile
 
 `$ bundle install`

@@ -4,9 +4,19 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
+  # Required for NFS to work, pick any local IP
+  config.vm.network :private_network, ip: '192.168.50.50'
+  # Use NFS for shared folders for better performance
+  config.vm.synced_folder '.', '/vagrant', nfs: true
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+  end
+
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
   config.vm.provision "shell", inline: <<-SHELL
+    echo "cd /vagrant/" >> /home/vagrant/.bashrc
     sudo apt-get update
 
     sudo dd if=/dev/zero of=/swap bs=1M count=1024
@@ -24,14 +34,8 @@ Vagrant.configure(2) do |config|
     sudo -u postgres psql -c"CREATE ROLE vagrant WITH LOGIN CREATEDB SUPERUSER PASSWORD 'vagrant'"
 
     sudo apt-get install -y curl
-
-    curl -sSL https://get.rvm.io | bash
-    source /etc/profile.d/rvm.sh
-
-    rvm requirements
-    rvm install 2.3
-    rvm use 2.3 --default
-
-    gem install bundler
   SHELL
+
+  config.vm.provision :shell, path: "install-rvm.sh", args: "stable", privileged: false
+  config.vm.provision :shell, path: "install-ruby.sh", args: "2.3.3", privileged: false
 end
