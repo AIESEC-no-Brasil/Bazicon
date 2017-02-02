@@ -54,18 +54,16 @@ namespace :deploy do
   desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      execute "cd #{current_path}"
-      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
   desc 'Clockwork'
   task :clock do
     on roles(:clock) do
-      execute "cd #{current_path}"
-      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_expa.rb"
-      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_podio.rb"
-      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_sync.rb"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_expa.rb"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_podio.rb"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_sync.rb"
     end
   end
 
