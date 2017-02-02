@@ -23,6 +23,10 @@ set :format,        :pretty
 set :log_level,     :debug
 set :keep_releases, 5
 
+set :rvm_type, :user
+set :rvm_ruby_version, 'ruby-2.3.3'
+set :rvm_binary, '~/.rvm/bin/rvm'
+
 set :linked_files, %w{config/database.yml config/local_env.yml}
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -50,24 +54,18 @@ namespace :deploy do
   desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      within release_path do
-        execute "bash --login -c rvm use 2.3.3"
-        execute "cd #{deploy_to}/current"
-        execute "RAILS_ENV=production shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
-      end
+      execute "cd #{current_path}"
+      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
   desc 'Clockwork'
   task :clock do
     on roles(:clock) do
-      within release_path do
-        execute "bash --login -c rvm use 2.3.3"
-        execute "cd #{deploy_to}/current"
-        execute "RAILS_ENV=production clockwork script/clockwork_expa.rb"
-        execute "RAILS_ENV=production clockwork script/clockwork_podio.rb"
-        execute "RAILS_ENV=production clockwork script/clockwork_sync.rb"
-      end
+      execute "cd #{current_path}"
+      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_expa.rb"
+      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_podio.rb"
+      execute "RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec clockwork script/clockwork_sync.rb"
     end
   end
 
