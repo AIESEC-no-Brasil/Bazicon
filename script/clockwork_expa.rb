@@ -101,5 +101,4 @@ every(3.hours, 'list new approved applications and update opportunities')
 every(8.hours, 'list new realized applications and update opportunities')
 every(8.hours, 'list new completed applications and update opportunities')
 
-every(1.day, 'send data to OD', :at => '03:00')
 #every(1.day, 'list all applications and update people', :at => '16:48')
