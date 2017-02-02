@@ -51,6 +51,7 @@ namespace :deploy do
   task :workers do
     on roles(:workers) do
       within release_path do
+        execute "bash --login -c rvm use 2.3.3"
         execute "cd #{deploy_to}/current"
         execute "RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
       end
@@ -61,6 +62,7 @@ namespace :deploy do
   task :clock do
     on roles(:clock) do
       within release_path do
+        execute "bash --login -c rvm use 2.3.3"
         execute "cd #{deploy_to}/current"
         execute "RAILS_ENV=production clockwork script/clockwork_expa.rb"
         execute "RAILS_ENV=production clockwork script/clockwork_podio.rb"
