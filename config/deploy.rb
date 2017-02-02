@@ -19,7 +19,6 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 
-set :scm,           :git
 set :format,        :pretty
 set :log_level,     :debug
 set :keep_releases, 5
@@ -51,22 +50,26 @@ namespace :deploy do
   desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      execute "bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+      within release_path do
+        execute "bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+      end
     end
   end
 
   desc 'Clockwork'
   task :clock do
     on roles(:clock) do
-      execute 'clockwork script/clockwork_expa.rb'
-      execute 'clockwork script/clockwork_podio.rb'
-      execute 'clockwork script/clockwork_sync.rb'
+      within release_path do
+        execute 'clockwork script/clockwork_expa.rb'
+        execute 'clockwork script/clockwork_podio.rb'
+        execute 'clockwork script/clockwork_sync.rb'
+      end
     end
   end
 
 
-  after "deploy:published", "deploy:workers"
-  after "deploy:published", "deploy:clock"
+  # after "deploy:published", "deploy:workers"
+  # after "deploy:published", "deploy:clock"
 
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
