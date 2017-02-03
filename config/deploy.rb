@@ -27,16 +27,16 @@ set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.3.3'
 set :rvm_binary, '~/.rvm/bin/rvm'
 
-# set :shoryuken_default_hooks,  true
+set :shoryuken_default_hooks,  true
 
-# set :shoryuken_pid,            -> { File.join(shared_path, 'tmp', 'pids', 'shoryuken.pid') }
-# set :shoryuken_env,            -> { fetch(:rack_env, fetch(:rails_env, fetch(:stage))) }
-# set :shoryuken_log,            -> { File.join(shared_path, 'log', 'shoryuken.log') }
-# set :shoryuken_config,         -> { File.join(release_path, 'config', 'shoryuken.yml') }
-# set :shoryuken_requires,       -> { [] }
-# set :shoryuken_options,        -> { ['--rails'] }
-# set :shoryuken_queues,         -> { [] }
-# set :shoryuken_role,           :workers
+set :shoryuken_pid,            -> { File.join(shared_path, 'tmp', 'pids', 'shoryuken.pid') }
+set :shoryuken_env,            -> { fetch(:rack_env, fetch(:rails_env, fetch(:stage))) }
+set :shoryuken_log,            -> { File.join(shared_path, 'log', 'shoryuken.log') }
+set :shoryuken_config,         -> { File.join(release_path, 'config', 'shoryuken.yml') }
+set :shoryuken_requires,       -> { [] }
+set :shoryuken_options,        -> { ['--rails'] }
+set :shoryuken_queues,         -> { [] }
+set :shoryuken_role,           :workers
 
 set :linked_files, %w{config/database.yml config/local_env.yml}
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
