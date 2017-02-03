@@ -390,6 +390,8 @@ GEM
     sshkit (1.11.5)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    sshkit-interactive (0.2.0)
+      sshkit (~> 1.9)
     thin (1.7.0)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -477,6 +479,7 @@ DEPENDENCIES
   slack-notifier
   spring
   spring-commands-rspec
+  sshkit-interactive
   thin
   turbolinks
   uglifier
