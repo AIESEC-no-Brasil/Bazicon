@@ -54,7 +54,8 @@ namespace :deploy do
   desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+      # set :default_shell, "bash -l"
+      execute "cd #{current_path} && nohup RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
