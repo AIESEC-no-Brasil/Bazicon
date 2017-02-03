@@ -27,6 +27,17 @@ set :rvm_type, :user
 set :rvm_ruby_version, 'ruby-2.3.3'
 set :rvm_binary, '~/.rvm/bin/rvm'
 
+# set :shoryuken_default_hooks,  true
+
+# set :shoryuken_pid,            -> { File.join(shared_path, 'tmp', 'pids', 'shoryuken.pid') }
+# set :shoryuken_env,            -> { fetch(:rack_env, fetch(:rails_env, fetch(:stage))) }
+# set :shoryuken_log,            -> { File.join(shared_path, 'log', 'shoryuken.log') }
+# set :shoryuken_config,         -> { File.join(release_path, 'config', 'shoryuken.yml') }
+# set :shoryuken_requires,       -> { [] }
+# set :shoryuken_options,        -> { ['--rails'] }
+# set :shoryuken_queues,         -> { [] }
+# set :shoryuken_role,           :workers
+
 set :linked_files, %w{config/database.yml config/local_env.yml}
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -54,8 +65,8 @@ namespace :deploy do
   desc 'Shoryuken'
   task :workers do
     on roles(:workers) do
-      # set :default_shell, "bash -l"
-      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do nohup bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
+      set :default_shell, "bash -l"
+      execute "cd #{current_path} && RAILS_ENV=production #{fetch(:rvm_binary)} #{fetch(:rvm_ruby_version)} do bundle exec shoryuken -R -C config/shoryuken.yml -d -L ~/shoryuken.log"
     end
   end
 
