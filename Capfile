@@ -2,6 +2,8 @@
 require 'capistrano/setup'
 require 'capistrano/deploy'
 
+require 'sshkit/interactive'
+
 require 'capistrano/rails'
 require 'capistrano/bundler'
 require 'capistrano/rvm'
