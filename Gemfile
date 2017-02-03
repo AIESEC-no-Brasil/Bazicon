@@ -54,8 +54,6 @@ gem 'responders', '~> 2.0'
 gem 'aws-sdk', '~> 2'
 gem 'shoryuken'
 
-gem 'sshkit-interactive'
-
 group :development do
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
