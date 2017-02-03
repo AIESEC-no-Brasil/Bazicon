@@ -8,7 +8,6 @@ require 'capistrano/rails'
 require 'capistrano/bundler'
 require 'capistrano/rvm'
 require 'capistrano/puma'
-require 'capistrano/shoryuken'
 require "capistrano/scm/git"
 
 install_plugin Capistrano::SCM::Git
