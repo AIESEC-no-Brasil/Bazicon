@@ -55,15 +55,23 @@ gem 'aws-sdk', '~> 2'
 gem 'shoryuken'
 
 group :development do
-  gem 'capistrano-rails'
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-shoryuken'
   gem 'web-console', '~> 2.0'
 end
+
+gem 'puma'
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development, :test do
+  gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'spring'
