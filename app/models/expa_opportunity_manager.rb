@@ -1,0 +1,2 @@
+class ExpaOpportunityManager < ApplicationRecord
+end

@@ -149,7 +149,11 @@ class Sync
               application = ExpaApplication.new if application.nil?
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
-              application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
+              data = EXPA::Applications.get_attributes(xp_application.id)
+              unless application.status == data.status.to_s.downcase.gsub(' ','_')
+                # Trigger Mailgun application.status, data.status.to_s.downcase.gsbu('', '_')
+              end
+              application.update_from_expa(data)
               application.save
 
               person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
