@@ -1,5 +1,5 @@
-WARN: Unresolved specs during Gem::Specification.reset:
-      minitest (~> 5.1)
-WARN: Clearing out unresolved specs.
-Please report a bug if this causes problems.
-I, [2016-08-25T10:42:06.254999 #19775]  INFO -- : Starting clock for 0 events: [  ]
+I, [2017-02-08T12:38:14.145336 #9078]  INFO -- sentry: ** [Raven] Raven 2.3.0 ready to catch errors
+I, [2017-02-08T12:38:15.804995 #9078]  INFO -- sentry: ** [Raven] Raven 2.3.0 ready to catch errors
+I, [2017-02-08T12:38:15.921327 #9078]  INFO -- : Starting clock for 1 events: [ Get offline lead from Podio and send them to RD ]
+I, [2017-02-08T12:38:15.921404 #9078]  INFO -- : Triggering 'Get offline lead from Podio and send them to RD'
+Running Podio Get offline lead from Podio and send them to RD starting 2017-02-08 12:38:18 -0200
