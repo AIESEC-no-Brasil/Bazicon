@@ -10,6 +10,8 @@ include Clockwork
 handler do |job|
   if job.eql?('list new open people')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "get_new_people_from_expa" })
+  elsif job.eql?('list new open opportunities')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "get_new_opportunities_from_expa" })
   elsif job.eql?('list new open applications and update people')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "open", "programs" => "1", "for_filter" => "people" } })
   elsif job.eql?('list new accepted applications and update people')
@@ -71,6 +73,7 @@ end
 
 # Define the schedule
 every(6.hours, 'list new open people')
+every(6.hours, 'list new open opportunities')
 
 every(4.hours, 'list new open applications and update people')
 every(3.hours, 'list new accepted applications and update people')
@@ -94,7 +97,6 @@ every(8.hours, 'list new realized applications and update GE people')
 every(8.hours, 'list new completed applications and update GE people')
 
 every(4.hours, 'list new open applications and update opportunities')
-every(3.hours, 'list new accepted applications and update opportunities')
 every(3.hours, 'list new accepted applications and update opportunities')
 every(3.hours, 'list new in progress applications and update opportunities')
 every(3.hours, 'list new approved applications and update opportunities')

@@ -8,32 +8,30 @@ include Clockwork
 
 # Define the jobs
 handler do |job|
-  if job.eql?('list new open people')
-    Sync.new.get_new_people_from_expa
-  elsif job.eql?('oGV')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[1],'people')
+  if job.eql?('oGV')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[1]", "for_filter" => "people" } })
   elsif job.eql?('oGE')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[5],'people')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[5]", "for_filter" => "people" } })
   elsif job.eql?('oGT')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'people')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[2]", "for_filter" => "people" } })
   elsif job.eql?('iGV')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[1],'opportunities')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[1]", "for_filter" => "opportunities" } })
   elsif job.eql?('iGE')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[5],'opportunities')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[5]", "for_filter" => "opportunities" } })
   elsif job.eql?('iGT')
-    Sync.new.check_problematic_applications(Date.new(2016,1,1),Date.new(2016,12,31),[2],'opportunities')
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[2]", "for_filter" => "opportunities" } })
   elsif job.eql?('opportunities')
-    Sync.new.check_problematic_opportunities(Date.new(2016,1,1),Date.new(2016,12,31))
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_opportunities", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01) } })
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
-#every(1.day, 'oGE')
-#every(1.day, 'oGT')
-#every(1.day, 'iGV')
-#every(1.day, 'iGE')
-#every(1.day, 'iGT')
-#every(1.day, 'oGV')
-every(1.day, 'opportunities')
+every(3.day, 'oGE')
+every(3.day, 'oGT')
+every(3.day, 'iGV')
+every(3.day, 'iGE')
+every(3.day, 'iGT')
+every(3.day, 'oGV')
+every(3.day, 'opportunities')
 #every(1.day, 'list all applications and update people', :at => '16:48')
