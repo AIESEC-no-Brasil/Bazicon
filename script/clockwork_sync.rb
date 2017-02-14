@@ -9,19 +9,19 @@ include Clockwork
 # Define the jobs
 handler do |job|
   if job.eql?('oGV')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[1]", "for_filter" => "people" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[1]", "for_filter" => "people" } })
   elsif job.eql?('oGE')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[5]", "for_filter" => "people" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[5]", "for_filter" => "people" } })
   elsif job.eql?('oGT')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[2]", "for_filter" => "people" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[2]", "for_filter" => "people" } })
   elsif job.eql?('iGV')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[1]", "for_filter" => "opportunities" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[1]", "for_filter" => "opportunities" } })
   elsif job.eql?('iGE')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[5]", "for_filter" => "opportunities" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[5]", "for_filter" => "opportunities" } })
   elsif job.eql?('iGT')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01), "programs" => "[2]", "for_filter" => "opportunities" } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_applications", "params" => { "programs" => "[2]", "for_filter" => "opportunities" } })
   elsif job.eql?('opportunities')
-    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_opportunities", "params" => { "from" => Date.new(2017,1,1), "to" => Date.new(2017,02,01) } })
+    SendJobDataToSqs.call({ "klass" => "Sync", "method" => "check_problematic_opportunities" })
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
