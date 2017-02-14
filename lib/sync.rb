@@ -491,7 +491,12 @@ class Sync
   end
 
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
-  def check_problematic_applications(from,to,programs,for_filter)
+  def check_problematic_applications(params)
+    from = params["from"]
+    to = params["to"]
+    programs = params["programs"].split(",").map { |s| s.to_i }
+    for_filter = params["for_filter"]
+
     total_items = 0
     between = (to - from).to_i
     setup_expa_api
@@ -580,7 +585,10 @@ class Sync
   end
 
   #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
-  def check_problematic_opportunities(from,to)
+  def check_problematic_opportunities(params)
+    from = params["from"]
+    to = params["to"]
+
     puts 'Check Opportunities'
     total_items = 0
     between = (to - from).to_i
