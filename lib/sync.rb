@@ -493,7 +493,7 @@ class Sync
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
   def check_problematic_applications(params)
     from = Date.new(2017,1,1)
-    to = Date.new(2017,02,01)
+    to = Date.new(2017,02,16)
     programs = params["programs"].split(",").map { |s| s.to_i }
     for_filter = params["for_filter"]
 
@@ -587,7 +587,7 @@ class Sync
   #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
   def check_problematic_opportunities
     from = Date.new(2017,1,1)
-    to = Date.new(2017,02,01)
+    to = Date.new(2017,02,16)
 
     puts 'Check Opportunities'
     total_items = 0
