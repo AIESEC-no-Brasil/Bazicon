@@ -320,8 +320,10 @@ class DigitalTransformationController < ApplicationController
     case interested_program
       when 'GCDP', 'GV'
           office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
-      when 'GIP', 'GT', 'GE'
-          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogip[lc.to_i])
+      when 'GIP', 'GT',
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogt[lc.to_i])
+      when 'GE'
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_oge[lc.to_i])
       else
           office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
     end
