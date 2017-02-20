@@ -73,7 +73,7 @@ end
 
 # Define the schedule
 every(6.hours, 'list new open people')
-every(6.hours, 'list new open opportunities')
+# every(6.hours, 'list new open opportunities')
 
 every(4.hours, 'list new open applications and update people')
 every(3.hours, 'list new accepted applications and update people')
