@@ -1,5 +1,5 @@
-concurrency: 3
+concurrency: 10
 delay: 0
 queues:
-  - default
-  - jobs
+  - [default, 6]
+  - [jobs, 2]
