@@ -478,7 +478,7 @@ class DigitalTransformationController < ApplicationController
     fields['title'] = name + ' ' + lastname  unless name.nil? || lastname.nil?
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
-    fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
+    # fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
     fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
     fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
     fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
