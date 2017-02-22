@@ -9,17 +9,17 @@ include Clockwork
 # Define the jobs
 handler do |job|
   if job.eql?('oGV')
-    Sync.new.check_problematic_applications({ "programs" => "[1]", "for_filter" => "people" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people")
   elsif job.eql?('oGE')
-    Sync.new.check_problematic_applications({ "programs" => "[5]", "for_filter" => "people" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[5],"people")
   elsif job.eql?('oGT')
-    Sync.new.check_problematic_applications({ "programs" => "[2]", "for_filter" => "people" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[2],"people")
   elsif job.eql?('iGV')
-    Sync.new.check_problematic_applications({ "programs" => "[1]", "for_filter" => "opportunities" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"opportunities")
   elsif job.eql?('iGE')
-    Sync.new.check_problematic_applications({ "programs" => "[5]", "for_filter" => "opportunities" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[5],"opportunities")
   elsif job.eql?('iGT')
-    Sync.new.check_problematic_applications({ "programs" => "[2]", "for_filter" => "opportunities" })
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[2],"opportunities")
   elsif job.eql?('opportunities')
     Sync.new.check_problematic_opportunities
   end
