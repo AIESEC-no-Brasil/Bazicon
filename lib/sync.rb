@@ -491,15 +491,15 @@ class Sync
   end
 
   #created_at date_matched date_an_signed date_approved date_realized experience_start_date experience_end_date
-  def check_problematic_applications(from,to,programs,for_filter)
+  def check_problematic_applications(from,to,programs,for_filter,status)
     total_items = 0
     between = (to - from).to_i
     setup_expa_api
     between.downto(0).each do |day|
       params = {'per_page' => 25}
       date = (to - day)
-      params['filters[created_at][from]'] = date.to_s
-      params['filters[created_at][to]'] = date.to_s
+      params['filters['+status+'][from]'] = date.to_s
+      params['filters['+status+'][to]'] = date.to_s
       #params['filters[person_committee]'] = 1606 #from MC Brazil
       params['filters[programmes][]'] = programs #GCDP
       params['filters[for]'] = for_filter
