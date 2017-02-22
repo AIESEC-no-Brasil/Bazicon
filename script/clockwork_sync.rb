@@ -27,11 +27,11 @@ handler do |job|
 end
 
 # Define the schedule
-every(3.day, 'oGE')
-every(3.day, 'oGT')
-every(3.day, 'iGV')
-every(3.day, 'iGE')
-every(3.day, 'iGT')
-every(3.day, 'oGV')
-every(3.day, 'opportunities')
+#every(3.day, 'oGE')
+#every(3.day, 'oGT')
+#every(3.day, 'iGV')
+#every(3.day, 'iGE')
+#every(3.day, 'iGT')
+#every(3.day, 'oGV')
+#every(3.day, 'opportunities')
 #every(1.day, 'list all applications and update people', :at => '16:48')
