@@ -1,4 +1,5 @@
 class DigitalTransformationController < ApplicationController
+  after_filter :cors_set_access_control_headers
 
   # GET /dt/difficulties
   def difficulties
@@ -496,5 +497,9 @@ class DigitalTransformationController < ApplicationController
     attibutes[:tags] = [campagin] unless campagin.nil? || campagin.empty?
 
     Podio::Item.create(podio_app_decided_leads, attibutes)
+  end
+
+  def cors_set_access_control_headers
+    headers['X-Frame-Options'] = 'ALLOW-FROM http://aiesec.org.br'
   end
 end
