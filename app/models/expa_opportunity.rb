@@ -3,7 +3,9 @@ class ExpaOpportunity < ActiveRecord::Base
   belongs_to :xp_office, class_name: 'ExpaOffice'
   belongs_to :xp_home_lc, class_name: 'ExpaOffice'
   belongs_to :xp_host_lc, class_name: 'ExpaOffice'
+
   has_many :xp_application, class_name: 'ExpaApplication', foreign_key: 'xp_opportunity_id', primary_key: 'xp_id'
+  has_many :expa_opportunity_managers
 
   validates :xp_id,
             uniqueness: true,
