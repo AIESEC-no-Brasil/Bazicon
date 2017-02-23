@@ -190,8 +190,10 @@ class Sync
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               data = EXPA::Applications.get_attributes(xp_application.id)
-              unless application.status == data.status.to_s.downcase.gsub(' ','_')
-                # Trigger Mailgun application.status, data.status.to_s.downcase.gsbu('', '_')
+              unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+                # Trigger Mailgun application.status, data.status.to_s.downcase.gsub('', '_')
+                # SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+                puts "#{application.xp_status} -------- #{data.status.to_s.downcase.gsub(' ', '_')}"
               end
               application.update_from_expa(data)
               application.save
