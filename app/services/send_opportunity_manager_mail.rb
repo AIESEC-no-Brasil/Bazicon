@@ -29,7 +29,6 @@ class SendOpportunityManagerMail
     subject = []
 
     managers.each do |manager|
-      puts "managers: #{managers}"
       subject = I18n.t("emails.opportunity_manager.#{@status}.title", manager_name: manager.name)
       text = I18n.t("emails.opportunity_manager.#{status}.text",
                     manager_name: manager.name,
