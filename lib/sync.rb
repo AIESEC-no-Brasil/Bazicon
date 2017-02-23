@@ -80,10 +80,12 @@ class Sync
           opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
+          create_opportunity_managers(opportunity)
         else
           opportunity = ExpaOpportunity.new
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
+          create_opportunity_managers(opportunity)
         end
       end
 
@@ -94,6 +96,44 @@ class Sync
     end
 
     puts "Listed #{opportunities.length} opportunities finishing #{Time.now}"
+  end
+
+  def create_opportunity_managers(opportunity)
+    data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
+
+    managers = []
+
+    managers = data['managers'] unless data['managers'].nil?
+
+    if managers.any?
+      managers.each do |manager|
+        unless ExpaOpportunityManager.find_by(expa_opportunity_id: opportunity.id, expa_manager_id: ExpaManager.id_by_xp_id(manager['id']))
+          if ExpaManager.find_by(xp_id: manager['id'])
+            expa_opportunity_manager = ExpaOpportunityManager.create(expa_opportunity_id: opportunity.id,
+                                                                     expa_manager_id: ExpaManager.id_by_xp_id(manager['id'])
+                                                                    )
+
+            puts "Opportunity Manager created: #{expa_opportunity_manager}"
+          else
+            expa_manager = ExpaManager.create(xp_id: manager['id'],
+                                      name: manager['full_name'],
+                                      email: manager['email'],
+                                      profile_photo_url: manager['profile_photo_url']
+                                    )
+
+            puts "Manager created: #{expa_manager}"
+
+            expa_opportunity_manager = ExpaOpportunityManager.create(expa_opportunity_id: opportunity.id,
+                                                                     expa_manager_id: expa_manager.id
+                                                                    )
+
+            puts "Opportunity Manager created: #{expa_opportunity_manager}"
+          end
+        else
+          puts "Already created, skipping"
+        end
+      end
+    end
   end
 
   #params
