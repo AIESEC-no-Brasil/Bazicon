@@ -52,7 +52,7 @@ module DigitalTransformation
       case program
         when 'GCDP', 'GV'
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[i]]['ids']
-        when 'GIP', 'GT',
+        when 'GIP', 'GT'
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogt[i]]['ids']
         when 'GE'
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_oge[i]]['ids']
