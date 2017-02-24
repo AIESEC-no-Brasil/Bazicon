@@ -24,7 +24,9 @@ class ExpaPerson < ActiveRecord::Base
   has_many :comments_that_i_made, class_name: 'ExpaPersonComment', foreign_key: 'person_id'
   has_many :made_comments, through: :comments_that_i_made
 
-  has_and_belongs_to_many :ep_managers, class_name: 'ExpaPerson', :join_table => 'expa_person_ep_managers', :foreign_key => 'person_id', :association_foreign_key => 'manager_id'
+  has_many :expa_person_managers
+
+  # has_and_belongs_to_many :ep_managers, class_name: 'ExpaPerson', :join_table => 'expa_person_ep_managers', :foreign_key => 'person_id', :association_foreign_key => 'manager_id'
 
   validates :xp_id,
             uniqueness: true,
@@ -151,7 +153,7 @@ class ExpaPerson < ActiveRecord::Base
     self.xp_contacted_at = data.contacted_at unless data.contacted_at.nil?
     self.xp_contacted_by = data.contacted_by unless data.contacted_by.nil?
     self.xp_gender = data.gender.downcase.gsub(' ','_') unless data.gender.nil?
-    self.xp_address = (data.address_info.nil? || data.address_info.to_s.length <= 2) ? {} : data.address_info 
+    self.xp_address = (data.address_info.nil? || data.address_info.to_s.length <= 2) ? {} : data.address_info
     self.xp_contact = (data.contact_info.nil? || data.contact_info.to_s.length <= 2) ? {} : data.contact_info
     self.xp_current_office = current_office unless current_office.nil?
     self.xp_cv_info = data.cv_info unless data.cv_info.nil?
