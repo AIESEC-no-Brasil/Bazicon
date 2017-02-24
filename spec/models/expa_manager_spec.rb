@@ -13,5 +13,4 @@ RSpec.describe ExpaManager, type: :model do
   it { is_expected.to validate_presence_of(:xp_id) }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to validate_presence_of(:profile_photo_url) }
 end
