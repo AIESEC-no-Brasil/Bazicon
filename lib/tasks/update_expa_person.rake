@@ -22,10 +22,9 @@ task :update_expa_person => [ :environment ] do
             puts "Person Manager created: #{expa_person_manager}"
           else
             expa_manager = ExpaManager.create(xp_id: manager['id'],
-                                      name: manager['full_name'],
-                                      email: manager['email'],
-                                      profile_photo_url: manager['profile_photo_url']
-                                    )
+                                              name: manager['full_name'],
+                                              email: manager['email'],
+                                            )
 
             puts "Manager created: #{expa_manager}"
 
