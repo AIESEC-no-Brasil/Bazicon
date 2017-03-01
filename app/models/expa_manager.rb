@@ -1,6 +1,9 @@
 class ExpaManager < ApplicationRecord
   has_many :expa_opportunity_managers
+  has_many :expa_opportunities, through: :expa_opportunity_managers
+
   has_many :expa_person_managers
+  has_many :expa_opportunities, through: :expa_person_managers
 
   validates :xp_id, presence: true
   validates :name, presence: true
