@@ -1,4 +1,4 @@
-class SendOpportunityManagerMail
+class SendEpManagerMail
   STATUSES = [:open, :accepted, :approved, :realized, :matched, :completed]
 
   def self.call(application, status)
@@ -14,8 +14,8 @@ class SendOpportunityManagerMail
 
   def call
     opportunity = @application.xp_opportunity
-    managers = opportunity.expa_managers
     person = @application.xp_person
+    managers = person.expa_managers
     subject = {}
 
     if @status.to_sym.in?(STATUSES)
@@ -29,8 +29,8 @@ class SendOpportunityManagerMail
     subject = []
 
     managers.each do |manager|
-      subject = I18n.t("emails.opportunity_manager.#{@status}.title", manager_name: manager.name)
-      text = I18n.t("emails.opportunity_manager.#{status}.text",
+      subject = I18n.t("emails.ep_manager.#{@status}.title", manager_name: manager.name)
+      text = I18n.t("emails.ep_manager.#{status}.text",
                     manager_name: manager.name,
                     opportunity_title: opportunity.xp_title,
                     opportunity_id: opportunity.xp_id,
@@ -38,11 +38,11 @@ class SendOpportunityManagerMail
                     person_email: person.xp_email
                     ).gsub('"', '')
 
-      person.expa_managers.each do |ep_manager|
-        text += "\n\n - #{manager.name} - #{manager.email}"
+      opportunity.expa_managers.each do |manager|
+        text += "\n\n - #{managar.name} - #{manager.email}"
       end
 
-      puts "Called Mailgunner"
+      puts "called mailgunner"
 
       Mailgunner.call('no-reply@aiesec.org.br',
                       manager.email,

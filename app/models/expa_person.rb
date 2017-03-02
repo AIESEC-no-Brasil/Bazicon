@@ -25,6 +25,7 @@ class ExpaPerson < ActiveRecord::Base
   has_many :made_comments, through: :comments_that_i_made
 
   has_many :expa_person_managers
+  has_many :expa_managers, through: :expa_person_managers
 
   # has_and_belongs_to_many :ep_managers, class_name: 'ExpaPerson', :join_table => 'expa_person_ep_managers', :foreign_key => 'person_id', :association_foreign_key => 'manager_id'
 

@@ -193,6 +193,7 @@ class Sync
               unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
                 application.update_from_expa(data)
                 SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
               end
               application.update_from_expa(data)
               application.save
