@@ -2,7 +2,7 @@ pt-BR:
   emails:
     opportunity_manager:
       open:
-        title: "%{manager_name} New Application for your opportunity"
+        title: "[Opportunity Manager] New Application for your opportunity"
         text: |
           Olá %{manager_name},
 
@@ -13,7 +13,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       accepted:
-        title: "%{manager_name} Application Accepted"
+        title: "[Opportunity Manager] Application Accepted"
         text: |
           Olá %{manager_name},
 
@@ -24,7 +24,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       matched:
-        title: "%{manager_name} An Application got In Progress"
+        title: "[Opportunity Manager] An Application got In Progress"
         text: |
           Olá %{manager_name},
 
@@ -35,7 +35,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       approved:
-        title: "%{manager_name} An Application got Approved"
+        title: "[Opportunity Manager] An Application got Approved"
         text: |
           Olá %{manager_name},
 
@@ -46,7 +46,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       realized:
-        title: "%{manager_name} An Application started the Realization"
+        title: "[Opportunity Manager] An Application started the Realization"
         text: |
           Olá %{manager_name},
 
@@ -60,7 +60,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       completed:
-        title: "%{manager_name} An Application finished the Realization"
+        title: "[Opportunity Manager] An Application finished the Realization"
         text: |
           Olá %{manager_name},
 
