@@ -44,11 +44,13 @@ class Sync
           person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
           person.update_from_expa(xp_person)
           job_status = false unless person.save
+          create_ep_managers(person)
         else
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
           job_status = false unless person.save
           job_status = false unless send_to_rd(person, nil, self.rd_identifiers[:open], nil)
+          create_ep_managers(person)
         end
       end
 
@@ -61,6 +63,43 @@ class Sync
     puts "Listed #{people.length} people finishing #{Time.now}"
 
     job_status
+  end
+
+  def create_ep_managers(person)
+    data = EXPA::People.list_single_person(person.xp_id)
+
+    managers = []
+
+    managers = data['managers'] unless data['managers'].nil?
+
+    if managers.any?
+      managers.each do |manager|
+        unless ExpaPersonManager.find_by(expa_person_id: person.id, expa_manager_id: ExpaManager.id_by_xp_id(manager['id']))
+          if ExpaManager.find_by(xp_id: manager['id'])
+            expa_person_manager = ExpaPersonManager.create(expa_person_id: person.id,
+                                                           expa_manager_id: ExpaManager.id_by_xp_id(manager['id'])
+                                                          )
+
+            puts "Person Manager created: #{expa_person_manager}"
+          else
+            expa_manager = ExpaManager.create(xp_id: manager['id'],
+                                              name: manager['full_name'],
+                                              email: manager['email'],
+                                            )
+
+            puts "Manager created: #{expa_manager}"
+
+            expa_person_manager = ExpaPersonManager.create(expa_person_id: person.id,
+                                                           expa_manager_id: expa_manager.id
+                                                          )
+
+            puts "Person Manager created: #{expa_person_manager}"
+          end
+        else
+          puts "Already created, skipping"
+        end
+      end
+    end
   end
 
   #get all new people on EXPA since last sync, save on DB and sent to RD
@@ -80,10 +119,12 @@ class Sync
           opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
+          create_opportunity_managers(opportunity)
         else
           opportunity = ExpaOpportunity.new
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
+          create_opportunity_managers(opportunity)
         end
       end
 
@@ -94,6 +135,44 @@ class Sync
     end
 
     puts "Listed #{opportunities.length} opportunities finishing #{Time.now}"
+  end
+
+  def create_opportunity_managers(opportunity)
+    data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
+
+    managers = []
+
+    managers = data['managers'] unless data['managers'].nil?
+
+    if managers.any?
+      managers.each do |manager|
+        unless ExpaOpportunityManager.find_by(expa_opportunity_id: opportunity.id, expa_manager_id: ExpaManager.id_by_xp_id(manager['id']))
+          if ExpaManager.find_by(xp_id: manager['id'])
+            expa_opportunity_manager = ExpaOpportunityManager.create(expa_opportunity_id: opportunity.id,
+                                                                     expa_manager_id: ExpaManager.id_by_xp_id(manager['id'])
+                                                                    )
+
+            puts "Opportunity Manager created: #{expa_opportunity_manager}"
+          else
+            expa_manager = ExpaManager.create(xp_id: manager['id'],
+                                      name: manager['full_name'],
+                                      email: manager['email'],
+                                      profile_photo_url: manager['profile_photo_url']
+                                    )
+
+            puts "Manager created: #{expa_manager}"
+
+            expa_opportunity_manager = ExpaOpportunityManager.create(expa_opportunity_id: opportunity.id,
+                                                                     expa_manager_id: expa_manager.id
+                                                                    )
+
+            puts "Opportunity Manager created: #{expa_opportunity_manager}"
+          end
+        else
+          puts "Already created, skipping"
+        end
+      end
+    end
   end
 
   #params
@@ -149,7 +228,13 @@ class Sync
               application = ExpaApplication.new if application.nil?
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
-              application.update_from_expa(EXPA::Applications.get_attributes(xp_application.id))
+              data = EXPA::Applications.get_attributes(xp_application.id)
+              # unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+              #   application.update_from_expa(data)
+              #   SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+              #   SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+              # end
+              application.update_from_expa(data)
               application.save
 
               person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)

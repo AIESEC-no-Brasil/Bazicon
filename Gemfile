@@ -30,6 +30,7 @@ gem 'thin'
 gem 'will_paginate', '~> 3.1.0'
 gem 'slack-notifier'
 gem "sentry-raven"
+gem 'mailgun-ruby', '~>1.1.2'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', group: :doc

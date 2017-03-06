@@ -1,0 +1,86 @@
+pt-BR:
+  emails:
+    ep_manager:
+      open:
+        title: "[EP Manager] New Application"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} acaba de se aplicar para a oportunidade (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Entre em contato com ele(a) através do email %{person_email} para alinhar os próximos passos necessários para ser aprovado na vaga.
+
+          Adiantar-se e contatar o Opportunity Manager provavelmente vai acelerar ainda mais o processo.
+
+          Opportunity Managers:"
+      accepted:
+        title: "[EP Manager] Application Accepted"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} acaba de ser aceito na oportunidade (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Entre em contato com ele(a) através do email %{person_email} para alinhar os próximos passos necessários para ser aprovado na vaga.
+
+          Certifique-se de que o EP está ciente da taxa de intercâmbio e não se esqueça que ele tem no máximo 5 dias para pagar e assinar o contrato!
+
+          Opportunity Managers:"
+      matched:
+        title: "[EP Manager] The Application got In Progress"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} acaba de assinar a Acceptence Note da oportunidade  (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Entre em contato com ele(a) através do email %{person_email} para alinhar os próximos passos necessários para ser aprovado na vaga.
+
+          Após o pagamento, certifique-se que o EP preencheu o LDA, formalize a aprovação no EXPA e entre em contato com o Opportunity Manager para finalizar o processo.
+
+          Opportunity Managers:"
+      approved:
+        title: "[EP Manager] The Application got Approved"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} acaba de ser APROVADO da oportunidade  (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Entre em contato com ele(a) através do email %{person_email} para agendar a OPS e ajuda-lo com os preparativos para a viagem.
+
+          Os materiais nacionais para a preparação cultural estão disponíveis [aqui](https://hub.aiesec.org.br/incoming-outgoing-preparation/).
+          Não se esqueça de enviar a agenda da OPS e os resultados do LDA para o Opportunity Manager.
+
+          Opportunity Managers:"
+      realized:
+        title: "[EP Manager] An Application started the Realization"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} acaba de iniciar a sua experiência de desenvolvimento de liderança na oportunidade  (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Garanta a entrega de valor do nosso serviço através dos 16 Standards: https://hub.aiesec.org.br/standard-satisfaction/
+
+          Estabeleça contato constante com o EP por meio do email %{person_email}, e por outros meios de contato que sejam mais acessíveis para vocês.
+
+          Opportunity Managers:"
+      completed:
+        title: "[EP Manager] The Application finished the Realization"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} esta finalizando a sua experiência de desenvolvimento de liderança através da oportunidade  (%{opportunity_title})
+          <https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications>.
+
+          Excelente momento para refletirmos se garantimos realmente desenvolvemos através dos 16 Standards: https://hub.aiesec.org.br/standard-satisfaction/
+
+          Confirme se o LDA e a NPS foram preenchidas e informe o EP que a experiência dele será formalizada no sistema após a conclusão dessas etapas.
+
+          Que tal lembrar %{person_name} sobre tudo que vivenciou?
+
+          Entre em contato com o EP pelo e-mail %{person_email} e marque uma reunião de reintegração.
+
+          Opportunity Managers:"

@@ -1,0 +1,77 @@
+pt-BR:
+  emails:
+    opportunity_manager:
+      open:
+        title: "[Opportunity Manager] New Application for your opportunity"
+        text: |
+          Olá %{manager_name},
+
+          "Você acaba de receber uma nova aplicação para a oportunidade que você gerencia %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications
+
+          Entre em contato com o/a trainee %{person_name} através do email %{person_email} para alinhar os próximos passos necessários para vir para o seu comitê.
+
+          EP Managers do(a) trainee:"
+      accepted:
+        title: "[Opportunity Manager] Application Accepted"
+        text: |
+          Olá %{manager_name},
+
+          "Uma aplicação para a oportunidade que você gerencia %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications foi marcada como aceita.
+
+          Entre em contato com o/a trainee %{person_name} através do email %{person_email} para alinhar os próximos passos necessários para vir para o seu comitê.
+
+          EP Managers do(a) trainee:"
+      matched:
+        title: "[Opportunity Manager] An Application got In Progress"
+        text: |
+          Olá %{manager_name},
+
+          "Uma aplicação para a oportunidade que você gerencia %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications teve a sua EP AN assinada.
+
+          Entre em contato com o/a trainee %{person_name} através do email %{person_email} para alinhar os próximos passos necessários para vir para o seu comitê.
+
+          EP Managers do(a) trainee:"
+      approved:
+        title: "[Opportunity Manager] An Application got Approved"
+        text: |
+          Olá %{manager_name},
+
+          "Uma aplicação para a oportunidade que você gerencia %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications foi aprovada com sucesso \o/.
+
+          Entre em contato com o/a trainee %{person_name} através do email %{person_email} para alinhar os próximos passos necessários para vir para o seu comitê.
+
+          EP Managers do(a) trainee:"
+      realized:
+        title: "[Opportunity Manager] An Application started the Realization"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} iniciou a sua experiência de desenvolvimento de liderança através da oportunidade  %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications foi aprovada com sucesso \o/.
+
+          Garanta a entrega de valor do nosso serviço através dos 16 Standards:
+          https://hub.aiesec.org.br/standard-satisfaction/
+
+          %{person_email}
+
+          EP Managers do(a) trainee:"
+      completed:
+        title: "[Opportunity Manager] An Application finished the Realization"
+        text: |
+          Olá %{manager_name},
+
+          "%{person_name} está finalizando a sua experiência de desenvolvimento de liderança através da oportunidade   %{opportunity_title}
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications foi aprovada com sucesso \o/.
+
+          Excelente momento para refletirmos se garantimos a entrega de valor do nosso serviço através dos 16 Standards:
+          https://hub.aiesec.org.br/standard-satisfaction/
+
+          Que tal lembrar %{person_name} sobre tudo que vivenciou?
+
+          %{person_email}
+
+          EP Managers do(a) trainee:"
