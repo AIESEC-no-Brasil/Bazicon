@@ -229,11 +229,11 @@ class Sync
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               data = EXPA::Applications.get_attributes(xp_application.id)
-              unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
-                application.update_from_expa(data)
-                SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
-                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
-              end
+              # unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+              #   application.update_from_expa(data)
+              #   SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+              #   SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
+              # end
               application.update_from_expa(data)
               application.save
 
