@@ -131,14 +131,22 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.entities_ogcdp[i]
-                        - elsif params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE'
-                          - for i in 0...DigitalTransformation.entities_ogip.size
+                        - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
+                          - for i in 0...DigitalTransformation.entities_ogt.size
                             - if i == 0
                               %option{value: ''}
-                                = DigitalTransformation.entities_ogip[i]
+                                = DigitalTransformation.entities_ogt[i]
                             - else
                               %option{value: "#{i}"}
-                                = DigitalTransformation.entities_ogip[i]
+                                = DigitalTransformation.entities_ogt[i]
+                        - elsif params['programa'] == 'GE'
+                          - for i in 0...DigitalTransformation.entities_oge.size
+                            - if i == 0
+                              %option{value: ''}
+                                = DigitalTransformation.entities_oge[i]
+                            - else
+                              %option{value: "#{i}"}
+                                = DigitalTransformation.entities_oge[i]
                     #travel_interest
                       %label Quando você tem interesse em viajar? *
                       %select.form-control.m-b.required{name: 'travel_interest'}
@@ -202,9 +210,6 @@
                     %label{for: 'acceptTerms'}
                       Eu concordo com os
                       %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
-
-                    %center
-                      .fa.big-icon.fa-plane{style: 'color: gray'}
 
 - content_for :javascript do
   / Facebook Pixel Code

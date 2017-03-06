@@ -163,7 +163,7 @@ class SyncTest < Minitest::Test
 =end
 
   def test_get_opportunities
-    Sync.new.check_problematic_opportunities(Date.new(2016,1,1),Date.new(2016,1,20))
+    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],'opportunities')
   end
 end
 

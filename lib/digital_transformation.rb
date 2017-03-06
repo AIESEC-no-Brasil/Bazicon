@@ -52,8 +52,10 @@ module DigitalTransformation
       case program
         when 'GCDP', 'GV'
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[i]]['ids']
-        when 'GIP', 'GT', 'GE'
-          DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogip[i]]['ids']
+        when 'GIP', 'GT'
+          DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogt[i]]['ids']
+        when 'GE'
+          DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_oge[i]]['ids']
         else
       end
     end
@@ -61,22 +63,22 @@ module DigitalTransformation
     def hash_entities_podio_expa
       {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
        #'ALFENAS' => {'ids' => [479,362627844], 'programs' => ['oGCDP']},
-       'ARACAJU' => {'ids' => [100,306817550], 'programs' => ['oGCDP','oGIP']},
+       'ARACAJU' => {'ids' => [100,306817550], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        #'ARARAQUARA' => {'ids' => [435,362628166], 'programs' => ['oGCDP']},
        'BALNEARIO CAMBORIU' => {'ids' => [1731,306820346], 'programs' => ['oGCDP']},
        'BAURU' => {'ids' => [32,306825623], 'programs' => ['oGCDP']},
        'BELEM' => {'ids' => [12,362628356], 'programs' => ['oGCDP']},
-       'BELO HORIZONTE' => {'ids' => [1248,306810804], 'programs' => ['oGCDP','oGIP']},
+       'BELO HORIZONTE' => {'ids' => [1248,306810804], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'BLUMENAU' => {'ids' => [2155,362628487], 'programs' => ['oGCDP']},
-       'BRASILIA' => {'ids' => [1300,306812018], 'programs' => ['oGCDP','oGIP']},
+       'BRASILIA' => {'ids' => [1300,306812018], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'CAMPINA GRANDE' => {'ids' => [146,362628658], 'programs' => ['oGCDP']},
        'CAMPO GRANDE' => {'ids' => [1766,306825376], 'programs' => ['oGCDP']},
        #'CAMPO MOURAO' => {'ids' => [723,362629024], 'programs' => ['oGCDP']},
        'CHAPECO' => {'ids' => [283,306822862], 'programs' => ['oGCDP']},
        'CUIABA' => {'ids' => [2150,336444212], 'programs' => ['oGCDP']},
-       'CURITIBA' => {'ids' => [1178,306813088], 'programs' => ['oGCDP','oGIP']},
-       'FLORIANOPOLIS' => {'ids' => [988,306811093], 'programs' => ['oGCDP','oGIP']},
-       'FORTALEZA' => {'ids' => [286,306810283], 'programs' => ['oGCDP','oGIP']},
+       'CURITIBA' => {'ids' => [1178,306813088], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'FLORIANOPOLIS' => {'ids' => [988,306811093], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'FORTALEZA' => {'ids' => [286,306810283], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'FRANCA' => {'ids' => [284,306818036], 'programs' => ['oGCDP']},
        'GOIANIA' => {'ids' => [434,306817719], 'programs' => ['oGCDP']},
        'ITA' => {'ids' => [1368,306817098], 'programs' => ['oGCDP']},
@@ -88,40 +90,40 @@ module DigitalTransformation
        'MACEIO' => {'ids' => [2149,362629308], 'programs' => ['oGCDP']},
        'MANAUS' => {'ids' => [231,306817297], 'programs' => ['oGCDP']},
        #'MARILIA' => {'ids' => [437,362629660], 'programs' => ['oGCDP']},
-       'MARINGA' => {'ids' => [723,306811055], 'programs' => ['oGCDP','oGIP']},
+       'MARINGA' => {'ids' => [723,306811055], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'NATAL' => {'ids' => [2151,362629783], 'programs' => ['oGCDP']},
        #'PASSO FUNDO' => {'ids' => [958,362630011], 'programs' => ['oGCDP']},
        'PELOTAS' => {'ids' => [148,306820564], 'programs' => ['oGCDP']},
        #'PIRASSUNUNGA' => {'ids' => [435,362630097], 'programs' => ['oGCDP']},
        #'POCOS DE CALDAS' => {'ids' => [1003,362630236], 'programs' => ['oGCDP']},
-       'PORTO ALEGRE' => {'ids' => [854,306810913], 'programs' => ['oGCDP','oGIP']},
-       'RECIFE' => {'ids' => [541,306810735], 'programs' => ['oGCDP','oGIP']},
+       'PORTO ALEGRE' => {'ids' => [854,306810913], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'RECIFE' => {'ids' => [541,306810735], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'RIBEIRAO PRETO' => {'ids' => [467,306820937], 'programs' => ['oGCDP']},
-       'RIO DE JANEIRO' => {'ids' => [777,306811119], 'programs' => ['oGCDP','oGIP']},
-       'SALVADOR' => {'ids' => [1121,306811026], 'programs' => ['oGCDP','oGIP']},
+       'RIO DE JANEIRO' => {'ids' => [777,306811119], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'SALVADOR' => {'ids' => [1121,306811026], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        #'SANTA CRUZ DO SUL' => {'ids' => [285,306825793], 'programs' => ['oGCDP']},
-       'SANTA MARIA' => {'ids' => [958,306813159], 'programs' => ['oGCDP','oGIP']},
+       'SANTA MARIA' => {'ids' => [958,306813159], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SANTAREM' => {'ids' => [2153,353882059], 'programs' => ['oGCDP']},
        'SANTOS' => {'ids' => [1816,306819356], 'programs' => ['oGCDP']},
-       'SAO CARLOS' => {'ids' => [435,306812438], 'programs' => ['oGCDP','oGIP']},
+       'SAO CARLOS' => {'ids' => [435,306812438], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SAO JOSE DO RIO PRETO' => {'ids' => [2147,353885407], 'programs' => ['oGCDP']},
        'SAO PAULO - UNIDADE ABC' => {'ids' => [1647,340039892], 'programs' => ['oGCDP']},
-       'SAO PAULO - UNIDADE ESPM' => {'ids' => [436,306812929], 'programs' => ['oGCDP','oGIP']},
-       'SAO PAULO - UNIDADE GETULIO VARGAS' => {'ids' => [943,306822659], 'programs' => ['oGCDP','oGIP']},
-       'SAO PAULO - UNIDADE INSPER' => {'ids' => [233,306817462], 'programs' => ['oGCDP','oGIP']},
+       'SAO PAULO - UNIDADE ESPM' => {'ids' => [436,306812929], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'SAO PAULO - UNIDADE GETULIO VARGAS' => {'ids' => [943,306822659], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'SAO PAULO - UNIDADE INSPER' => {'ids' => [233,306817462], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SAO PAULO - UNIDADE MACKENZIE' => {'ids' => [2152,362629397], 'programs' => ['oGCDP']},
-       'SAO PAULO - UNIDADE PUC' => {'ids' => [288,306817495], 'programs' => ['oGCDP','oGIP']},
-       'SAO PAULO - UNIDADE USP' => {'ids' => [1003,306811162], 'programs' => ['oGCDP','oGIP']},
+       'SAO PAULO - UNIDADE PUC' => {'ids' => [288,306817495], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'SAO PAULO - UNIDADE USP' => {'ids' => [1003,306811162], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SOROCABA' => {'ids' => [230,306825137], 'programs' => ['oGCDP']},
-       'TERESINA' => {'ids' => [2098,340037977], 'programs' => ['oGCDP']},
+       'TERESINA' => {'ids' => [2098,340037977], 'programs' => ['oGCDP','oGE']},
        #'UBERABA' => {'ids' => [287,362630742], 'programs' => ['oGCDP']},
-       'UBERLANDIA' => {'ids' => [287,306813291], 'programs' => ['oGCDP','oGIP']},
+       'UBERLANDIA' => {'ids' => [287,306813291], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'VALE DO PARAIBA' => {'ids' => [1368,306817098], 'programs' => ['oGCDP']},
        'VALE DO SAO FRANCISCO - JUAZEIRO' => {'ids' => [1649,362630905], 'programs' => ['oGCDP']},
        'VALE DO SAO FRANCISCO - PETROLINA' => {'ids' => [1649,362630905], 'programs' => ['oGCDP']},
        #'VARGINHA' => {'ids' => [479,362630969], 'programs' => ['oGCDP']},
-       'VICOSA' => {'ids' => [2148,362631010], 'programs' => ['oGCDP']},
-       'VITORIA' => {'ids' => [909,306810868], 'programs' => ['oGCDP','oGIP']},
+       'VIÇOSA' => {'ids' => [2148,362631010], 'programs' => ['oGCDP','oGE']},
+       'VITORIA' => {'ids' => [909,306810868], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'VOLTA REDONDA' => {'ids' => [289,335438552], 'programs' => ['oGCDP']}}
     end
 
@@ -144,6 +146,24 @@ module DigitalTransformation
       res_hash = []
       hash_entities.keys.each do |entity|
         res_hash << entity if hash_entities[entity]['programs'].include?('oGIP')
+      end
+      res_hash
+    end
+
+    def entities_oge
+      hash_entities = hash_entities_podio_expa
+      res_hash = []
+      hash_entities.keys.each do |entity|
+        res_hash << entity if hash_entities[entity]['programs'].include?('oGE')
+      end
+      res_hash
+    end
+
+    def entities_ogt
+      hash_entities = hash_entities_podio_expa
+      res_hash = []
+      hash_entities.keys.each do |entity|
+        res_hash << entity if hash_entities[entity]['programs'].include?('oGT')
       end
       res_hash
     end
@@ -193,9 +213,9 @@ module DigitalTransformation
        'Ensino Fundamental Incompleto',
        'Ensino Medio Incompleto',
        'Curso Tecnico Incompleto',
-       'Ensino Superior - Cursando',
-       'Mestrado - Cursando',
-       'Doutorado - Cursando']
+       'Ensino Superior - Cursando/Formado',
+       'Mestrado - Cursand/Formado',
+       'Doutorado - Cursando/Formado']
     end
 
     def universities

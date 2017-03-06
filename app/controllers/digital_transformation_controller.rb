@@ -1,4 +1,5 @@
 class DigitalTransformationController < ApplicationController
+  after_filter :cors_set_access_control_headers
 
   # GET /dt/difficulties
   def difficulties
@@ -320,8 +321,10 @@ class DigitalTransformationController < ApplicationController
     case interested_program
       when 'GCDP', 'GV'
           office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
-      when 'GIP', 'GT', 'GE'
-          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogip[lc.to_i])
+      when 'GIP', 'GT',
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogt[lc.to_i])
+      when 'GE'
+          office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_oge[lc.to_i])
       else
           office = ExpaOffice.find_by_xp_name(DigitalTransformation.entities_ogcdp[lc.to_i])
     end
@@ -494,5 +497,9 @@ class DigitalTransformationController < ApplicationController
     attibutes[:tags] = [campagin] unless campagin.nil? || campagin.empty?
 
     Podio::Item.create(podio_app_decided_leads, attibutes)
+  end
+
+  def cors_set_access_control_headers
+    headers['X-Frame-Options'] = 'ALLOW-FROM http://aiesec.org.br'
   end
 end
