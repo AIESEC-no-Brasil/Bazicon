@@ -1,8 +1,8 @@
-desc 'Updates ExpaOpportunity With Its Managers'
+edesc 'Updates ExpaOpportunity With Its Managers'
 task :update_expa_opportunities => [ :environment ] do
   EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-  opportunities = ExpaOpportunity.all
+  opportunities = ExpaOpportunity.includes(:expa_opportunity_managers).where(expa_opportunity_managers: { expa_opportunity_id: nil })
 
   opportunities.each do |opportunity|
     data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
