@@ -1,4 +1,4 @@
-edesc 'Updates ExpaOpportunity With Its Managers'
+desc 'Updates ExpaOpportunity With Its Managers'
 task :update_expa_opportunities => [ :environment ] do
   EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
