@@ -61,7 +61,7 @@ module DigitalTransformation
     end
 
     def hash_entities_podio_expa
-      {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP']},
+      {'Comitê Local' => {'ids' => ['EXPA_ID', 'PODIO_ITEM_ID'], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        #'ALFENAS' => {'ids' => [479,362627844], 'programs' => ['oGCDP']},
        'ARACAJU' => {'ids' => [100,306817550], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        #'ARARAQUARA' => {'ids' => [435,362628166], 'programs' => ['oGCDP']},
