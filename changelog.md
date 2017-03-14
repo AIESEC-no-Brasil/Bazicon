@@ -1,5 +1,33 @@
 # Change log
 
+## Mar 13th 2017
+
+### General
+
+- Opportunities have been update in Production with its new database structure (Ongoing)
+
+- EP have been updated in Production with its new database structure (Ongoing)
+
+### Mailgun
+
+- Mailgun now shoots mails for Opportunity Managers & EP Managers
+
+### Services & Jobs
+
+- UpdateStatus job now triggers mailgun upon status changing so it communicates its opportunity/ep managers
+
+- Whenever a new opportunity or EP data is grabbed from the API it also comes with manager data from now on
+
+### ExpaRb
+
+- Adds EP Managers data handling through API
+
+### Hotfixes
+
+- Shoryuken error prone job handling tweaked, now outputs better information
+
+- Checkbox disappearence in sign up forms now corrected
+
 ## Feb 12th 2017
 
 ### General

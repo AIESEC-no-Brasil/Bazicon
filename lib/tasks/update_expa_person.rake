@@ -2,7 +2,7 @@ desc 'Updates ExpaPerson With Its Managers'
 task :update_expa_person => [ :environment ] do
   EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-  people = ExpaPerson.includes(:expa_person_managers).where(expa_person_managers: { expa_person_id: nil })
+  people = ExpaPerson.where(xp_home_mc_id: 2).includes(:expa_person_managers).where(expa_person_managers: { expa_person_id: nil })
 
   people.each do |person|
     data = EXPA::People.list_single_person(person.xp_id)
