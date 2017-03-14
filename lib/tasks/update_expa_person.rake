@@ -5,6 +5,8 @@ task :update_expa_person => [ :environment ] do
   people = ExpaPerson.where(xp_home_mc_id: 2).includes(:expa_person_managers).where(expa_person_managers: { expa_person_id: nil })
 
   people.each do |person|
+    puts "ExpaPerson ID: #{person.xp_id}"
+
     data = EXPA::People.list_single_person(person.xp_id)
 
     managers = []
