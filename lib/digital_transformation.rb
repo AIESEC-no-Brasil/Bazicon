@@ -2859,6 +2859,8 @@ module DigitalTransformation
        'Artes Visuais' => 'Curso0000000181',
        'Automacao Industrial' => 'Curso0000000180',
        'Banco De Dados' => 'Curso0000000179',
+       'Bacharelado em Ciência e Tecnologia' => 'Curso0000000202',
+       'Bacharelado em Ciências e Humanidades' => 'Curso0000000203',
        'Beleza' => 'Curso0000000178',
        'Biblioteconomia' => 'Curso0000000177',
        'Biologia' => 'Curso0000000176',
