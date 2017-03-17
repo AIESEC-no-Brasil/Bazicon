@@ -24,7 +24,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       matched:
-        title: "[Opportunity Manager] An Application got In Progress"
+        title: "[Opportunity Manager] The Application got In Progress"
         text: |
           Olá %{manager_name},
 
@@ -35,7 +35,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       approved:
-        title: "[Opportunity Manager] An Application got Approved"
+        title: "[Opportunity Manager] The Application got Approved"
         text: |
           Olá %{manager_name},
 
@@ -46,7 +46,7 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       realized:
-        title: "[Opportunity Manager] An Application started the Realization"
+        title: "[Opportunity Manager] The Application started the Realization"
         text: |
           Olá %{manager_name},
 
@@ -60,12 +60,12 @@ pt-BR:
 
           EP Managers do(a) trainee:"
       completed:
-        title: "[Opportunity Manager] An Application finished the Realization"
+        title: "[Opportunity Manager] The Application finished the Realization"
         text: |
           Olá %{manager_name},
 
           "%{person_name} está finalizando a sua experiência de desenvolvimento de liderança através da oportunidade   %{opportunity_title}
-          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications foi aprovada com sucesso \o/.
+          https://experience.aiesec.org/#/opportunities/%{opportunity_id}/applications.
 
           Excelente momento para refletirmos se garantimos a entrega de valor do nosso serviço através dos 16 Standards:
           https://hub.aiesec.org.br/standard-satisfaction/

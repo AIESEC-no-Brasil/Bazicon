@@ -21,6 +21,6 @@ class Mailgunner
   private
 
   def message_params
-    { from: @from, to: @to, subject: @subject, text: @text }
+    { from: @from, to: @to, subject: @subject, html: @text }
   end
 end
