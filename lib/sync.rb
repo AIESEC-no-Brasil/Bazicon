@@ -66,7 +66,7 @@ class Sync
   end
 
   def create_ep_managers(person)
-    EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    setup_expa_api
 
     data = EXPA::People.list_single_person(person.xp_id)
 
@@ -140,7 +140,7 @@ class Sync
   end
 
   def create_opportunity_managers(opportunity)
-    EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    setup_expa_api
 
     data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
 

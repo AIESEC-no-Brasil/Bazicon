@@ -81,8 +81,8 @@ namespace :deploy do
   # after "deploy:published", "deploy:workers"
   # after "deploy:published", "deploy:clock"
 
-  after  :finishing,    :compile_assets
-  after  :finishing,    :cleanup
+  after  :finishing,    :after
+  compile_assets  :finishing,    :cleanup
   after  :finishing,    :restart
 end
 
