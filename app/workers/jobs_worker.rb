@@ -13,15 +13,15 @@ class JobsWorker
     notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
 
     begin
-      klass = body["klass"].constantize.new
+      klass = body[:klass].constantize.new
 
-      if body.has_key? "params"
-        notify_and_delete_message(sqs_msg, body) if klass.send body["method"], body["params"]
+      if body.has_key? :params
+        notify_and_delete_message(sqs_msg, body) if klass.send body[:method], body[:params]
       else
-        notify_and_delete_message(sqs_msg, body) if klass.send body["method"]
+        notify_and_delete_message(sqs_msg, body) if klass.send body[:method]
       end
     rescue
-      raise NameError, "Not a defined job: #{body["method"]} - #{body["params"]}"
+      raise NameError, "Not a defined job: #{body[:method]} - #{body[:params]}"
     end
   end
 
