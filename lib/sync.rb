@@ -184,9 +184,9 @@ class Sync
   #programs - a Array of the programs
   def update_status(params) #status, programs, for_filter
     job_status = true
-    status = params[:status]
-    programs = params[:programs].split(",").map { |s| s.to_i }
-    for_filter = params[:for_filter]
+    status = params["status"]
+    programs = params["programs"].split(",").map { |s| s.to_i }
+    for_filter = params["for_filter"]
 
     filter = nil
     case status
@@ -272,7 +272,9 @@ class Sync
 
     data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
 
-    data["parent"]["id"] == 1606 ? true : false
+    unless data.nil?
+      data["parent"]["id"] == 1606 ? true : false
+    end
   end
 
   def person_in_brazil(application)
@@ -285,7 +287,9 @@ class Sync
 
     data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
 
-    data["parent"]["id"] == 1606 ? true : false
+    unless data.nil?
+      data["parent"]["id"] == 1606 ? true : false
+    end
   end
 
   def update_podio
