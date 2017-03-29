@@ -66,6 +66,8 @@ class Sync
   end
 
   def create_ep_managers(person)
+    setup_expa_api
+
     data = EXPA::People.list_single_person(person.xp_id)
 
     managers = []
@@ -138,6 +140,8 @@ class Sync
   end
 
   def create_opportunity_managers(opportunity)
+    setup_expa_api
+
     data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
 
     managers = []
@@ -229,11 +233,13 @@ class Sync
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               data = EXPA::Applications.get_attributes(xp_application.id)
-              # unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
-              #   application.update_from_expa(data)
-              #   SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
-              #   SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_'))
-              # end
+              unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+                application.update_from_expa(data)
+                create_opportunity_managers(application.xp_opportunity)
+                create_ep_managers(application.xp_person)
+                SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_')) if opportunity_in_brazil(application)
+                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_')) if person_in_brazil(application)
+              end
               application.update_from_expa(data)
               application.save
 
@@ -256,6 +262,34 @@ class Sync
     end
 
     job_status
+  end
+
+  def opportunity_in_brazil(application)
+    setup_expa_api
+
+    opportunity = application.xp_opportunity
+    xp_office_id = opportunity.xp_office_id
+
+    data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
+
+    unless data.nil?
+      data["parent"]["id"] == 1606 ? true : false
+    end
+  end
+
+  def person_in_brazil(application)
+    setup_expa_api
+
+    person_xp_id = application.xp_person.xp_id
+    person = EXPA::People.list_single_person(person_xp_id)
+
+    xp_office_id = person["home_lc"]["id"]
+
+    data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
+
+    unless data.nil?
+      data["parent"]["id"] == 1606 ? true : false
+    end
   end
 
   def update_podio

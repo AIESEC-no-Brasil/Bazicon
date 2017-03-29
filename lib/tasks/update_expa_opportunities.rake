@@ -2,7 +2,7 @@ desc 'Updates ExpaOpportunity With Its Managers'
 task :update_expa_opportunities => [ :environment ] do
   EXPA.setup.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
 
-  opportunities = ExpaOpportunity.includes(:expa_opportunity_managers).where(expa_opportunity_managers: { expa_opportunity_id: nil })
+  opportunities = ExpaOpportunity.where(has_been_migrated: false).includes(:expa_opportunity_managers).where(expa_opportunity_managers: { expa_opportunity_id: nil })
 
   puts "#{opportunities.count} Opportunities"
 
@@ -52,5 +52,7 @@ task :update_expa_opportunities => [ :environment ] do
         end
       end
     end
+
+  opportunity.update(has_been_migrated: true)
   end
 end
