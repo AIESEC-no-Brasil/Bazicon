@@ -228,13 +228,13 @@ class Sync
               xp_application = EXPA::Applications.find_by_id(xp_application.id)
               xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
               xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-              application = ExpaApplication.find_by_xp_id(xp_application.id)
-              application = ExpaApplication.new if application.nil?
+              application = ExpaApplication.find_by_xp_id(xp_application.id) || ExpaApplication.new
 
               to_rd = application.xp_person.nil? || xp_application.person.status.to_s != application.xp_person.xp_status.to_s
               data = EXPA::Applications.get_attributes(xp_application.id)
               unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
                 application.update_from_expa(data)
+                application.save
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
                 SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_')) if opportunity_in_brazil(application)
@@ -282,6 +282,8 @@ class Sync
 
     person_xp_id = application.xp_person.xp_id
     person = EXPA::People.list_single_person(person_xp_id)
+
+    return false if person["status"]["code"] == 403
 
     xp_office_id = person["home_lc"]["id"]
 
