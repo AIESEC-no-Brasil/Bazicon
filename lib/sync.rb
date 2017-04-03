@@ -237,8 +237,8 @@ class Sync
                 application.save
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
-                SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub('', '_')) if opportunity_in_brazil(application)
-                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub('', '_')) if person_in_brazil(application)
+                SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub(' ', '_')) if opportunity_in_brazil(application)
+                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub(' ', '_')) if person_in_brazil(application)
               end
               application.update_from_expa(data)
               application.save
