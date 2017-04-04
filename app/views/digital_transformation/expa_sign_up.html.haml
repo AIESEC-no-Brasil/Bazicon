@@ -32,6 +32,9 @@
                     %label E-mail *
                     %input#userName.form-control.required.email{:name => "email", :type => "text"}
                   .form-group
+                    %label Data de Nascimento *
+                    %input#dob.form-control.required{:name => "dob", :type => "date"}
+                  .form-group
                     %label Senha *
                     %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
             %h1
@@ -82,17 +85,17 @@
                   .col-xs-12.b-r
                     #sub-productrm-control.m-b.required{name: 'sub-product'}
                       - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
-                        %label Região de interesse *
-                        %select.form-control.m-b.required{name: 'sub-product'}
-                          - for i in 0...DigitalTransformation.sub_product_global_citizen.size
+                        %label Quero trabalhar por *
+                        %select.form-control.m-b.required{name: 'sdg'}
+                          - for i in 0...DigitalTransformation.sdgs_we_work.size
                             - if i == 0
                               %option{value: ''}
-                                = DigitalTransformation.sub_product_global_citizen[i]
+                                = DigitalTransformation.sdgs_we_work[i]
                             - else
                               %option{value: "#{i}"}
-                                = DigitalTransformation.sub_product_global_citizen[i]
+                                = DigitalTransformation.sdgs_we_work[i]
                       - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
-                        %label Meu interesse *
+                        %label Quero trabalhar com *
                         %select.form-control.m-b.required{name: 'sub-product'}
                           - for i in 0...DigitalTransformation.sub_product_global_talent.size
                             - if i == 0
@@ -102,7 +105,7 @@
                               %option{value: "#{i}"}
                                 = DigitalTransformation.sub_product_global_talent[i]
                       - elsif params['programa'] == 'GE'
-                        %label Meu interesse *
+                        %label Quero trabalhar com *
                         %select.form-control.m-b.required{name: 'sub-product'}
                           - for i in 0...DigitalTransformation.sub_product_global_entrepreneur.size
                             - if i == 0
@@ -111,16 +114,6 @@
                             - else
                               %option{value: "#{i}"}
                                 = DigitalTransformation.sub_product_global_entrepreneur[i]
-                    #how-get-to-know-aiesec
-                      %label Como conheceu a AIESEC? *
-                      %select.form-control.m-b.required{name: 'how-got-to-know-aiesec'}
-                        - for i in 0...DigitalTransformation.how_got_to_know_aiesec.size
-                          - if i == 0
-                            %option{value: ''}
-                              = DigitalTransformation.how_got_to_know_aiesec[i]
-                          - else
-                            %option{value: "#{i}"}
-                              = DigitalTransformation.how_got_to_know_aiesec[i]
                       %label AIESEC mais próxima *
                       %select.form-control.m-b.required{name: 'nearest_lc'}
                         - if params['programa'] == 'GCDP' || params['programa'] == 'GV'

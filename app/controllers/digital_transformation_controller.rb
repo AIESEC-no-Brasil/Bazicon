@@ -152,9 +152,7 @@ class DigitalTransformationController < ApplicationController
     elsif how_got_to_know_aiesec == ''
       flash['text-danger'] = "Nos conte como conheceu a AIESEC"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (study_level == '4' ||
-          study_level == '5' ||
-          study_level == '6') &&
+    elsif (study_level == '4' || study_level == '5' || study_level == '6') &&
           (university == '' || course == '')
       flash['text-danger'] = "Campos 'Universidade' e 'Curso' são obrigatórios caso você tenha algum tipo de ensino superior"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
@@ -269,10 +267,12 @@ class DigitalTransformationController < ApplicationController
     lastname = params['lastname']
     phone = params['phone']
     email = params['email']
+    bithdate = params['dob']
     password = params['password']
     interested_program = params['programa']
+    sdg = params['sdg']
     sub_product = params['sub-product']
-    how_got_to_know_aiesec = params['how-got-to-know-aiesec']
+    #how_got_to_know_aiesec = params['how-got-to-know-aiesec']
     university = params['university']
     course = params['course']
     study_level = params['study-level']
@@ -288,12 +288,8 @@ class DigitalTransformationController < ApplicationController
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (interested_program == 'GCDP' && sub_product == '') ||
-        (interested_program == 'GIP' && sub_product == '')
-      flash['text-danger'] = "Você deve selecionar um sub-produto"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif how_got_to_know_aiesec == ''
-      flash['text-danger'] = "Nos conte como conheceu a AIESEC"
+    elsif sdg == ''
+      flash['text-danger'] = "Nos conte qual SDG você gostaria de defender"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     elsif (study_level == '4' ||
           study_level == '5' ||
@@ -309,9 +305,9 @@ class DigitalTransformationController < ApplicationController
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
 
-    send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
+    podio_id = send_to_podio(name,lastname,phone,email,bithdate,interested_program,sub_product,sdg,university,
       course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
-
+    puts podio_id
     send_data_to_sqs(email, name, lastname, password, lc, interested_program)
 
     person = ExpaPerson.new
@@ -400,11 +396,15 @@ class DigitalTransformationController < ApplicationController
     person.customized_fields = json.to_json.to_s
 
     #como conheceu a AIESEC
-    person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
+    #person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
     person.travel_interest = travel_interest.to_i
     person.want_contact_by_email = (want_contact_by_email == 'on') ? true : false
     person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
     person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
+
+    person.podio_id = podio_id['item_id'].to_i
+    puts 'Podio ID'
+    puts person.podio_id
 
     tags = interested_program
     tags = "'"+campagin.to_s+"','"+interested_program+"'" unless campagin.nil? || campagin.empty?
@@ -449,15 +449,8 @@ class DigitalTransformationController < ApplicationController
     @options['other'] = 'Outro'
   end
 
-  def background(&block)
-    Thread.new do
-      yield
-      ActiveRecord::Base.connection.close
-    end
-  end
-
-  def send_to_podio(name,lastname,phone,email,interested_program,
-      sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,english_level,spanish_level,
+  def send_to_podio(name,lastname,phone,email,bithdate,interested_program,sub_product,sdg,
+      university,course,lc,travel_interest,english_level,spanish_level,
       want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
@@ -480,13 +473,15 @@ class DigitalTransformationController < ApplicationController
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
-    fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
+    fields['sub-produto'] = sub_product.to_i unless sub_product.nil? || interested_program == 'GV'
+    fields['sdg-de-interesse'] = sdg.to_i unless sdg.nil? || interested_program != 'GV'
     fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
     fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
-    fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
+    #fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
     fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
     fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
     fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
+    fields['data-de-nascimento'] = { start: (bithdate + ' 00:00:00') } unless bithdate.nil?
 
     contato = []
     contato << 1 if want_contact_by_email

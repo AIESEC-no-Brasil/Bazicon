@@ -15,11 +15,22 @@ module DigitalTransformation
        'América Latina']
     end
 
+    def sdgs_we_work
+      ['Selecione aqui!',
+       'SDG 1 - Erradicação da Pobreza',
+       'SDG 2 - Fome Zero',
+       'SDG 3 - Boa Saúde e Bem-Estar',
+       'SDG 4 - Educação de Qualidade',
+       'SDG 5 - Igualdade de Gênero',
+       'SDG 10 - Redução de Desigualdades',
+       'SDG 17 - Parcerias em Prol das Metas']
+    end
+
     def sub_product_global_talent
       ['Selecione aqui!',
-       'Educação',
+       'Lecionar idiomas no exterior',
        'Tecnologia da Informação',
-       'Adminstração',
+       'Gestão',
        'Marketing']
     end
 
