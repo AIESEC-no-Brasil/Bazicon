@@ -398,13 +398,12 @@ class DigitalTransformationController < ApplicationController
     #como conheceu a AIESEC
     #person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
     person.travel_interest = travel_interest.to_i
+    person.interested_sdg = sdg.to_i unless sdg.nil?
     person.want_contact_by_email = (want_contact_by_email == 'on') ? true : false
     person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
     person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
 
     person.podio_id = podio_id['item_id'].to_i
-    puts 'Podio ID'
-    puts person.podio_id
 
     tags = interested_program
     tags = "'"+campagin.to_s+"','"+interested_program+"'" unless campagin.nil? || campagin.empty?

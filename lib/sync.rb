@@ -245,6 +245,9 @@ class Sync
 
               person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
               send_to_rd(application.xp_person, application, status, nil) if !person.nil? && to_rd
+              podio_date = application.xp_date_approved if status == 'approved'
+              podio_date = application.xp_date_realized if status == 'realized'
+              update_podio_ogx_people(person.podio_id,status,podio_date)
             rescue => exception
               puts 'ACHAR O BUG'
               puts xp_application.id unless xp_application.id.nil?
@@ -292,6 +295,24 @@ class Sync
     unless data.nil?
       data["parent"]["id"] == 1606 ? true : false
     end
+  end
+
+  def update_podio_ogx_people(person_id, status, date)
+    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
+    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
+
+    case status
+      when 'approved'
+        fields = {}
+        fields['data-do-approved'] = { start: date.strftime('%Y-%m-%d %H:%M:%S')} unless date.nil?
+        attributes = {:fields => fields}
+        Podio::Item.update( person_id, attributes )
+      when 'realized'
+        fields = {}
+        fields['data-do-realize'] = { start: date.strftime('%Y-%m-%d %H:%M:%S')} unless date.nil?
+        attributes = {:fields => fields}
+        Podio::Item.update( person_id, attributes )
+    end    
   end
 
   def update_podio

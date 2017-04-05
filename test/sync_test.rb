@@ -160,10 +160,14 @@ class SyncTest < Minitest::Test
   def test_get_all_appllications
     Sync.new.check_problematic_applications(Date.new(2016,10,1),Date.new(2016,10,25))
   end
-=end
 
   def test_get_opportunities
     Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],'opportunities')
+  end
+=end
+
+  def test_update_podio_ogx_people
+    Sync.new.update_podio_ogx_people(590498244, 'approved', Date.new(2017,3,2))
   end
 end
 
