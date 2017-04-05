@@ -164,10 +164,21 @@ class SyncTest < Minitest::Test
   def test_get_opportunities
     Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],'opportunities')
   end
-=end
 
   def test_update_podio_ogx_people
     Sync.new.update_podio_ogx_people(590498244, 'approved', Date.new(2017,3,2))
+  end
+
+  def test_send_icx_application
+    PodioSync.new.send_icx_application('approved', ExpaApplication.find_by_xp_id(1131006))
+  end
+
+  def test_send_icx_opportunity
+    PodioSync.new.send_icx_opportunity(ExpaOpportunity.find_by_xp_id(722065))
+  end
+=end
+  def test_update_icx_applications
+    Sync.new.update_status({"status" => "realized", "programs" => "1", "for_filter" => "opportunities" })
   end
 end
 

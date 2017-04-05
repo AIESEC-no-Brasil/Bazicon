@@ -197,6 +197,15 @@ module DigitalTransformation
       res_hash
     end
 
+    def hash_expa_podio
+      hash_entities = hash_entities_podio_expa
+      res_hash = {'nil' => nil}
+      hash_entities.keys.each do |entity|
+        res_hash[hash_entities[entity]['ids'][0]] = hash_entities[entity]['ids'][1]
+      end
+      res_hash
+    end
+
     def how_got_to_know_aiesec
       ['Como conheceu a AIESEC?',
        'Facebook',
