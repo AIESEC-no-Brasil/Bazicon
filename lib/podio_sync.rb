@@ -47,10 +47,10 @@ class PodioSync
 
   #Create a Podio item o Leads ICX or Update it
   def send_icx_application(application,podio_id)
-    login
+    loggin
     fields = {}
     fields['application-created-at'] = {'start' => application.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_created_at.nil?
-    fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil?
+    fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil? || ExpaApplication.xp_statuses[application.xp_status] > 5
     fields['titulo'] = application.xp_person.xp_full_name unless application.xp_person.nil?
     fields['ep-email'] = [{'type' => 'home', 'value' => application.xp_person.xp_email}] unless application.xp_person.nil?
     fields['ep-office'] = application.xp_person.xp_home_lc.xp_full_name
@@ -60,6 +60,7 @@ class PodioSync
     fields['application-date-realized'] = {'start' => application.xp_date_realized.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_realized.nil?
     fields['application-date-completed'] = {'start' => application.xp_date_completed.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_completed.nil?
     fields['opportunity'] = podio_id unless podio_id.nil?
+    puts fields
     case application.xp_opportunity.xp_programmes["id"]
       when 1
         fields['programme'] = 1
