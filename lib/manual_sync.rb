@@ -18,6 +18,12 @@ class ManualSync
     }
   end
 
+  def setup_expa_api
+    if EXPA.client.nil?
+      xp = EXPA.setup()
+      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    end
+  end
   
   def big_sync(from,to)
     puts 'STARTING BIG SYNC'
@@ -86,40 +92,40 @@ class ManualSync
       date = (to - day)
       params['filters['+status+'][from]'] = date.to_s
       params['filters['+status+'][to]'] = date.to_s
-      #params['filters[person_committee]'] = 1606 #from MC Brazil
       params['filters[programmes][]'] = programs #GCDP
       params['filters[for]'] = for_filter
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
-      #total_bazicon = ExpaApplication.gv.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).count
       puts date.to_s
       puts 'No EXPA: ' + total_items.to_s
-      #puts 'No Bazicon: ' + total_bazicon.to_s
-      #if total_bazicon != total_items
-        xp_applications = EXPA::Applications.list_by_param(params)
-        #b_applications = ExpaApplication.gt.get_completed_in(Time.new(date.year,date.month,date.day,0,0,0,'+00:00'),Time.new(date.year,date.month,date.day,23,59,59,'+00:00')).map {|x| [x.xp_id, x] }.to_h
-        xp_applications.each do |xp_application|
-          #if !b_applications.has_key?(xp_application.id) || xp_application.xp_date_matched.nil? #xp_date_matched xp_date_approved xp_date_realized xp_date_completed
-            begin
-              #puts 'Application: '+ xp_app.id.to_s
-              #puts 'Opportunity: '+ xp_app.opportunity.id.to_s + ' and programme ' + xp_app.opportunity.programmes.to_s
-              xp_application = EXPA::Applications.find_by_id(xp_application.id)
-              xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
-              xp_application.person = EXPA::People.find_by_id(xp_application.person.id)
-              application = ExpaApplication.find_by_xp_id(xp_application.id)
-              application = ExpaApplication.new if application.nil?
+      xp_applications = EXPA::Applications.list_by_param(params)
+      xp_applications.each do |xp_application|
+        begin
+          xp_application = EXPA::Applications.find_by_id(xp_application.id)
+          xp_application.opportunity = EXPA::Opportunities.find_by_id(xp_application.opportunity.id)
+          xp_application.person = EXPA::People.find_by_id(xp_application.person.id) if for_filter == 'people'
+          application = ExpaApplication.find_by_xp_id(xp_application.id)
+          application = ExpaApplication.new if application.nil?
 
-              application.update_from_expa(xp_application)
-              application.save
-            rescue => exception
-              puts 'ACHAR O BUG'
-              puts xp_application.id unless xp_application.id.nil?
-              puts exception.to_s
-              puts exception.backtrace
-            end
-          #end
+          application.update_from_expa(xp_application)
+          application.save
+
+          podio_date = application.xp_date_approved if status == 'approved'
+          podio_date = application.xp_date_realized if status == 'realized'
+          if for_filter == 'people'
+            PodioSync.new.update_podio_ogx_people(person.podio_id,status,podio_date) if !person.podio_id.nil?
+          elsif for_filter == 'opportunities'
+            podio_sync = PodioSync.new
+            opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
+            podio_sync.send_icx_application(application,opportunity_podio_id)
+          end
+        rescue => exception
+          puts 'ACHAR O BUG'
+          puts xp_application.id unless xp_application.id.nil?
+          puts exception.to_s
+          puts exception.backtrace
         end
-      #end
+      end
     end
   end
 
@@ -166,9 +172,7 @@ class ManualSync
   end
 
   #created_at date_matched date_an_signed date_approved experience_start_date experience_end_date
-  def check_problematic_opportunities
-    from = Date.new(2017,1,1)
-    to = Date.new(2017,02,22)
+  def check_problematic_opportunities(from,to)
 
     puts 'Check Opportunities'
     total_items = 0
@@ -179,7 +183,7 @@ class ManualSync
       date = (to - day)
       params['filters[created][from]'] = date.to_s
       params['filters[created][to]'] = date.to_s
-      params['filters[committee]'] = 1606 #from MC Brazil
+      params['filters[home_mc]'] = 1606 #from MC Brazil
       paging = EXPA::Opportunities.paging(params)
       total_items = paging[:total_items]
       puts date.to_s
@@ -187,12 +191,20 @@ class ManualSync
       xp_opportunities = EXPA::Opportunities.list_by_param(params)
       xp_opportunities.each do |xp_opportunity|
         begin
-          xp_opportunity = EXPA::Opportunities.find_by_id(xp_opportunity.id)
-          opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
-          opportunity = ExpaOpportunity.new if opportunity.nil?
-
-          opportunity.update_from_expa(xp_opportunity)
-          opportunity.save
+          puts xp_opportunity.title
+          if ExpaOpportunity.exist?(xp_opportunity)
+            xp_opportunity = EXPA::Opportunities.find_by_id(xp_opportunity.id)
+            opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
+            opportunity.update_from_expa(xp_opportunity)
+            opportunity.save
+            Sync.new.create_opportunity_managers(opportunity)
+          else
+            opportunity = ExpaOpportunity.new
+            opportunity.update_from_expa(xp_opportunity)
+            opportunity.save
+            Sync.new.create_opportunity_managers(opportunity)
+          end
+          PodioSync.new.send_icx_opportunity(opportunity)
         rescue => exception
           puts 'ACHAR O BUG'
           puts xp_opportunity.id unless xp_opportunity.id.nil?

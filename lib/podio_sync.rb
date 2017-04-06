@@ -1,5 +1,6 @@
 class PodioSync
   attr_accessor :rd_identifiers
+  @@expires_at = nil
 
   def initialize
     self.rd_identifiers = {
@@ -16,12 +17,20 @@ class PodioSync
         :accepted => 'accepted',
         :approved => 'approved'
     }
+    loggin
+  end
+
+  def loggin
+    if Podio.client.nil? || @@expires_at.nil? || @@expires_at < (Time.now + 600)
+      Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
+      auth = Podio.client.authenticate_with_credentials(ENV['PODIO_2_USERNAME'], ENV['PODIO_2_PASSWORD'])
+      @@expires_at = auth.expires_at
+      puts 'LOGIN'
+    end
   end
 
   def update_ogx_person(person_id, status, date)
-    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
-    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-
+    loggin
     case status
       when 'approved'
         fields = {}
@@ -38,9 +47,7 @@ class PodioSync
 
   #Create a Podio item o Leads ICX or Update it
   def send_icx_application(application,podio_id)
-    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
-    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-
+    login
     fields = {}
     fields['application-created-at'] = {'start' => application.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_created_at.nil?
     fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil?
@@ -60,9 +67,12 @@ class PodioSync
         fields['programme'] = 2
       when 5
         fields['programme'] = 3
+      when 3
+        fields['programme'] = 4
+      when 4
+        fields['programme'] = 5
     end
-    puts "Application"
-    puts fields
+
     attributes = {:fields => fields}
 
     if !application.podio_id.nil? && Podio::Item.find(application.podio_id)
@@ -75,9 +85,7 @@ class PodioSync
   end
 
   def send_icx_opportunity(xp_opportunity)
-    Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
-    Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
-
+    loggin
     fields = {}
     fields['titulo'] = xp_opportunity.xp_title unless xp_opportunity.xp_title.nil?
     fields['link'] = ('https://experience.aiesec.org/#/opportunities/' + xp_opportunity.xp_id.to_s) unless xp_opportunity.nil?
@@ -96,9 +104,11 @@ class PodioSync
         fields['programme'] = 2
       when 5
         fields['programme'] = 3
+      when 3
+        fields['programme'] = 4
+      when 4
+        fields['programme'] = 5
     end
-    puts "Opportunity"
-    puts fields
 
     attributes = {:fields => fields}
 

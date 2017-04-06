@@ -204,7 +204,7 @@ class Sync
       sync.sync_type = 'applied_'+filter
 
       setup_expa_api
-      time = SyncControl.get_last('applied_people').strftime('%F')
+      time = SyncControl.get_last('applied_'+filter).strftime('%F')
       time = Date.today.to_s if time.nil?
 
       params = {'per_page' => 25}
@@ -247,7 +247,7 @@ class Sync
               podio_date = application.xp_date_approved if status == 'approved'
               podio_date = application.xp_date_realized if status == 'realized'
               if for_filter == 'people'
-                PodioSync.new.update_podio_ogx_people(person.podio_id,status,podio_date)
+                PodioSync.new.update_podio_ogx_people(person.podio_id,status,podio_date) if !person.podio_id.nil?
               elsif for_filter == 'opportunities'
                 podio_sync = PodioSync.new
                 opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
