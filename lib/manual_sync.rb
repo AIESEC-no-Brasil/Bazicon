@@ -110,6 +110,7 @@ class ManualSync
           application.update_from_expa(xp_application)
           application.save
 
+          person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
           podio_date = application.xp_date_approved if status == 'approved'
           podio_date = application.xp_date_realized if status == 'realized'
           if for_filter == 'people'

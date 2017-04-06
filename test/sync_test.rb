@@ -181,6 +181,3 @@ class SyncTest < Minitest::Test
     Sync.new.update_status({"status" => "realized", "programs" => "1", "for_filter" => "opportunities" })
   end
 end
-
-
-  
