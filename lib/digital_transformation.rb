@@ -15,11 +15,22 @@ module DigitalTransformation
        'América Latina']
     end
 
+    def sdgs_we_work
+      ['Selecione aqui!',
+       'SDG 1 - Erradicação da Pobreza',
+       'SDG 2 - Fome Zero',
+       'SDG 3 - Boa Saúde e Bem-Estar',
+       'SDG 4 - Educação de Qualidade',
+       'SDG 5 - Igualdade de Gênero',
+       'SDG 10 - Redução de Desigualdades',
+       'SDG 17 - Parcerias em Prol das Metas']
+    end
+
     def sub_product_global_talent
       ['Selecione aqui!',
-       'Educação',
+       'Lecionar idiomas no exterior',
        'Tecnologia da Informação',
-       'Adminstração',
+       'Gestão',
        'Marketing']
     end
 
@@ -182,6 +193,15 @@ module DigitalTransformation
       res_hash = {'nil' => nil}
       hash_entities.keys.each do |entity|
         res_hash[entity] = hash_entities[entity]['ids'][0]
+      end
+      res_hash
+    end
+
+    def hash_expa_podio
+      hash_entities = hash_entities_podio_expa
+      res_hash = {'nil' => nil}
+      hash_entities.keys.each do |entity|
+        res_hash[hash_entities[entity]['ids'][0]] = hash_entities[entity]['ids'][1]
       end
       res_hash
     end
@@ -2859,6 +2879,8 @@ module DigitalTransformation
        'Artes Visuais' => 'Curso0000000181',
        'Automacao Industrial' => 'Curso0000000180',
        'Banco De Dados' => 'Curso0000000179',
+       'Bacharelado em Ciência e Tecnologia' => 'Curso0000000202',
+       'Bacharelado em Ciências e Humanidades' => 'Curso0000000203',
        'Beleza' => 'Curso0000000178',
        'Biblioteconomia' => 'Curso0000000177',
        'Biologia' => 'Curso0000000176',
