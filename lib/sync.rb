@@ -273,7 +273,7 @@ class Sync
   end
 
   def opportunity_in_brazil(application)
-    application.xp_opportunity.xp_home_lc.xp_parent.xp_id == 1606aa
+    application.xp_opportunity.xp_home_lc.xp_parent.xp_id == 1606
   end
 
   def person_in_brazil(application)

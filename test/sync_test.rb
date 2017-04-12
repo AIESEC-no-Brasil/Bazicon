@@ -172,12 +172,26 @@ class SyncTest < Minitest::Test
   def test_send_icx_application
     PodioSync.new.send_icx_application('approved', ExpaApplication.find_by_xp_id(1131006))
   end
-
   def test_send_icx_opportunity
     PodioSync.new.send_icx_opportunity(ExpaOpportunity.find_by_xp_id(722065))
   end
-=end
   def test_update_icx_applications
     Sync.new.update_status({"status" => "realized", "programs" => "1", "for_filter" => "opportunities" })
+  end
+  def test_update_offices
+    EXPA::Offices.list_lcs.each do |lc|
+      office = ExpaOffice.find_by_xp_id(lc.id)
+      office = ExpaOffice.new if office.nil?
+      office.update_from_expa(lc)
+      office.save
+      puts office.xp_name
+    end
+  end
+  def test_opportunity_in_brazil
+    puts Sync.new.opportunity_in_brazil(ExpaApplication.find_by_xp_id(1131006))
+  end
+=end
+  def test_person_in_brazil
+    puts Sync.new.person_in_brazil(ExpaApplication.find_by_xp_id(1131006))
   end
 end
