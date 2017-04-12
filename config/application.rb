@@ -41,6 +41,7 @@ module Myapp
 
     Raven.configure do |config|
       config.dsn = 'https://d2e499a95bdc478aacc84491f365a9f6:88bc3b8e4eff404bb7b6de2a5eac773d@sentry.io/129061'
+      config.environments = %w[production]
     end
   end
 end
