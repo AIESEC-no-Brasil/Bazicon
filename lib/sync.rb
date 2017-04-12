@@ -273,33 +273,11 @@ class Sync
   end
 
   def opportunity_in_brazil(application)
-    setup_expa_api
-
-    opportunity = application.xp_opportunity
-    xp_office_id = opportunity.xp_office_id
-
-    data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
-
-    unless data.nil?
-      data["parent"]["id"] == 1606 ? true : false
-    end
+    application.xp_opportunity.xp_home_lc.xp_parent.xp_id == 1606
   end
 
   def person_in_brazil(application)
-    setup_expa_api
-
-    person_xp_id = application.xp_person.xp_id
-    person = EXPA::People.list_single_person(person_xp_id)
-
-    return false if person["status"]["code"] == 403
-
-    xp_office_id = person["home_lc"]["id"]
-
-    data = EXPA::Offices.list_single_office(xp_office_id) unless xp_office_id.nil?
-
-    unless data.nil?
-      data["parent"]["id"] == 1606 ? true : false
-    end
+    application.xp_person.xp_home_mc.xp_id == 1606
   end
 
   #TODO: Delete after migrate everything to Bazicon/EXPA and do not use Podio anymore
