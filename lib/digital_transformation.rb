@@ -67,7 +67,6 @@ module DigitalTransformation
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogt[i]]['ids']
         when 'GE'
           DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_oge[i]]['ids']
-        else
       end
     end
 

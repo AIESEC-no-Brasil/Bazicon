@@ -307,7 +307,7 @@ class DigitalTransformationController < ApplicationController
 
     podio_id = send_to_podio(name,lastname,phone,email,bithdate,interested_program,sub_product,sdg,university,
       course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
-    puts podio_id
+
     send_data_to_sqs(email, name, lastname, password, lc, interested_program)
 
     person = ExpaPerson.new
@@ -406,7 +406,7 @@ class DigitalTransformationController < ApplicationController
     person.podio_id = podio_id['item_id'].to_i
 
     tags = interested_program
-    tags = "'"+campagin.to_s+"','"+interested_program+"'" unless campagin.nil? || campagin.empty?
+    tags = campagin.to_s+", "+interested_program unless campagin.nil? || campagin.empty?
     person.save(validate: false)
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
@@ -481,6 +481,7 @@ class DigitalTransformationController < ApplicationController
     fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
     fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
     fields['data-de-nascimento'] = { start: (bithdate + ' 00:00:00') } unless bithdate.nil?
+    puts fields
 
     contato = []
     contato << 1 if want_contact_by_email
