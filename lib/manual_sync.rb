@@ -432,4 +432,16 @@ class ManualSync
 
     puts "Listed #{people.length} people finishing #{Time.now}"
   end
+
+  def update_opportunities_without_lc
+    opportunities = ExpaOpportunity.where(xp_home_lc:nil)
+    opportunities.each do |opportunity|
+      xp_opportunity = EXPA::Opportunities.find_by_id(opportunity.xp_id)
+      opportunity.update_from_expa(xp_opportunity)
+      opportunity.save
+      puts 'Saved'
+      puts opportunity.xp_id
+      puts opportunity.xp_home_lc.xp_id
+    end
+  end
 end
