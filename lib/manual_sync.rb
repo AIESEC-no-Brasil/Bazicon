@@ -434,6 +434,7 @@ class ManualSync
   end
 
   def update_opportunities_without_lc
+    setup_expa_api
     opportunities = ExpaOpportunity.where(xp_home_lc:nil)
     opportunities.each do |opportunity|
       xp_opportunity = EXPA::Opportunities.find_by_id(opportunity.xp_id)
