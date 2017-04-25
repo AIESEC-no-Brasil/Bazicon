@@ -20,7 +20,8 @@ class JobsWorker
       else
         notify_and_delete_message(sqs_msg, body) if klass.send body["method"]
       end
-    rescue
+    rescue => exception
+      puts exception.backtrace
       raise NameError, "Not a defined job"
     end
   end
