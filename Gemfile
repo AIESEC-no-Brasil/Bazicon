@@ -54,7 +54,7 @@ gem 'responders', '~> 2.0'
 
 # Gerenciamento AWS SQS
 gem 'aws-sdk', '~> 2'
-gem 'shoryuken'
+gem 'shoryuken', '3.0.3'
 
 group :development do
   gem 'capistrano',         require: false
