@@ -257,6 +257,7 @@ class Sync
               puts 'ACHAR O BUG'
               puts xp_application.id unless xp_application.id.nil?
               puts exception.to_s
+              sleep 3600 unless exception['error_description'].nil?
               puts exception.backtrace
             end
           end

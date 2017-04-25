@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'uri'
+require 'csv'
 
 class SyncTest < Minitest::Test
   def setup
@@ -190,8 +191,36 @@ class SyncTest < Minitest::Test
   def test_opportunity_in_brazil
     puts Sync.new.opportunity_in_brazil(ExpaApplication.find_by_xp_id(1131006))
   end
+  def test_get_skills
+    CSV.open('opportunity_skills.csv', "wb") do |skills|
+    CSV.open('opportunity_backgrounds.csv', "wb") do |bgs|
+    CSV.open('opportunity_issues.csv', "wb") do |issues|
+    CSV.open('opportunity_workk_fields.csv', "wb") do |works|
+        skills << ['Opportunity ID','Skill ID', 'Skill', 'Option']
+        bgs << ['Opportunity ID','Background ID', 'Background', 'Option']
+        issues << ['Opportunity ID','Issue ID', 'Issue']
+        works << ['Opportunity ID','Work Field ID', 'Work Field']
+      ExpaOpportunity.all.each do |opportunity|
+        opportunity.xp_skills.each do |skill|
+          skills << [opportunity.xp_id,skill['id'],skill['name'],skill['option']]
+        end
+        opportunity.xp_backgrounds.each do |bg|
+          bgs << [opportunity.xp_id,bg['id'],bg['name'],bg['option']]
+        end
+        opportunity.xp_issues.each do |issue|
+          issues << [opportunity.xp_id,issue['id'],issue['name']]
+        end
+        opportunity.xp_work_fields.each do |work_field|
+          works << [opportunity.xp_id,work_field['id'],work_field['name']]
+        end
+      end
+    end
+    end
+    end
+    end
+  end
 =end
-  def test_person_in_brazil
-    puts Sync.new.person_in_brazil(ExpaApplication.find_by_xp_id(1131006))
+  def test_opportunites_update
+    ManualSync.new.update_opportunities_without_lc
   end
 end
