@@ -215,7 +215,6 @@ class Sync
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
       puts 'Esses negos tudo: ' + total_items.to_s
-
       if !total_items.nil? && total_items > 0
         total_pages = paging[:total_pages]
 
@@ -228,7 +227,6 @@ class Sync
               data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
               data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
               application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
-
               to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
               unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
@@ -274,11 +272,19 @@ class Sync
   end
 
   def opportunity_in_brazil(application)
-    application.xp_opportunity.xp_home_lc.xp_parent.xp_id == 1606
+    if application.try(:xp_opportunity).try(:xp_home_lc).try(:xp_parent)
+      application.xp_opportunity.xp_home_lc.xp_parent.xp_id == 1606
+    else
+      false
+    end
   end
 
   def person_in_brazil(application)
-    application.xp_person.xp_home_mc.xp_id == 1606
+    if application.try(:xp_person).try(:xp_home_mc)
+      application.xp_person.xp_home_mc.xp_id == 1606
+    else
+      false
+    end
   end
 
   #TODO: Delete after migrate everything to Bazicon/EXPA and do not use Podio anymore
