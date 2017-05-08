@@ -17,7 +17,7 @@ class SendDataToSqs
   def call
     @status = false unless perform_on_worker
 
-    notify_on_slack if @status
+    # notify_on_slack if @status
 
     @status
   end
