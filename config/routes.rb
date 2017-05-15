@@ -1,7 +1,7 @@
 Myapp::Application.routes.draw do
 
   # You can have the root of your site routed with 'root'
-  root 'sessions#index'
+  root 'digital_transformation#expa_sign_up_success2'
 
   get '/admin/force_update' => 'main#force_update', as: 'force_update'
   # All routes
