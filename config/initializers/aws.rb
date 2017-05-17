@@ -13,6 +13,6 @@ sqs = Aws::SQS::Client.new(
 )
 
 # Sign Up Queue
-sqs.create_queue({queue_name: 'default'})
+sqs.create_queue({queue_name: 'sign_up_queue'})
 
-sqs.create_queue({queue_name: 'jobs'})
+sqs.create_queue({queue_name: 'jobs_queue'})

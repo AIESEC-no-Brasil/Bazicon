@@ -2,7 +2,7 @@ class JobsWorker
   include Shoryuken::Worker
   require 'slack-notifier'
 
-  QUEUE_NAME = 'jobs'
+  QUEUE_NAME = 'jobs_queue'
   SLACK_WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL']
 
   shoryuken_options queue: QUEUE_NAME, auto_delete: false, body_parser: JSON
@@ -39,6 +39,6 @@ class JobsWorker
   def notify_and_delete_message(sqs_msg, body)
     sqs_msg.delete
 
-    notify_on_slack("Mensagem excluida", body)
+    # notify_on_slack("Mensagem excluida", body)
   end
 end

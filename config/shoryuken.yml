@@ -1,5 +1,5 @@
 concurrency: 10
 delay: 0
 queues:
-  - [default, 6]
-  - [jobs, 2]
+  - [sign_up_queue, 6]
+  - [jobs_queue, 2]
