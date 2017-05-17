@@ -222,7 +222,7 @@
 
   :javascript
     $(function() {
-
+      var sent = false;
       var settings = {
         labels: {
           finish: "Enviar",
@@ -272,10 +272,14 @@
 
         onFinished: function (event, currentIndex) {
           var form = $(this);
-          fbq('trackCustom', "Send", {value:currentIndex,program:"#{params['programa']}"});
 
+          fbq('trackCustom', "Send", {value:currentIndex,program:"#{params['programa']}"});
           // Submit form input
-          form.submit();
+          if (sent == false) {
+            form.submit();
+          }
+          sent = true;
+          $($("ul[aria-label='Pagination'] li")).addClass('disabled');
         }
       };
 
