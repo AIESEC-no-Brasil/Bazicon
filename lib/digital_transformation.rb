@@ -100,7 +100,7 @@ module DigitalTransformation
        'MACEIO' => {'ids' => [2149,362629308], 'programs' => ['oGCDP']},
        'MANAUS' => {'ids' => [231,306817297], 'programs' => ['oGCDP']},
        #'MARILIA' => {'ids' => [437,362629660], 'programs' => ['oGCDP']},
-       'MARINGA' => {'ids' => [723,306811055], 'programs' => ['oGCDP','oGIP']},
+       'MARINGA' => {'ids' => [723,306811055], 'programs' => ['oGCDP']},
        'NATAL' => {'ids' => [2151,362629783], 'programs' => ['oGCDP']},
        #'PASSO FUNDO' => {'ids' => [958,362630011], 'programs' => ['oGCDP']},
        'PELOTAS' => {'ids' => [148,306820564], 'programs' => ['oGCDP']},
