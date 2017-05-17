@@ -19,4 +19,3 @@
 //= require bootstrap-markdown/bootstrap-markdown.js
 //= require bootstrap-markdown/markdown.js
 //= require chosen.jquery.js
-//= require buttonLoader/jquery.buttonLoader.min.js
