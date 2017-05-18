@@ -275,13 +275,13 @@ class DigitalTransformationController < ApplicationController
 
     case interested_program
       when 'GCDP', 'GV'
-        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogv'
       when 'GIP', 'GT'
         redirect_to 'http://brasil.aiesec.org.br/global-talent-obrigado'
       when 'GE'
         redirect_to 'http://brasil.aiesec.org.br/global-entrepreneur-obrigado'
       else
-        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogv'
     end
   end
 
