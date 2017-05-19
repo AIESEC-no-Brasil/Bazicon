@@ -37,6 +37,14 @@
                   .form-group
                     %label Senha *
                     %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
+                  .col-xs-3
+                    %p Sua senha deve conter ao menos:
+                    %ul
+                      %li 8 caractéres
+                      %li um caractére maiúsculo
+                      %li um caractére minúsculo
+                      %li um digito
+
             %h1
               .fa.fa-graduation-cap
               Estudo
@@ -212,9 +220,9 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    
+
     fbq('init', '531154527045235');
-    fbq('init', '1883258715253820'); 
+    fbq('init', '1883258715253820');
     fbq('trackCustom', "PageInit", {program:"#{params['programa']}"});
   %noscript
     %img{:height => "1", :src => "https://www.facebook.com/tr?id=531154527045235&ev=PageView&noscript=1", :style => "display:none", :width => "1"}/
