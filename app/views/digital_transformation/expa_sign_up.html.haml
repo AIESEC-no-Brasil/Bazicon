@@ -37,13 +37,6 @@
                   .form-group
                     %label Senha *
                     %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
-                  .col-xs-3
-                    %p Sua senha deve conter ao menos:
-                    %ul
-                      %li 8 caractéres
-                      %li um caractére maiúsculo
-                      %li um caractére minúsculo
-                      %li um digito
 
             %h1
               .fa.fa-graduation-cap
@@ -227,8 +220,14 @@
   %noscript
     %img{:height => "1", :src => "https://www.facebook.com/tr?id=531154527045235&ev=PageView&noscript=1", :style => "display:none", :width => "1"}/
   / End Facebook Pixel Code
-
   :javascript
+    $().ready(function() {
+      console.log('it works?');
+      $.validator.addMethod("password",function(value,element){
+                return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/i.test(value);
+            },"Senhas devem conter no mínimo 8 caractéres, letras maiúsculas, minúsculas e números");
+
+    });
     $(function() {
       var sent = false;
       var settings = {
@@ -261,7 +260,11 @@
           }
 
           // Disable validation on fields that are disabled or hidden.
-          form.validate().settings.ignore = ":disabled,:hidden";
+          form.validate({
+            rules: {
+              password: "required password"
+            },
+          }).settings.ignore = ":disabled,:hidden";
 
           // Start validation; Prevent going forward if false
           return form.valid();
@@ -272,7 +275,11 @@
 
           // Disable validation on fields that are disabled.
           // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-          form.validate().settings.ignore = ":disabled";
+          form.validate({
+            rules: {
+              password: "required password"
+            },
+          }).settings.ignore = ":disabled";
 
           // Start validation; Prevent form submission if false
           return form.valid();
@@ -291,7 +298,11 @@
         }
       };
 
-      $("#form").steps(settings).validate({});
+      $("#form").steps(settings).validate({
+            rules: {
+              password: "required password"
+            },
+          });
 
       $("select#study-level-form").change(function() {
         select_text = $(this).find('option:selected').val()
