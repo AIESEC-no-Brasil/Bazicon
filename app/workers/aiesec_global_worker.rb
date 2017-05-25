@@ -8,7 +8,7 @@ class AiesecGlobalWorker
   shoryuken_options queue: QUEUE_NAME, auto_delete: false, body_parser: JSON
 
   def perform(sqs_msg, body)
-    notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
+    # notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
 
     Shoryuken.logger.info("Received message: '#{body}'")
 

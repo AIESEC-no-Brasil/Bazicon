@@ -10,7 +10,7 @@ class JobsWorker
   def perform(sqs_msg, body)
     Shoryuken.logger.info("Received message: '#{body}'")
 
-    notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
+    # notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
 
     begin
       klass = body["klass"].constantize.new
