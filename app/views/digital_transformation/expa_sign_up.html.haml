@@ -224,7 +224,7 @@
     $().ready(function() {
       console.log('it works?');
       $.validator.addMethod("password",function(value,element){
-                return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/i.test(value);
+                return this.optional(element) || /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(value);
             },"Senhas devem conter no mínimo 8 caractéres, letras maiúsculas, minúsculas e números");
 
     });
