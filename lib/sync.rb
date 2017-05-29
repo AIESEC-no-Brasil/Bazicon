@@ -174,7 +174,7 @@ class Sync
             puts "Opportunity Manager created: #{expa_opportunity_manager}"
           end
         else
-          opportunity_manager = ExpaOpportunityManager.find_by(expa_opportunity_id: opportunity.id, expa_manager_id: ExpaManager.id_by_xp_id(manager['id']))
+          opportunity_manager = ExpaManager.find_by(xp_id: manager['id'])
           old_email = opportunity_manager.email
           new_email = manager['email']
           opportunity_manager.update(email: manager['email'])
