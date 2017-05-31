@@ -340,3 +340,20 @@
             radioClass: 'iradio_square-green',
         });
     });
+
+  :javascript
+    $().ready(function() {
+      $('#password').keypress(function (e) {
+        console.log('does it work?');
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+          return true;
+        }
+
+        alert("Sua senha deve conter apenas caractéres alfanuméricos");
+
+        e.preventDefault();
+        return false;
+      });
+    });
