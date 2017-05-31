@@ -53,14 +53,15 @@ class PodioSync
     fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil? || ExpaApplication.xp_statuses[application.xp_status] > 5
     fields['titulo'] = application.xp_person.xp_full_name unless application.xp_person.nil?
     fields['ep-email'] = [{'type' => 'home', 'value' => application.xp_person.xp_email}] unless application.xp_person.nil?
-    fields['ep-office'] = application.xp_person.xp_home_lc.xp_full_name
+    fields['ep-office'] = application.xp_person.xp_home_lc.xp_full_name unless application.xp_person.xp_home_lc.nil?
+    fields['ep-mc'] = DigitalTransformation.hash_mcs_podio_expa[application.xp_person.xp_home_lc.xp_parent.xp_id][:podio] unless application.xp_person.xp_home_lc.xp_parent.nil?
     fields['opportunity-lc'] = DigitalTransformation.hash_expa_podio[application.xp_opportunity.xp_home_lc.xp_id] unless application.xp_opportunity.xp_home_lc.xp_id.nil?
     fields['application-date-accepted'] = {'start' => application.xp_date_matched.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_matched.nil?
     fields['application-date-approved'] = {'start' => application.xp_date_approved.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_approved.nil?
     fields['application-date-realized'] = {'start' => application.xp_date_realized.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_realized.nil?
     fields['application-date-completed'] = {'start' => application.xp_date_completed.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_completed.nil?
     fields['opportunity'] = podio_id unless podio_id.nil?
-    puts fields
+
     case application.xp_opportunity.xp_programmes["id"]
       when 1
         fields['programme'] = 1
@@ -73,6 +74,7 @@ class PodioSync
       when 4
         fields['programme'] = 5
     end
+    #puts fields
 
     attributes = {:fields => fields}
 

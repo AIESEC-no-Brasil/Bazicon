@@ -219,8 +219,11 @@ class SyncTest < Minitest::Test
     end
     end
   end
-=end
   def test_opportunites_update
     ManualSync.new.update_opportunities_without_lc
+  end
+=end
+  def test_opportunites_update
+    PodioSync.new.send_icx_application(ExpaApplication.find_by_xp_id(3065454), 594310097)
   end
 end
