@@ -129,7 +129,7 @@ class DigitalTransformationController < ApplicationController
     lastname = params['lastname']
     phone = params['phone']
     email = params['email']
-    bithdate = params['dob'].to_date.strftime("%Y-%m-%d %H:%M:%S")
+    bithdate = params['dob'].to_date.strftime("%Y-%m-%d %H:%M:%S") unless params['dob'].nil?
     password = params['password']
     interested_program = params['programa']
     sdg = params['sdg']
