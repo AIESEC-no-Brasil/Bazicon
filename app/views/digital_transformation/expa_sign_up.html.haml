@@ -33,7 +33,7 @@
                     %input#userName.form-control.required.email{:name => "email", :type => "text"}
                   .form-group
                     %label Data de Nascimento *
-                    %input#dob.form-control.required{:name => "dob", :type => "date"}
+                    %input#dob.form-control.required{:name => "dob"}
                   .form-group
                     %label Senha *
                     %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
@@ -356,4 +356,9 @@
         e.preventDefault();
         return false;
       });
+    });
+
+  :javascript
+    jQuery(function($){
+      $("#dob").mask("99/99/9999",{placeholder:"dd/mm/yyyy"});
     });
