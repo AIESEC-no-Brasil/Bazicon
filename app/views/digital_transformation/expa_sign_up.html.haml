@@ -33,7 +33,7 @@
                     %input#userName.form-control.required.email{:name => "email", :type => "text"}
                   .form-group
                     %label Data de Nascimento *
-                    %input#dob.form-control.required{:name => "dob", :type => "date"}
+                    %input#dob.form-control.required{:name => "dob"}
                   .form-group
                     %label Senha *
                     %input#password.form-control.required{:name => "password", :type => "password", :minlength => "8"}
@@ -222,11 +222,13 @@
   / End Facebook Pixel Code
   :javascript
     $().ready(function() {
-      console.log('it works?');
       $.validator.addMethod("password",function(value,element){
                 return this.optional(element) || /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(value);
             },"Senhas devem conter no mínimo 8 caractéres, letras maiúsculas, minúsculas e números");
 
+      $.validator.addMethod("email",function(value,element){
+                return this.optional(element) || /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/.test(value);
+            },"Por favor insira um endereço de email válido");
     });
     $(function() {
       var sent = false;
@@ -262,7 +264,8 @@
           // Disable validation on fields that are disabled or hidden.
           form.validate({
             rules: {
-              password: "required password"
+              password: "required password",
+              email: "required email"
             },
           }).settings.ignore = ":disabled,:hidden";
 
@@ -277,7 +280,8 @@
           // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
           form.validate({
             rules: {
-              password: "required password"
+              password: "required password",
+              email: "required email"
             },
           }).settings.ignore = ":disabled";
 
@@ -300,7 +304,8 @@
 
       $("#form").steps(settings).validate({
             rules: {
-              password: "required password"
+              password: "required password",
+              email: "required email"
             },
           });
 
@@ -356,4 +361,9 @@
         e.preventDefault();
         return false;
       });
+    });
+
+  :javascript
+    jQuery(function($){
+      $("#dob").mask("99/99/9999",{placeholder:"dd/mm/yyyy"});
     });

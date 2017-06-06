@@ -122,14 +122,14 @@ class DigitalTransformationController < ApplicationController
     end
     render layout: "empty"
   end
-  
+
   # POST /expa/sign_up
   def expa_sign_up_success2
     name = params['name']
     lastname = params['lastname']
     phone = params['phone']
     email = params['email']
-    bithdate = params['dob']
+    bithdate = params['dob'].to_date.strftime("%Y-%m-%d %H:%M:%S")
     password = params['password']
     interested_program = params['programa']
     sdg = params['sdg']
@@ -342,7 +342,7 @@ class DigitalTransformationController < ApplicationController
     fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
     fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
     fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
-    fields['data-de-nascimento'] = { start: (bithdate + ' 00:00:00') } unless bithdate.nil?
+    fields['data-de-nascimento'] = { start: (bithdate) } unless bithdate.nil?
     puts fields
 
     contato = []
