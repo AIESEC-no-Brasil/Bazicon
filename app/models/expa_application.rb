@@ -56,7 +56,7 @@ class ExpaApplication < ActiveRecord::Base
       opportunity.save
     end
     unless data.person.nil?
-      person = ExpaPerson.find_by_xp_id(data.person.id)
+      person = ExpaPerson.find_by_xp_email(data.person.email)
       person = ExpaPerson.new if person.nil?
       person.update_from_expa(data.person)
       person.save
