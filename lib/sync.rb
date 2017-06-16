@@ -255,14 +255,14 @@ class Sync
               application.update_from_expa(data)
               application.save
 
-              person = ExpaPerson.find_by_xp_id(application.xp_person.xp_id)
-              send_to_rd(application.xp_person, application, status, nil) if !person.nil? && to_rd
+              send_to_rd(application.xp_person, application, status, nil) if to_rd
               podio_date = application.xp_date_approved if status == 'approved'
               podio_date = application.xp_date_realized if status == 'realized'
+              podio_sync = PodioSync.new
               if for_filter == 'people'
-                PodioSync.new.update_ogx_person(person.podio_id,status,podio_date) unless person.nil? || person.podio_id.nil?
+                podio_sync.update_ogx_person(application.xp_person.podio_id,status,podio_date) unless application.xp_person.nil? || application.xp_person.podio_id.nil?
+                podio_sync.send_ogx_application(application, application.xp_person.podio_id) unless application.xp_person.nil? 
               elsif for_filter == 'opportunities'
-                podio_sync = PodioSync.new
                 opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
                 podio_sync.send_icx_application(application,opportunity_podio_id)
               end

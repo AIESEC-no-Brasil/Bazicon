@@ -45,6 +45,51 @@ class PodioSync
     end
   end
 
+  #Create a Podio item on Leads OGX with the applications achieved
+  def send_ogx_application(application, podio_id)
+    loggin
+    fields = {}
+    fields['application-created-at'] = {'start' => application.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_created_at.nil?
+    fields['person'] = application.xp_person.podio_id unless application.xp_person.podio_id.nil?
+    fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil? || ExpaApplication.xp_statuses[application.xp_status] > 5
+    fields['ep-link'] = ('https://experience.aiesec.org/#/people/' + application.xp_person.xp_id.to_s) unless application.xp_person.xp_id.nil? 
+    fields['ep-lc'] = DigitalTransformation.hash_expa_podio[application.xp_person.xp_home_lc.xp_id] unless application.xp_person.xp_home_lc.xp_id.nil?
+    fields['opportunity-title'] = application.xp_opportunity.xp_title unless application.xp_opportunity.xp_title.nil?
+    fields['opportunity-earliest-start-date'] = {'start' => application.xp_opportunity.xp_earliest_start_date.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_opportunity.xp_earliest_start_date.nil? 
+    fields['opportunity-latest-end-date'] = {'start' => application.xp_opportunity.xp_latest_end_date.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_opportunity.xp_latest_end_date.nil?
+    fields['opportunity-application-close-date'] = {'start' => application.xp_opportunity.xp_applications_close_date.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_opportunity.xp_applications_close_date.nil?
+    fields['opportunity-lc-2'] = application.xp_opportunity.xp_home_lc.xp_full_name unless application.xp_opportunity.xp_home_lc.xp_full_name.nil? 
+    fields['opportunity-mc'] = DigitalTransformation.hash_mcs_podio_expa[application.xp_opportunity.xp_home_lc.xp_parent.xp_id][:podio] unless application.xp_opportunity.xp_home_lc.xp_parent.nil?
+    fields['application-date-accepted'] = {'start' => application.xp_date_matched.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_matched.nil?
+    fields['application-date-approved'] = {'start' => application.xp_date_approved.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_approved.nil?
+    fields['application-date-realized'] = {'start' => application.xp_date_realized.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_realized.nil?
+    fields['application-date-completed'] = {'start' => application.xp_date_completed.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_completed.nil?
+  
+    case application.xp_opportunity.xp_programmes["id"]
+      when 1
+        fields['programme'] = 1
+      when 2
+        fields['programme'] = 2
+      when 5
+        fields['programme'] = 3
+      when 3
+        fields['programme'] = 4
+      when 4
+        fields['programme'] = 5
+    end
+    #puts fields
+
+    attributes = {:fields => fields}
+
+    if !application.podio_id.nil? && Podio::Item.find(application.podio_id)
+      Podio::Item.update( application.podio_id, attributes )
+    else
+      podio_id = Podio::Item.create(18739593, attributes)
+      application.podio_id = podio_id['item_id'].to_i
+      application.save
+    end
+  end
+
   #Create a Podio item o Leads ICX or Update it
   def send_icx_application(application,podio_id)
     loggin
