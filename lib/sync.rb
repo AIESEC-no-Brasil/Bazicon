@@ -1,4 +1,8 @@
 class Sync
+  require 'slack-notifier'
+
+  SLACK_WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL']
+
   attr_accessor :rd_identifiers
   attr_accessor :rd_tags
 
@@ -204,6 +208,11 @@ class Sync
     end
 
     SyncControl.new do |sync|
+      status_updates = 0
+      mails_success = 0
+      mails_failures = 0
+      exceptions_count = 0
+
       sync.start_sync = DateTime.now
       sync.sync_type = 'applied_'+filter
 
@@ -234,12 +243,14 @@ class Sync
               to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
               unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+                status_updates += 1
                 application.update_from_expa(data)
                 application.save
+
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
-                SendOpportunityManagerMail.call(application, data.status.to_s.downcase.gsub(' ', '_')) if opportunity_in_brazil(application)
-                SendEpManagerMail.call(application, data.status.to_s.downcase.gsub(' ', '_')) if person_in_brazil(application)
+
+                send_emails(application, data.status.to_s.downcase.gsub(' ', '_')) ? mails_success += 1 : mails_failures += 1
               end
               application.update_from_expa(data)
               application.save
@@ -256,6 +267,7 @@ class Sync
                 podio_sync.send_icx_application(application,opportunity_podio_id)
               end
             rescue => exception
+              exceptions_count += 1
               puts 'ACHAR O BUG'
               puts xp_application.id unless xp_application.id.nil?
               puts exception.to_s
@@ -270,9 +282,26 @@ class Sync
       sync.count_itens = total_items
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
+
+      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count)
     end
 
     job_status
+  end
+
+  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count)
+    notifier = Slack::Notifier.new "#{SLACK_WEBHOOK_URL}", channel: "#update-status",
+                                                           username: "Notifier"
+
+    notifier.ping(text: "Report status #{status}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
+                        "&gt;Atualizações de status: #{status_updates}\n"\
+                        "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}",
+                         icon_emoji: ':email:')
+  end
+
+  def send_emails(application, status)
+    SendOpportunityManagerMail.call(application, status) if opportunity_in_brazil(application)
+    SendEpManagerMail.call(application, status) if person_in_brazil(application)
   end
 
   def opportunity_in_brazil(application)
