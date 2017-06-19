@@ -261,7 +261,7 @@ class Sync
               podio_sync = PodioSync.new
               if for_filter == 'people'
                 podio_sync.update_ogx_person(application.xp_person.podio_id,status,podio_date) unless application.xp_person.nil? || application.xp_person.podio_id.nil?
-                podio_sync.send_ogx_application(application, application.xp_person.podio_id) unless application.xp_person.nil? 
+                podio_sync.send_ogx_application(application, application.xp_person.podio_id) unless application.xp_person.nil?
               elsif for_filter == 'opportunities'
                 opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
                 podio_sync.send_icx_application(application,opportunity_podio_id)
@@ -283,24 +283,34 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count)
+      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first)
     end
 
     job_status
   end
 
-  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count)
+  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program)
+    programs = { 1 => 'GV', 2 => 'GT', 5 => 'GE' }
     notifier = Slack::Notifier.new "#{SLACK_WEBHOOK_URL}", channel: "#update-status",
                                                            username: "Notifier"
 
-    notifier.ping(text: "Report status #{status}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
+    program_name = programs[program]
+
+    notifier.ping(text: "Report status #{status} #{program_name}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
                         "&gt;Atualizações de status: #{status_updates}\n"\
                         "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}",
                          icon_emoji: ':email:')
   end
 
   def send_emails(application, status)
+    opportunity_manager_mail(application, status) || ep_manager_mail(application, status)
+  end
+
+  def opportunity_manager_mail(application, status)
     SendOpportunityManagerMail.call(application, status) if opportunity_in_brazil(application)
+  end
+
+  def ep_manager_mail(application, status)
     SendEpManagerMail.call(application, status) if person_in_brazil(application)
   end
 
