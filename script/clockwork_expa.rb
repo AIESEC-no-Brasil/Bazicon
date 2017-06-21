@@ -63,7 +63,7 @@ handler do |job|
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "realized", "programs" => "1", "for_filter" => "opportunities" } })
   elsif job.eql?('list new completed applications and update GV opportunities')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "completed", "programs" => "1", "for_filter" => "opportunities" } })
-  
+
   elsif job.eql?('list new open applications and update GT opportunities')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "open", "programs" => "2", "for_filter" => "opportunities" } })
   elsif job.eql?('list new accepted applications and update GT opportunities')
@@ -76,7 +76,7 @@ handler do |job|
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "realized", "programs" => "2", "for_filter" => "opportunities" } })
   elsif job.eql?('list new completed applications and update GT opportunities')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "completed", "programs" => "2", "for_filter" => "opportunities" } })
-  
+
   elsif job.eql?('list new open applications and update GE opportunities')
     SendJobDataToSqs.call({ "klass" => "Sync", "method" => "update_status", "params" => { "status" => "open", "programs" => "5", "for_filter" => "opportunities" } })
   elsif job.eql?('list new accepted applications and update GE opportunities')
@@ -144,4 +144,4 @@ every(3.hours, 'list new approved applications and update GE opportunities')
 every(8.hours, 'list new realized applications and update GE opportunities')
 every(8.hours, 'list new completed applications and update GE opportunities')
 
-#every(1.day, 'list all applications and update people', :at => '16:48')
+# every(1.day, 'list all applications and update people', :at => '16:48')

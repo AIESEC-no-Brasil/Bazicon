@@ -18,9 +18,13 @@ class SendOpportunityManagerMail
     person = @application.xp_person
     subject = {}
 
+    status = true
+
     if @status.to_sym.in?(STATUSES)
-      send_emails(opportunity, managers, person)
+      status = false unless send_emails(opportunity, managers, person)
     end
+
+    status
   end
 
   private
