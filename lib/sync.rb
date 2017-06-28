@@ -283,20 +283,20 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first)
+      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first, for_filter)
     end
 
     job_status
   end
 
-  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program)
+  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program, for_filter)
     programs = { 1 => 'GV', 2 => 'GT', 5 => 'GE' }
     notifier = Slack::Notifier.new "#{SLACK_WEBHOOK_URL}", channel: "#update-status",
                                                            username: "Notifier"
 
     program_name = programs[program]
 
-    notifier.ping(text: "Report status #{status} #{program_name}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
+    notifier.ping(text: "Report status #{status} #{program_name} #{for_filter}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
                         "&gt;Atualizações de status: #{status_updates}\n"\
                         "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}",
                          icon_emoji: ':email:')
