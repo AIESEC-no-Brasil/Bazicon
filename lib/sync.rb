@@ -211,6 +211,7 @@ class Sync
       status_updates = 0
       mails_success = 0
       mails_failures = 0
+      failed_application_ids = []
       exceptions_count = 0
 
       sync.start_sync = DateTime.now
@@ -250,7 +251,12 @@ class Sync
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
 
-                send_emails(application, data.status.to_s.downcase.gsub(' ', '_')) ? mails_success += 1 : mails_failures += 1
+                if send_emails(application, data.status.to_s.downcase.gsub(' ', '_'))
+                  mails_success += 1
+                else
+                  mails_failures += 1
+                  failed_application_ids << application.xp_id
+                end
               end
               application.update_from_expa(data)
               application.save
@@ -283,13 +289,13 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first, for_filter)
+      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
     job_status
   end
 
-  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program, for_filter)
+  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program, for_filter, failed_application_ids)
     programs = { 1 => 'GV', 2 => 'GT', 5 => 'GE' }
     notifier = Slack::Notifier.new "#{SLACK_WEBHOOK_URL}", channel: "#update-status",
                                                            username: "Notifier"
@@ -298,7 +304,8 @@ class Sync
 
     notifier.ping(text: "Report status #{status} #{program_name} #{for_filter}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
                         "&gt;Atualizações de status: #{status_updates}\n"\
-                        "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}",
+                        "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}\n"\
+                        "&gt;Aplicações com falha: #{failed_application_ids}",
                          icon_emoji: ':email:')
   end
 
