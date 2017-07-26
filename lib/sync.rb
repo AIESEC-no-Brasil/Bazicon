@@ -217,7 +217,11 @@ class Sync
       sync.start_sync = DateTime.now
       sync.sync_type = 'applied_'+filter
 
-      setup_expa_api
+      # setup_expa_api
+
+      EXPA.client = EXPA::Client.new
+      EXPA.client.auth(ENV['ROBOZINHO_EMAIL'], ENV['ROBOZINHO_PASSWORD'])
+
       time = SyncControl.get_last('applied_'+filter).strftime('%F')
       time = Date.today.to_s if time.nil?
 
