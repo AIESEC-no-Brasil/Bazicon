@@ -24,7 +24,7 @@ class PodioWorker
     send_data_to_podio(application, status, for_filter)
   end
 
-  def send_data_to_podio
+  def send_data_to_podio(application, status, for_filter)
     podio_date = application.xp_date_approved if status == 'approved'
     podio_date = application.xp_date_realized if status == 'realized'
     podio_sync = PodioSync.new
