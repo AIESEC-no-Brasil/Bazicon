@@ -17,11 +17,11 @@ class PodioWorker
   private
 
   def perform_on_worker(message)
-    application = ExpaApplication.find_by(message[])
-    send_data_to_podio(message)
-  end
+    application = ExpaApplication.find_by(xp_id: message['xp_id'])
+    status = message['status']
+    for_filter = message['for_filter']
 
-  def send_emails
+    send_data_to_podio(application, status, for_filter)
   end
 
   def send_data_to_podio

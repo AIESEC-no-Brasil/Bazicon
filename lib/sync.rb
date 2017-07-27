@@ -250,6 +250,8 @@ class Sync
 
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
+
+                send_emails(application, application.xp_status)
               end
 
               application.update_from_expa(data)
