@@ -416,7 +416,37 @@ class Sync
   def setup_expa_api
     if EXPA.client.nil?
       xp = EXPA.setup()
-      xp.auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+      auth(ENV['ROBOZINHO_EMAIL'],ENV['ROBOZINHO_PASSWORD'])
+    end
+  end
+
+  def auth(email, password)
+    url = 'https://experience.aiesec.org/auth'
+    agent = Mechanize.new {|a| a.ssl_version, a.verify_mode = 'TLSv1',OpenSSL::SSL::VERIFY_NONE}
+    page = agent.get(url)
+    aiesec_form = page.form()
+    aiesec_form.field_with(:name => 'user[email]').value = email
+    aiesec_form.field_with(:name => 'user[password]').value = password
+
+    begin
+      page = agent.submit(aiesec_form, aiesec_form.buttons.first)
+    rescue => exception
+      puts exception.to_s
+      false
+    else
+      if page.code.to_i == 200
+        cj = page.mech.agent.cookie_jar.store
+        index = cj.count
+        for i in 0...index
+          index = i if cj.to_a[i].domain == 'experience.aiesec.org'
+        end
+        if index != cj.count
+          EXPA.client.instance_variable_set(:@token, cj.to_a[index].value)
+          EXPA.client.instance_variable_set(:@expiration_time, cj.to_a[index].created_at)
+          EXPA.client.instance_variable_set(:@max_age, cj.to_a[index].max_age)
+          true
+        end
+      end
     end
   end
 
