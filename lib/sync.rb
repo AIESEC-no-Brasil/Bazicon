@@ -252,30 +252,21 @@ class Sync
                 create_opportunity_managers(application.xp_opportunity)
                 create_ep_managers(application.xp_person)
 
-                if send_emails(application, data.status.to_s.downcase.gsub(' ', '_'))
-                  mails_success += 1
-                else
-                  mails_failures += 1
-                  failed_application_ids << application.xp_id
-                end
+                send_emails(application, application.xp_status)
               end
+
               application.update_from_expa(data)
               application.save
 
               send_to_rd(application.xp_person, application, status, nil) if to_rd
-              podio_date = application.xp_date_approved if status == 'approved'
-              podio_date = application.xp_date_realized if status == 'realized'
-              podio_sync = PodioSync.new
-              if for_filter == 'people'
-                podio_sync.update_ogx_person(application.xp_person.podio_id,status,podio_date) unless application.xp_person.nil? || application.xp_person.podio_id.nil?
-                podio_sync.send_ogx_application(application, application.xp_person.podio_id) unless application.xp_person.nil?
-              elsif for_filter == 'opportunities'
-                opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
-                podio_sync.send_icx_application(application,opportunity_podio_id)
-              end
+
+              params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
+              SendPodioDataToSqs.call(params)
+
             rescue => exception
               exceptions_count += 1
               puts 'ACHAR O BUG'
+              failed_application_ids << xp_application.id
               puts xp_application.id unless xp_application.id.nil?
               puts exception.to_s
               sleep 3600 unless exception['error_description'].nil?
@@ -290,13 +281,13 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
+      send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
     job_status
   end
 
-  def send_slack_notification(total_items, mails_success, mails_failures, status_updates, status, exceptions_count, program, for_filter, failed_application_ids)
+  def send_slack_notification(total_items, status_updates, status, exceptions_count, program, for_filter, failed_application_ids)
     programs = { 1 => 'GV', 2 => 'GT', 5 => 'GE' }
     notifier = Slack::Notifier.new "#{SLACK_WEBHOOK_URL}", channel: "#update-status",
                                                            username: "Notifier"
@@ -305,7 +296,7 @@ class Sync
 
     notifier.ping(text: "Report status #{status} #{program_name} #{for_filter}:\n\n&gt; Itens sincronizados: #{total_items}\n"\
                         "&gt;Atualizações de status: #{status_updates}\n"\
-                        "&gt;Emails: #{mails_success} sucessos e #{mails_failures} falhas\n&gt;Exceções: #{exceptions_count}\n"\
+                        "&gt;Exceções: #{exceptions_count}\n"\
                         "&gt;Aplicações com falha: #{failed_application_ids}",
                          icon_emoji: ':email:')
   end
