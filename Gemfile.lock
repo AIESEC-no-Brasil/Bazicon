@@ -1,8 +1,8 @@
 GIT
   remote: http://github.com/AIESEC-no-Brasil/expa-rb
-  revision: 3ecc18653c8b7cbc9ac0fa4c4391ead4719041d4
+  revision: 17be76f5601d7ab0f8c08657a78e209a9e5227ad
   specs:
-    expa (0.1.2.8)
+    expa (0.1.2.10)
 
 GEM
   remote: https://rubygems.org/
@@ -440,7 +440,7 @@ DEPENDENCIES
   clockwork
   coffee-rails
   dropbox-sdk
-  expa!
+  expa (= 0.1.2.10)!
   factory_girl_rails
   faraday (>= 0.9)
   font-awesome-rails

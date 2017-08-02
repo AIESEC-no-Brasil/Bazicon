@@ -5,7 +5,7 @@ gem 'json'
 gem 'guard-rspec', require: false
 gem 'whenever', :require => false
 gem 'clockwork', :require => false
-gem 'expa', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
+gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'mechanize'
 gem 'haml'
 gem 'rails'
