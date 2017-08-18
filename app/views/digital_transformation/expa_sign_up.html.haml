@@ -200,10 +200,14 @@
                             %i
                             Whatsapp
 
+                    = check_box_tag 'checkboxG2', '', false, class: "css-checkbox"
+                    = label_tag 'checkboxG2', 'Option 1', class: "css-label"
+
                     %input#accepTerms.required{name: 'acceptTerms', type: 'checkbox', 'aria-required' => true}
                     %label{for: 'acceptTerms'}
                       Eu concordo com os
                       %a{href: 'https://opportunities.aiesec.org/assets/terms.pdf', target: '_blank'} termos e condições.
+
 
 - content_for :javascript do
   / Facebook Pixel Code
@@ -213,12 +217,10 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
-    fbq('init', '531154527045235');
-    fbq('init', '1883258715253820');
-    fbq('trackCustom', "PageInit", {program:"#{params['programa']}"});
+    fbq('init', '503547479982951'); // Insert your pixel ID here.
+    fbq('track', 'PageView');
   %noscript
-    %img{:height => "1", :src => "https://www.facebook.com/tr?id=531154527045235&ev=PageView&noscript=1", :style => "display:none", :width => "1"}/
+    %img{:height => "1", :src => "https://www.facebook.com/tr?id=503547479982951&ev=PageView&noscript=1", :style => "display:none", :width => "1"}/
   / End Facebook Pixel Code
   :javascript
     $().ready(function() {
