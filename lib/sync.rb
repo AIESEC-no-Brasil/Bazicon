@@ -219,8 +219,8 @@ class Sync
 
       setup_expa_api
 
-      time = SyncControl.get_last('applied_'+filter).strftime('%F')
-      time = Date.today.to_s if time.nil?
+      # time = SyncControl.get_last('applied_'+filter).strftime('%F')
+      time = Date.today.to_s # if time.nil?
 
       params = {'per_page' => 25}
       params['filters['+filter+'][from]'] = time
@@ -239,30 +239,31 @@ class Sync
           applications.each do |xp_application|
             begin
               data = EXPA::Applications.find_by_id(xp_application.id)
-              data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
-              data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
-              application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
-              to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
+              unless data.status["code"] == 401
+                data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
+                data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
+                application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
+                to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
-              unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
-                status_updates += 1
+                unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+                  status_updates += 1
+                  application.update_from_expa(data)
+                  application.save
+
+                  create_opportunity_managers(application.xp_opportunity)
+                  create_ep_managers(application.xp_person)
+
+                  send_emails(application, application.xp_status)
+                end
+
                 application.update_from_expa(data)
                 application.save
 
-                create_opportunity_managers(application.xp_opportunity)
-                create_ep_managers(application.xp_person)
+                send_to_rd(application.xp_person, application, status, nil) if to_rd
 
-                send_emails(application, application.xp_status)
+                params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
+                SendPodioDataToSqs.call(params)
               end
-
-              application.update_from_expa(data)
-              application.save
-
-              send_to_rd(application.xp_person, application, status, nil) if to_rd
-
-              params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
-              SendPodioDataToSqs.call(params)
-
             rescue => exception
               exceptions_count += 1
               puts 'ACHAR O BUG'
