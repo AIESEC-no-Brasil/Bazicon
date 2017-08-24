@@ -2,5 +2,5 @@ concurrency: 10
 delay: 0
 queues:
   - [sign_up_queue, 6]
-  # - [jobs_queue, 2]
+  - [jobs_queue, 2]
   # - [podio_queue, 2]
