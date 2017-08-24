@@ -43,4 +43,11 @@
   white-space: nowrap;
 }
 
-
+/* HiDPI overwrite */
+@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi), (min-resolution: 1.25dppx) {
+  .icheckbox_square-green {
+    background-image: image-url("green.png") no-repeat;
+    -webkit-background-size: 240px 24px;
+    background-size: 240px 24px;
+  }
+}
