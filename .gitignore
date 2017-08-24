@@ -7,3 +7,5 @@ log/
 .vagrant/
 config/database.yml
 .byebug_history
+*.swp
+*.swo
