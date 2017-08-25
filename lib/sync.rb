@@ -239,6 +239,7 @@ class Sync
           applications.each do |xp_application|
             begin
               data = EXPA::Applications.find_by_id(xp_application.id)
+              puts "Sync: #{xp_application.id}\nData: #{data}"
               unless data.status["code"] == 401
                 data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
                 data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
