@@ -48,13 +48,11 @@ class Sync
           person = ExpaPerson.find_by_xp_email(xp_person.email) if person.nil?
           person.update_from_expa(xp_person)
           job_status = false unless person.save
-          create_ep_managers(person)
         else
           person = ExpaPerson.new
           person.update_from_expa(xp_person)
           job_status = false unless person.save
           job_status = false unless send_to_rd(person, nil, self.rd_identifiers[:open], nil)
-          create_ep_managers(person)
         end
       end
 
@@ -69,10 +67,8 @@ class Sync
     job_status
   end
 
-  def create_ep_managers(person)
+  def create_ep_managers(person, data)
     setup_expa_api
-
-    data = EXPA::People.list_single_person(person.xp_id)
 
     managers = []
 
@@ -125,12 +121,10 @@ class Sync
           opportunity = ExpaOpportunity.find_by_xp_id(xp_opportunity.id)
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
-          create_opportunity_managers(opportunity)
         else
           opportunity = ExpaOpportunity.new
           opportunity.update_from_expa(xp_opportunity)
           opportunity.save
-          create_opportunity_managers(opportunity)
         end
         PodioSync.new.send_icx_opportunity(xp_opportunity)
       end
@@ -144,10 +138,8 @@ class Sync
     puts "Listed #{opportunities.length} opportunities finishing #{Time.now}"
   end
 
-  def create_opportunity_managers(opportunity)
+  def create_opportunity_managers(opportunity, data)
     setup_expa_api
-
-    data = EXPA::Opportunities.list_single_opportunity(opportunity.xp_id)
 
     managers = []
 
@@ -239,6 +231,7 @@ class Sync
           applications.each do |xp_application|
             begin
               data = EXPA::Applications.find_by_id(xp_application.id)
+              puts "Sync: #{xp_application.id}\nData: #{data}"
               unless data.status["code"] == 401
                 data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
                 data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
@@ -250,8 +243,8 @@ class Sync
                   application.update_from_expa(data)
                   application.save
 
-                  create_opportunity_managers(application.xp_opportunity)
-                  create_ep_managers(application.xp_person)
+                  create_opportunity_managers(application.xp_opportunity, data.opportunity)
+                  create_ep_managers(application.xp_person, data.person)
 
                   send_emails(application, application.xp_status)
                 end
@@ -263,6 +256,8 @@ class Sync
 
                 params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
                 SendPodioDataToSqs.call(params)
+
+                sleep 60
               end
             rescue => exception
               exceptions_count += 1
