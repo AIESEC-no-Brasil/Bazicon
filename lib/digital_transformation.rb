@@ -97,7 +97,10 @@ module DigitalTransformation
        'MACEIO' => {'ids' => [2149,362629308], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'MANAUS' => {'ids' => [231,306817297], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'MARINGA' => {'ids' => [723,306811055], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
+       'MONTES CLAROS' => {'ids' => [287,306813291], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'NATAL' => {'ids' => [2151,362629783], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
+       'OURO PRETO' => {'ids' => [1248,306810804], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'PALMAS' => {'ids' => [1300,306812018], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'PELOTAS' => {'ids' => [148,306820564], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'PORTO ALEGRE' => {'ids' => [854,306810913], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'RECIFE' => {'ids' => [541,306810735], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
@@ -122,8 +125,8 @@ module DigitalTransformation
        'VALE DO PARAIBA' => {'ids' => [1368,306817098], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'VALE DO SAO FRANCISCO - JUAZEIRO' => {'ids' => [1649,362630905], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'VALE DO SAO FRANCISCO - PETROLINA' => {'ids' => [1649,362630905], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
-       'VIÇOSA' => {'ids' => [2148,362631010], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'VITORIA' => {'ids' => [909,306810868], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'VIÇOSA' => {'ids' => [2148,362631010], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'VOLTA REDONDA' => {'ids' => [289,335438552], 'programs' => ['oGIP','oGCDP','oGE','oGT']}}
     end
 
