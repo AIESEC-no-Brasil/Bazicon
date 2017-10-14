@@ -42,12 +42,6 @@ gem 'podio'
 gem 'oauth2'
 gem 'faraday', '>= 0.9'
 
-
-# AngularJS
-gem 'angularjs-rails'
-gem 'angular-rails-templates'
-gem 'ngannotate-rails'
-
 # Bower to control dependencies of the Frontend
 gem 'bower-rails'
 gem 'responders', '~> 2.0'

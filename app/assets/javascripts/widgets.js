@@ -1,4 +1,3 @@
-//= require iCheck/icheck.min.js
 //= require flot/jquery.flot.js
 //= require flot/jquery.flot.tooltip.min.js
 //= require flot/jquery.flot.resize.js

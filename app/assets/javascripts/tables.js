@@ -1,4 +1,3 @@
-//= require iCheck/icheck.min.js
 //= require jeditable/jquery.jeditable.js
 //= require dataTables/datatables.min.js
 //= require jqGrid/i18n/grid.locale-el.js
