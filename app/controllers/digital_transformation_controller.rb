@@ -1,6 +1,18 @@
 class DigitalTransformationController < ApplicationController
   after_filter :cors_set_access_control_headers
 
+  expose :study_level, -> { DigitalTransformation.study_level }
+  expose :universities, -> { DigitalTransformation.universities }
+  expose :courses, -> { DigitalTransformation.courses }
+  expose :sdgs_we_work, -> { DigitalTransformation.sdgs_we_work }
+  expose :sub_product_global_talent, -> { DigitalTransformation.sub_product_global_talent }
+  expose :sub_product_global_entrepreneur, -> { DigitalTransformation.sub_product_global_entrepreneur }
+  expose :entities_ogcdp, -> { DigitalTransformation.entities_ogcdp }
+  expose :entities_ogt, -> { DigitalTransformation.entities_ogt }
+  expose :entities_oge, -> { DigitalTransformation.entities_oge }
+  expose :travel_interest, -> { DigitalTransformation.travel_interest }
+  expose :language_level, -> { DigitalTransformation.language_level }
+
   # GET /dt/difficulties
   def difficulties
     render layout: "empty"

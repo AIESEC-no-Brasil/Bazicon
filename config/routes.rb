@@ -1,7 +1,5 @@
 Myapp::Application.routes.draw do
-
-  # You can have the root of your site routed with 'root'
-  root 'digital_transformation#expa_sign_up_success2', programa: 'GV'
+  root 'digital_transformation#expa_sign_up', programa: 'GV'
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',          as: 'digital_transformation_difficulties'
