@@ -1,37 +1,38 @@
 source 'https://rubygems.org'
 
-gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
-gem 'json'
-gem 'guard-rspec', require: false
-gem 'whenever', :require => false
-gem 'clockwork', :require => false
-gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
-gem 'mechanize'
-gem 'haml'
-gem 'rails'
-gem 'rack-cache'
-gem 'groupdate'
+gem 'bcrypt'
 gem 'better_errors'
 gem 'bootstrap-sass'
-gem 'font-awesome-rails'
-gem 'log4r'
-gem 'pg'
-gem 'rails_12factor', group: :production
-gem 'sass-rails'
-gem 'uglifier'
+gem 'clockwork', :require => false
 gem 'coffee-rails'
-gem 'turbolinks'
-gem 'jbuilder'
+gem 'decent_exposure'
 gem 'dropbox-sdk'
+gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
+gem 'font-awesome-rails'
 gem 'google_drive', '>= 2.0'
-gem 'bcrypt'
-gem 'thin'
-gem 'will_paginate', '~> 3.1.0'
-gem 'slack-notifier'
-gem "sentry-raven"
+gem 'groupdate'
+gem 'guard-rspec', require: false
+gem 'haml'
+gem 'jbuilder'
+gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
+gem 'json'
+gem 'log4r'
 gem 'mailgun-ruby', '~>1.1.2'
-gem 'simplecov', :require => false, :group => :test
+gem 'mechanize'
+gem 'pg'
+gem 'rack-cache'
+gem 'rails'
+gem 'rails_12factor', group: :production
 gem 'rubocop', require: false
+gem 'sass-rails'
+gem 'sentry-raven'
+gem 'simplecov', :require => false, :group => :test
+gem 'slack-notifier'
+gem 'thin'
+gem 'turbolinks'
+gem 'uglifier'
+gem 'whenever', :require => false
+gem 'will_paginate', '~> 3.1.0'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', group: :doc

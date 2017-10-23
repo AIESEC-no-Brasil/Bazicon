@@ -48,33 +48,15 @@
                     #study-level
                       %label Escolaridade *
                       %select.form-control.m-b.required#study-level-form{name: 'study-level'}
-                        - for i in 0...DigitalTransformation.study_level.size
-                          - if i == 0
-                            %option{value: ""}
-                              = DigitalTransformation.study_level[i]
-                          -else
-                            %option{value: "#{i}"}
-                              = DigitalTransformation.study_level[i]
+                        = options_for(study_level)
                     #university{hidden: true}
                       %label Universidade *
                       %select.form-control.m-b#university-form{name: 'university'}
-                        - for i in 0...DigitalTransformation.universities.size
-                          - if i == 0
-                            %option{value: ''}
-                              = DigitalTransformation.universities[i]
-                          - else
-                            %option{value: "#{i}"}
-                              = DigitalTransformation.universities[i]
+                        = options_for(universities)
                     #course{hidden: true}
                       %label Curso *
                       %select.form-control.m-b#course-form{name: 'course'}
-                        - for i in 0...DigitalTransformation.courses.size
-                          - if i == 0
-                            %option{value: ''}
-                              = DigitalTransformation.courses[i]
-                          - else
-                            %option{value: "#{i}"}
-                              = DigitalTransformation.courses[i]
+                        = options_for(courses)
                     %center
                       .fa.big-icon.fa-graduation-cap{style: 'color: gray'}
             %h1
@@ -88,93 +70,36 @@
                       - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
                         %label Quero trabalhar por *
                         %select.form-control.m-b.required{name: 'sdg'}
-                          - for i in 0...DigitalTransformation.sdgs_we_work.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.sdgs_we_work[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.sdgs_we_work[i]
+                          = options_for(sdgs_we_work)
                       - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
                         %label Quero trabalhar com *
                         %select.form-control.m-b.required{name: 'sub-product'}
-                          - for i in 0...DigitalTransformation.sub_product_global_talent.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.sub_product_global_talent[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.sub_product_global_talent[i]
+                          = options_for(sub_product_global_talent)
                       - elsif params['programa'] == 'GE'
                         %label Quero trabalhar com *
                         %select.form-control.m-b.required{name: 'sub-product'}
-                          - for i in 0...DigitalTransformation.sub_product_global_entrepreneur.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.sub_product_global_entrepreneur[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.sub_product_global_entrepreneur[i]
+                          = options_for(sub_product_global_entrepreneur)
                       %label AIESEC mais próxima *
                       %select.form-control.m-b.required{name: 'nearest_lc'}
                         - if params['programa'] == 'GCDP' || params['programa'] == 'GV'
-                          - for i in 0...DigitalTransformation.entities_ogcdp.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.entities_ogcdp[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.entities_ogcdp[i]
+                          = options_for(entities_ogcdp)
                         - elsif params['programa'] == 'GIP' || params['programa'] == 'GT'
-                          - for i in 0...DigitalTransformation.entities_ogt.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.entities_ogt[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.entities_ogt[i]
+                          = options_for(entities_ogt)
                         - elsif params['programa'] == 'GE'
-                          - for i in 0...DigitalTransformation.entities_oge.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.entities_oge[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.entities_oge[i]
+                          = options_for(entities_oge)
                     #travel_interest
                       %label Quando você tem interesse em viajar? *
                       %select.form-control.m-b.required{name: 'travel_interest'}
-                        - for i in 0...DigitalTransformation.travel_interest.size
-                          - if i == 0
-                            %option{value: ''}
-                              = DigitalTransformation.travel_interest[i]
-                          - else
-                            %option{value: "#{i}"}
-                              = DigitalTransformation.travel_interest[i]
-                              .form-group
+                        = options_for(travel_interest)
                     - if params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE'
                       #english_level
                         %label Nível de Inglês *
                         %select.form-control.m-b.required{name: 'english_level'}
-                          - for i in 0...DigitalTransformation.language_level.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.language_level[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.language_level[i]
-                                .form-group
+                          = options_for(language_level)
                       #spanish_level
                         %label Nível de Espanhol *
                         %select.form-control.m-b.required{name: 'spanish_level'}
-                          - for i in 0...DigitalTransformation.language_level.size
-                            - if i == 0
-                              %option{value: ''}
-                                = DigitalTransformation.language_level[i]
-                            - else
-                              %option{value: "#{i}"}
-                                = DigitalTransformation.language_level[i]
-                                .form-group
+                          = options_for(language_level)
                     #contact_interest
                       .form-group
                         %label  Preferêcia de contato
