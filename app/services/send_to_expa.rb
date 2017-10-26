@@ -52,6 +52,6 @@ class SendToExpa
   end
 
   def check_page_for_errors(page)
-    page.search('#error_explanation').text.include?('error')
+    page.search('span.red_icon')
   end
 end
