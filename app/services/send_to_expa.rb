@@ -19,7 +19,7 @@ class SendToExpa
   private
 
   def send_data_to_expa(params)
-    url = 'https://opportunities.aiesec.org/auth'
+    url = 'https://auth.aiesec.org/users/sign_in'
 
     agent = Mechanize.new {|a| a.ssl_version, a.verify_mode = 'TLSv1',OpenSSL::SSL::VERIFY_NONE}
     page = agent.get(url)
@@ -52,6 +52,6 @@ class SendToExpa
   end
 
   def check_page_for_errors(page)
-    page.search('#error_explanation').text.include?('error')
+    page.search('span.red_icon')
   end
 end
