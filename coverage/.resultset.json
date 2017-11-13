@@ -1,23 +1,16 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/ruth/workspace/devmagic/Bazicon/spec/models/payment_spec.rb": [
+      "/home/ruth/workspace/devmagic/Bazicon/spec/requests/payment_spec.rb": [
         1,
         null,
         1,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
+        1,
+        1,
+        1,
         null,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
+        1,
+        null,
         null,
         null
       ],
@@ -207,6 +200,7 @@
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/config/initializers/assets.rb": [
+        1,
         1,
         1,
         1,
@@ -648,7 +642,12 @@
       "/home/ruth/workspace/devmagic/Bazicon/spec/factories/payments.rb": [
         1,
         1,
-        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         null,
         null
       ],
@@ -674,6 +673,7 @@
         1,
         1,
         null,
+        1,
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/app/models/user.rb": [
@@ -717,17 +717,41 @@
         null,
         null
       ],
-      "/home/ruth/workspace/devmagic/Bazicon/app/models/payment.rb": [
+      "/home/ruth/workspace/devmagic/Bazicon/app/helpers/payments_helper.rb": [
+        1,
+        null
+      ],
+      "/home/ruth/workspace/devmagic/Bazicon/app/controllers/payments_controller.rb": [
         1,
         1,
+        null,
+        null
+      ],
+      "/home/ruth/workspace/devmagic/Bazicon/app/controllers/application_controller.rb": [
         1,
+        null,
+        null,
         1,
-        1,
-        1,
-        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         null
       ]
     },
-    "timestamp": 1510579282
+    "timestamp": 1510582588
   }
 }
