@@ -20,6 +20,10 @@
   %body
     / Wrapper
     #wrapper{"class" => "#{params[:controller]}.#{params[:action]}"}
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+
 
       / Navigation
       = render 'layouts/navigation'

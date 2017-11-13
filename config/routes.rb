@@ -1,4 +1,5 @@
 Myapp::Application.routes.draw do
+  devise_for :users
   root 'digital_transformation#expa_sign_up', programa: 'GV'
 
   # Digital Transformation
