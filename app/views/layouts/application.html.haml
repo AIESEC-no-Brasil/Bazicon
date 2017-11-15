@@ -25,19 +25,19 @@
 
 
       / Navigation
-      = render 'layouts/navigation'
+      / = render 'layouts/navigation'
 
       / Page wrapper
       #page-wrapper.gray-bg{"class" => "#{@extra_class}"}
 
         / Page wrapper
-        = render 'layouts/topnavbar'
+        / = render 'layouts/topnavbar'
 
         / Main view
         = yield
 
         / Footer
-        = render 'layouts/footer'
+        / = render 'layouts/footer'
 
     / Include javascript per-controller - vendor plugins
     = javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")

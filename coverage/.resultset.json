@@ -1,16 +1,10 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/ruth/workspace/devmagic/Bazicon/spec/requests/payment_spec.rb": [
+      "/home/ruth/workspace/devmagic/Bazicon/spec/controllers/payments_controller_spec.rb": [
         1,
         null,
         1,
-        1,
-        1,
-        1,
-        null,
-        1,
-        null,
         null,
         null
       ],
@@ -22,6 +16,10 @@
         1,
         1,
         1,
+        1,
+        null,
+        2,
+        null,
         null,
         null,
         null,
@@ -71,6 +69,8 @@
         1,
         null,
         null,
+        null,
+        1,
         null,
         null,
         1,
@@ -200,6 +200,7 @@
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/config/initializers/assets.rb": [
+        1,
         1,
         1,
         1,
@@ -654,7 +655,9 @@
       "/home/ruth/workspace/devmagic/Bazicon/spec/factories/users.rb": [
         1,
         1,
-        null,
+        1,
+        1,
+        1,
         null,
         null
       ],
@@ -721,9 +724,55 @@
         1,
         null
       ],
+      "/home/ruth/workspace/devmagic/Bazicon/spec/support/request_spec_helper.rb": [
+        1,
+        null,
+        1,
+        null,
+        1,
+        0,
+        0,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        1,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null
+      ],
       "/home/ruth/workspace/devmagic/Bazicon/app/controllers/payments_controller.rb": [
         1,
         1,
+        null,
+        1,
+        0,
+        null,
+        null,
+        1,
+        0,
+        null,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        0,
+        null,
         null,
         null
       ],
@@ -752,6 +801,6 @@
         null
       ]
     },
-    "timestamp": 1510582588
+    "timestamp": 1510591418
   }
 }
