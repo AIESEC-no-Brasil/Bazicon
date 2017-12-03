@@ -1,6 +1,8 @@
 Myapp::Application.routes.draw do
   root 'digital_transformation#expa_sign_up', programa: 'GV'
 
+  resources :test, only: [:index]
+
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',          as: 'digital_transformation_difficulties'
   get '/dt/prevents'              => 'digital_transformation#prevents',              as: 'digital_transformation_prevents'

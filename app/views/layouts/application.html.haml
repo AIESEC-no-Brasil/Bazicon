@@ -22,13 +22,13 @@
     #wrapper{"class" => "#{params[:controller]}.#{params[:action]}"}
 
       / Navigation
-      = render 'layouts/navigation'
+
 
       / Page wrapper
       #page-wrapper.gray-bg{"class" => "#{@extra_class}"}
 
         / Page wrapper
-        = render 'layouts/topnavbar'
+
 
         / Main view
         = yield

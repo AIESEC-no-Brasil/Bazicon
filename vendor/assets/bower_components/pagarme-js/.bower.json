@@ -1,0 +1,14 @@
+{
+  "name": "pagarme-js",
+  "homepage": "https://github.com/pagarme/pagarme-js",
+  "version": "3.1.3",
+  "_release": "3.1.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.1.3",
+    "commit": "6aed600cc5cdb2cbd09185e9723a161837ec7e0a"
+  },
+  "_source": "https://github.com/pagarme/pagarme-js.git",
+  "_target": "*",
+  "_originalSource": "pagarme-js"
+}
