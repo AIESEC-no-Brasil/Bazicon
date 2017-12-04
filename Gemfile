@@ -6,6 +6,7 @@ gem 'bootstrap-sass'
 gem 'clockwork', :require => false
 gem 'coffee-rails'
 gem 'decent_exposure'
+gem 'devise'
 gem 'dropbox-sdk'
 gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'font-awesome-rails'
@@ -65,10 +66,10 @@ end
 gem 'puma'
 
 group :test do
-  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development, :test do
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'

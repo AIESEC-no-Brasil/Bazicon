@@ -1,0 +1,28 @@
+= form_for payment do |f|
+  .form-group
+    = f.label :local_committee
+    = f.hidden_field :local_committee, value: user.local_committee
+    = f.hidden_field :status, value: "pending"
+    %div= user.local_committee.humanize
+  .form-group
+    = f.label :customer_name, class: "required"
+    = f.text_field :customer_name, class: "form-control required"
+  .form-group
+    = f.label :application_id, class: "required"
+    = f.text_field :application_id, class: "form-control required"
+  .form-group
+    = f.label :program, class: "required"
+    = f.select :program,
+      Payment.programs.keys.map { |p| [p.humanize, p] },
+      {}, { class: "form-control m-b required" }
+  .form-group
+    = f.label :opportunity_name, class: "required"
+    = f.text_field :opportunity_name, class: "form-control required"
+  .form-group
+    = f.label :tag, class: "required"
+    = f.text_field :tag, class: "form-control required"
+  .form-group
+    = f.label :value, class: "required"
+    = f.text_field :value, class: "form-control required"
+  .form-group
+    = f.submit "Enviar"
