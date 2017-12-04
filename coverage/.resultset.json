@@ -1,17 +1,53 @@
 {
   "RSpec": {
     "coverage": {
-<<<<<<< HEAD
-      "/home/ruth/workspace/devmagic/Bazicon/spec/controllers/test_controller_spec.rb": [
-        1,
-        null,
-        0,
-=======
       "/home/ruth/workspace/devmagic/Bazicon/spec/controllers/payments_controller_spec.rb": [
         1,
         null,
         1,
->>>>>>> guidohcosta/31-pagarme-form
+        7,
+        4,
+        null,
+        1,
+        6,
+        6,
+        null,
+        null,
+        1,
+        4,
+        null,
+        2,
+        2,
+        2,
+        null,
+        null,
+        1,
+        1,
+        2,
+        null,
+        null,
+        3,
+        null,
+        1,
+        2,
+        3,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
         null,
         null
       ],
@@ -23,13 +59,10 @@
         1,
         1,
         1,
-<<<<<<< HEAD
-=======
         1,
         null,
-        2,
+        3,
         null,
->>>>>>> guidohcosta/31-pagarme-form
         null,
         null,
         null,
@@ -52,6 +85,8 @@
         1,
         null,
         1,
+        1,
+        1,
         null,
         1,
         null,
@@ -80,14 +115,6 @@
         null,
         null,
         null,
-<<<<<<< HEAD
-        null,
-        1,
-        0,
-        0,
-        null,
-        0,
-=======
         1,
         null,
         null,
@@ -96,7 +123,6 @@
         1,
         null,
         1,
->>>>>>> guidohcosta/31-pagarme-form
         null,
         null
       ],
@@ -141,16 +167,13 @@
         1,
         1,
         null,
-        41,
+        42,
         1,
         null,
         null,
         1,
-<<<<<<< HEAD
         null,
         1,
-=======
->>>>>>> guidohcosta/31-pagarme-form
         1,
         null,
         1,
@@ -230,11 +253,8 @@
         1,
         1,
         1,
-<<<<<<< HEAD
-=======
         1,
         1,
->>>>>>> guidohcosta/31-pagarme-form
         1
       ],
       "/home/ruth/workspace/devmagic/Bazicon/config/initializers/aws.rb": [
@@ -295,8 +315,6 @@
         null,
         1
       ],
-<<<<<<< HEAD
-=======
       "/home/ruth/workspace/devmagic/Bazicon/config/initializers/devise.rb": [
         null,
         null,
@@ -576,7 +594,6 @@
         null,
         null
       ],
->>>>>>> guidohcosta/31-pagarme-form
       "/home/ruth/workspace/devmagic/Bazicon/config/initializers/filter_parameter_logging.rb": [
         null,
         null,
@@ -670,13 +687,8 @@
         null,
         null
       ],
-<<<<<<< HEAD
-      "/home/ruth/workspace/devmagic/Bazicon/config/routes.rb": [
-        1,
-        1,
-        null,
-=======
       "/home/ruth/workspace/devmagic/Bazicon/spec/factories/payments.rb": [
+        1,
         1,
         1,
         1,
@@ -694,13 +706,14 @@
         1,
         1,
         1,
+        1,
         null,
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/config/routes.rb": [
         1,
         1,
->>>>>>> guidohcosta/31-pagarme-form
+        null,
         1,
         null,
         null,
@@ -713,8 +726,6 @@
         1,
         1,
         null,
-<<<<<<< HEAD
-=======
         1,
         null
       ],
@@ -724,12 +735,21 @@
         null,
         1,
         null,
+        null,
+        1,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/app/models/application_record.rb": [
         1,
         1,
->>>>>>> guidohcosta/31-pagarme-form
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/app/helpers/application_helper.rb": [
@@ -760,16 +780,27 @@
         null,
         null
       ],
-<<<<<<< HEAD
-      "/home/ruth/workspace/devmagic/Bazicon/app/helpers/test_helper.rb": [
-        1,
-        null
-      ]
-    },
-    "timestamp": 1512317024
-=======
       "/home/ruth/workspace/devmagic/Bazicon/app/helpers/payments_helper.rb": [
         1,
+        null
+      ],
+      "/home/ruth/workspace/devmagic/Bazicon/spec/support/matchers/expose.rb": [
+        1,
+        2,
+        2,
+        null,
+        null,
+        2,
+        1,
+        null,
+        null,
+        2,
+        0,
+        null,
+        null,
+        2,
+        0,
+        null,
         null
       ],
       "/home/ruth/workspace/devmagic/Bazicon/spec/support/request_spec_helper.rb": [
@@ -802,24 +833,34 @@
         1,
         1,
         null,
+        4,
+        4,
         1,
-        0,
-        null,
-        null,
-        1,
-        0,
-        null,
-        0,
-        0,
-        null,
-        0,
-        null,
-        null,
-        null,
         1,
         null,
         1,
+        3,
+        null,
+        null,
+        1,
+        2,
+        2,
+        null,
         0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        null,
+        2,
         null,
         null,
         null
@@ -847,9 +888,32 @@
         null,
         null,
         null
+      ],
+      "/home/ruth/workspace/devmagic/Bazicon/app/models/payment.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null
       ]
     },
-    "timestamp": 1510591418
->>>>>>> guidohcosta/31-pagarme-form
+    "timestamp": 1512352195
   }
 }

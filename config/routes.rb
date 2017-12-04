@@ -1,8 +1,7 @@
 Myapp::Application.routes.draw do
   devise_for :users
-  root 'digital_transformation#expa_sign_up', programa: 'GV'
 
-  resources :test, only: [:index]
+  root 'digital_transformation#expa_sign_up', programa: 'GV'
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',          as: 'digital_transformation_difficulties'
