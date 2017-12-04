@@ -32,7 +32,6 @@ class CaptureTransaction
 
   def capture(transaction)
     # capture transaction
-    # TODO insert metadata here
     transaction.capture(amount: payment.value, metadata: {
       program: payment.program.humanize,
       lc: payment.local_committee,
