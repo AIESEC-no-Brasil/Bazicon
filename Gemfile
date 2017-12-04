@@ -19,6 +19,7 @@ gem 'json'
 gem 'log4r'
 gem 'mailgun-ruby', '~>1.1.2'
 gem 'mechanize'
+gem 'pagarme'
 gem 'pg'
 gem 'rack-cache'
 gem 'rails'
@@ -63,11 +64,8 @@ end
 
 gem 'puma'
 
-group :test do
-  gem 'shoulda-matchers', '~> 3.1'
-end
-
 group :development, :test do
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
