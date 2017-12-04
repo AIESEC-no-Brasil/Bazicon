@@ -15,4 +15,10 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to validate_presence_of(:opportunity_name) }
   it { is_expected.to validate_presence_of(:value) }
 
+  it { is_expected.to define_enum_for(:program)
+        .with [ :gv, :ge, :gt ] }
+  it { is_expected.to define_enum_for(:status)
+        .with [ :pending, :paid ] }
+  it { is_expected.to define_enum_for(:local_committee)
+        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :uberlandia ] }
 end

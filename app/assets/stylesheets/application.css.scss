@@ -71,3 +71,7 @@
 .green-checkbox.checked.disabled {
   background-position: -96px 0;
 }
+
+label.required:after {
+  content: " *";
+}
