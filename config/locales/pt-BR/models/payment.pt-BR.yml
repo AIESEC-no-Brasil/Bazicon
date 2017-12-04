@@ -1,0 +1,20 @@
+pt-BR:
+  activerecord:
+    models:
+      payment: Pagamento
+    attributes:
+      payment:
+        application_id: ID da aplicação no EXPA
+        customer_name: Nome do cliente
+        local_committee: Comitê local
+        opportunity_name: Nome da oportunidade
+        program: Programa
+        tag: Tag
+        value: Valor
+        status:
+          one: Status
+          pending: Pendente
+          paid: Pago
+      payment/status:
+        pending: Pendente
+        paid: Pago

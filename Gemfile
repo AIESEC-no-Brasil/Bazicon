@@ -6,6 +6,7 @@ gem 'bootstrap-sass'
 gem 'clockwork', :require => false
 gem 'coffee-rails'
 gem 'decent_exposure'
+gem 'devise'
 gem 'dropbox-sdk'
 gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'font-awesome-rails'
