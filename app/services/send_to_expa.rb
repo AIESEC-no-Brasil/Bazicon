@@ -19,7 +19,7 @@ class SendToExpa
   private
 
   def send_data_to_expa(params)
-    url = 'https://opportunities.aiesec.org/auth'
+    url = 'https://auth.aiesec.org/users/sign_in'
 
     agent = Mechanize.new {|a| a.ssl_version, a.verify_mode = 'TLSv1',OpenSSL::SSL::VERIFY_NONE}
     page = agent.get(url)
@@ -35,9 +35,12 @@ class SendToExpa
       when 'GCDP', 'GV'
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
         auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[params["lc"].to_i]
-      when 'GIP', 'GT', 'GE'
-        auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogip[params["lc"].to_i]]['ids'][0]
-        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogip[params["lc"].to_i]
+      when 'GIP', 'GT'
+        auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogt[params["lc"].to_i]]['ids'][0]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogt[params["lc"].to_i]
+      when 'GE'
+        auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_oge[params["lc"].to_i]]['ids'][0]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_oge[params["lc"].to_i]
       else
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
         auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[params["lc"].to_i]
@@ -49,6 +52,6 @@ class SendToExpa
   end
 
   def check_page_for_errors(page)
-    page.search('#error_explanation').text.include?('error')
+    page.search('span.red_icon')
   end
 end

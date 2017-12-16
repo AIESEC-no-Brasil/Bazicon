@@ -55,7 +55,7 @@ pt-BR:
 
           Opportunity Managers:"
       realized:
-        title: "[EP Manager] An Application started the Realization"
+        title: "[EP Manager] The Application started the Realization"
         text: |
           Olá %{manager_name},
 

@@ -1,6 +1,18 @@
 class DigitalTransformationController < ApplicationController
   after_filter :cors_set_access_control_headers
 
+  expose :study_level, -> { DigitalTransformation.study_level }
+  expose :universities, -> { DigitalTransformation.universities }
+  expose :courses, -> { DigitalTransformation.courses }
+  expose :sdgs_we_work, -> { DigitalTransformation.sdgs_we_work }
+  expose :sub_product_global_talent, -> { DigitalTransformation.sub_product_global_talent }
+  expose :sub_product_global_entrepreneur, -> { DigitalTransformation.sub_product_global_entrepreneur }
+  expose :entities_ogcdp, -> { DigitalTransformation.entities_ogcdp }
+  expose :entities_ogt, -> { DigitalTransformation.entities_ogt }
+  expose :entities_oge, -> { DigitalTransformation.entities_oge }
+  expose :travel_interest, -> { DigitalTransformation.travel_interest }
+  expose :language_level, -> { DigitalTransformation.language_level }
+
   # GET /dt/difficulties
   def difficulties
     render layout: "empty"
@@ -124,155 +136,17 @@ class DigitalTransformationController < ApplicationController
   end
 
   # POST /expa/sign_up
-  def expa_sign_up_success
-    name = params['name']
-    lastname = params['lastname']
-    phone = params['phone']
-    email = params['email']
-    password = params['password']
-    interested_program = params['programa']
-    sub_product = params['sub-product']
-    how_got_to_know_aiesec = params['how-got-to-know-aiesec']
-    university = params['university']
-    course = params['course']
-    study_level = params['study-level']
-    lc = params['nearest_lc']
-    travel_interest = params['travel_interest']
-    want_contact_by_email = params['want_contact_by_email']
-    want_contact_by_phone = params['want_contact_by_phone']
-    want_contact_by_whatsapp = params['want_contact_by_whatsapp']
-
-    if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
-      flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (interested_program == 'GCDP' && sub_product == '') ||
-        (interested_program == 'GIP' && sub_product == '')
-      flash['text-danger'] = "Você deve selecionar um sub-produto"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif how_got_to_know_aiesec == ''
-      flash['text-danger'] = "Nos conte como conheceu a AIESEC"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (study_level == '4' ||
-          study_level == '5' ||
-          study_level == '6') &&
-          (university == '' || course == '')
-      flash['text-danger'] = "Campos 'Universidade' e 'Curso' são obrigatórios caso você tenha algum tipo de ensino superior"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif lc == ''
-      flash['text-danger'] = "É necessário escolher o comitê mais perto de você para cadastrar uma nova conta"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif password.length < 8
-      flash['text-danger'] = "Senha precisa ter no mínimo 8 caracteres"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    end
-
-    send_to_expa(email,name,lastname,password,lc)
-
-    person = ExpaPerson.new
-    person.xp_email = email.downcase
-    person.xp_full_name = name
-
-    office = ExpaOffice.find_by_xp_name(DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i])
-    if office.nil?
-      office = ExpaOffice.new
-
-      DigitalTransformation.hash_entities_podio_expa.each do |entity|
-        if entity[0] == DigitalTransformation.hash_entities_podio_expa.keys[lc.to_i]
-          office.xp_id = entity[1]['ids'][0]
-          office.xp_full_name = entity[0]
-          office.xp_name = entity[0]
-          office.save
-          break
-        end
-      end
-    end
-
-    #Entidade mais próxima != Entidade EXPA
-    person.entity_exchange_lc = office
-
-    #Programa de interesse e sub-produto
-    case interested_program
-      when 'GCDP', 'GV'
-        person.interested_program = :global_volunteer
-        case sub_product.to_i
-          when 1 then person.interested_sub_product = 'global_volunteer_arab'
-          when 2 then person.interested_sub_product = 'global_volunteer_east_europe'
-          when 3 then person.interested_sub_product = 'global_volunteer_africa'
-          when 4 then person.interested_sub_product = 'global_volunteer_asia'
-          when 5 then person.interested_sub_product = 'global_volunteer_latam'
-        end
-      when 'GIP', 'GT'
-        person.interested_program = :global_talents
-        case sub_product.to_i
-          when 1 then person.interested_sub_product = 'global_talents_start_up'
-          when 2 then person.interested_sub_product = 'global_talents_educacional'
-          when 3 then person.interested_sub_product = 'global_talents_IT'
-          when 4 then person.interested_sub_product = 'global_talents_management'
-        end
-    end
-
-    #TODO Tirar control_podio quando BAZICON lançar para OGX
-    json = if person.control_podio.nil?
-             person.control_podio = {}
-           else
-             JSON.parse(person.control_podio)
-           end
-
-    json['escolaridade'] = DigitalTransformation.study_level[study_level.to_i]
-
-    case study_level.to_i
-      when 4,5,6
-        json['universidade'] = {item_id: DigitalTransformation.hash_universities_podio.values[university.to_i],
-                                value: DigitalTransformation.hash_universities_podio.keys[university.to_i]}
-        json['curso'] = {item_id: DigitalTransformation.hash_courses_podio.values[course.to_i],
-                         value: DigitalTransformation.hash_courses_podio.keys[course.to_i]}
-    end
-
-    json['podio_status'] = 'lead_decidido'
-    person.control_podio = json.to_json.to_s
-
-    # escolaridade, universidade e curso
-    json = if person.customized_fields.nil?
-             person.customized_fields = {}
-           else
-             JSON.parse(person.customized_fields)
-           end
-
-    json['telefone'] = phone
-
-    json['escolaridade'] = study_level
-
-    case study_level
-      when '4', '5', '6'
-        json['universidade'] = university
-        json['curso'] = course
-    end
-    person.customized_fields = json.to_json.to_s
-
-    #como conheceu a AIESEC
-    person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
-    person.travel_interest = travel_interest.to_i
-    person.want_contact_by_email = (want_contact_by_email == 'on') ? true : false
-    person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
-    person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
-
-    person.save(validate: false)
-    xp_sync = Sync.new
-    xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], nil)
-
-    redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
-  end
-
-  # POST /expa/sign_up
   def expa_sign_up_success2
     name = params['name']
     lastname = params['lastname']
     phone = params['phone']
     email = params['email']
+    bithdate = params['dob'].to_date.strftime("%Y-%m-%d %H:%M:%S") unless params['dob'].nil?
     password = params['password']
     interested_program = params['programa']
+    sdg = params['sdg']
     sub_product = params['sub-product']
-    how_got_to_know_aiesec = params['how-got-to-know-aiesec']
+    #how_got_to_know_aiesec = params['how-got-to-know-aiesec']
     university = params['university']
     course = params['course']
     study_level = params['study-level']
@@ -288,12 +162,8 @@ class DigitalTransformationController < ApplicationController
     if ExpaPerson.find_by_xp_aiesec_email(email) || ExpaPerson.find_by_xp_email(email)
       flash['text-danger'] = "Já existe uma conta com o e-mail #{email}. Tente logar clicando <a href='https://auth.aiesec.org/users/sign_in'>aqui</a>"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif (interested_program == 'GCDP' && sub_product == '') ||
-        (interested_program == 'GIP' && sub_product == '')
-      flash['text-danger'] = "Você deve selecionar um sub-produto"
-      return redirect_to expa_sign_up_url + '?programa=' + interested_program
-    elsif how_got_to_know_aiesec == ''
-      flash['text-danger'] = "Nos conte como conheceu a AIESEC"
+    elsif sdg == ''
+      flash['text-danger'] = "Nos conte qual SDG você gostaria de defender"
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     elsif (study_level == '4' ||
           study_level == '5' ||
@@ -309,7 +179,7 @@ class DigitalTransformationController < ApplicationController
       return redirect_to expa_sign_up_url + '?programa=' + interested_program
     end
 
-    send_to_podio(name,lastname,phone,email,interested_program,sub_product,how_got_to_know_aiesec,university,
+    podio_id = send_to_podio(name,lastname,phone,email,bithdate,interested_program,sub_product,sdg,university,
       course,lc,travel_interest,english_level,spanish_level,want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
     send_data_to_sqs(email, name, lastname, password, lc, interested_program)
@@ -400,27 +270,30 @@ class DigitalTransformationController < ApplicationController
     person.customized_fields = json.to_json.to_s
 
     #como conheceu a AIESEC
-    person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
+    #person.how_got_to_know_aiesec = how_got_to_know_aiesec.to_i
     person.travel_interest = travel_interest.to_i
+    person.interested_sdg = sdg.to_i unless sdg.nil?
     person.want_contact_by_email = (want_contact_by_email == 'on') ? true : false
     person.want_contact_by_phone = (want_contact_by_phone == 'on') ? true : false
     person.want_contact_by_whatsapp = (want_contact_by_whatsapp == 'on') ? true : false
 
+    person.podio_id = podio_id['item_id'].to_i
+
     tags = interested_program
-    tags = "'"+campagin.to_s+"','"+interested_program+"'" unless campagin.nil? || campagin.empty?
+    tags = campagin.to_s+", "+interested_program unless campagin.nil? || campagin.empty?
     person.save(validate: false)
     xp_sync = Sync.new
     xp_sync.send_to_rd(person, nil, xp_sync.rd_identifiers[:open], tags)
 
     case interested_program
       when 'GCDP', 'GV'
-        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogv'
       when 'GIP', 'GT'
         redirect_to 'http://brasil.aiesec.org.br/global-talent-obrigado'
       when 'GE'
         redirect_to 'http://brasil.aiesec.org.br/global-entrepreneur-obrigado'
       else
-        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogcdp'
+        redirect_to 'http://brasil.aiesec.org.br/obrigado-por-se-inscrever-ogv'
     end
   end
 
@@ -449,15 +322,8 @@ class DigitalTransformationController < ApplicationController
     @options['other'] = 'Outro'
   end
 
-  def background(&block)
-    Thread.new do
-      yield
-      ActiveRecord::Base.connection.close
-    end
-  end
-
-  def send_to_podio(name,lastname,phone,email,interested_program,
-      sub_product,how_got_to_know_aiesec,university,course,lc,travel_interest,english_level,spanish_level,
+  def send_to_podio(name,lastname,phone,email,bithdate,interested_program,sub_product,sdg,
+      university,course,lc,travel_interest,english_level,spanish_level,
       want_contact_by_email,want_contact_by_phone,want_contact_by_whatsapp,campagin)
 
     Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
@@ -480,13 +346,16 @@ class DigitalTransformationController < ApplicationController
     fields['email'] = [{'type' => 'home', 'value' => email}] unless email.nil?
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
-    fields['sub-produto'] = sub_product.to_i unless sub_product.nil?
+    fields['sub-produto'] = sub_product.to_i unless sub_product.nil? || interested_program == 'GV'
+    fields['sdg-de-interesse'] = sdg.to_i unless sdg.nil? || interested_program != 'GV'
     fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
     fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
-    fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
+    #fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
     fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
     fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
     fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
+    fields['data-de-nascimento'] = { start: (bithdate) } unless bithdate.nil?
+    puts fields
 
     contato = []
     contato << 1 if want_contact_by_email

@@ -12,8 +12,7 @@
  *= require animate/animate.css
  *= require style
  *= require font-awesome
- *= require miscellaneous.css
- *= require uielements.css
+ *= require jquery-ui/jquery-ui.css
  */
 
 #profile_photo {
@@ -43,4 +42,32 @@
   white-space: nowrap;
 }
 
+.green-checkbox {
+  display: inline-block;
+  *display: inline;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  background: image-url("green.png") no-repeat;
+  border: none;
+  cursor: pointer;
+}
 
+.green-checkbox {
+  background-position: 0 0;
+}
+.green-checkbox.hover {
+  background-position: -24px 0;
+}
+.green-checkbox.checked {
+  background-position: -48px 0;
+}
+.green-checkbox.disabled {
+  background-position: -72px 0;
+  cursor: default;
+}
+.green-checkbox.checked.disabled {
+  background-position: -96px 0;
+}

@@ -1,0 +1,15 @@
+Olá <%= manager_name %>,<br /><br />
+
+<%= person_name %> acaba de ser aceito na oportunidade <%= link_to opportunity_title, "https://experience.aiesec.org/#/opportunities/#{opportunity_id}/applications" %>.<br /><br />
+
+Entre em contato com ele(a) através do email <%= person_email %> para alinhar os próximos passos necessários para ser aprovado na vaga.<br /><br />
+
+Certifique-se de que o EP está ciente da taxa de intercâmbio e não se esqueça que ele tem no máximo 5 dias para pagar e assinar o contrato!<br /><br />
+
+<% if managers.any? %>
+Opportunity Managers:<br /><br />
+
+<% managers.each do |manager| %>
+  <%= "#{manager.name} - #{manager.email}" %> <br />
+<% end %>
+<% end %>

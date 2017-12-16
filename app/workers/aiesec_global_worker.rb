@@ -2,13 +2,13 @@ class AiesecGlobalWorker
   include Shoryuken::Worker
   require 'slack-notifier'
 
-  QUEUE_NAME = 'default'
+  QUEUE_NAME = 'sign_up_queue'
   SLACK_WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL']
 
   shoryuken_options queue: QUEUE_NAME, auto_delete: false, body_parser: JSON
 
   def perform(sqs_msg, body)
-    notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
+    # notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
 
     Shoryuken.logger.info("Received message: '#{body}'")
 
@@ -28,6 +28,6 @@ class AiesecGlobalWorker
   def notify_and_delete_message(sqs_msg, body)
     sqs_msg.delete
 
-    notify_on_slack("Mensagem excluida", body)
+    # notify_on_slack("Mensagem excluida", body)
   end
 end

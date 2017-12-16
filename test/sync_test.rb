@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'uri'
+require 'csv'
 
 class SyncTest < Minitest::Test
   def setup
@@ -160,12 +161,83 @@ class SyncTest < Minitest::Test
   def test_get_all_appllications
     Sync.new.check_problematic_applications(Date.new(2016,10,1),Date.new(2016,10,25))
   end
-=end
 
   def test_get_opportunities
     Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],'opportunities')
   end
+
+  def test_update_podio_ogx_people
+    Sync.new.update_podio_ogx_people(590498244, 'approved', Date.new(2017,3,2))
+  end
+
+  def test_send_icx_application
+    PodioSync.new.send_icx_application('approved', ExpaApplication.find_by_xp_id(1131006))
+  end
+  def test_send_icx_opportunity
+    PodioSync.new.send_icx_opportunity(ExpaOpportunity.find_by_xp_id(722065))
+  end
+  def test_update_icx_applications
+    Sync.new.update_status({"status" => "realized", "programs" => "1", "for_filter" => "opportunities" })
+  end
+  def test_update_offices
+    EXPA::Offices.list_lcs.each do |lc|
+      office = ExpaOffice.find_by_xp_id(lc.id)
+      office = ExpaOffice.new if office.nil?
+      office.update_from_expa(lc)
+      office.save
+      puts office.xp_name
+    end
+  end
+  def test_opportunity_in_brazil
+    puts Sync.new.opportunity_in_brazil(ExpaApplication.find_by_xp_id(1131006))
+  end
+  def test_get_skills
+    CSV.open('opportunity_skills.csv', "wb") do |skills|
+    CSV.open('opportunity_backgrounds.csv', "wb") do |bgs|
+    CSV.open('opportunity_issues.csv', "wb") do |issues|
+    CSV.open('opportunity_workk_fields.csv', "wb") do |works|
+        skills << ['Opportunity ID','Skill ID', 'Skill', 'Option']
+        bgs << ['Opportunity ID','Background ID', 'Background', 'Option']
+        issues << ['Opportunity ID','Issue ID', 'Issue']
+        works << ['Opportunity ID','Work Field ID', 'Work Field']
+      ExpaOpportunity.all.each do |opportunity|
+        opportunity.xp_skills.each do |skill|
+          skills << [opportunity.xp_id,skill['id'],skill['name'],skill['option']]
+        end
+        opportunity.xp_backgrounds.each do |bg|
+          bgs << [opportunity.xp_id,bg['id'],bg['name'],bg['option']]
+        end
+        opportunity.xp_issues.each do |issue|
+          issues << [opportunity.xp_id,issue['id'],issue['name']]
+        end
+        opportunity.xp_work_fields.each do |work_field|
+          works << [opportunity.xp_id,work_field['id'],work_field['name']]
+        end
+      end
+    end
+    end
+    end
+    end
+  end
+  def test_opportunites_update
+    ManualSync.new.update_opportunities_without_lc
+  end
+
+  def test_opportunites_update
+    PodioSync.new.send_icx_application(ExpaApplication.find_by_xp_id(3065454), 594310097)
+  end
+
+  def test_ogx_applications_update
+    PodioSync.new.send_ogx_application(ExpaApplication.find_by_xp_id(3107344), 610873057)
+  end
+=end
+  def test_ogx_applications_update2
+    Sync.new.update_status(
+        {
+          "status" => 'approved', 
+          "programs" => "1",
+          "for_filter" => "people",
+        }
+      )
+  end
 end
-
-
-  

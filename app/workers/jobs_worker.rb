@@ -2,7 +2,7 @@ class JobsWorker
   include Shoryuken::Worker
   require 'slack-notifier'
 
-  QUEUE_NAME = 'jobs'
+  QUEUE_NAME = 'jobs_queue'
   SLACK_WEBHOOK_URL = ENV['SLACK_WEBHOOK_URL']
 
   shoryuken_options queue: QUEUE_NAME, auto_delete: false, body_parser: JSON
@@ -10,7 +10,7 @@ class JobsWorker
   def perform(sqs_msg, body)
     Shoryuken.logger.info("Received message: '#{body}'")
 
-    notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
+    # notify_on_slack("Mensagem consumida :envelope_with_arrow:", body)
 
     begin
       klass = body["klass"].constantize.new
@@ -20,7 +20,8 @@ class JobsWorker
       else
         notify_and_delete_message(sqs_msg, body) if klass.send body["method"]
       end
-    rescue
+    rescue => exception
+      puts exception.backtrace
       raise NameError, "Not a defined job"
     end
   end
@@ -38,6 +39,6 @@ class JobsWorker
   def notify_and_delete_message(sqs_msg, body)
     sqs_msg.delete
 
-    notify_on_slack("Mensagem excluida", body)
+    # notify_on_slack("Mensagem excluida", body)
   end
 end

@@ -1,6 +1,6 @@
 class ExpaApplication < ActiveRecord::Base
   enum xp_current_status: [:current_open, :current_matched, :current_accepted, :current_approved, :current_realized, :current_completed, :current_withdrawn, :current_rejected, :current_declined, :current_approved_ep_manager, :current_approved_tn_manager, :current_acceptance_broken, :current_realization_broken] #TODO: Use prefix when they launch outside edge
-  enum xp_status: [:open, :matched, :accepted, :approved, :realized, :completed, :withdrawn, :rejected, :declined, :approved_ep_manager, :approved_tn_manager, :acceptance_broken, :realization_broken] #TODO: Use prefix when they launch outside edge
+  enum xp_status: {open:0, matched:1, accepted:2, approved:3, realized:4, completed:5, withdrawn:6, rejected:7, declined:8, approved_ep_manager:9, approved_tn_manager:10, acceptance_broken:11, realization_broken:12} #TODO: Use prefix when they launch outside edge
 
   belongs_to :xp_person, class_name: 'ExpaPerson'
   belongs_to :xp_opportunity, class_name: 'ExpaOpportunity'
@@ -56,7 +56,7 @@ class ExpaApplication < ActiveRecord::Base
       opportunity.save
     end
     unless data.person.nil?
-      person = ExpaPerson.find_by_xp_id(data.person.id)
+      person = ExpaPerson.find_by_xp_email(data.person.email)
       person = ExpaPerson.new if person.nil?
       person.update_from_expa(data.person)
       person.save

@@ -9,33 +9,109 @@ include Clockwork
 # Define the jobs
 handler do |job|
   if job.eql?('oGV')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'date_matched')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'date_an_signed')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'date_approved')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'date_realized')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'experience_start_date')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"people",'experience_end_date')
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"people",'experience_end_date')
   elsif job.eql?('oGE')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[5],"people")
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"people",'experience_end_date')
   elsif job.eql?('oGT')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[2],"people")
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"people",'experience_end_date')
   elsif job.eql?('iGV')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[1],"opportunities")
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[1],"opportunities",'experience_end_date')
   elsif job.eql?('iGE')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[5],"opportunities")
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[5],"opportunities",'experience_end_date')
   elsif job.eql?('iGT')
-    Sync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,02,22),[2],"opportunities")
+    puts 'created_at'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'created_at')
+    puts 'date_matched'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'date_matched')
+    puts 'date_an_signed'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'date_an_signed')
+    puts 'date_approved'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'date_approved')
+    puts 'date_realized'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'date_realized')
+    puts 'experience_start_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'experience_start_date')
+    puts 'experience_end_date'
+    ManualSync.new.check_problematic_applications(Date.new(2017,1,1),Date.new(2017,3,5),[2],"opportunities",'experience_end_date')
   elsif job.eql?('opportunities')
-    Sync.new.check_problematic_opportunities
+    ManualSync.new.check_problematic_opportunities(Date.new(2016,7,1),Date.new(2017,3,5))
+  elsif job.eql?('update_opportunities_without_lc')
+    ManualSync.new.update_opportunities_without_lc
   end
   puts "Running EXPA #{job} starting #{Time.now}"
 end
 
 # Define the schedule
-every(3.day, 'oGE')
-every(3.day, 'oGT')
-every(3.day, 'iGV')
-every(3.day, 'iGE')
-every(3.day, 'iGT')
-every(3.day, 'oGV')
-every(3.day, 'opportunities')
+every(1.day, 'update_opportunities_without_lc')
+every(2.day, 'opportunities')
+every(2.day, 'iGE')
+every(2.day, 'iGT')
+every(2.day, 'iGV')
+every(2.day, 'oGE')
+every(2.day, 'oGT')
+every(2.day, 'oGV')
