@@ -15,8 +15,14 @@ class Payment < ApplicationRecord
     uberlandia: 4
   }
   enum status: {
-    pending: 0,
-    paid: 1
+    processing: 0,
+    authorized: 1,
+    paid: 2,
+    refunded: 3,
+    waiting_payment: 4,
+    pending_refund: 5,
+    refused: 6,
+    chargedback: 7
   }
 
 end

@@ -9,7 +9,8 @@
   "vendor": {
     "name": "bower-rails generated vendor assets",
     "dependencies": {
-      "bootstrap" : "latest"
+      "bootstrap" : "latest",
+      "jquery-maskmoney": "latest"
     }
   }
 }

@@ -3,9 +3,12 @@
     .col-xs-12
       .ibox
         .ibox-content
-          %h1
-            .fa.fa-user
-            Pagamentos
+          .row
+            .col-xs-10
+              %h1
+                Pagamentos
+            .col-xs-2
+              = link_to "Novo", new_payment_path, class: "link-button"
           %fieldset{:style => "height: auto"}
             - flash.each do |name, msg|
               %p
@@ -24,8 +27,9 @@
                     %tbody
                       - payments.each do |payment|
                         %tr
-                          %td= payment.customer_name
-                          %td= payment.local_committee
-                          %td= payment.program
+                          %td
+                            = link_to payment.customer_name, payment_path(payment)
+                          %td= payment.local_committee.humanize
+                          %td= payment.program.humanize
                           %td= payment.value
-                          %td= payment.status
+                          %td= enum_l(payment, :status)

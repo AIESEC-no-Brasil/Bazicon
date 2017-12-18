@@ -1,0 +1,35 @@
+!!! XML
+%workbook{:xmlns => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:html" => "http://www.w3.org/TR/REC-html40", "xmlns:o" => "urn:schemas-microsoft-com:office:office", "xmlns:ss" => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:x" => "urn:schemas-microsoft-com:office:excel"}
+  %worksheet{"ss:name" => "Sheet1"}
+    %table
+      %row
+        %cell
+          %data{"ss:type" => "String"} EXPA ID
+        %cell
+          %data{"ss:type" => "String"} Nome
+        %cell
+          %data{"ss:type" => "String"} Páis
+        %cell
+          %data{"ss:type" => "String"} CL
+        %cell
+          %data{"ss:type" => "String"} E-mail
+        %cell
+          %data{"ss:type" => "String"} Telefone
+      - @people.each do |person|
+        %row
+          %cell
+            %data{"ss:type" => "String"}= person.xp_id
+          %cell
+            %data{"ss:type" => "String"}= person.xp_full_name
+          %cell
+            %data{"ss:type" => "String"}= person.xp_home_mc.xp_name
+          %cell
+            %data{"ss:type" => "String"}= person.xp_home_lc.xp_name
+          %cell
+            %data{"ss:type" => "String"}= person.xp_email
+          %cell
+            %data{"ss:type" => "String"}
+              - if !person.xp_phone.nil?
+                = person.xp_phone.to_s
+              - elsif !person.xp_contact_info.nil? && JSON.parse(person.xp_contact_info.gsub('=>',':').gsub(':nil',':"nil"')).include?('phone')
+                = JSON.parse(person.xp_contact_info.gsub('=>',':').gsub(':nil',':"nil"'))['phone']

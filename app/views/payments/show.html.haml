@@ -4,7 +4,6 @@
       .ibox
         .ibox-content
           %h1
-            .fa.fa-user
             Pagamento
           %fieldset{:style => "height: auto"}
             - flash.each do |name, msg|
@@ -41,4 +40,8 @@
                   .form-group
                     %label= Payment.human_attribute_name :status
                     %p.form-control-static
-                      = payment.status.humanize
+                      = enum_l(payment, :status).humanize
+            - if user_signed_in? && can?(:manage, payment)
+              .row
+                .form-group
+                  = link_to "Voltar", :back, class: "link-button"

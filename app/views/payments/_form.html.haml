@@ -1,9 +1,9 @@
 = form_for payment do |f|
   .form-group
     = f.label :local_committee
-    = f.hidden_field :local_committee, value: user.local_committee
+    = f.hidden_field :local_committee, value: local_committee
     = f.hidden_field :status, value: "pending"
-    %div= user.local_committee.humanize
+    %div= local_committee.try(:humanize)
   .form-group
     = f.label :customer_name, class: "required"
     = f.text_field :customer_name, class: "form-control required"
@@ -25,4 +25,5 @@
     = f.label :value, class: "required"
     = f.text_field :value, class: "form-control required"
   .form-group
-    = f.submit "Enviar"
+    = f.submit "Enviar", class: "form-button"
+    = link_to "Voltar", payments_path, class: "link-button"

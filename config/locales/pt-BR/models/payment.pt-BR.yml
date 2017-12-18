@@ -11,10 +11,12 @@ pt-BR:
         program: Programa
         tag: Tag
         value: Valor
-        status:
-          one: Status
-          pending: Pendente
+        statuses:
+          processing: Processando
+          authorized: Autorizado
           paid: Pago
-      payment/status:
-        pending: Pendente
-        paid: Pago
+          refunded: Devolvido
+          waiting_payment: Aguardando pagamento
+          pending_refund: Devolução pendente
+          refused: Recusado
+          chargedback: Estornado

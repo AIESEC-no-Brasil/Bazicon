@@ -18,7 +18,9 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to define_enum_for(:program)
         .with [ :gv, :ge, :gt ] }
   it { is_expected.to define_enum_for(:status)
-        .with [ :pending, :paid ] }
+        .with [ :processing, :authorized, :paid, :refunded,
+                :waiting_payment, :pending_refund,
+                :refused, :chargedback ] }
   it { is_expected.to define_enum_for(:local_committee)
         .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :uberlandia ] }
 end
