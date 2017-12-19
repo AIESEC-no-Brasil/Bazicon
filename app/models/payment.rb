@@ -22,7 +22,7 @@ class Payment < ApplicationRecord
     waiting_payment: 4,
     pending_refund: 5,
     refused: 6,
-    chargedback: 7
+    chargedback: 7,
+    created: 8
   }
-
 end

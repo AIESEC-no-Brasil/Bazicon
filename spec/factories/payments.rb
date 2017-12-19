@@ -6,6 +6,6 @@ FactoryGirl.define do
     program "gv"
     opportunity_name "Living La Vida Loca"
     value 1500
-    status "pending"
+    status "waiting_payment"
   end
 end

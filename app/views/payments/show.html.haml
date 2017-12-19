@@ -35,12 +35,12 @@
                   .form-group
                     %label= Payment.human_attribute_name :value
                     %p.form-control-static
-                      = payment.value
+                      = number_to_currency(payment.value, unit: "R$")
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :status
                     %p.form-control-static
-                      = enum_l(payment, :status).humanize
+                      = enum_l(payment, :status).try(:humanize)
             - if user_signed_in? && can?(:manage, payment)
               .row
                 .form-group

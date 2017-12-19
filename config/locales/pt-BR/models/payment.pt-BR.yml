@@ -12,11 +12,12 @@ pt-BR:
         tag: Tag
         value: Valor
         statuses:
-          processing: Processando
           authorized: Autorizado
-          paid: Pago
-          refunded: Devolvido
-          waiting_payment: Aguardando pagamento
-          pending_refund: Devolução pendente
-          refused: Recusado
           chargedback: Estornado
+          created: Criado
+          paid: Pago
+          pending_refund: Devolução pendente
+          processing: Processando
+          refunded: Devolvido
+          refused: Recusado
+          waiting_payment: Aguardando pagamento
