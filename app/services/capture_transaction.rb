@@ -21,18 +21,17 @@ class CaptureTransaction
   private
 
   def payment(payment_id)
-    # find payment
     payment = Payment.find_by(id: @payment_id)
   end
 
   def transaction(payment)
-    # find transaction
-    transaction = PagarMe::Transaction.find(payment.transaction_id)
+    transaction = PagarMe::Transaction.find(payment.pagarme_id)
   end
 
   def capture(transaction)
-    # capture transaction
     transaction.capture(amount: payment.value, metadata: {
+      application_id: payment.application_id,
+      opportunity_name: payment.opportunity_name.humanize,
       program: payment.program.humanize,
       lc: payment.local_committee,
       tag: payment.tag
