@@ -21,20 +21,24 @@ RSpec.describe "Payment", type: :request do
       payment_attributes = FactoryGirl.attributes_for(:payment)
 
       expect {
-        post "/payments", { payment: payment_attributes }
+        post "/payments", params: { payment: payment_attributes }
       }.not_to change(Payment, :count)
 
       expect(response).to redirect_to new_user_session_path
     end
 
-    it "allows access to logged in user" do
-      payment_attributes = FactoryGirl.attributes_for(:payment)
+    context "logged in user" do
+      let(:user) { create(:user) }
 
-      expect {
-        post "/payments", { payment: payment_attributes }
-      }.to change(Payment, :count)
+      before { sign_in(user) }
+      
+      it "allows access to logged in user" do
+        payment_attributes = FactoryGirl.attributes_for(:payment)
 
-      expect(response).to have_http_status(200)
+        expect {
+          post "/payments", params: { payment: payment_attributes }
+        }.to change(Payment, :count)
+      end
     end
   end
 end

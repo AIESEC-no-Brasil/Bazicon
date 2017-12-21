@@ -10,3 +10,4 @@ config/database.yml
 *.swp
 *.swo
 coverage/
+
