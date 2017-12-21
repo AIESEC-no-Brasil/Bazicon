@@ -1,0 +1,23 @@
+pt-BR:
+  activerecord:
+    models:
+      payment: Pagamento
+    attributes:
+      payment:
+        application_id: ID da aplicação no EXPA
+        customer_name: Nome do cliente
+        local_committee: Comitê local
+        opportunity_name: Nome da oportunidade
+        program: Programa
+        tag: Tag
+        value: Valor
+        statuses:
+          authorized: Autorizado
+          chargedback: Estornado
+          created: Criado
+          paid: Pago
+          pending_refund: Devolução pendente
+          processing: Processando
+          refunded: Devolvido
+          refused: Recusado
+          waiting_payment: Aguardando pagamento
