@@ -8,16 +8,14 @@ module Api
 
         def update_status
           if valid_postback?
-            payment = Payment.find_by(params[:payment_id])
+            payment = Payment.find_by(id: params[:payment_id])
             payment.update(pagarme_id: params[:id]) unless payment.pagarme_id
 
             if params[:event] == "transaction_status_changed"
-              transaction = PagarMe::Transaction.find(payment.pagarme_id)
-
               payment.update(status: params[:current_status])
 
               if params[:current_status] == "authorized"
-                # capture transaction
+                CaptureTransaction.call(params[:payment_id])
               end
             end
           else
@@ -26,7 +24,7 @@ module Api
 
           render json: { params: params }
         end
-        
+
         protected
         
         def valid_postback?
