@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
   let(:user) { create(:user) }
-  let(:payment) { controller.payment }
+  let(:payment) { create(:payment) }
+  let(:payments) { Payment.where(local_committee: user.local_committee) }
 
   before do
     user.save
@@ -25,22 +26,23 @@ RSpec.describe PaymentsController, type: :controller do
     let(:create_attributes) { attributes_for :payment }
 
     context "on success" do
-      it { is_expected.to redirect_to payment_path(payment) }
+      it { is_expected.to redirect_to payment_path(Payment.last) }
       it { expect { do_create }.to change(Payment, :count).by(1) }
     end
   end
 
   describe "#index" do
     subject(:do_index) { get :index }
-    let(:payments) { Payment.where(local_committee: user.local_committee) }
 
-    #it { is_expected.to expose(:payments).as_collection payments }
+    before { create_list(:payment, 3) }
+
+    it { expect(controller.payments).to match_array payments }
   end
 
   describe "#show" do
     before do
       payment.save
-      get :show, id: payment
+      get :show, params: { id: payment }
     end
 
     it { is_expected.to expose(:payment).as payment }

@@ -4,7 +4,6 @@
       .ibox
         .ibox-content
           %h1
-            .fa.fa-user
             Pagamento
           %fieldset{:style => "height: auto"}
             - flash.each do |name, msg|
@@ -35,12 +34,25 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :value
+<<<<<<< HEAD
                     %p.form-control-static{ "data-value" => payment.value }
                       = payment.value
+=======
+                    %p.form-control-static
+                      = number_to_currency(payment.value, unit: "R$")
+>>>>>>> upstream/dev
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :status
                     %p.form-control-static
+<<<<<<< HEAD
                       = payment.status.humanize
                     %p.form-control-static
                       = render 'shared/payments/checkout.html.haml'
+=======
+                      = enum_l(payment, :status).try(:humanize)
+            - if user_signed_in? && can?(:manage, payment)
+              .row
+                .form-group
+                  = link_to "Voltar", :back, class: "link-button"
+>>>>>>> upstream/dev

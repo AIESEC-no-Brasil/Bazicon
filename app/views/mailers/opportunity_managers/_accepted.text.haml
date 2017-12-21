@@ -1,0 +1,16 @@
+Olá #{manager_name},
+%br/
+%br/
+Uma aplicação para a oportunidade que você gerencia #{link_to opportunity_title, "https://experience.aiesec.org/#/opportunities/#{opportunity_id}/applications"} foi marcada como aceita.
+%br/
+%br/
+Entre em contato com o/a trainee #{person_name} através do email #{person_email} para alinhar os próximos passos necessários para vir para o seu comitê.
+%br/
+%br/
+- if managers.any?
+  EP Managers do(a) trainee:
+  %br/
+  %br/
+  - managers.each do |manager|
+    = "#{manager.name} - #{manager.email}"
+    %br/
