@@ -246,6 +246,9 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     os (0.9.6)
+    pagarme (2.2.2)
+      multi_json
+      rest-client
     parallel (1.12.1)
     parser (2.4.0.2)
       ast (~> 2.3)
@@ -458,6 +461,7 @@ DEPENDENCIES
   mailgun-ruby (~> 1.1.2)
   mechanize
   oauth2
+  pagarme
   pg
   podio
   puma
