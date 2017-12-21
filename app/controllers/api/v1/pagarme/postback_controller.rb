@@ -3,26 +3,30 @@ module Api
     module Pagarme
       class PostbackController < ApplicationController
         require 'pagarme'
-        
         skip_before_action :verify_authenticity_token
+        PagarMe.api_key = ENV['PAGARME_API_KEY']
 
         def update_status
           if valid_postback?
-            # Handle your code here
-            # postback payload is in params
-            puts "params ======================== "
-            puts params
-            puts "payment_id #{params[:payment_id]}"
-            puts params[:current_status]
-            puts params[:event]
-            puts params[:fingerprint]
+            payment = Payment.find_by(params[:payment_id])
+            payment.update(pagarme_id: params[:id]) unless payment.pagarme_id
+
+            if params[:event] == "transaction_status_changed"
+              transaction = PagarMe::Transaction.find(payment.pagarme_id)
+
+              payment.update(status: params[:current_status])
+
+              if params[:current_status] == "authorized"
+                # capture transaction
+              end
+            end
           else
             render_invalid_postback_response
           end
 
           render json: { params: params }
         end
-
+        
         protected
         
         def valid_postback?
