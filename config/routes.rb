@@ -1,4 +1,5 @@
 Myapp::Application.routes.draw do
+  devise_for :users
   root 'digital_transformation#expa_sign_up', programa: 'GV'
 
   post '/api/v1/postback_test' => 'api/v1/postback_test#status_update'
@@ -14,4 +15,5 @@ Myapp::Application.routes.draw do
   post '/dt/prevents_success'     => 'digital_transformation#prevents_success',      as: 'digital_transformation_prevents_success'
   post '/expa/sign_up'            => 'digital_transformation#expa_sign_up_success2', as: 'expa_sign_up_success'
 
+  resources :payments, only:[:new, :create, :show, :index]
 end
