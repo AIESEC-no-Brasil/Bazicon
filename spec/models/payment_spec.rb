@@ -23,4 +23,7 @@ RSpec.describe Payment, type: :model do
                 :refused, :chargedback, :created ] }
   it { is_expected.to define_enum_for(:local_committee)
         .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :uberlandia ] }
+
+  it { is_expected.to define_enum_for(:payment_method)
+        .with [:credit_card, :boleto] }
 end

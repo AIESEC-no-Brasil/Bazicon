@@ -25,4 +25,9 @@ class Payment < ApplicationRecord
     chargedback: 7,
     created: 8
   }
+
+  enum payment_method: {
+    credit_card: 0,
+    boleto: 1
+  }
 end
