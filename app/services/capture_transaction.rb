@@ -21,10 +21,10 @@ class CaptureTransaction
   private
 
   def capture_transaction
-    capture(transaction(payment(@payment_id)))
+    capture(transaction(payment))
   end
 
-  def payment(payment_id)
+  def payment
     Payment.find_by(id: @payment_id)
   end
 
