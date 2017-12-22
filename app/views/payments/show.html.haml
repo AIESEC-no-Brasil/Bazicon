@@ -10,7 +10,7 @@
               %p
                 = content_tag :div, msg.html_safe, class: name
             .row
-              .col-xs-12.b-r{ "data-payment-information" => "", "data-tag" => payment.tag }
+              .col-xs-12.b-r{ "data-payment-information" => "", "data-tag" => payment.tag, "data-payment-id" => payment.id }
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :customer_name
