@@ -15,17 +15,21 @@ class CaptureTransaction
   end
 
   def call
-    @status = false unless capture(transaction(payment))
+    @status = false unless capture_transaction
   end
 
   private
 
+  def capture_transaction
+    capture(transaction(payment(@payment_id)))
+  end
+
   def payment(payment_id)
-    payment = Payment.find_by(id: @payment_id)
+    Payment.find_by(id: @payment_id)
   end
 
   def transaction(payment)
-    transaction = PagarMe::Transaction.find(payment.pagarme_id)
+    PagarMe::Transaction.find(payment.pagarme_id)
   end
 
   def capture(transaction)
