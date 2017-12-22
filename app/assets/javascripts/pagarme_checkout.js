@@ -11,7 +11,9 @@ $(document).ready(function() {
       }});
 
       var _paymentInformation = $("[data-payment-information]");
-
+      var _paymentId = _paymentInformation.find("[data-payment-id]").data("payment-id");
+      var _postbackUrl = "https://teste.aiesec.org.br/api/v1/pagarme/postback/" + _paymentId;
+  
       // DEFINIR AS OPÇÕES
       // e abrir o modal
       // É necessário passar os valores boolean em "var params" como string
@@ -22,7 +24,7 @@ $(document).ready(function() {
         "paymentMethods":"boleto,credit_card",
         "maxInstallments":10,
         "uiColor":"#bababa",
-        "postbackUrl":"requestb.in/qbk3b4qb",
+        "postbackUrl": _postbackUrl,
         "createToken":"true",
         "interestRate":2.99,
         "freeInstallments":6,
