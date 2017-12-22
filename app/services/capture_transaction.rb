@@ -15,21 +15,24 @@ class CaptureTransaction
   end
 
   def call
-    @status = false unless capture(transaction(payment))
+    @status = false unless capture_transaction
   end
 
   private
 
-  def load_payment(payment_id)
+  def capture_transaction
+    capture(transaction(payment(@payment_id)))
+  end
+
+  def payment(payment_id)
     Payment.find_by(id: @payment_id)
   end
 
-  def load_transaction(payment)
+  def transaction(payment)
     PagarMe::Transaction.find(payment.pagarme_id)
   end
 
   def capture(transaction)
-    transaction = load_transaction(load_payment)
     transaction.capture(amount: payment.value, metadata: {
       application_id: payment.application_id,
       opportunity_name: payment.opportunity_name.humanize,
