@@ -22,6 +22,7 @@ gem 'json'
 gem 'log4r'
 gem 'mailgun-ruby', '~>1.1.2'
 gem 'mechanize'
+gem 'pagarme'
 gem 'pg'
 gem 'rack-cache'
 gem 'rails'
@@ -65,9 +66,6 @@ group :development do
 end
 
 gem 'puma'
-
-group :test do
-end
 
 group :development, :test do
   gem 'shoulda-matchers', '~> 3.1'

@@ -9,3 +9,5 @@ config/database.yml
 .byebug_history
 *.swp
 *.swo
+coverage/
+
