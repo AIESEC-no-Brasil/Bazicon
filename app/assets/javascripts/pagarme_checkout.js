@@ -11,7 +11,7 @@ $(document).ready(function() {
       }});
 
       var _paymentInformation = $("[data-payment-information]");
-      var _paymentId = _paymentInformation.find("[data-payment-id]").data("payment-id");
+      var _paymentId = $("[data-payment-id]").data("payment-id");
       var _postbackUrl = "https://teste.aiesec.org.br/api/v1/pagarme/postback/" + _paymentId;
   
       // DEFINIR AS OPÇÕES
