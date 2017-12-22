@@ -10,7 +10,7 @@
               %p
                 = content_tag :div, msg.html_safe, class: name
             .row
-              .col-xs-12.b-r
+              .col-xs-12.b-r{ "data-payment-information" => "", "data-tag" => payment.tag }
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :customer_name
@@ -19,17 +19,17 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :local_committee
-                    %p.form-control-static
+                    %p.form-control-static{ "data-local-committee" => payment.local_committee.humanize }
                       = payment.local_committee.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :program
-                    %p.form-control-static
+                    %p.form-control-static{ "data-local-committee" => payment.program.humanize }
                       = payment.program.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :opportunity_name
-                    %p.form-control-static
+                    %p.form-control-static{ "data-local-committee" => payment.opportunity_name.humanize }
                       = payment.opportunity_name.humanize
                 .col-lg-6
                   .form-group
