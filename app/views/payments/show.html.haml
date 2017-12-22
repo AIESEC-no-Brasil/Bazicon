@@ -24,23 +24,25 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :program
-                    %p.form-control-static{ "data-local-committee" => payment.program.humanize }
+                    %p.form-control-static{ "data-program" => payment.program.humanize }
                       = payment.program.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :opportunity_name
-                    %p.form-control-static{ "data-local-committee" => payment.opportunity_name.humanize }
+                    %p.form-control-static{ "data-opportunity-name" => payment.opportunity_name.humanize }
                       = payment.opportunity_name.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :value
-                    %p.form-control-static
+                    %p.form-control-static{ "data-value" => payment.value }
                       = number_to_currency(payment.value, unit: "R$")
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :status
                     %p.form-control-static
                       = enum_l(payment, :status).try(:humanize)
+                    %p.form-control-static
+                      = render 'shared/payments/checkout.html.haml'
             - if user_signed_in? && can?(:manage, payment)
               .row
                 .form-group
