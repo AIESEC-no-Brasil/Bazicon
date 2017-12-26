@@ -31,5 +31,5 @@
                             = link_to payment.customer_name, payment_path(payment)
                           %td= payment.local_committee.humanize
                           %td= payment.program.humanize
-                          %td= number_to_currency(payment.value, unit:  "R$")
+                          %td= Money.new(payment.value, "BRL").format
                           %td= enum_l(payment, :status)
