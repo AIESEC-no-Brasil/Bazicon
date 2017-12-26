@@ -10,7 +10,7 @@ module Api
           if valid_postback?
             payment = Payment.find_by(id: params[:payment_id])
             payment.update(pagarme_id: params[:id]) unless payment.pagarme_id
-            payment.update(payment_method: params[:payment_method]) unless payment.payment_method
+            payment.update(payment_method: params[:transaction][:payment_method]) unless payment.payment_method
 
             if params[:event] == "transaction_status_changed"
               payment.update(status: params[:current_status])
@@ -19,8 +19,8 @@ module Api
                 CaptureTransaction.call(params[:payment_id])
               end
 
-              if params[:payment_method] == "boleto"
-                payment.update(boleto_url: params[:boleto_url])
+              if params[:transaction][:payment_method] == "boleto"
+                payment.update(boleto_url: params[:transaction][:boleto_url])
               end
             end
           else
