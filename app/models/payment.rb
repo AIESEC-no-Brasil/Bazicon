@@ -1,4 +1,6 @@
 class Payment < ApplicationRecord
+  before_create :trim_value
+
   validates :customer_name, presence: true
   validates :local_committee, presence: true
   validates :application_id, presence: true
@@ -30,4 +32,10 @@ class Payment < ApplicationRecord
     credit_card: 0,
     boleto: 1
   }
+
+  private
+
+  def trim_value
+    self.value.tr!('^0-9', '')
+  end
 end

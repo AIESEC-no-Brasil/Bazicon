@@ -26,4 +26,10 @@ RSpec.describe Payment, type: :model do
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }
+
+  describe "#trim_value" do
+    let(:payment) { create(:payment, value: "2.200,00") }
+
+    it { expect(payment.value).to eq "220000" }
+  end
 end

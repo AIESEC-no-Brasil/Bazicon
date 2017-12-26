@@ -2,5 +2,6 @@
 //= require pagarme_checkout.js
 
 $().ready(function() {
-  $("#payment_value").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+  gPaymentValue = $("#payment_value");
+  gPaymentValue.maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
 });
