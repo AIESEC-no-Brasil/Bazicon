@@ -19,7 +19,7 @@ module Api
                 CaptureTransaction.call(params[:payment_id])
               end
 
-              if params[:status] == "waiting_payment" && params[:payment_method] == "boleto"
+              if params[:payment_method] == "boleto"
                 payment.update(boleto_url: params[:boleto_url])
               end
             end
