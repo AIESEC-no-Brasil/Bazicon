@@ -25,7 +25,7 @@
                   .form-group
                     %label= Payment.human_attribute_name :program
                     %p.form-control-static{ "data-program" => payment.program.humanize }
-                      = payment.program.humanize
+                      = payment.program.upcase
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :opportunity_name
