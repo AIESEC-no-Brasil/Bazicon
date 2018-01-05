@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
   let(:user) { create(:user) }
-  let(:payment) { create(:payment) }
+  let(:payment) { create(:payment, status: "created" ) }
   let(:payments) { Payment.where(local_committee: user.local_committee) }
 
   before do
@@ -46,5 +46,15 @@ RSpec.describe PaymentsController, type: :controller do
     end
 
     it { is_expected.to expose(:payment).as payment }
+  end
+
+  describe "#destroy" do
+    before { payment.save }
+    subject(:do_delete) do
+      delete :destroy, params: { id: payment.id }
+    end
+
+    it { expect { do_delete }.to change(Payment, :count).by(-1) }
+    it { is_expected.to redirect_to action: :index }
   end
 end
