@@ -6,7 +6,6 @@ $(document).ready(function() {
       // declarando um callback de sucesso
       var encryptionKey = $('#pay-button').data('pagarme-enc-key');
       var checkout = new PagarMeCheckout.Checkout({"encryption_key": encryptionKey, success: function(data) {
-          console.log(data);
           //Tratar aqui as ações de callback do checkout, como exibição de mensagem ou envio de token para captura da transação
       }});
 
@@ -29,7 +28,7 @@ $(document).ready(function() {
         "interestRate":2.99,
         "freeInstallments":6,
         "defaultInstallment":1,
-        "headerText":_paymentInformation.find("[data-ep-name]").data("opportunity-name")
+        "headerText":_paymentInformation.find("[data-ep-name]").data("ep-name")
       };
       checkout.open(params);
   });
