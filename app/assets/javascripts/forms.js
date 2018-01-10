@@ -8,4 +8,3 @@
 //= require bootstrap-markdown/markdown.js
 //= require chosen.jquery.js
 //= require jquery.maskedinput.min.js
-//= require jquery-maskmoney/src/jquery.maskMoney.js

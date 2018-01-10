@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">EXPA ID</Data></Cell>
+        <Cell><Data ss:Type="String">Nome</Data></Cell>
+        <Cell><Data ss:Type="String">Páis</Data></Cell>
+        <Cell><Data ss:Type="String">CL</Data></Cell>
+        <Cell><Data ss:Type="String">E-mail</Data></Cell>
+        <Cell><Data ss:Type="String">Telefone</Data></Cell>
+      </Row>
+      <% @people.each do |person| %>
+          <Row>
+            <Cell><Data ss:Type="String"><%= person.xp_id %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= person.xp_full_name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= person.xp_home_mc.xp_name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= person.xp_home_lc.xp_name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= person.xp_email %></Data></Cell>
+            <Cell><Data ss:Type="String">
+              <% if !person.xp_phone.nil? %>
+                  <%= person.xp_phone.to_s %>
+              <% elsif !person.xp_contact_info.nil? && JSON.parse(person.xp_contact_info.gsub('=>',':').gsub(':nil',':"nil"')).include?('phone') %>
+                  <%= JSON.parse(person.xp_contact_info.gsub('=>',':').gsub(':nil',':"nil"'))['phone'] %>
+              <% end %>
+            </Data></Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,4 +1,4 @@
-class CreateExpaOpportunities < ActiveRecord::Migration[5.1]
+class CreateExpaOpportunities < ActiveRecord::Migration
   def change
     create_table :expa_opportunities do |t|
       t.column :xp_id, :integer
