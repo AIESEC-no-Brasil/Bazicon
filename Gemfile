@@ -3,9 +3,11 @@ source 'https://rubygems.org'
 gem 'bcrypt'
 gem 'better_errors'
 gem 'bootstrap-sass'
+gem 'cancancan'
 gem 'clockwork', :require => false
 gem 'coffee-rails'
 gem 'decent_exposure'
+gem 'devise'
 gem 'dropbox-sdk'
 gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'font-awesome-rails'
@@ -13,12 +15,15 @@ gem 'google_drive', '>= 2.0'
 gem 'groupdate'
 gem 'guard-rspec', require: false
 gem 'haml'
+gem 'haml-rails'
 gem 'jbuilder'
 gem 'jquery-rails', '~> 4.0', '>= 4.0.5'
 gem 'json'
 gem 'log4r'
 gem 'mailgun-ruby', '~>1.1.2'
 gem 'mechanize'
+gem 'money'
+gem 'pagarme'
 gem 'pg'
 gem 'rack-cache'
 gem 'rails'
@@ -63,11 +68,8 @@ end
 
 gem 'puma'
 
-group :test do
-  gem 'shoulda-matchers', '~> 3.1'
-end
-
 group :development, :test do
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'

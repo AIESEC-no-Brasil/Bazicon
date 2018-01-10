@@ -1,5 +1,5 @@
 class DigitalTransformationController < ApplicationController
-  after_filter :cors_set_access_control_headers
+  after_action :cors_set_access_control_headers
 
   expose :study_level, -> { DigitalTransformation.study_level }
   expose :universities, -> { DigitalTransformation.universities }

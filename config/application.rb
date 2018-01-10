@@ -33,8 +33,10 @@ module Myapp
       end if File.exists?(env_file)
     end
 
+    config.assets.paths << Rails.root.join("vendor","assets","bower_components")
+
     config.assets.precompile += [ 'appviews.css', 'archives.css', 'cssanimations.css', 'dashboards.css', 'digital_transformation.css', 'forms.css', 'gallery.css', 'graphs.css', 'mailbox.css', 'miscellaneous.css', 'outgoing_exchange.css', 'pages.css', 'tables.css', 'uielements.css', 'widgets.css', 'files.css' ]
-    config.assets.precompile += [ 'appviews.js',  'archives.js', 'cssanimations.js', 'dashboards.js', 'digital_transformation.js', 'forms.js', 'gallery.js', 'graphs.js', 'mailbox.js', 'miscellaneous.js', 'outgoing_exchange.js', 'pages.js', 'tables.js', 'uielements.js', 'widgets.js', 'files.js' ]
+    config.assets.precompile += [ 'appviews.js',  'archives.js', 'cssanimations.js', 'dashboards.js', 'digital_transformation.js', 'forms.js', 'gallery.js', 'graphs.js', 'mailbox.js', 'miscellaneous.js', 'outgoing_exchange.js', 'pages.js', 'pagarme_checkout.js', 'tables.js', 'uielements.js', 'widgets.js', 'files.js' ]
     #config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths << "#{Rails.root}/lib"
     config.eager_load_paths << "#{Rails.root}/lib"
