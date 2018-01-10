@@ -11,6 +11,7 @@ RSpec.describe Api::V1::Pagarme::PostbackController, type: :controller do
     it 'updates payment status' do
       post :update_status, params: {
         payment_id: payment.id,
+        transaction: { payment_method: "credit_card" },
         event: "transaction_status_changed",
         current_status: "paid"
       }
