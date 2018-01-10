@@ -8,8 +8,8 @@
               %h1
                 Pagamentos
             .col-xs-2
-              = link_to "Novo", new_payment_path, class: "link-button"
-          %fieldset{:style => "height: auto"}
+              = link_to "Novo Pagamento", new_payment_path, class: "link-button"
+          %fieldset{style: "height: auto"}
             - flash.each do |name, msg|
               %p
                 = content_tag :div, msg.html_safe, class: name
@@ -20,7 +20,7 @@
                     %thead
                       %tr
                         %th.table-header-link
-                          = link_to "Nome do cliente", payments_path(order: 'customer_name'), :class => 'table-link'
+                          = link_to "Nome do EP", payments_path(order: 'customer_name'), :class => 'table-link'
                         %th 
                           = link_to "Comitê Local", payments_path(order: 'local_committee'), :class => 'table-link'
                         %th
@@ -37,12 +37,16 @@
                           %td
                             = link_to payment.customer_name, payment_path(payment), :class => 'table-link'
                           %td= payment.local_committee.humanize
-                          %td= payment.program.humanize
+                          %td= payment.program.upcase
                           %td= Money.new(payment.value, "BRL").format
                           %td= enum_l(payment, :status)
                           %td= l(payment.created_at)
-
+                          %td
+                            - if payment.created?
+                              = link_to 'Excluir',
+                                payment_path(payment),
+                                data: { confirm: 'Tem certeza?' },
+                                method: :delete
             .row
               .col-xs-12.b-r
                 = will_paginate payments, renderer: BootstrapPagination::Rails
-

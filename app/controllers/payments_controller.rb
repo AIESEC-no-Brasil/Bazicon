@@ -13,8 +13,9 @@ class PaymentsController < ApplicationController
 
   def create
     if can?(:manage, payment) && payment.save
-      redirect_to payment_path(payment)
+      redirect_to payment_path(payment), notice: 'Pagamento registrado com sucesso!'
     else
+      flash[:error] = 'Erro ao registrar o pagamento.'
       render :new
     end
   end
@@ -24,6 +25,11 @@ class PaymentsController < ApplicationController
   end
 
   def show
+  end
+
+  def destroy
+    payment.created? && payment.destroy
+    redirect_to action: :index
   end
 
   private
