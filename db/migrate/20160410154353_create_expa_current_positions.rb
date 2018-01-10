@@ -1,4 +1,4 @@
-class CreateExpaCurrentPositions < ActiveRecord::Migration[5.1]
+class CreateExpaCurrentPositions < ActiveRecord::Migration
   def change
     create_table :expa_current_positions do |t|
       t.column :xp_id, :integer

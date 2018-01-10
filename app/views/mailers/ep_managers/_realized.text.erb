@@ -1,0 +1,16 @@
+Olá <%= manager_name %>,<br /><br />
+
+<%= person_name %> acaba de iniciar a sua experiência de desenvolvimento de liderança na oportunidade <%= link_to opportunity_title, "https://experience.aiesec.org/#/opportunities/#{opportunity_id}/applications" %>.<br /><br />
+
+Garanta a entrega de valor do nosso serviço através dos 16 Standards:<br />
+https://hub.aiesec.org.br/standard-satisfaction/<br /><br />
+
+Estabeleça contato constante com o EP por meio do email <%= person_email %>, e por outros meios de contato que sejam mais acessíveis para vocês.<br /><br />
+
+<% if managers.any? %>
+Opportunity Managers:<br /><br />
+
+<% managers.each do |manager| %>
+  <%= "#{manager.name} - #{manager.email}" %> <br />
+<% end %>
+<% end %>
