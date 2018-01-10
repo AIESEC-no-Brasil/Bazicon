@@ -29,7 +29,7 @@ $(document).ready(function() {
         "interestRate":2.99,
         "freeInstallments":6,
         "defaultInstallment":1,
-        "headerText":_paymentInformation.find("[data-opportunity-name]").data("opportunity-name")
+        "headerText":_paymentInformation.find("[data-ep-name]").data("opportunity-name")
       };
       checkout.open(params);
   });
