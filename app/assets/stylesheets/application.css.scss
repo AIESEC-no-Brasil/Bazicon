@@ -71,3 +71,36 @@
 .green-checkbox.checked.disabled {
   background-position: -96px 0;
 }
+
+label.required:after {
+  content: " *";
+}
+
+.form-button {
+  color: #FFF;
+  height: 31px;
+  width: 77px;
+  background: #1ab394;
+  border: 0px none;
+  border-radius: 5px 5px 5px 5px;
+  &:hover {
+    color: #23527C;
+  }
+}
+
+.link-button {
+	color: #FFF;
+	width: 64px;
+	background: #1ab394;
+	border-radius: 5px 5px 5px 5px;
+	padding: 6.5px 13px;
+}
+
+#pay-button {
+  width: 128px;
+}
+
+.error {
+  background: #FCF8E3;
+  border: #FAEBCC;
+}

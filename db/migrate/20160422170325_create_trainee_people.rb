@@ -1,4 +1,4 @@
-class CreateTraineePeople < ActiveRecord::Migration
+class CreateTraineePeople < ActiveRecord::Migration[5.1]
   def change
     create_table :trainee_people do |t|
       t.string :full_name
