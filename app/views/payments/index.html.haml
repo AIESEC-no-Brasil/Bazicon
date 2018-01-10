@@ -19,17 +19,30 @@
                   %table.table.table-striped
                     %thead
                       %tr
-                        %th Nome do cliente
-                        %th Comitê local
-                        %th Programa
-                        %th Valor
-                        %th Status
+                        %th.table-header-link
+                          = link_to "Nome do cliente", payments_path(order: 'customer_name'), :class => 'table-link'
+                        %th 
+                          = link_to "Comitê Local", payments_path(order: 'local_committee'), :class => 'table-link'
+                        %th
+                          = link_to "Programa", payments_path(order: 'program'), :class => 'table-link'
+                        %th
+                          = link_to "Valor", payments_path(order: 'value'), :class => 'table-link'
+                        %th
+                          = link_to "Status", payments_path(order: 'status'), :class => 'table-link'
+                        %th
+                          = link_to "Criado em", payments_path(order: 'created_at'), :class => 'table-link'
                     %tbody
                       - payments.each do |payment|
                         %tr
                           %td
-                            = link_to payment.customer_name, payment_path(payment)
+                            = link_to payment.customer_name, payment_path(payment), :class => 'table-link'
                           %td= payment.local_committee.humanize
                           %td= payment.program.humanize
                           %td= Money.new(payment.value, "BRL").format
                           %td= enum_l(payment, :status)
+                          %td= l(payment.created_at)
+
+            .row
+              .col-xs-12.b-r
+                = will_paginate payments, renderer: BootstrapPagination::Rails
+

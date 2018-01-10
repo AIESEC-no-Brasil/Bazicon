@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   expose :user, -> { current_user }
   expose :local_committee, -> { user.local_committee }
   expose :payment
-  expose(:payments) { Payment.where(local_committee: local_committee) }
+  expose(:payments) { Payment.where(local_committee: local_committee).order(params[:order]).paginate(:page => params[:page], :per_page => 25) }
 
   def new
     redirect_to root_path unless can?(:manage, payment)
