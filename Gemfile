@@ -12,6 +12,7 @@ gem 'dropbox-sdk'
 gem 'expa', '0.1.2.10', :git => 'http://github.com/AIESEC-no-Brasil/expa-rb'
 gem 'font-awesome-rails'
 gem 'google_drive', '>= 2.0'
+gem 'gretel'
 gem 'groupdate'
 gem 'guard-rspec', require: false
 gem 'haml'
