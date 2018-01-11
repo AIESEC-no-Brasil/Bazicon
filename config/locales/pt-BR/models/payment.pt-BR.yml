@@ -5,7 +5,7 @@ pt-BR:
     attributes:
       payment:
         application_id: ID da aplicação no EXPA
-        customer_name: Nome do cliente
+        customer_name: Nome do EP
         local_committee: Comitê local
         opportunity_name: Nome da oportunidade
         program: Programa
