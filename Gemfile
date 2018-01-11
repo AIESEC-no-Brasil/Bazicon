@@ -39,6 +39,7 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'whenever', :require => false
 gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', group: :doc
