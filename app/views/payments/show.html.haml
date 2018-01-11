@@ -1,3 +1,4 @@
+- breadcrumb :payment, payment
 #wrapper.gray-bg
   .wrapper.wrapper-content.animated.fadeInRight.center-block
     .col-xs-12
@@ -15,27 +16,27 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :customer_name
-                    %p.form-control-static
+                    %p.form-control-static{ data: { ep_name: payment.customer_name } }
                       = payment.customer_name
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :local_committee
-                    %p.form-control-static{ "data-local-committee" => payment.local_committee.humanize }
+                    %p.form-control-static{ data: { local_committee: payment.local_committee.humanize } }
                       = payment.local_committee.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :program
-                    %p.form-control-static{ "data-program" => payment.program.humanize }
+                    %p.form-control-static{ data: { program: payment.program.humanize } }
                       = payment.program.upcase
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :opportunity_name
-                    %p.form-control-static{ "data-opportunity-name" => payment.opportunity_name.humanize }
+                    %p.form-control-static{ data: { opportunity_name: payment.opportunity_name.humanize } }
                       = payment.opportunity_name.humanize
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :value
-                    %p.form-control-static{ "data-value" => payment.value }
+                    %p.form-control-static{ data: { value: payment.value } }
                       = Money.new(payment.value, "BRL").format
                 .col-lg-6
                   .form-group

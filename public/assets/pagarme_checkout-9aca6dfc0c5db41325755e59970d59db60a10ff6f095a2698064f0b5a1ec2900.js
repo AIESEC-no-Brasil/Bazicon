@@ -1,19 +1,12 @@
 $(document).ready(function() {
   var button = $('#pay-button');
 
-  if (sessionStorage.message) {
-    addFlash(sessionStorage.message);
-    sessionStorage.removeItem('message');
-  }
-
   button.click(function() {
       // INICIAR A INSTÂNCIA DO CHECKOUT
       // declarando um callback de sucesso
       var encryptionKey = $('#pay-button').data('pagarme-enc-key');
       var checkout = new PagarMeCheckout.Checkout({"encryption_key": encryptionKey, success: function(data) {
-        //Tratar aqui as ações de callback do checkout, como exibição de mensagem ou envio de token para captura da transação
-        sessionStorage.message="Pagamento realizado com sucesso.";
-        location.reload();
+          //Tratar aqui as ações de callback do checkout, como exibição de mensagem ou envio de token para captura da transação
       }});
 
       var _paymentInformation = $("[data-payment-information]");
@@ -39,7 +32,4 @@ $(document).ready(function() {
       };
       checkout.open(params);
   });
-  function addFlash(message) {
-    $("#messages").append('<div class="alert alert-success">'+message+'</div>');
-  }
 });
