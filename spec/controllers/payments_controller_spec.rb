@@ -26,7 +26,7 @@ RSpec.describe PaymentsController, type: :controller do
     let(:create_attributes) { attributes_for :payment }
 
     context "on success" do
-      it { is_expected.to redirect_to payment_path(Payment.last) }
+      it { is_expected.to redirect_to payment_path(Payment.last, created: true) }
       it { expect { do_create }.to change(Payment, :count).by(1) }
     end
   end
