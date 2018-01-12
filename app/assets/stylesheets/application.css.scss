@@ -80,7 +80,7 @@ label.required:after {
   color: #FFF;
   height: 31px;
   width: 77px;
-  background: #1ab394;
+  background: #1AB394;
   border: 0px none;
   border-radius: 5px 5px 5px 5px;
   &:hover {
@@ -91,7 +91,7 @@ label.required:after {
 .link-button {
 	color: #FFF;
 	width: 64px;
-	background: #1ab394;
+	background: #1AB394;
 	border-radius: 5px 5px 5px 5px;
 	padding: 6.5px 13px;
 }
@@ -103,4 +103,19 @@ label.required:after {
 .error {
   background: #FCF8E3;
   border: #FAEBCC;
+}
+
+.loader {
+  border: 16px solid #1AB394;
+  border-top: 16px solid #23527C;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 0.7s linear infinite;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin, @-webkit-keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
