@@ -8,8 +8,11 @@
     = f.label :customer_name, class: "required"
     = f.text_field :customer_name, class: "form-control required"
   .form-group
+    = f.label :customer_email, class: "required"
+    = f.email_field :customer_email, class: "form-control required"
+  .form-group
     = f.label :application_id, class: "required"
-    = f.text_field :application_id, class: "form-control required"
+    = f.number_field :application_id, class: "form-control required"
   .form-group
     = f.label :program, class: "required"
     = f.select :program,
@@ -20,10 +23,10 @@
     = f.text_field :opportunity_name, class: "form-control required"
   .form-group
     = f.label :tag
-    = f.text_field :tag, class: "form-control required"
+    = f.text_field :tag, class: "form-control required", placeholder: "Marcador customizado não obrigatório"
   .form-group
     = f.label :value, class: "required"
-    = f.text_field :value, class: "form-control required"
+    = f.telephone_field :value, class: "form-control required"
   .form-group
     = f.submit "Enviar", class: "form-button"
     = link_to "Voltar", payments_path, class: "link-button"

@@ -6,11 +6,13 @@ pt-BR:
       payment:
         application_id: ID da aplicação no EXPA
         customer_name: Nome do EP
+        customer_email: Email
         local_committee: Comitê local
         opportunity_name: Nome da oportunidade
         program: Programa
         tag: Tag
         value: Valor
+        boleto_url: Link para o boleto
         statuses:
           authorized: Autorizado
           chargedback: Estornado

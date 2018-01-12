@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :payment do
     customer_name "John Doe"
+    customer_email "johndoe@gmail.com"
     local_committee "curitiba"
     application_id "32"
     program "gv"
