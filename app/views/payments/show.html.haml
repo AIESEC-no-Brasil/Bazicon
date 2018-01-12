@@ -33,7 +33,7 @@
                     %label= Payment.human_attribute_name :program
                     %p.form-control-static{ data: { program: payment.program.humanize } }
                       = payment.program.upcase
-                - if current_user
+                - if user_signed_in?
                   .col-lg-6
                     .form-group
                       %label= Payment.human_attribute_name :application_id
@@ -60,12 +60,12 @@
                       %label= Payment.human_attribute_name :boleto_url
                       %p.form-control-static
                         = link_to payment.boleto_url, payment.boleto_url
-            - if user_signed_in? && can?(:manage, payment)
               .row
                 .form-group
                   .col-lg-12
-                    = link_to "Listar Pagamentos", payments_path, class: "link-button"
-                    - if params[:created]
-                      = link_to "Novo Pagamento", new_payment_path, class: "link-button"
+                    - if user_signed_in? && can?(:manage, payment)
+                      = link_to "Listar Pagamentos", payments_path, class: "link-button"
+                      - if params[:created]
+                        = link_to "Novo Pagamento", new_payment_path, class: "link-button"
                     - if payment.created?
                       = render 'shared/payments/checkout.html.haml'
