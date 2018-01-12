@@ -105,17 +105,27 @@ label.required:after {
   border: #FAEBCC;
 }
 
+.loading-alert {
+  display: flex;
+}
+
 .loader {
-  border: 16px solid #1AB394;
-  border-top: 16px solid #23527C;
+	margin-right: 10px;
+  border: 4px solid #1AB394;
+  border-top: 4px solid #23527C;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 20px;
+  height: 20px;
   -webkit-animation: spin 0.7s linear infinite;
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin, @-webkit-keyframes spin {
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }

@@ -2,7 +2,7 @@ $(document).ready(function() {
   var button = $('#pay-button');
 
   if (sessionStorage.message) {
-    addFlash(sessionStorage.message);
+    add_flash(sessionStorage.message);
     sessionStorage.removeItem('message');
   }
 
@@ -13,7 +13,16 @@ $(document).ready(function() {
       var checkout = new PagarMeCheckout.Checkout({"encryption_key": encryptionKey, success: function(data) {
         //Tratar aqui as ações de callback do checkout, como exibição de mensagem ou envio de token para captura da transação
         sessionStorage.message="Pagamento realizado com sucesso.";
-        location.reload();
+
+        if (data.payment_method == "boleto") {
+          add_loading_flash("Aguarde enquanto geramos seu boleto");
+          setTimeout(function() {
+            location.reload();
+          },3000);
+        } else {
+          location.reload();
+        }
+
       }});
 
       var _paymentInformation = $("[data-payment-information]");
@@ -39,7 +48,11 @@ $(document).ready(function() {
       };
       checkout.open(params);
   });
-  function addFlash(message) {
+  function add_flash(message) {
     $("#messages").append('<div class="alert alert-success">'+message+'</div>');
+  }
+
+  function add_loading_flash(message) {
+    $("#messages").append('<div class="alert alert-info loading-alert"><div class="loader"></div><span>'+message+'</span></div>');
   }
 });
