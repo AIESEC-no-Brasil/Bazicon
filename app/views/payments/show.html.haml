@@ -46,7 +46,7 @@
                     - if payment.created?
                       %p.form-control-static
                         = render 'shared/payments/checkout.html.haml'
-                - if payment.created? && payment.boleto_url
+                - if payment.waiting_payment? && payment.boleto_url
                   .col-lg-12
                     .form-group
                       %label= Payment.human_attribute_name :boleto_url
