@@ -21,12 +21,16 @@
                   %table.table.table-striped
                     %thead
                       %tr
+                        %th
+                          = link_to "ID", payments_path(order: 'id'), :class => 'table-link'
                         %th.table-header-link
                           = link_to "Nome do EP", payments_path(order: 'customer_name'), :class => 'table-link'
-                        %th 
+                        %th
                           = link_to "Comitê Local", payments_path(order: 'local_committee'), :class => 'table-link'
                         %th
                           = link_to "Programa", payments_path(order: 'program'), :class => 'table-link'
+                        %th
+                          = link_to "Aplicação", payments_path(order: 'application_id'), :class => 'table-link'
                         %th
                           = link_to "Valor", payments_path(order: 'value'), :class => 'table-link'
                         %th
@@ -36,10 +40,12 @@
                     %tbody
                       - payments.each do |payment|
                         %tr
+                          %td= payment.id
                           %td
                             = link_to payment.customer_name, payment_path(payment), :class => 'table-link'
                           %td= payment.local_committee.humanize
                           %td= payment.program.upcase
+                          %td= payment.application_id
                           %td= Money.new(payment.value, "BRL").format
                           %td= enum_l(payment, :status)
                           %td= l(payment.created_at)

@@ -13,7 +13,7 @@ class PaymentsController < ApplicationController
 
   def create
     if can?(:manage, payment) && payment.save
-      redirect_to payment_path(payment), notice: 'Pagamento registrado com sucesso!'
+      redirect_to payment_path(payment, created: true), notice: 'Pagamento registrado com sucesso!'
     else
       flash[:error] = 'Erro ao registrar o pagamento.'
       render :new
@@ -35,8 +35,10 @@ class PaymentsController < ApplicationController
   private
 
   def payment_params
+    # FIX-ME: remove this nonsens logic
+    params[:payment][:value] = params[:payment][:value].tr!('^0-9', '')
     params.require(:payment)
-      .permit(:customer_name, :local_committee, :status,
+      .permit(:customer_name, :customer_email, :local_committee, :status,
       :application_id, :program, :opportunity_name, :value, :tag)
   end
 end

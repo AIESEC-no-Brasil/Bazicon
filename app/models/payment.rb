@@ -1,7 +1,8 @@
 class Payment < ApplicationRecord
-  before_create :trim_value
+  # before_create :trim_value
 
   validates :customer_name, presence: true
+  validates :customer_email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
   validates :local_committee, presence: true
   validates :application_id, presence: true
   validates :program, presence: true
@@ -32,10 +33,4 @@ class Payment < ApplicationRecord
     credit_card: 0,
     boleto: 1
   }
-
-  private
-
-  def trim_value
-    self.value.tr!('^0-9', '')
-  end
 end
