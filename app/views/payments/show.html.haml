@@ -54,12 +54,6 @@
                     %label= Payment.human_attribute_name :status
                     %p.form-control-static
                       = enum_l(payment, :status).try(:humanize)
-                - if payment.waiting_payment? && payment.boleto_url
-                  .col-lg-12
-                    .form-group
-                      %label= Payment.human_attribute_name :boleto_url
-                      %p.form-control-static
-                        = link_to payment.boleto_url, payment.boleto_url
               .row
                 .form-group
                   .col-lg-12
@@ -67,5 +61,7 @@
                       = link_to "Listar Pagamentos", payments_path, class: "link-button"
                       - if params[:created]
                         = link_to "Novo Pagamento", new_payment_path, class: "link-button"
+                    - if payment.waiting_payment? && payment.boleto_url?
+                      = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
                     - if payment.created?
                       = render 'shared/payments/checkout.html.haml'

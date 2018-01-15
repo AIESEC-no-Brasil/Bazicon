@@ -1,10 +1,11 @@
 class PaymentsController < ApplicationController
   before_action :authenticate_user!, except: [ :show ]
+  helper_method :sort_column, :sort_direction
 
   expose :user, -> { current_user }
   expose :local_committee, -> { user.local_committee }
   expose :payment
-  expose(:payments) { Payment.where(local_committee: local_committee).order(params[:order]).paginate(:page => params[:page], :per_page => 25) }
+  expose(:payments) { Payment.where(local_committee: local_committee).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 25) }
 
   def new
     redirect_to root_path unless can?(:manage, payment)
@@ -36,6 +37,14 @@ class PaymentsController < ApplicationController
   end
 
   private
+
+  def sort_column
+    Payment.column_names.include?(params[:sort]) ? params[:sort] : "customer_name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
   def payment_params
     params.require(:payment)

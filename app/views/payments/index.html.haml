@@ -22,21 +22,21 @@
                     %thead
                       %tr
                         %th
-                          = link_to "ID", payments_path(order: 'id'), :class => 'table-link'
+                          = sortable("id", "ID")
                         %th.table-header-link
-                          = link_to "Nome do EP", payments_path(order: 'customer_name'), :class => 'table-link'
+                          = sortable("customer_name", "Nome do EP")
                         %th
-                          = link_to "Comitê Local", payments_path(order: 'local_committee'), :class => 'table-link'
+                          = sortable("local_committee", "Comitê Local")
                         %th
-                          = link_to "Programa", payments_path(order: 'program'), :class => 'table-link'
+                          = sortable("program", "Programa")
                         %th
-                          = link_to "Aplicação", payments_path(order: 'application_id'), :class => 'table-link'
+                          = sortable("application_id", "Aplicação")
                         %th
-                          = link_to "Valor", payments_path(order: 'value'), :class => 'table-link'
+                          = sortable("value", "Valor")
                         %th
-                          = link_to "Status", payments_path(order: 'status'), :class => 'table-link'
+                          = sortable("status", "Status")
                         %th
-                          = link_to "Criado em", payments_path(order: 'created_at'), :class => 'table-link'
+                          = sortable("created_at", "Criado em")
                     %tbody
                       - payments.each do |payment|
                         %tr
