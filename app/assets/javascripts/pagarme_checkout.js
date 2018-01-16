@@ -2,7 +2,7 @@ $(document).ready(function() {
   var button = $('#pay-button');
 
   if (sessionStorage.message) {
-    add_flash(sessionStorage.message);
+    add_warning_flash(sessionStorage.message);
     sessionStorage.removeItem('message');
   }
 
@@ -12,7 +12,7 @@ $(document).ready(function() {
       var encryptionKey = $('#pay-button').data('pagarme-enc-key');
       var checkout = new PagarMeCheckout.Checkout({"encryption_key": encryptionKey, success: function(data) {
         //Tratar aqui as ações de callback do checkout, como exibição de mensagem ou envio de token para captura da transação
-        sessionStorage.message="Pagamento realizado com sucesso.";
+        sessionStorage.message="Seu pagamento foi registrado, estamos efetuando a cobrança.";
 
         if (data.payment_method == "boleto") {
           add_loading_flash("Aguarde enquanto geramos seu boleto");
@@ -50,6 +50,10 @@ $(document).ready(function() {
   });
   function add_flash(message) {
     $("#messages").append('<div class="alert alert-success">'+message+'</div>');
+  }
+
+  function add_warning_flash(message) {
+    $("#messages").append('<div class="alert alert-warning">'+message+'</div>');
   }
 
   function add_loading_flash(message) {
