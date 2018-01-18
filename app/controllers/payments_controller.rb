@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
 
   expose :user, -> { current_user }
   expose :local_committee, -> { user.local_committee }
-  expose :payment
+  expose :payment, find_by: :slug
   expose(:payments) { Payment.where(local_committee: local_committee).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 25) }
 
   def new
