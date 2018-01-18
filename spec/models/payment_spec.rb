@@ -8,6 +8,7 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to respond_to :program }
   it { is_expected.to respond_to :opportunity_name }
   it { is_expected.to respond_to :value }
+  it { is_expected.to respond_to :slug }
 
   it { is_expected.to validate_presence_of(:customer_name) }
   it { is_expected.to validate_presence_of(:customer_email) }
@@ -16,6 +17,7 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to validate_presence_of(:program) }
   it { is_expected.to validate_presence_of(:opportunity_name) }
   it { is_expected.to validate_presence_of(:value) }
+  it { is_expected.to validate_uniqueness_of(:slug) }
 
   it { is_expected.to allow_value('test@example.com').for(:customer_email) }
 

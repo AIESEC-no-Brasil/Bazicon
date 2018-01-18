@@ -42,7 +42,7 @@ RSpec.describe PaymentsController, type: :controller do
   describe "#show" do
     before do
       payment.save
-      get :show, params: { id: payment }
+      get :show, params: { id: payment.slug }
     end
 
     it { is_expected.to expose(:payment).as payment }
@@ -51,7 +51,7 @@ RSpec.describe PaymentsController, type: :controller do
   describe "#destroy" do
     before { payment.save }
     subject(:do_delete) do
-      delete :destroy, params: { id: payment.id }
+      delete :destroy, params: { id: payment.slug }
     end
 
     it { expect { do_delete }.to change(Payment, :count).by(-1) }

@@ -42,7 +42,7 @@
                         %tr
                           %td= payment.id
                           %td
-                            = link_to payment.customer_name, payment_path(payment), :class => 'table-link'
+                            = link_to payment.customer_name, payment_path(id: payment.slug), :class => 'table-link'
                           %td= payment.local_committee.humanize
                           %td= payment.program.upcase
                           %td= payment.application_id
