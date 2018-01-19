@@ -11,6 +11,6 @@ class User < ApplicationRecord
     brasilia: 1,
     limeira: 2,
     porto_alegre: 3,
-    uberlandia: 4
+    belo_horizonte: 4
   }
 end
