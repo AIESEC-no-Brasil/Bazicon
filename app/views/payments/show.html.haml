@@ -57,6 +57,11 @@
               .row
                 .form-group
                   .col-lg-12
+                    = hidden_field_tag 'payment-url', payment_url(payment)
+                    = button_tag "Copiar link", id: "copy-btn",
+                      data: { clipboard_action: "copy", clipboard_target: "#payment-url" },
+                      class: "form-button"
+
                     - if user_signed_in? && can?(:manage, payment)
                       = link_to "Listar Pagamentos", payments_path, class: "link-button"
                       - if params[:created]

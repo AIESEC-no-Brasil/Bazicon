@@ -4,7 +4,6 @@ gem 'bcrypt'
 gem 'better_errors'
 gem 'bootstrap-sass'
 gem 'cancancan'
-gem 'clipboard-rails'
 gem 'clockwork', :require => false
 gem 'coffee-rails'
 gem 'decent_exposure'
