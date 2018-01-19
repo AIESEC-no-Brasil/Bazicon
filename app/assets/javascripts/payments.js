@@ -6,7 +6,6 @@ $().ready(function() {
   gPaymentValue.maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
 
   $("#copy-btn").on('click', function() {
-    console.log('clicked');
     copy_to_clipboard("#payment-url");
   });
 });
@@ -17,10 +16,10 @@ $("[name=commit]").submit(function(){
 })
 
 function copy_to_clipboard(element) {
-  console.log($(element).val());
-  var $temp = $("<input>");
+  var temp = $("<input>");
+
   $("body").append($temp);
-  $temp.val($(element).val()).select();
+  temp.val($(element).val()).select();
   document.execCommand("copy");
   $temp.remove();
 }
