@@ -63,5 +63,5 @@
                         = link_to "Novo Pagamento", new_payment_path, class: "link-button"
                     - if payment.waiting_payment? && payment.boleto_url?
                       = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
-                    - if payment.created?
+                    - if payment.created? && !user_signed_in?
                       = render 'shared/payments/checkout.html.haml'
