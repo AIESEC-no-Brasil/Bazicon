@@ -95,6 +95,7 @@ GEM
       capistrano-bundler
       puma (~> 3.4)
     chronic (0.10.2)
+    clipboard-rails (1.7.1)
     clockwork (2.0.2)
       activesupport
       tzinfo
@@ -474,6 +475,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-shoryuken
   capistrano3-puma
+  clipboard-rails
   clockwork
   coffee-rails
   decent_exposure
