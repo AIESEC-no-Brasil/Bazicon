@@ -5,5 +5,5 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:local_committee) }
 
   it { is_expected.to define_enum_for(:local_committee)
-        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :uberlandia ] }
+        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :belo_horizonte ] }
 end
