@@ -30,7 +30,7 @@ RSpec.describe Payment, type: :model do
                 :waiting_payment, :pending_refund,
                 :refused, :chargedback, :created ] }
   it { is_expected.to define_enum_for(:local_committee)
-        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :uberlandia ] }
+        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :belo_horizonte ] }
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }
