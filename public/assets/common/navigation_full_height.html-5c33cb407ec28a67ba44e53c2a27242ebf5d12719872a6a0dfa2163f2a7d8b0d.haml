@@ -1,0 +1,297 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse{"full-scroll" => ""}
+    %ul#side-menu.nav.metismenu{"side-navigation" => ""}
+      %li.nav-header
+        .profile-element{"uib-dropdown" => ""}
+          %img.img-circle{:alt => "image", :src => "img/profile_small.jpg"}/
+          %a{:href => "", "uib-dropdown-toggle" => ""}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold David Williams
+              %span.text-muted.text-xs.block
+                Art Director
+                %b.caret
+          %ul.animated.fadeInRight.m-t-xs{"uib-dropdown-menu" => ""}
+            %li
+              %a{"ui-sref" => "profile"} Profile
+            %li
+              %a{"ui-sref" => "contacts"} Contacts
+            %li
+              %a{"ui-sref" => "inbox"} Mailbox
+            %li.divider
+            %li
+              %a{:href => "../login.html"} Logout
+        .logo-element
+          IN+
+      %li{"ng-class" => "{active: $state.includes('dashboards')}"}
+        %a{:href => "index.html"}
+          %i.fa.fa-th-large
+          %span.nav-label {{ 'DASHBOARD' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('dashboards')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "dashboards.dashboard_1"} {{ 'DASHBOARD' | translate }} v.1
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "dashboards.dashboard_2"} {{ 'DASHBOARD' | translate }} v.2
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "dashboards.dashboard_3"} {{ 'DASHBOARD' | translate }} v.3
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "dashboards.dashboard_4_1"} {{ 'DASHBOARD' | translate }} v.4
+      %li{"ui-sref-active" => "active"}
+        %a{"ui-sref" => "layouts"}
+          %i.fa.fa-diamond
+          %span.nav-label {{ 'LAYOUTS' | translate }}
+      %li{"ng-class" => "{active: $state.includes('charts')}"}
+        %a{:href => ""}
+          %i.fa.fa-bar-chart-o
+          %span.nav-label {{ 'GRAPHS' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('charts')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.flot_chart"} Flot Charts
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.rickshaw_chart"} Rickshaw Charts
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.chartjs_chart"} Chart.js
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.chartist_chart"} Chartist
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.peity_chart"} Peity Charts
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "charts.sparkline_chart"} Sparkline Charts
+      %li{"ng-class" => "{active: $state.includes('mailbox')}"}
+        %a{"ui-sref" => "inbox"}
+          %i.fa.fa-envelope
+          %span.nav-label {{ 'MAILBOX' | translate }}
+          %span.label.label-warning.pull-right 16/24
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('mailbox')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "mailbox.inbox"} Inbox
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "mailbox.email_view"} Email view
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "mailbox.email_compose"} Compose email
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "mailbox.email_template"} Email template
+      %li{"ui-sref-active" => "active"}
+        %a{"ui-sref" => "metrics"}
+          %i.fa.fa-pie-chart
+          %span.nav-label {{ 'METRICS' | translate }}
+          %span.label.label-primary.pull-right NEW
+      %li{"ui-sref-active" => "active"}
+        %a{"ui-sref" => "widgets"}
+          %i.fa.fa-flask
+          %span.nav-label {{ 'WIDGETS' | translate }}
+      %li{"ng-class" => "{active: $state.includes('forms')}"}
+        %a{:href => ""}
+          %i.fa.fa-edit
+          %span.nav-label {{ 'FORMS' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('forms')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "forms.basic_form"} Basic form
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "forms.advanced_plugins"} Advanced Plugins
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "forms.wizard.step_one"} Wizard
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "forms.file_upload"} File Upload
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "forms.text_editor"} Text Editor
+      %li{"ng-class" => "{active: $state.includes('app')}"}
+        %a{:href => ""}
+          %i.fa.fa-desktop
+          %span.nav-label {{ 'APPVIEWS' | translate }}
+          %span.pull-right.label.label-primary SPECIAL
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('app')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.contacts"} Contacts
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.profile"} Profile
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.projects"} Projects
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.project_detail"} Project detail
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.teams_board"} Teams board
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.social_feed"} Social feed
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.clients"} Clients
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.file_manager"} File manager
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.calendar"} Calendar
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.issue_tracker"} Issue tracker
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.blog"} Blog
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.article"} Article
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.faq"} FAQ
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.timeline"} Timeline
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.pin_board"} Pin board
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "app.invoice"} Invoice
+      %li{"ng-class" => "{active: $state.includes('pages')}"}
+        %a{:href => ""}
+          %i.fa.fa-files-o
+          %span.nav-label {{ 'OTHERPAGES' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('pages')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "pages.search_results"} Search results
+          %li
+            %a{"ui-sref" => "lockscreen"} Lockscreen
+          %li
+            %a{"ui-sref" => "errorOne"} 404 Page
+          %li
+            %a{"ui-sref" => "errorTwo"} 500 Page
+          %li
+            %a{"ui-sref" => "login"} Login
+          %li
+            %a{"ui-sref" => "login_two_columns"} Login v.2
+          %li
+            %a{"ui-sref" => "forgot_password"} Forgot password
+          %li
+            %a{"ui-sref" => "register"} Register
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "pages.empy_page"} Empty page
+      %li{"ng-class" => "{active: $state.includes('miscellaneous')}"}
+        %a{:href => ""}
+          %i.fa.fa-globe
+          %span.nav-label {{ 'MISCELLANEOUS' | translate }}
+          %span.label.label-info.pull-right NEW
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('miscellaneous')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.notify"} Notification
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.nestable_list"} Nestable list
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.agile_board"} Agile board
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.timeline_2"} Timeline v.2
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.diff"} Diff
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.sweet_alert"} Sweet alert
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.idle_timer"} Idle timer
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.spinners"} Spinners
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.live_favicon"} Live favicon
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.google_maps"} Google maps
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.code_editor"} Code editor
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.forum_view"} Forum view
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.validation"} Validation
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.modal_window"} Modal window
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "miscellaneous.chat_view"} Chat view
+      %li{"ng-class" => "{active: $state.includes('ui')}"}
+        %a{:href => ""}
+          %i.fa.fa-flask
+          %span.nav-label {{ 'UIELEMENTS' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('ui')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.typography"} Typography
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.icons"} Icons
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.draggable"} Draggable Panels
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.buttons"} Buttons
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.video"} Video
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.tabs_panels"} Panels
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.tabs"} Tabs
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.notifications_tooltips"} Notifications & Tooltips
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "ui.badges_labels"} Badges, Labels, Progress
+      %li{"ui-sref-active" => "active"}
+        %a{"ui-sref" => "grid_options"}
+          %i.fa.fa-laptop
+          %span.nav-label {{ 'GRIDOPTIONS' | translate }}
+      %li{"ng-class" => "{active: $state.includes('tables')}"}
+        %a{:href => ""}
+          %i.fa.fa-table
+          %span.nav-label {{ 'TABLES' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('tables')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "tables.static_table"} Static Tables
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "tables.data_tables"} Data Tables
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "tables.foo_table"} Foo Table
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "tables.nggrid"} NG Grid
+      %li{"ng-class" => "{active: $state.includes('commerce')}"}
+        %a{:href => "#"}
+          %i.fa.fa-shopping-cart
+          %span.nav-label {{ 'COMMERCE' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('commerce')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "commerce.products_grid"} Products list (front)
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "commerce.product_list"} Product list (admin)
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "commerce.product"} Product edit
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "commerce.orders"} Orders
+      %li{"ng-class" => "{active: $state.includes('gallery')}"}
+        %a{:href => ""}
+          %i.fa.fa-picture-o
+          %span.nav-label {{ 'GALLERY' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level{"ng-class" => "{in: $state.includes('gallery')}"}
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "gallery.basic_gallery"} Lightbox Gallery
+          %li{"ui-sref-active" => "active"}
+            %a{"ui-sref" => "gallery.bootstrap_carousel"} Bootstrap Carusela
+      %li
+        %a{:href => ""}
+          %i.fa.fa-sitemap
+          %span.nav-label {{ 'MENULEVELS' | translate }}
+          %span.fa.arrow
+        %ul.nav.nav-second-level
+          %li
+            %a{:href => ""}
+              Third Level
+              %span.fa.arrow
+            %ul.nav.nav-third-level
+              %li
+                %a{:href => ""} Third Level Item
+              %li
+                %a{:href => ""} Third Level Item
+              %li
+                %a{:href => ""} Third Level Item
+          %li
+            %a{:href => ""} Second Level Item
+          %li
+            %a{:href => ""} Second Level Item
+          %li
+            %a{:href => ""} Second Level Item
+      %li{"ui-sref-active" => "active"}
+        %a{"ui-sref" => "css_animations"}
+          %i.fa.fa-magic
+          %span.nav-label {{ 'ANIMATIONS' | translate }}
+          %span.label.label-info.pull-right 62
+      %li.landing_link
+        %a{"ui-sref" => "landing"}
+          %i.fa.fa-star
+          %span.nav-label {{ 'LANDING' | translate }}
+          %span.label.label-warning.pull-right NEW

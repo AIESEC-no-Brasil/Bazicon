@@ -1,4 +1,4 @@
-class CreateExpaOffices < ActiveRecord::Migration
+class CreateExpaOffices < ActiveRecord::Migration[5.1]
   def change
     create_table :expa_offices do |t|
       t.column :xp_id, :integer

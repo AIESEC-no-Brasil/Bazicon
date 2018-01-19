@@ -1,4 +1,4 @@
-class CreateHostProblems < ActiveRecord::Migration
+class CreateHostProblems < ActiveRecord::Migration[5.1]
   def change
     create_table :host_problems do |t|
       t.timestamp :reported_date

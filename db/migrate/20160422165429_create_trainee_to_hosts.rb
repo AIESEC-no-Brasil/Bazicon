@@ -1,4 +1,4 @@
-class CreateTraineeToHosts < ActiveRecord::Migration
+class CreateTraineeToHosts < ActiveRecord::Migration[5.1]
   def change
     create_table :trainee_to_hosts do |t|
       t.integer :host_id
