@@ -9,9 +9,3 @@ machine:
 test:
   override:
     - bundle exec rspec spec --exclude-pattern "spec/api/*_spec.rb"
-
-deployment:
-  dev:
-    branch: dev
-    commands:
-      - bundle exec cap staging deploy
