@@ -16,10 +16,10 @@ $("[name=commit]").submit(function(){
 })
 
 function copy_to_clipboard(element) {
-  var temp = $("<input>");
+  var $temp = $("<input>");
 
   $("body").append($temp);
-  temp.val($(element).val()).select();
+  $temp.val($(element).val()).select();
   document.execCommand("copy");
   $temp.remove();
 }
