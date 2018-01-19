@@ -1,0 +1,67 @@
+- breadcrumb :payment, payment
+#wrapper.gray-bg
+  .wrapper.wrapper-content.animated.fadeInRight.center-block
+    .col-xs-12
+      .ibox
+        .ibox-content
+          %h1
+            Pagamento
+          %fieldset{:style => "height: auto"}
+            #messages
+              - flash.each do |name, msg|
+                %p
+                  = content_tag :div, msg.html_safe, class: name
+            .row
+              .col-xs-12.b-r{ "data-payment-information" => "", "data-tag" => payment.tag, "data-payment-id" => payment.id }
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :customer_name
+                    %p.form-control-static{ data: { ep_name: payment.customer_name } }
+                      = payment.customer_name
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :customer_email
+                    %p.form-control-static{ data: { ep_name: payment.customer_email } }
+                      = payment.customer_email
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :local_committee
+                    %p.form-control-static{ data: { local_committee: payment.local_committee.humanize } }
+                      = payment.local_committee.humanize
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :program
+                    %p.form-control-static{ data: { program: payment.program.humanize } }
+                      = payment.program.upcase
+                - if user_signed_in?
+                  .col-lg-6
+                    .form-group
+                      %label= Payment.human_attribute_name :application_id
+                      %p.form-control-static
+                        = payment.application_id
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :opportunity_name
+                    %p.form-control-static{ data: { opportunity_name: payment.opportunity_name.humanize } }
+                      = payment.opportunity_name.humanize
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :value
+                    %p.form-control-static{ data: { value: payment.value } }
+                      = Money.new(payment.value, "BRL").format
+                .col-lg-6
+                  .form-group
+                    %label= Payment.human_attribute_name :status
+                    %p.form-control-static
+                      = enum_l(payment, :status).try(:humanize)
+              .row
+                .form-group
+                  .col-lg-12
+                    - if user_signed_in? && can?(:manage, payment)
+                      = link_to "Listar Pagamentos", payments_path, class: "link-button"
+                      - if params[:created]
+                        = link_to "Novo Pagamento", new_payment_path, class: "link-button"
+                    - if payment.waiting_payment? && payment.boleto_url?
+                      = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
+                    - if payment.created? && !user_signed_in?
+                      = render 'shared/payments/checkout.html.haml'
