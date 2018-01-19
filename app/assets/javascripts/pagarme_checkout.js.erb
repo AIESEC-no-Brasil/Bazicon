@@ -27,7 +27,7 @@ $(document).ready(function() {
 
       var _paymentInformation = $("[data-payment-information]");
       var _paymentId = $("[data-payment-id]").data("payment-id");
-      var _postbackUrl = "https://bazicon.aiesec.org.br/api/v1/pagarme/postback/" + _paymentId;
+      var _postbackUrl = "<%= ENV["POSTBACK_URL"] %>" + _paymentId;
 
       // DEFINIR AS OPÇÕES
       // e abrir o modal
