@@ -1,5 +1,0 @@
-= params.inspect
-= payment = Payment.find_by(slug: params[:payment_id])
-= "#{Rails.public_path}/contracts/#{payment.local_committee}.pdf"
-= controller.send_file("#{Rails.public_path}/contracts/#{payment.local_committee}.pdf", filename: "#{payment.local_committee}.pdf", type: "application/pdf")
-= link_to "contratinho", '/contracts/curitiba.pdf', target: '_blank'
