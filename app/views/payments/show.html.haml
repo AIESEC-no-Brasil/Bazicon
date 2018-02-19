@@ -26,8 +26,8 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :local_committee
-                    %p.form-control-static{ data: { local_committee: payment.local_committee.humanize } }
-                      = payment.local_committee.humanize
+                    %p.form-control-static{ data: { local_committee: payment.local_committee.try(:name_key).try(:humanize) } }
+                      = payment.local_committee.try(:name_key).try(:humanize)
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :program
