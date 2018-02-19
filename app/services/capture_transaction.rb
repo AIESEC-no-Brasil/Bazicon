@@ -38,7 +38,8 @@ class CaptureTransaction
       opportunity_name: payment.opportunity_name.humanize,
       program: payment.program.humanize,
       lc: payment.local_committee,
-      tag: payment.tag,
+      tag: payment.tag
+      },
       split_rules: [
         {
           recipient_id: ENV["AIESEC_BANK_ACCOUNT"],
@@ -52,6 +53,5 @@ class CaptureTransaction
           charge_processing_fee: true
         }
       ])
-      })
   end
 end
