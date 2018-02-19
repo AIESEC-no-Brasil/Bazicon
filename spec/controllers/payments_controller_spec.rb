@@ -15,7 +15,7 @@ RSpec.describe PaymentsController, type: :controller do
 
     it { is_expected.to expose(:user).as user }
     it { is_expected.to expose(:payment) }
-    it { expect(payment.local_committee).to eq user.local_committee }
+    it { expect(controller.payment.local_committee).to eq user.local_committee }
   end
 
   describe "#create" do
