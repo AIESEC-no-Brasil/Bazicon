@@ -6,11 +6,5 @@ class User < ApplicationRecord
 
   validates :local_committee, presence: true
 
-  enum local_committee: {
-    curitiba: 0,
-    brasilia: 1,
-    limeira: 2,
-    porto_alegre: 3,
-    belo_horizonte: 4
-  }
+  belongs_to :local_committee
 end
