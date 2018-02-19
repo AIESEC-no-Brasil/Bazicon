@@ -10,14 +10,9 @@ class Payment < ApplicationRecord
   validates :slug, uniqueness: true
   validates :value, presence: true
 
+  belongs_to :local_committee
+
   enum program: { gv: 0, ge: 1, gt: 2 }
-  enum local_committee: {
-    curitiba: 0,
-    brasilia: 1,
-    limeira: 2,
-    porto_alegre: 3,
-    belo_horizonte: 4
-  }
   enum status: {
     processing: 0,
     authorized: 1,

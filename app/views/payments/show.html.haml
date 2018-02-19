@@ -65,6 +65,8 @@
                       = link_to "Listar Pagamentos", payments_path, class: "link-button"
                       - if params[:created]
                         = link_to "Novo Pagamento", new_payment_path, class: "link-button"
+                    = link_to "Contrato", "/contracts/#{payment.local_committee}.pdf",
+                      class: "link-button", target: '_blank'
                     - if payment.waiting_payment? && payment.boleto_url?
                       = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
                     - if payment.created? && !user_signed_in?

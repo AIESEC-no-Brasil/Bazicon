@@ -19,6 +19,8 @@ RSpec.describe Payment, type: :model do
   it { is_expected.to validate_presence_of(:value) }
   it { is_expected.to validate_uniqueness_of(:slug) }
 
+  it { is_expected.to belong_to :local_committee }
+
   it { is_expected.to allow_value('test@example.com').for(:customer_email) }
 
   it { is_expected.not_to allow_values('testexample').for(:customer_email) }
@@ -29,8 +31,6 @@ RSpec.describe Payment, type: :model do
         .with [ :processing, :authorized, :paid, :refunded,
                 :waiting_payment, :pending_refund,
                 :refused, :chargedback, :created ] }
-  it { is_expected.to define_enum_for(:local_committee)
-        .with [ :curitiba, :brasilia, :limeira, :porto_alegre, :belo_horizonte ] }
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }
