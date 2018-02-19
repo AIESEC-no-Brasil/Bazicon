@@ -34,4 +34,28 @@ RSpec.describe Payment, type: :model do
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }
+
+  describe 'program_fee' do
+    context 'returns correct fee for defined program' do
+      let(:payment) { FactoryGirl.create(:payment, program: "gv") }
+
+      it 'when gv' do
+        expect(payment.program_fee).to eq(54738)
+      end
+
+      it 'when ge' do
+        payment.update(program: "ge")
+
+        expect(payment.program_fee).to eq(65101)
+        payment.reload
+      end
+
+      it 'when gt' do
+        payment.update(program: "gt")
+
+        expect(payment.program_fee).to eq(109245)
+        payment.reload
+      end
+    end
+  end
 end

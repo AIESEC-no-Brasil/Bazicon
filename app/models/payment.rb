@@ -30,6 +30,17 @@ class Payment < ApplicationRecord
     boleto: 1
   }
 
+  def program_fee
+    case program
+    when "gv"
+      return 54738
+    when "ge"
+      return 65101
+    when "gt"
+      return 109245
+    end
+  end
+
 	def to_param
 		slug
 	end
