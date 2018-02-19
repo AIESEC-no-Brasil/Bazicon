@@ -1,6 +1,6 @@
 class LocalCommittee < ApplicationRecord
   validates :name_key, presence: true
-  validates :receiver_id, presence: true
+  validates :recipient_id, presence: true
 
   has_many :payments
 
