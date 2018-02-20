@@ -9,13 +9,13 @@ module Api
         def update_status
           if valid_postback?
             payment = Payment.find_by(id: params[:payment_id])
-            payment.update(pagarme_id: params[:id]) unless payment.pagarme_id
-            payment.update(payment_method: params[:transaction][:payment_method]) unless payment.payment_method
 
             if params[:event] == "transaction_status_changed"
               payment.update(status: params[:current_status])
 
               if params[:current_status] == "authorized"
+                payment.update(pagarme_id: params[:id]) unless payment.pagarme_id
+                payment.update(payment_method: params[:transaction][:payment_method]) unless payment.payment_method
                 CaptureTransaction.call(params[:payment_id])
               end
 
