@@ -10,6 +10,8 @@ class Payment < ApplicationRecord
   validates :slug, uniqueness: true
   validates :value, presence: true
 
+  validate :minimum_value
+
   belongs_to :local_committee
 
   enum program: { gv: 0, ge: 1, gt: 2 }
@@ -30,14 +32,20 @@ class Payment < ApplicationRecord
     boleto: 1
   }
 
+  def minimum_value
+    errors.add(:value, 'must be bigger than program fee') unless value.to_i > program_fee
+  end
+
   def program_fee
-    case program
-    when "gv"
+    case program&.to_sym
+    when :gv
       return 54738
-    when "ge"
+    when :ge
       return 65101
-    when "gt"
+    when :gt
       return 109245
+    else
+      return 0
     end
   end
 
