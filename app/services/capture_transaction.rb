@@ -47,7 +47,7 @@ class CaptureTransaction
           liable: true,
           charge_processing_fee: true
         },{
-          recipient_id: payment.local_committee.receiver_id,
+          recipient_id: payment.local_committee.recipient_id,
           amount: (payment.value - payment.program_fee),
           liable: true,
           charge_processing_fee: true
