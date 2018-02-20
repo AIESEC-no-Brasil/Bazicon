@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
+  subject { FactoryGirl.build(:payment) }
+
   it { is_expected.to respond_to :customer_name }
   it { is_expected.to respond_to :customer_email }
   it { is_expected.to respond_to :local_committee }
@@ -37,25 +39,38 @@ RSpec.describe Payment, type: :model do
 
   describe 'program_fee' do
     context 'returns correct fee for defined program' do
-      let(:payment) { FactoryGirl.create(:payment, program: "gv") }
+      let(:payment) { FactoryGirl.create(:payment, program: :gv) }
 
       it 'when gv' do
         expect(payment.program_fee).to eq(54738)
       end
 
       it 'when ge' do
-        payment.update(program: "ge")
+        payment.update(program: :ge)
 
         expect(payment.program_fee).to eq(65101)
         payment.reload
       end
 
       it 'when gt' do
-        payment.update(program: "gt")
+        payment.update(program: :gt)
 
         expect(payment.program_fee).to eq(109245)
         payment.reload
       end
+    end
+  end
+
+  describe 'minimum value' do
+    let(:payment) { FactoryGirl.build(:payment, value: 500000) }
+    it 'is valid when value is higher than program_fee' do
+      expect(payment.valid?).to eq(true)
+    end
+
+    it 'is invalid when value is lower than program_free' do
+      payment.value = payment.program_fee - 1
+
+      expect(payment.valid?).to eq(false)
     end
   end
 end

@@ -6,7 +6,7 @@ FactoryGirl.define do
     application_id "32"
     program "gv"
     opportunity_name "Living La Vida Loca"
-    value 1500
+    value 350000
     status "waiting_payment"
   end
 end
