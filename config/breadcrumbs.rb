@@ -1,10 +1,5 @@
-crumb :root do
-  link "Home", root_path
-end
-
 crumb :payments do
   link "Pagamentos", payments_path
-  parent :root
 end
 
 crumb :payment do |payment|
