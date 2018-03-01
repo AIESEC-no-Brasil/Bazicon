@@ -110,7 +110,7 @@ module DigitalTransformation
        'SANTA MARIA' => {'ids' => [958,306813159], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SANTAREM' => {'ids' => [2153,353882059], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'SANTOS' => {'ids' => [1816,306819356], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
-       'SÃO CARLOS (ARARAQUARA | PIRASSUNUNGA)' => {'ids' => [435,306812438], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
+       'SAO CARLOS (ARARAQUARA | PIRASSUNUNGA)' => {'ids' => [435,306812438], 'programs' => ['oGCDP','oGIP','oGE','oGT']},
        'SAO JOSE DO RIO PRETO' => {'ids' => [2147,353885407], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'SAO LUIS' => {'ids' => [2344,746673297], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
        'SAO PAULO - UNIDADE ABC' => {'ids' => [1647,340039892], 'programs' => ['oGIP','oGCDP','oGE','oGT']},
