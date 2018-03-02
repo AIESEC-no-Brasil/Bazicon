@@ -70,5 +70,5 @@
                       class: "link-button", target: '_blank'
                     - if payment.waiting_payment? && payment.boleto_url?
                       = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
-                    - if payment.created? && !user_signed_in?
+                    - if payment.pagarme_transactions.last.created? && !user_signed_in?
                       = render 'shared/payments/checkout.html.haml'
