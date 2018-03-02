@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Pagarme::PostbackController, type: :controller do
-  let(:payment) { FactoryGirl.create(:payment) }
+  let(:payment) { FactoryBot.create(:payment) }
 
   describe '#update_status' do
     before(:each) do

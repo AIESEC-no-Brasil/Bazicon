@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :expa_person do
 
   end
