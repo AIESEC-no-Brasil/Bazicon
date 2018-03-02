@@ -68,7 +68,7 @@
                         = link_to "Novo Pagamento", new_payment_path, class: "link-button"
                     = link_to "Contrato", "/contracts/#{payment.local_committee.name_key}.pdf",
                       class: "link-button", target: '_blank'
-                    - if payment.waiting_payment? && payment.boleto_url?
+                    - if payment.pagarme_transactions.last.waiting_payment? && payment.boleto_url?
                       = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
                     - if payment.pagarme_transactions.last.created? && !user_signed_in?
                       = render 'shared/payments/checkout.html.haml'
