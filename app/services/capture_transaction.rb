@@ -29,7 +29,7 @@ class CaptureTransaction
   end
 
   def transaction(payment)
-    PagarMe::Transaction.find(payment.pagarme_id)
+    PagarMe::Transaction.find(payment.pagarme_transactions.last.pagarme_id)
   end
 
   def capture(transaction)
