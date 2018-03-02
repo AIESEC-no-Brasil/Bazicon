@@ -50,7 +50,7 @@
                           %td= enum_l(payment.pagarme_transactions.last, :status)
                           %td= l(payment.created_at)
                           %td
-                            - if payment.created?
+                            - if payment.pagarme_transactions.last.created?
                               = link_to 'Excluir',
                                 payment_path(payment),
                                 data: { confirm: 'Tem certeza?' },
