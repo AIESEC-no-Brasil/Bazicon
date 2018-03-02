@@ -1,6 +1,7 @@
 class PagarmeTransaction < ApplicationRecord
-  validates :pagarme_id, presence: true
   validates :payment_id, presence: true
+
+  belongs_to :payment
 
   enum status: {
     processing: 0,

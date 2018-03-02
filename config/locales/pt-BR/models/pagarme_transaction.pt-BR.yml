@@ -1,0 +1,15 @@
+pt-BR:
+  activerecord:
+    models:
+      payment: Pagamento
+    attributes:
+      statuses:
+        authorized: Autorizado
+        chargedback: Estornado
+        created: Criado
+        paid: Pago
+        pending_refund: Devolução pendente
+        processing: Processando
+        refunded: Devolvido
+        refused: Recusado
+        waiting_payment: Aguardando pagamento

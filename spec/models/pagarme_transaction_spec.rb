@@ -5,7 +5,6 @@ RSpec.describe PagarmeTransaction, type: :model do
   it { is_expected.to respond_to(:payment_id) }
   it { is_expected.to respond_to(:status) }
 
-  it { is_expected.to validate_presence_of(:pagarme_id) }
   it { is_expected.to validate_presence_of(:payment_id) }
 
   it { is_expected.to define_enum_for(:status)

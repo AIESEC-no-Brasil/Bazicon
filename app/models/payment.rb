@@ -1,5 +1,6 @@
 class Payment < ApplicationRecord
 	before_create :set_slug
+  before_create { |payment| payment.pagarme_transactions.build(payment_id: id, status: :created) }
 
   validates :customer_name, presence: true
   validates :customer_email, presence: true, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
@@ -13,6 +14,7 @@ class Payment < ApplicationRecord
   validate :minimum_value
 
   belongs_to :local_committee
+  has_many :pagarme_transactions
 
   enum program: { gv: 0, ge: 1, gt: 2 }
   enum status: {
