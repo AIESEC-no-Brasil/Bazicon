@@ -29,10 +29,6 @@ RSpec.describe Payment, type: :model do
 
   it { is_expected.to define_enum_for(:program)
         .with [ :gv, :ge, :gt ] }
-  it { is_expected.to define_enum_for(:status)
-        .with [ :processing, :authorized, :paid, :refunded,
-                :waiting_payment, :pending_refund,
-                :refused, :chargedback, :created ] }
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }

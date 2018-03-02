@@ -17,17 +17,6 @@ class Payment < ApplicationRecord
   has_many :pagarme_transactions
 
   enum program: { gv: 0, ge: 1, gt: 2 }
-  enum status: {
-    processing: 0,
-    authorized: 1,
-    paid: 2,
-    refunded: 3,
-    waiting_payment: 4,
-    pending_refund: 5,
-    refused: 6,
-    chargedback: 7,
-    created: 8
-  }
 
   enum payment_method: {
     credit_card: 0,

@@ -11,13 +11,11 @@ module Api
             payment = Payment.find_by(id: params[:payment_id])
 
             if params[:event] == "transaction_status_changed"
-              if PagarmeTransaction.find(pagarme_id: params[:id])
-                PagarmeTransaction.find(pagarme_id: params[:id]).update(status: params[:current_status])
+              if PagarmeTransaction.find_by(pagarme_id: params[:id])
+                PagarmeTransaction.find_by(pagarme_id: params[:id]).update(status: params[:current_status])
               else
                 PagarMeTransaction.create(pagarme_id: params[:id], payment_id: payment.id, status: params[:current_status])
               end
-
-              payment.update(status: params[:current_status])
 
               if params[:current_status] == "authorized"
                 payment.update(payment_method: params[:transaction][:payment_method]) unless payment.payment_method
