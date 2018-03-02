@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpaOpportunityManager, type: :model do
-  subject { FactoryGirl.build(:expa_opportunity_manager) }
+  subject { FactoryBot.build(:expa_opportunity_manager) }
 
   it { is_expected.to belong_to(:expa_opportunity) }
   it { is_expected.to belong_to(:expa_manager) }

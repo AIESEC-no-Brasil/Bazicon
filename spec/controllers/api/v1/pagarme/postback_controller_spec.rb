@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Pagarme::PostbackController, type: :controller do
-  let(:payment) { FactoryGirl.create(:payment) }
+  let(:payment) { FactoryBot.create(:payment) }
+  let!(:pagarme_transaction) { FactoryBot.create(:pagarme_transaction, payment_id: payment.id) }
 
   describe '#update_status' do
     before(:each) do
@@ -13,12 +14,13 @@ RSpec.describe Api::V1::Pagarme::PostbackController, type: :controller do
         payment_id: payment.id,
         transaction: { payment_method: "credit_card" },
         event: "transaction_status_changed",
-        current_status: "paid"
+        current_status: "paid",
+        id: pagarme_transaction.pagarme_id
       }
 
       payment.reload
 
-      expect(payment.status).to eq("paid")
+      expect(payment.pagarme_transactions.last.status).to eq("paid")
     end
 
     # context 'authorized status' do

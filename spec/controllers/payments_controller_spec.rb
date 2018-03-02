@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
   let(:user) { create(:user) }
-  let(:payment) { create(:payment, status: "created" ) }
+  let(:payment) { create(:payment) }
+  let!(:pagarme_transaction) { create(:pagarme_transaction, status: :created, payment_id: payment.id) }
   let(:payments) { Payment.where(local_committee: user.local_committee) }
 
   before do

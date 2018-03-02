@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :expa_manager do
     xp_id 1
     name "MyString"

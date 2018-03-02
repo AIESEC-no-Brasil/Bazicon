@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :payment do
     customer_name "John Doe"
     customer_email "johndoe@gmail.com"
@@ -7,6 +7,5 @@ FactoryGirl.define do
     program "gv"
     opportunity_name "Living La Vida Loca"
     value 350000
-    status "waiting_payment"
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
-  subject { FactoryGirl.build(:payment) }
+  subject { FactoryBot.build(:payment) }
 
   it { is_expected.to respond_to :customer_name }
   it { is_expected.to respond_to :customer_email }
@@ -29,17 +29,13 @@ RSpec.describe Payment, type: :model do
 
   it { is_expected.to define_enum_for(:program)
         .with [ :gv, :ge, :gt ] }
-  it { is_expected.to define_enum_for(:status)
-        .with [ :processing, :authorized, :paid, :refunded,
-                :waiting_payment, :pending_refund,
-                :refused, :chargedback, :created ] }
 
   it { is_expected.to define_enum_for(:payment_method)
         .with [:credit_card, :boleto] }
 
   describe 'program_fee' do
     context 'returns correct fee for defined program' do
-      let(:payment) { FactoryGirl.create(:payment, program: :gv) }
+      let(:payment) { FactoryBot.create(:payment, program: :gv) }
 
       it 'when gv' do
         expect(payment.program_fee).to eq(54738)
@@ -62,7 +58,7 @@ RSpec.describe Payment, type: :model do
   end
 
   describe 'minimum value' do
-    let(:payment) { FactoryGirl.build(:payment, value: 500000) }
+    let(:payment) { FactoryBot.build(:payment, value: 500000) }
     it 'is valid when value is higher than program_fee' do
       expect(payment.valid?).to eq(true)
     end

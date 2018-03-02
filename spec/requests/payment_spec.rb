@@ -9,7 +9,7 @@ RSpec.describe "Payment", type: :request do
     end
 
     it "allows access to logged in user" do
-      sign_in FactoryGirl.create(:user)
+      sign_in FactoryBot.create(:user)
       get new_payment_path
 
       expect(response).to have_http_status(200)
@@ -18,7 +18,7 @@ RSpec.describe "Payment", type: :request do
 
   context "#create" do
     it "denies public access" do
-      payment_attributes = FactoryGirl.attributes_for(:payment)
+      payment_attributes = FactoryBot.attributes_for(:payment)
 
       expect {
         post "/payments", params: { payment: payment_attributes }
@@ -33,7 +33,7 @@ RSpec.describe "Payment", type: :request do
       before { sign_in(user) }
       
       it "allows access to logged in user" do
-        payment_attributes = FactoryGirl.attributes_for(:payment)
+        payment_attributes = FactoryBot.attributes_for(:payment)
 
         expect {
           post "/payments", params: { payment: payment_attributes }

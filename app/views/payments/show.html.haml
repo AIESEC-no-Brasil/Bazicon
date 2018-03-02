@@ -52,9 +52,9 @@
                       = Money.new(payment.value, "BRL").format
                 .col-lg-6
                   .form-group
-                    %label= Payment.human_attribute_name :status
+                    %label= PagarmeTransaction.human_attribute_name :status
                     %p.form-control-static
-                      = enum_l(payment, :status).try(:humanize)
+                      = enum_l(payment.pagarme_transactions.last, :status).try(:humanize)
               .row
                 .form-group
                   .col-lg-12
