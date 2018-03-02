@@ -33,7 +33,7 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
-    payment.created? && payment.destroy
+    payment.pagarme_transactions.last.created? && payment.destroy
     redirect_to action: :index
   end
 
