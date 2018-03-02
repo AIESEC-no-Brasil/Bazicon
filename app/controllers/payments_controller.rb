@@ -49,7 +49,7 @@ class PaymentsController < ApplicationController
 
   def payment_params
     params.require(:payment)
-      .permit(:customer_name, :customer_email, :local_committee, :status,
+      .permit(:customer_name, :customer_email, :local_committee,
       :application_id, :program, :opportunity_name, :value, :tag)
   end
 end

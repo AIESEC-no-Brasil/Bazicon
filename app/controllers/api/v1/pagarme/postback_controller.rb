@@ -14,7 +14,7 @@ module Api
               if PagarmeTransaction.find_by(pagarme_id: params[:id])
                 PagarmeTransaction.find_by(pagarme_id: params[:id]).update(status: params[:current_status])
               else
-                PagarMeTransaction.create(pagarme_id: params[:id], payment_id: payment.id, status: params[:current_status])
+                PagarmeTransaction.create(pagarme_id: params[:id], payment_id: payment.id, status: params[:current_status])
               end
 
               if params[:current_status] == "authorized"
