@@ -24,7 +24,7 @@ class Payment < ApplicationRecord
   }
 
   def minimum_value
-    errors.add(:value, 'must be bigger than program fee') unless value.to_i > program_fee
+    errors.add(:value, "O valor do pagamento deve ser maior que a taxa de #{display_fee}.") unless value.to_i > program_fee
   end
 
   def program_fee
@@ -51,5 +51,9 @@ class Payment < ApplicationRecord
       self.slug = SecureRandom.hex(8)
       break unless Payment.where(slug: slug).exists?
     end
+  end
+
+  def display_fee
+    Money.new(program_fee, "BRL").format
   end
 end
