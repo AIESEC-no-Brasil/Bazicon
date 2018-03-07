@@ -20,7 +20,10 @@ class PaymentsController < ApplicationController
     if can?(:manage, payment) && payment.save
       redirect_to payment_path(payment, created: true), notice: 'Pagamento registrado com sucesso!'
     else
-      flash.now[:error] = 'Erro ao registrar o pagamento.'
+      flash.now[:error] = ""
+      payment.errors.messages[:value].each do |message|
+        flash.now[:error] << message
+      end
       render :new
     end
   end
