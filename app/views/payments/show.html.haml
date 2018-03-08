@@ -27,7 +27,7 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :local_committee
-                    %p.form-control-static{ data: { local_committee: payment.local_committee.try(:name_key).try(:capitalize) } }
+                    %p.form-control-static{ data: { local_committee: payment.local_committee.try(:name_key).split('_').collect(&:capitalize).join(' ') } }
                       = payment.local_committee.try(:name_key).try(:capitalize)
                 .col-lg-6
                   .form-group
