@@ -44,7 +44,7 @@ class CaptureTransaction
         {
           recipient_id: ENV["AIESEC_BANK_ACCOUNT"],
           amount: payment.program_fee,
-          liable: true,
+          liable: false,
           charge_processing_fee: true
         },{
           recipient_id: payment.local_committee.recipient_id,

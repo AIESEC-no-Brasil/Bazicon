@@ -2,7 +2,7 @@
   .form-group
     = f.label :local_committee
     = f.hidden_field :local_committee_id, value: local_committee
-    %div= local_committee.try(:humanize)
+    %div= local_committee.try(:capitalize)
   .form-group
     = f.label :customer_name, class: "required"
     = f.text_field :customer_name, class: "form-control required"
