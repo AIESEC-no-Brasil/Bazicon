@@ -19,4 +19,9 @@ class ApplicationController < ActionController::Base
   #     return redirect_to main_path
   #   end
   # end
+  private
+
+  def after_sign_out_path_for(resource_or_scope)
+    payments_path
+  end
 end
