@@ -9,17 +9,21 @@ class PaymentsController < ApplicationController
 
   def new
     redirect_to root_path unless can?(:manage, payment)
-    self.payment.local_committee = User.local_committees[local_committee]
+    self.payment.local_committee = local_committee
   end
 
   def create
     # FIX-ME this nonsense logic
     payment.value = payment_params[:value].tr('^0-9', '')
+    self.payment.local_committee = local_committee
 
     if can?(:manage, payment) && payment.save
       redirect_to payment_path(payment, created: true), notice: 'Pagamento registrado com sucesso!'
     else
-      flash.now[:error] = 'Erro ao registrar o pagamento.'
+      flash.now[:error] = ""
+      payment.errors.messages[:value].each do |message|
+        flash.now[:error] << message
+      end
       render :new
     end
   end
@@ -32,7 +36,7 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
-    payment.created? && payment.destroy
+    payment.pagarme_transactions.last.created? && payment.destroy
     redirect_to action: :index
   end
 
@@ -48,7 +52,7 @@ class PaymentsController < ApplicationController
 
   def payment_params
     params.require(:payment)
-      .permit(:customer_name, :customer_email, :local_committee, :status,
+      .permit(:customer_name, :customer_email, :local_committee,
       :application_id, :program, :opportunity_name, :value, :tag)
   end
 end

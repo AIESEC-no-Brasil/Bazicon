@@ -1,8 +1,7 @@
 = form_for payment do |f|
   .form-group
     = f.label :local_committee
-    = f.hidden_field :local_committee, value: local_committee
-    = f.hidden_field :status, value: "created"
+    = f.hidden_field :local_committee_id, value: local_committee
     %div= local_committee.try(:humanize)
   .form-group
     = f.label :customer_name, class: "required"

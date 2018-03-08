@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      pagarme_transaction: Transação
+    attributes:
+      pagarme_transaction:
+        statuses:
+          authorized: Autorizado
+          chargedback: Estornado
+          created: Criado
+          paid: Pago
+          pending_refund: Devolução pendente
+          processing: Processando
+          refunded: Devolvido
+          refused: Recusado
+          waiting_payment: Aguardando pagamento

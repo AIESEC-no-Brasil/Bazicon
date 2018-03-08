@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpaPerson, type: :model do
-  subject { FactoryGirl.build(:expa_person) }
+  subject { FactoryBot.build(:expa_person) }
 
   it { is_expected.to have_many(:expa_person_managers) }
 

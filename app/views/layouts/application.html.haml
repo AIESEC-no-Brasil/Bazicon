@@ -26,7 +26,12 @@
 
       / Page wrapper
       #page-wrapper.gray-bg{"class" => "#{@extra_class}"}
-        = breadcrumbs display_single_fragment: true, style: :bootstrap
+        - if user_signed_in?
+          .row
+            .col-xs-11
+              = breadcrumbs display_single_fragment: true, style: :bootstrap
+            .col-xs-1
+              = link_to 'Sair', destroy_user_session_path, method: :delete
 
         / Page wrapper
         / = render 'layouts/topnavbar'

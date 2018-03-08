@@ -1,4 +1,5 @@
-- breadcrumb :payment, payment
+- if user_signed_in?
+  - breadcrumb :payment, payment
 #wrapper.gray-bg
   .wrapper.wrapper-content.animated.fadeInRight.center-block
     .col-xs-12
@@ -26,8 +27,8 @@
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :local_committee
-                    %p.form-control-static{ data: { local_committee: payment.local_committee.humanize } }
-                      = payment.local_committee.humanize
+                    %p.form-control-static{ data: { local_committee: payment.local_committee.try(:name_key).try(:humanize) } }
+                      = payment.local_committee.try(:name_key).try(:humanize)
                 .col-lg-6
                   .form-group
                     %label= Payment.human_attribute_name :program
@@ -51,9 +52,9 @@
                       = Money.new(payment.value, "BRL").format
                 .col-lg-6
                   .form-group
-                    %label= Payment.human_attribute_name :status
+                    %label= PagarmeTransaction.human_attribute_name :status
                     %p.form-control-static
-                      = enum_l(payment, :status).try(:humanize)
+                      = enum_l(payment.pagarme_transactions.last, :status).try(:humanize)
               .row
                 .form-group
                   .col-lg-12
@@ -65,7 +66,9 @@
                       = link_to "Listar Pagamentos", payments_path, class: "link-button"
                       - if params[:created]
                         = link_to "Novo Pagamento", new_payment_path, class: "link-button"
-                    - if payment.waiting_payment? && payment.boleto_url?
+                    = link_to "Contrato", "/contracts/#{payment.local_committee.name_key}.pdf",
+                      class: "link-button", target: '_blank'
+                    - if payment.pagarme_transactions.last.waiting_payment? && payment.boleto_url?
                       = link_to "Visualizar Boleto", payment.boleto_url, class: "link-button", target: :_blank
-                    - if payment.created? && !user_signed_in?
+                    - if payment.pagarme_transactions.last.created? && !user_signed_in?
                       = render 'shared/payments/checkout.html.haml'

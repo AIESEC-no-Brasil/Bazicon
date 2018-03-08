@@ -43,14 +43,14 @@
                           %td= payment.id
                           %td
                             = link_to payment.customer_name, payment_path(id: payment.slug), :class => 'table-link'
-                          %td= payment.local_committee.humanize
+                          %td= payment.local_committee.try(:name_key).try(:humanize)
                           %td= payment.program.upcase
                           %td= payment.application_id
                           %td= Money.new(payment.value, "BRL").format
-                          %td= enum_l(payment, :status)
+                          %td= enum_l(payment.pagarme_transactions.last, :status)
                           %td= l(payment.created_at)
                           %td
-                            - if payment.created?
+                            - if payment.pagarme_transactions.last.created?
                               = link_to 'Excluir',
                                 payment_path(payment),
                                 data: { confirm: 'Tem certeza?' },

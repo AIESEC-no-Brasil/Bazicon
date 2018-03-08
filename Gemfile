@@ -74,7 +74,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.5'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'spring'
   gem 'byebug'
 end
