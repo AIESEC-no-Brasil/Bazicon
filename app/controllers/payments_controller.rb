@@ -2,6 +2,9 @@ class PaymentsController < ApplicationController
   before_action :authenticate_user!, except: [ :show ]
   helper_method :sort_column, :sort_direction
 
+  sort_column ||= 'created_at'
+  sort_direction ||= 'desc'
+
   expose :user, -> { current_user }
   expose :local_committee, -> { user.local_committee }
   expose :payment, find_by: :slug
