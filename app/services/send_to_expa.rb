@@ -34,16 +34,16 @@ class SendToExpa
     case params["interested_program"]
       when 'GCDP', 'GV'
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
-        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[params["lc"].to_i]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
       when 'GIP', 'GT'
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogt[params["lc"].to_i]]['ids'][0]
-        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogt[params["lc"].to_i]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
       when 'GE'
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_oge[params["lc"].to_i]]['ids'][0]
-        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_oge[params["lc"].to_i]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
       else
         auth_form.field_with(:name => 'user[lc]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
-        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.entities_ogcdp[params["lc"].to_i]
+        auth_form.field_with(:name => 'user[lc_input]').value = DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]
     end
 
     page = agent.submit(auth_form, auth_form.buttons.first)
