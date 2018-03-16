@@ -47,9 +47,6 @@ class SendToExpa
     end
 
     Shoryuken.logger.info("============================")
-    Shoryuken.logger.info("TRABALHINHO DE IC2")
-    Shoryuken.logger.info("DIEGO DILLENBURG BUENO - 151153361 207001211")
-    Shoryuken.logger.info("PROFINHA ADRIANE")
     Shoryuken.logger.info("#{params}")
     Shoryuken.logger.info("#{params["lc"].to_i}")
     Shoryuken.logger.info("LC: #{DigitalTransformation.hash_entities_podio_expa[DigitalTransformation.entities_ogcdp[params["lc"].to_i]]['ids'][0]}")
