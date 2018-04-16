@@ -189,20 +189,12 @@ class Sync
     programs = params["programs"].split(",").map { |s| s.to_i }
     for_filter = params["for_filter"]
 
-    filter = nil
-    case status
-      when 'open' then filter = 'created_at'
-      when 'accepted' then filter = 'date_matched'
-      when 'in_progress' then filter = 'date_an_signed'
-      when 'approved' then filter = 'date_approved'
-      when 'realized' then filter = 'experience_start_date'
-      when 'completed' then filter = 'experience_end_date'
-    end
+    filter = filter_for(status)
 
     SyncControl.new do |sync|
       status_updates = 0
-      mails_success = 0
-      mails_failures = 0
+      #mails_success = 0
+      #mails_failures = 0
       failed_application_ids = []
       exceptions_count = 0
 
@@ -210,6 +202,7 @@ class Sync
       sync.sync_type = 'applied_'+filter
 
       setup_expa_api
+      puts "Sync: " + sync.inspect
 
       # time = SyncControl.get_last('applied_'+filter).strftime('%F')
       time = Date.today.to_s # if time.nil?
@@ -221,7 +214,9 @@ class Sync
       params['filters[for]'] = for_filter #people #opportunities
       paging = EXPA::Applications.paging(params)
       total_items = paging[:total_items]
+      puts 'Params: ' + params.inspect
       puts 'Esses negos tudo: ' + total_items.to_s
+
       if !total_items.nil? && total_items > 0
         total_pages = paging[:total_pages]
 
@@ -238,10 +233,13 @@ class Sync
                 application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
                 to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
+                puts "Oportunity: " + data.opportunity.inspect
+
                 unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
                   status_updates += 1
                   application.update_from_expa(data)
                   application.save
+                  puts "Application: " + application.inspect
 
                   create_opportunity_managers(application.xp_opportunity, data.opportunity)
                   create_ep_managers(application.xp_person, data.person)
@@ -255,6 +253,7 @@ class Sync
                 send_to_rd(application.xp_person, application, status, nil) if to_rd
 
                 params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
+                puts "ParamsToSqs: " + params.inspect
                 SendPodioDataToSqs.call(params)
 
                 sleep 60
@@ -277,7 +276,7 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
+      #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
     job_status
@@ -502,5 +501,18 @@ class Sync
 
     job_status = false unless ws.save
   end
+
+  private
+
+    def filter_for(status)
+      case status
+        when 'open' then 'created_at'
+        when 'accepted' then 'date_matched'
+        when 'in_progress' then 'date_an_signed'
+        when 'approved' then 'date_approved'
+        when 'realized' then 'experience_start_date'
+        when 'completed' then 'experience_end_date'
+      end
+    end
 
 end
