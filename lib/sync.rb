@@ -180,17 +180,6 @@ class Sync
     end
   end
 
-  def filter_for(status)
-    case status
-      when 'open' then filter = 'created_at'
-      when 'accepted' then filter = 'date_matched'
-      when 'in_progress' then filter = 'date_an_signed'
-      when 'approved' then filter = 'date_approved'
-      when 'realized' then filter = 'experience_start_date'
-      when 'completed' then filter = 'experience_end_date'
-    end
-  end
-
   #params
   #status - a String with the application status
   #programs - a Array of the programs
@@ -200,15 +189,7 @@ class Sync
     programs = params["programs"].split(",").map { |s| s.to_i }
     for_filter = params["for_filter"]
 
-    filter = nil
-    case status
-      when 'open' then filter = 'created_at'
-      when 'accepted' then filter = 'date_matched'
-      when 'in_progress' then filter = 'date_an_signed'
-      when 'approved' then filter = 'date_approved'
-      when 'realized' then filter = 'experience_start_date'
-      when 'completed' then filter = 'experience_end_date'
-    end
+    filter = filter_for(status)
 
     SyncControl.new do |sync|
       status_updates = 0
@@ -235,6 +216,7 @@ class Sync
       total_items = paging[:total_items]
       puts 'Params: ' + params.inspect
       puts 'Esses negos tudo: ' + total_items.to_s
+
       if !total_items.nil? && total_items > 0
         total_pages = paging[:total_pages]
 
@@ -294,7 +276,7 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
-      send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
+      #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
     job_status
@@ -519,5 +501,18 @@ class Sync
 
     job_status = false unless ws.save
   end
+
+  private
+
+    def filter_for(status)
+      case status
+        when 'open' then 'created_at'
+        when 'accepted' then 'date_matched'
+        when 'in_progress' then 'date_an_signed'
+        when 'approved' then 'date_approved'
+        when 'realized' then 'experience_start_date'
+        when 'completed' then 'experience_end_date'
+      end
+    end
 
 end
