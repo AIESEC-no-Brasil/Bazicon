@@ -185,99 +185,92 @@ class Sync
   #programs - a Array of the programs
   def update_status(params) #status, programs, for_filter
     job_status = true
-    status = params["status"]
-    programs = params["programs"].split(",").map { |s| s.to_i }
-    for_filter = params["for_filter"]
+    programs = params["programs"].split(",").map(&:to_i)
+    filter = filter_for(params[:status])
 
-    filter = filter_for(status)
+    sync = SyncControl.new
+    status_updates = 0
+    #mails_success = 0
+    #mails_failures = 0
+    failed_application_ids = []
+    exceptions_count = 0
 
-    SyncControl.new do |sync|
-      status_updates = 0
-      #mails_success = 0
-      #mails_failures = 0
-      failed_application_ids = []
-      exceptions_count = 0
+    sync.start_sync = DateTime.now
+    sync.sync_type = 'applied_'+filter
 
-      sync.start_sync = DateTime.now
-      sync.sync_type = 'applied_'+filter
+    setup_expa_api
+    puts "Sync: " + sync.inspect
 
-      setup_expa_api
-      puts "Sync: " + sync.inspect
+    paging_params = paging_params_for(filter, programs, params["for_filter"])
+    paging = EXPA::Applications.paging(paging_params)
+    total_items = paging[:total_items]
+    puts 'Params: ' + paging_params.inspect
+    puts 'Esses negos tudo: ' + total_items.to_s
 
-      # time = SyncControl.get_last('applied_'+filter).strftime('%F')
-      time = Date.today.to_s # if time.nil?
+    # Verifica se tem items na busca e depois faz ela de novo
+    if !total_items.nil? && total_items > 0
+      total_pages = paging[:total_pages]
 
-      params = {'per_page' => 25}
-      params['filters['+filter+'][from]'] = time
-      params['filters['+filter+'][to]'] = Date.today.to_s
-      params['filters[programmes][]'] = programs #GCDP
-      params['filters[for]'] = for_filter #people #opportunities
-      paging = EXPA::Applications.paging(params)
-      total_items = paging[:total_items]
-      puts 'Params: ' + params.inspect
-      puts 'Esses negos tudo: ' + total_items.to_s
+      for i in total_pages.downto(1)
+        paging_params['page'] = i
+        applications = EXPA::Applications.list_by_param(paging_params)
+        applications.each do |xp_application|
+          begin
+            # TODO: Find da propria application que foi encontrada. Qual a diferença?
+            puts "Application data from paging: " + xp_application.inspect
+            data = EXPA::Applications.find_by_id(xp_application.id)
+            puts "Application data after find_by_id: " + data.inspect
+            unless data.status["code"] == 401
+              puts "Opportunity before: " + data.opportunity.inspect
+              data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
+              data.person = EXPA::People.find_by_id(data.person.id) if params["for_filter"] == 'people'
+              application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
+              to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
-      if !total_items.nil? && total_items > 0
-        total_pages = paging[:total_pages]
+              puts "Oportunity: " + data.opportunity.inspect
 
-        for i in total_pages.downto(1)
-          params['page'] = i
-          applications = EXPA::Applications.list_by_param(params)
-          applications.each do |xp_application|
-            begin
-              data = EXPA::Applications.find_by_id(xp_application.id)
-              puts "Sync: #{xp_application.id}\nData: #{data}"
-              unless data.status["code"] == 401
-                data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
-                data.person = EXPA::People.find_by_id(data.person.id) if for_filter == 'people'
-                application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
-                to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
-
-                puts "Oportunity: " + data.opportunity.inspect
-
-                unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
-                  status_updates += 1
-                  application.update_from_expa(data)
-                  application.save
-                  puts "Application: " + application.inspect
-
-                  create_opportunity_managers(application.xp_opportunity, data.opportunity)
-                  create_ep_managers(application.xp_person, data.person)
-
-                  send_emails(application, application.xp_status)
-                end
-
+              unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
+                status_updates += 1
                 application.update_from_expa(data)
                 application.save
+                puts "Application: " + application.inspect
 
-                send_to_rd(application.xp_person, application, status, nil) if to_rd
+                create_opportunity_managers(application.xp_opportunity, data.opportunity)
+                create_ep_managers(application.xp_person, data.person)
 
-                params = { xp_id: application.xp_id, status: application.xp_status, for_filter: for_filter }
-                puts "ParamsToSqs: " + params.inspect
-                SendPodioDataToSqs.call(params)
-
-                sleep 60
+                send_emails(application, application.xp_status)
               end
-            rescue => exception
-              exceptions_count += 1
-              puts 'ACHAR O BUG'
-              failed_application_ids << xp_application.id
-              puts xp_application.id unless xp_application.id.nil?
-              puts exception.to_s
-              sleep 3600 unless exception['error_description'].nil?
-              puts exception.backtrace
+
+              application.update_from_expa(data)
+              application.save
+
+              send_to_rd(application.xp_person, application, params[:status], nil) if to_rd
+
+              sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
+              puts "ParamsToSqs: " + sync_params.inspect
+              SendPodioDataToSqs.call(sync_params)
+
+              sleep 60
             end
+          rescue => exception
+            exceptions_count += 1
+            puts 'ACHAR O BUG'
+            failed_application_ids << xp_application.id
+            puts xp_application.id unless xp_application.id.nil?
+            puts exception.to_s
+            sleep 3600 unless exception['error_description'].nil?
+            puts exception.backtrace
           end
         end
       end
-
-      sync.get_error = false
-      sync.count_itens = total_items
-      sync.end_sync = DateTime.now
-      job_status = false unless sync.save
-
-      #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
+
+    sync.get_error = false
+    sync.count_itens = total_items
+    sync.end_sync = DateTime.now
+    job_status = false unless sync.save
+
+    #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
 
     job_status
   end
@@ -498,7 +491,6 @@ class Sync
       ws[row,40] = analytics[key][1368][:re] unless analytics[key][1368].nil?
       ws[row,41] = analytics[key][909][:re] unless analytics[key][909].nil?
     end
-
     job_status = false unless ws.save
   end
 
@@ -513,6 +505,15 @@ class Sync
         when 'realized' then 'experience_start_date'
         when 'completed' then 'experience_end_date'
       end
+    end
+
+    def paging_params_for(filter, programs, for_filter)
+      params = {'per_page' => 25}
+      params['filters['+filter+'][from]'] = Date.today.to_s
+      params['filters['+filter+'][to]'] = Date.today.to_s
+      params['filters[programmes][]'] = programs #GCDP
+      params['filters[for]'] = for_filter #people #opportunities
+      params
     end
 
 end
