@@ -195,6 +195,9 @@ class Sync
     failed_application_ids = []
     exceptions_count = 0
 
+    puts "Filter: " + filter.inspect
+    puts "Sync Before: " + sync.inspect
+
     sync.start_sync = DateTime.now
     sync.sync_type = 'applied_'+filter
 

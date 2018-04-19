@@ -9,6 +9,7 @@ config/database.yml
 .byebug_history
 *.swp
 *.swo
+*.swn
 coverage/
 .ruby-gemset
 .ruby-version
