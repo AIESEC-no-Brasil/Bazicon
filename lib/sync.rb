@@ -186,6 +186,7 @@ class Sync
   def update_status(params) #status, programs, for_filter
     job_status = true
     programs = params["programs"].split(",").map(&:to_i)
+    puts "Params: " + params.inspect
     filter = filter_for(params[:status])
 
     SyncControl.new do |sync|
