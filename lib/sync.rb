@@ -187,12 +187,9 @@ class Sync
     job_status = true
     programs = params["programs"].split(",").map(&:to_i)
     puts "Params: " + params.inspect
-    filter = filter_for(params[:status])
+    filter = filter_for(params["status"])
 
     SyncControl.new do |sync|
-      status_updates = 0
-      #mails_success = 0
-      #mails_failures = 0
       failed_application_ids = []
       exceptions_count = 0
 
@@ -220,35 +217,12 @@ class Sync
           applications = EXPA::Applications.list_by_param(paging_params)
           applications.each do |xp_application|
             begin
-              # TODO: Find da propria application que foi encontrada. Qual a diferença?
               puts "Application data from paging: " + xp_application.inspect
-              data = EXPA::Applications.find_by_id(xp_application.id)
+              puts "Opportunity before: " + data.opportunity.inspect
+              data = find_application_data(xp_application.id, params["for_filter"])
               puts "Application data after find_by_id: " + data.inspect
-              unless data.status["code"] == 401
-                puts "Opportunity before: " + data.opportunity.inspect
-                data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
-                data.person = EXPA::People.find_by_id(data.person.id) if params["for_filter"] == 'people'
-                application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
-                to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
-
-                puts "Oportunity: " + data.opportunity.inspect
-
-                unless application.xp_status == data.status.to_s.downcase.gsub(' ','_')
-                  status_updates += 1
-                  application.update_from_expa(data)
-                  application.save
-                  puts "Application: " + application.inspect
-
-                  create_opportunity_managers(application.xp_opportunity, data.opportunity)
-                  create_ep_managers(application.xp_person, data.person)
-
-                  send_emails(application, application.xp_status)
-                end
-
-                application.update_from_expa(data)
-                application.save
-
-                send_to_rd(application.xp_person, application, params[:status], nil) if to_rd
+              unless data.nil?
+                find_and_update_xp_application(data)
 
                 sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
                 puts "ParamsToSqs: " + sync_params.inspect
@@ -274,6 +248,7 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
+      puts "Failed ids: " + failed_application_ids.inspect
       #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
@@ -521,4 +496,38 @@ class Sync
       params
     end
 
+    def update_application_status(application, data)
+      create_opportunity_managers(application.xp_opportunity, data.opportunity)
+      create_ep_managers(application.xp_person, data.person)
+
+      send_emails(application, application.xp_status)
+      application
+    end
+
+    def status_changed?(application, data)
+      application.xp_status != data.status.to_s.downcase.gsub(' ','_')
+    end
+
+    def find_application_data(id, filter)
+      data = EXPA::Applications.find_by_id(id)
+      if data.status["code"] == 401
+        nil
+      else
+        data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
+        data.person = EXPA::People.find_by_id(data.person.id) if filter == 'people'
+      end
+    end
+
+    def find_and_update_xp_application(application)
+      application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
+      to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
+
+      application.update_from_expa(data)
+      application.save
+      if status_changed?(application, data)
+        application = update_application_status(application, data)
+      end
+
+      send_to_rd(application.xp_person, application, params[:status], nil) if to_rd
+    end
 end
