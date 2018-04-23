@@ -191,7 +191,6 @@ class Sync
 
     SyncControl.new do |sync|
       failed_application_ids = []
-      exceptions_count = 0
 
       puts "Filter: " + filter.inspect
       puts "Sync Before: " + sync.inspect
@@ -218,7 +217,6 @@ class Sync
           applications.each do |xp_application|
             puts "Application data from paging: " + xp_application.inspect
             data = find_application_data(xp_application.id, params["for_filter"])
-            puts "Opportunity before: " + data.opportunity.inspect
             puts "Application data after find_by_id: " + data.inspect
             unless data.nil?
               find_and_update_xp_application(data)
@@ -500,6 +498,7 @@ class Sync
 
     def find_application_data(id, filter)
       data = EXPA::Applications.find_by_id(id)
+      puts "Application data(from find): "+ data.inspect
       if data.status["code"] == 401
         nil
       else
