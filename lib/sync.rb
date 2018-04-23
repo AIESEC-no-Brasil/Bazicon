@@ -218,8 +218,8 @@ class Sync
           applications.each do |xp_application|
             begin
               puts "Application data from paging: " + xp_application.inspect
-              puts "Opportunity before: " + data.opportunity.inspect
               data = find_application_data(xp_application.id, params["for_filter"])
+              puts "Opportunity before: " + data.opportunity.inspect
               puts "Application data after find_by_id: " + data.inspect
               unless data.nil?
                 find_and_update_xp_application(data)
