@@ -216,28 +216,18 @@ class Sync
           paging_params['page'] = i
           applications = EXPA::Applications.list_by_param(paging_params)
           applications.each do |xp_application|
-            begin
-              puts "Application data from paging: " + xp_application.inspect
-              data = find_application_data(xp_application.id, params["for_filter"])
-              puts "Opportunity before: " + data.opportunity.inspect
-              puts "Application data after find_by_id: " + data.inspect
-              unless data.nil?
-                find_and_update_xp_application(data)
+            puts "Application data from paging: " + xp_application.inspect
+            data = find_application_data(xp_application.id, params["for_filter"])
+            puts "Opportunity before: " + data.opportunity.inspect
+            puts "Application data after find_by_id: " + data.inspect
+            unless data.nil?
+              find_and_update_xp_application(data)
 
-                sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
-                puts "ParamsToSqs: " + sync_params.inspect
-                SendPodioDataToSqs.call(sync_params)
+              sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
+              puts "ParamsToSqs: " + sync_params.inspect
+              SendPodioDataToSqs.call(sync_params)
 
-                sleep 60
-              end
-            rescue => exception
-              exceptions_count += 1
-              puts 'ACHAR O BUG'
-              failed_application_ids << xp_application.id
-              puts xp_application.id unless xp_application.id.nil?
-              puts exception.to_s
-              sleep 3600 unless exception['error_description'].nil?
-              puts exception.backtrace
+              sleep 60
             end
           end
         end
