@@ -190,9 +190,6 @@ class Sync
     filter = filter_for(params["status"])
 
     SyncControl.new do |sync|
-      status_updates = 0
-      #mails_success = 0
-      #mails_failures = 0
       failed_application_ids = []
       exceptions_count = 0
 
@@ -244,7 +241,6 @@ class Sync
             end
           end
         end
-        puts "Updates: r" + status_updates
       end
 
       sync.get_error = false
@@ -252,6 +248,7 @@ class Sync
       sync.end_sync = DateTime.now
       job_status = false unless sync.save
 
+      puts "Failed ids: " + failed_application_ids.inspect
       #send_slack_notification(total_items, status_updates, status, exceptions_count, programs.first, for_filter, failed_application_ids)
     end
 
@@ -500,11 +497,6 @@ class Sync
     end
 
     def update_application_status(application, data)
-      status_updates += 1
-      application.update_from_expa(data)
-      application.save
-      puts "Application: " + application.inspect
-
       create_opportunity_managers(application.xp_opportunity, data.opportunity)
       create_ep_managers(application.xp_person, data.person)
 
@@ -530,13 +522,11 @@ class Sync
       application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
       to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
-      if status_changed?(application, data)
-        status_updates += 1
-        application = update_application_status(application, data)
-      end
-
       application.update_from_expa(data)
       application.save
+      if status_changed?(application, data)
+        application = update_application_status(application, data)
+      end
 
       send_to_rd(application.xp_person, application, params[:status], nil) if to_rd
     end
