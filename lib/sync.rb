@@ -221,7 +221,7 @@ class Sync
             unless data.nil?
               application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
               if status_changed?(application, data)
-                find_and_update_xp_application(data, params[:status])
+                find_and_update_xp_application(application, data, params[:status])
 
                 to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
                 send_to_rd(application.xp_person, application, status, nil) if to_rd
@@ -515,7 +515,7 @@ class Sync
       data
     end
 
-    def find_and_update_xp_application(application, status)
+    def find_and_update_xp_application(application, data, status)
       application.update_from_expa(data)
       application.save
       application = update_application_status(application, data)
