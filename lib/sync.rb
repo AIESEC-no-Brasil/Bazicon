@@ -219,13 +219,16 @@ class Sync
             data = find_application_data(xp_application.id, params["for_filter"])
             puts "Application data after find_by_id: " + data.inspect
             unless data.nil?
-              find_and_update_xp_application(data, params[:status])
+              application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
+              if status_changed?(application, data)
+                find_and_update_xp_application(data, params[:status])
 
-              sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
-              puts "ParamsToSqs: " + sync_params.inspect
-              SendPodioDataToSqs.call(sync_params)
+                sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
+                puts "ParamsToSqs: " + sync_params.inspect
+                SendPodioDataToSqs.call(sync_params)
 
-              sleep 60
+                sleep 60
+              end
             end
           end
         end
@@ -509,15 +512,12 @@ class Sync
       data
     end
 
-    def find_and_update_xp_application(data, status)
-      application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
+    def find_and_update_xp_application(application, status)
       to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
       application.update_from_expa(data)
       application.save
-      if status_changed?(application, data)
-        application = update_application_status(application, data)
-      end
+      application = update_application_status(application, data)
 
       send_to_rd(application.xp_person, application, status, nil) if to_rd
     end
