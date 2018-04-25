@@ -219,7 +219,7 @@ class Sync
             data = find_application_data(xp_application.id, params["for_filter"])
             puts "Application data after find_by_id: " + data.inspect
             unless data.nil?
-              find_and_update_xp_application(data)
+              find_and_update_xp_application(data, params[:status])
 
               sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
               puts "ParamsToSqs: " + sync_params.inspect
@@ -509,7 +509,7 @@ class Sync
       data
     end
 
-    def find_and_update_xp_application(data)
+    def find_and_update_xp_application(data, status)
       application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
       to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
@@ -519,6 +519,6 @@ class Sync
         application = update_application_status(application, data)
       end
 
-      send_to_rd(application.xp_person, application, params[:status], nil) if to_rd
+      send_to_rd(application.xp_person, application, status, nil) if to_rd
     end
 end
