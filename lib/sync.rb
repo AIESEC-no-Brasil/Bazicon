@@ -505,6 +505,8 @@ class Sync
         data.opportunity = EXPA::Opportunities.find_by_id(data.opportunity.id)
         data.person = EXPA::People.find_by_id(data.person.id) if filter == 'people'
       end
+
+      data
     end
 
     def find_and_update_xp_application(application)
