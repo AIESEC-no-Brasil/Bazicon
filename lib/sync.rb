@@ -509,7 +509,7 @@ class Sync
       data
     end
 
-    def find_and_update_xp_application(application)
+    def find_and_update_xp_application(data)
       application = ExpaApplication.find_by_xp_id(data.id) || ExpaApplication.new
       to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
 
