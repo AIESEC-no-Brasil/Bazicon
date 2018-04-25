@@ -223,6 +223,9 @@ class Sync
               if status_changed?(application, data)
                 find_and_update_xp_application(data, params[:status])
 
+                to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
+                send_to_rd(application.xp_person, application, status, nil) if to_rd
+
                 sync_params = { xp_id: application.xp_id, status: application.xp_status, for_filter: params["for_filter"] }
                 puts "ParamsToSqs: " + sync_params.inspect
                 SendPodioDataToSqs.call(sync_params)
@@ -513,12 +516,8 @@ class Sync
     end
 
     def find_and_update_xp_application(application, status)
-      to_rd = application.xp_person.nil? || data.status.to_s != application.xp_status.to_s
-
       application.update_from_expa(data)
       application.save
       application = update_application_status(application, data)
-
-      send_to_rd(application.xp_person, application, status, nil) if to_rd
     end
 end
