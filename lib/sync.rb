@@ -518,6 +518,6 @@ class Sync
     def find_and_update_xp_application(application, data, status)
       application.update_from_expa(data)
       application.save
-      application = update_application_status(application, data)
+      # application = update_application_status(application, data)
     end
 end
