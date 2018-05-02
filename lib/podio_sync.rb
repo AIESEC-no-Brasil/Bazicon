@@ -23,7 +23,7 @@ class PodioSync
   def loggin
     if Podio.client.nil? || @@expires_at.nil? || @@expires_at < (Time.now + 600)
       Podio.setup(:api_key => ENV['PODIO_API_KEY'], :api_secret => ENV['PODIO_API_SECRET'])
-      auth = Podio.client.authenticate_with_credentials(ENV['PODIO_2_USERNAME'], ENV['PODIO_2_PASSWORD'])
+      auth = Podio.client.authenticate_with_credentials(ENV['PODIO_USERNAME'], ENV['PODIO_PASSWORD'])
       @@expires_at = auth.expires_at
       puts 'LOGIN'
     end
