@@ -126,7 +126,7 @@ class PodioSync
     if !application.podio_id.nil? && Podio::Item.find(application.podio_id)
       Podio::Item.update( application.podio_id, attributes )
     else
-      podio_id = Podio::Item.create(18276512, attributes)
+      podio_id = Podio::Item.create(20633687, attributes)
       application.podio_id = podio_id['item_id'].to_i
       application.save
     end
