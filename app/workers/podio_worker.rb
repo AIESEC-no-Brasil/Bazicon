@@ -36,7 +36,7 @@ class PodioWorker
       podio_sync.send_ogx_application(application, application.xp_person.podio_id) unless application.xp_person.nil?
     elsif for_filter == 'opportunities'
       puts 'send_data_to_podio opportunities'
-      opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
+      # opportunity_podio_id = podio_sync.send_icx_opportunity(application.xp_opportunity)
       podio_sync.send_icx_application(application,opportunity_podio_id)
     end
   end
