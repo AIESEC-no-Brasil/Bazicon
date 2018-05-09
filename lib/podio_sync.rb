@@ -136,7 +136,7 @@ class PodioSync
     loggin
     fields = {}
     fields['titulo'] = xp_opportunity.xp_title unless xp_opportunity.xp_title.nil?
-    fields['link'] = ('https://experience.aiesec.org/#/opportunities/' + xp_opportunity.xp_id.to_s) unless xp_opportunity.nil?
+    fields['link-2'] = ('https://experience.aiesec.org/#/opportunities/' + xp_opportunity.xp_id.to_s) unless xp_opportunity.nil?
     fields['office'] = DigitalTransformation.hash_expa_podio[xp_opportunity.xp_home_lc.xp_id] unless xp_opportunity.xp_home_lc.xp_id.nil?
     fields['applications-count'] = xp_opportunity.xp_application_count unless xp_opportunity.xp_application_count.nil?
     fields['oppenings'] = xp_opportunity.xp_openings unless xp_opportunity.xp_openings.nil?
@@ -144,7 +144,7 @@ class PodioSync
     fields['earliest-start-date'] = {'start' => xp_opportunity.xp_earliest_start_date.strftime('%Y-%m-%d %H:%M:%S')} unless xp_opportunity.xp_earliest_start_date.nil?
     fields['latest-end-date'] = {'start' => xp_opportunity.xp_latest_end_date.strftime('%Y-%m-%d %H:%M:%S')} unless xp_opportunity.xp_latest_end_date.nil?
     fields['applications-close-date'] = {'start' => xp_opportunity.xp_applications_close_date.strftime('%Y-%m-%d %H:%M:%S')} unless xp_opportunity.xp_applications_close_date.nil?
-    fields['created-at'] = {'start' => xp_opportunity.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless xp_opportunity.xp_created_at.nil?
+    # fields['created-at'] = {'start' => xp_opportunity.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless xp_opportunity.xp_created_at.nil?
     case xp_opportunity.xp_programmes["id"]
       when 1
         fields['programme'] = 1
