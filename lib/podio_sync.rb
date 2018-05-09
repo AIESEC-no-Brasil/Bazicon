@@ -137,7 +137,7 @@ class PodioSync
     fields = {}
     fields['titulo'] = xp_opportunity.xp_title unless xp_opportunity.xp_title.nil?
     fields['link-2'] = ('https://experience.aiesec.org/#/opportunities/' + xp_opportunity.xp_id.to_s) unless xp_opportunity.nil?
-    # fields['office'] = DigitalTransformation.hash_expa_podio[xp_opportunity.xp_home_lc.xp_id] unless xp_opportunity.xp_home_lc.xp_id.nil?
+    fields['office'] = DigitalTransformation.hash_expa_podio[xp_opportunity.xp_home_lc.xp_id] unless xp_opportunity.xp_home_lc.xp_id.nil?
     fields['applications-count'] = xp_opportunity.xp_application_count unless xp_opportunity.xp_application_count.nil?
     fields['oppenings'] = xp_opportunity.xp_openings unless xp_opportunity.xp_openings.nil?
     fields['available-oppenings'] = xp_opportunity.xp_available_openings unless xp_opportunity.xp_available_openings.nil?
