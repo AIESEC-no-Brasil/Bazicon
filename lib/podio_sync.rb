@@ -94,39 +94,49 @@ class PodioSync
   def send_icx_application(application,podio_id)
     loggin
     fields = {}
-    # fields['application-created-at'] = {'start' => application.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_created_at.nil?
-    # fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil? || ExpaApplication.xp_statuses[application.xp_status] > 5
     fields['titulo'] = application.xp_person.xp_full_name unless application.xp_person.nil?
-    # fields['ep-email'] = [{'type' => 'home', 'value' => application.xp_person.xp_email}] unless application.xp_person.nil?
-    # fields['home-lc'] = 1 # application.xp_person.xp_home_lc.xp_full_name unless application.xp_person.xp_home_lc.nil?
-    # fields['ep-mc'] = DigitalTransformation.hash_mcs_podio_expa[application.xp_person.xp_home_lc.xp_parent.xp_id][:podio] unless application.xp_person.xp_home_lc.xp_parent.nil?
-    # fields['opportunity-lc'] = DigitalTransformation.hash_expa_podio[application.xp_opportunity.xp_home_lc.xp_id] unless application.xp_opportunity.xp_home_lc.xp_id.nil?
-    # fields['application-date-accepted'] = {'start' => application.xp_date_matched.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_matched.nil?
-    # fields['application-date-approved'] = {'start' => application.xp_date_approved.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_approved.nil?
+    fields['host-lc'] = DigitalTransformation.hash_expa_podio[application.xp_opportunity.xp_home_lc.xp_id] unless application.xp_opportunity.xp_home_lc.xp_id.nil?
+    fields['op-id'] = application.xp_opportunity_id unless application.xp_opportunity_id.nil?
+    fields['ep-id'] = application.xp_person_id unless application.xp_person_id.nil?
+    fields['ep-email'] = [{'type' => 'home', 'value' => application.xp_person.xp_email}] unless application.xp_person.nil?
+    fields['status'] = ExpaApplication.xp_statuses[application.xp_status] + 1 unless application.xp_status.nil? || ExpaApplication.xp_statuses[application.xp_status] > 5
+    fields['application-created-at'] = {'start' => application.xp_created_at.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_created_at.nil?
+    fields['application-date-accepted'] = {'start' => application.xp_date_matched.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_matched.nil?
+    fields['application-date-approved'] = {'start' => application.xp_date_approved.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_approved.nil?
+    fields['ep-mc'] = DigitalTransformation.hash_mcs_podio_expa[application.xp_person.xp_home_lc.xp_parent.xp_id][:podio] unless application.xp_person.xp_home_lc.xp_parent.nil?
+    fields['home-lc'] = 1 # application.xp_person.xp_home_lc.xp_full_name unless application.xp_person.xp_home_lc.nil?
+    fields['opportunity'] = podio_id unless podio_id.nil?
+
+    # Sincronizar com o APP Delivery
     # fields['application-date-realized'] = {'start' => application.xp_date_realized.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_realized.nil?
     # fields['application-date-completed'] = {'start' => application.xp_date_completed.strftime('%Y-%m-%d %H:%M:%S')} unless application.xp_date_completed.nil?
-    # fields['opportunity'] = podio_id unless podio_id.nil?
+    podio_app_id = nil
 
-    # case application.xp_opportunity.xp_programmes["id"]
-    #   when 1
-    #     fields['programme'] = 1
-    #   when 2
-    #     fields['programme'] = 2
-    #   when 5
-    #     fields['programme'] = 3
-    #   when 3
-    #     fields['programme'] = 4
-    #   when 4
-    #     fields['programme'] = 5
-    # end
+    case application.xp_opportunity.xp_programmes["id"]
+      when 1
+        podio_app_id = 19352693
+        # fields['programme'] = 1
+      when 2
+        podio_app_id = 20228970
+        # fields['programme'] = 2
+      when 5
+        podio_app_id = 20229037
+        # fields['programme'] = 3
+      # when 3
+        # fields['programme'] = 4
+      # when 4
+        # fields['programme'] = 5
+    end
     #puts fields
+
+    # gv 1 gt 2 ge 5
 
     attributes = {:fields => fields}
 
     if !application.podio_id.nil? && Podio::Item.find(application.podio_id)
       Podio::Item.update( application.podio_id, attributes )
     else
-      podio_id = Podio::Item.create(20633687, attributes)
+      podio_id = Podio::Item.create(podio_app_id, attributes)
       application.podio_id = podio_id['item_id'].to_i
       application.save
     end
