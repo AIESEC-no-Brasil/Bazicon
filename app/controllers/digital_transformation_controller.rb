@@ -347,21 +347,21 @@ class DigitalTransformationController < ApplicationController
     fields['telefone'] = [{'type' => 'home', 'value' => phone}]
     fields['cl-marcado-no-expa-nao-conta-expansao-ainda'] = DigitalTransformation.get_entity_ids_by_order(lc.to_i,interested_program)[1] unless lc.nil?
     fields['sub-produto'] = sub_product.to_i unless sub_product.nil? || interested_program == 'GV'
-    fields['sdg-de-interesse'] = sdg.to_i unless sdg.nil? || interested_program != 'GV'
+    # fields['sdg-de-interesse'] = sdg.to_i unless sdg.nil? || interested_program != 'GV'
     fields['universidade'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_universities_podio.values[university.to_i], 'universidade')[0]['item_id'].to_i unless university.empty?
     fields['curso'] = sync.podio_helper_find_item_by_unique_id(DigitalTransformation.hash_courses_podio.values[course.to_i], 'curso')[0]['item_id'].to_i unless course.empty?
     #fields['como-conheceu-a-aiesec'] = how_got_to_know_aiesec.to_i unless how_got_to_know_aiesec.nil?
-    fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
+    # fields['prioridade-de-contato'] = travel_interest.to_i unless travel_interest.nil?
     fields['nivel-de-ingles'] = english_level.to_i unless english_level.nil?
     fields['nivel-de-espanhol'] = spanish_level.to_i unless spanish_level.nil?
     fields['data-de-nascimento'] = { start: (bithdate) } unless bithdate.nil?
     puts fields
 
-    contato = []
-    contato << 1 if want_contact_by_email
-    contato << 2 if want_contact_by_phone
-    contato << 3 if want_contact_by_whatsapp
-    fields['preferencia-de-contato'] = contato
+    # contato = []
+    # contato << 1 if want_contact_by_email
+    # contato << 2 if want_contact_by_phone
+    # contato << 3 if want_contact_by_whatsapp
+    # fields['preferencia-de-contato'] = contato
     attibutes = {:fields => fields}
     attibutes[:tags] = [campagin] unless campagin.nil? || campagin.empty?
 
