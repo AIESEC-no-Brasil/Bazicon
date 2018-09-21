@@ -132,7 +132,17 @@ class DigitalTransformationController < ApplicationController
       redirect_to 'http://aiesec.org.br'
       return
     end
-    render layout: "empty"
+    params['source'] ||= ''
+    params['medium'] ||= ''
+    params['campaign'] ||= ''
+    case params['programa']
+    when 'GT'
+      redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+    when 'GE'
+      redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+    else
+      redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+    end
   end
 
   # POST /expa/sign_up
