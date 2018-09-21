@@ -137,11 +137,11 @@ class DigitalTransformationController < ApplicationController
     params['campaign'] ||= ''
     case params['programa']
     when 'GT'
-      redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+      redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
     when 'GE'
-      redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+      redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
     else
-      redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['source']}&campaign=#{params['source']}"
+      redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
     end
   end
 
