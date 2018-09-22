@@ -3,6 +3,7 @@ Myapp::Application.routes.draw do
 
   root 'digital_transformation#expa_sign_up', programa: 'GV'
   post '/api/v1/pagarme/postback/:payment_id' => 'api/v1/pagarme/postback#update_status'
+  get '/api/v1/expa_person' => 'api/v1/expa_person#validate_email'
 
   # Digital Transformation
   get '/dt/difficulties'          => 'digital_transformation#difficulties',          as: 'digital_transformation_difficulties'
