@@ -132,17 +132,18 @@ class DigitalTransformationController < ApplicationController
       redirect_to 'http://aiesec.org.br'
       return
     end
-    params['source'] ||= ''
-    params['medium'] ||= ''
-    params['campaign'] ||= ''
-    case params['programa']
-    when 'GT'
-      redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    when 'GE'
-      redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    else
-      redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    end
+    #params['source'] ||= ''
+    #params['medium'] ||= ''
+    #params['campaign'] ||= ''
+    #case params['programa']
+    #when 'GT'
+    #  redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
+    #when 'GE'
+    #  redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
+    #else
+    #  redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
+    #end
+    render layout: "empty"
   end
 
   # POST /expa/sign_up
