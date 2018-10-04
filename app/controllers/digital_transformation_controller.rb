@@ -129,20 +129,22 @@ class DigitalTransformationController < ApplicationController
     unless params.has_key?('programa') &&
         (params['programa'] == 'GCDP' || params['programa'] == 'GV' ||
           params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE')
-      redirect_to 'http://aiesec.org.br'
+      redirect_to 'http://aiesec.org.br/intercambio'
       return
     end
-    #params['source'] ||= ''
-    #params['medium'] ||= ''
-    #params['campaign'] ||= ''
-    #case params['programa']
-    #when 'GT'
-    #  redirect_to "http://aiesec.org.br/landing-page-gt?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    #when 'GE'
-    #  redirect_to "http://aiesec.org.br/landing-page-ge?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    #else
-    #  redirect_to "http://aiesec.org.br/landing-page-gv?source=#{params['source']}&medium=#{params['medium']}&campaign=#{params['campaign']}"
-    #end
+    params['source'] ||= ''
+    params['medium'] ||= ''
+    params['campaign'] ||= ''
+    case params['programa']
+    when 'GT'
+     redirect_to "http://aiesec.org.br/landing-page-gt?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+    when 'GE'
+     redirect_to "http://aiesec.org.br/landing-page-ge?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+    when 'GV'
+     redirect_to "http://aiesec.org.br/landing-page-gv?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+    else
+      redirect_to 'http://aiesec.org.br/intercambio'
+    end
     render layout: "empty"
   end
 
