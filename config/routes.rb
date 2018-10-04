@@ -1,7 +1,7 @@
 Myapp::Application.routes.draw do
   devise_for :users
 
-  root 'digital_transformation#expa_sign_up', programa: 'GV'
+  root 'digital_transformation#expa_sign_up'
   post '/api/v1/pagarme/postback/:payment_id' => 'api/v1/pagarme/postback#update_status'
   get '/api/v1/expa_person' => 'api/v1/expa_person#validate_email'
 
