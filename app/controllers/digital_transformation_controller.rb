@@ -137,11 +137,11 @@ class DigitalTransformationController < ApplicationController
     params['campaign'] ||= ''
     case params['programa']
     when 'GT'
-     redirect_to "http://aiesec.org.br/landing-page-gt?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "http://aiesec.org.br/talento-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     when 'GE'
-     redirect_to "http://aiesec.org.br/landing-page-ge?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "http://aiesec.org.br/empreendedor-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     when 'GV'
-     redirect_to "http://aiesec.org.br/landing-page-gv?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "http://aiesec.org.br/voluntario-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     else
       redirect_to 'http://aiesec.org.br/intercambio'
     end
