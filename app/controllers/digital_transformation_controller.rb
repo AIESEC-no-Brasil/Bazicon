@@ -145,7 +145,6 @@ class DigitalTransformationController < ApplicationController
     else
       redirect_to 'https://aiesec.org.br/intercambio'
     end
-    render layout: "empty"
   end
 
   # POST /expa/sign_up
