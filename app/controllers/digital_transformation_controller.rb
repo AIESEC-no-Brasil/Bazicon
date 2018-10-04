@@ -129,7 +129,7 @@ class DigitalTransformationController < ApplicationController
     unless params.has_key?('programa') &&
         (params['programa'] == 'GCDP' || params['programa'] == 'GV' ||
           params['programa'] == 'GIP' || params['programa'] == 'GT' || params['programa'] == 'GE')
-      redirect_to 'http://aiesec.org.br/intercambio'
+      redirect_to 'https://aiesec.org.br/intercambio'
       return
     end
     params['source'] ||= ''
@@ -137,13 +137,13 @@ class DigitalTransformationController < ApplicationController
     params['campaign'] ||= ''
     case params['programa']
     when 'GT'
-     redirect_to "http://aiesec.org.br/talento-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "https://aiesec.org.br/talento-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     when 'GE'
-     redirect_to "http://aiesec.org.br/empreendedor-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "https://aiesec.org.br/empreendedor-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     when 'GV'
-     redirect_to "http://aiesec.org.br/voluntario-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
+     redirect_to "https://aiesec.org.br/voluntario-global?utm_source=#{params['source']}&utm_medium=#{params['medium']}&utm_campaign=#{params['campaign']}"
     else
-      redirect_to 'http://aiesec.org.br/intercambio'
+      redirect_to 'https://aiesec.org.br/intercambio'
     end
     render layout: "empty"
   end
